@@ -1,0 +1,6 @@
+.woocommerce-gateway-youcanpay__payment-method-icon{display:inline-flex;align-items:center;vertical-align:middle;max-width:160px}@media (min-width: 661px){.woocommerce-gateway-youcanpay__payment-method-icon{max-width:inherit}}.woocommerce-gateway-youcanpay__payment-method-icon__label{margin-left:4px}
+
+.wcyoucanpay-confirmation-modal.wcyoucanpay-confirmation-modal{max-width:600px;min-width:400px}.wcyoucanpay-confirmation-modal .components-modal__content{padding:0 24px 24px}.wcyoucanpay-confirmation-modal .components-modal__header{margin:0 -24px 24px;padding:0 24px}.wcyoucanpay-confirmation-modal__separator{margin:24px -24px}.wcyoucanpay-confirmation-modal__footer{display:flex;justify-content:flex-end}.wcyoucanpay-confirmation-modal__footer>*:not(:first-child){margin-left:16px}
+
+.disable-confirmation-modal__payment-methods-list{margin-bottom:32px}.disable-confirmation-modal__payment-methods-list>*:not(:last-child){margin-bottom:12px}.disable-confirmation-modal__payment-methods-list .woocommerce-gateway-youcanpay__payment-method-icon{max-width:inherit}
+
