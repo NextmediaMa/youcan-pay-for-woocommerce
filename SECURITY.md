@@ -14,6 +14,7 @@ Generally, only the latest version of the extension has continued support.  In s
 
 _Please note that the **WordPress software is a separate entity** from Automattic. Please report vulnerabilities for WordPress through [the WordPress Foundation's HackerOne page](https://hackerone.com/wordpress)._
 
+
 ## Guidelines
 
 We're committed to working with security researchers to resolve the vulnerabilities they discover. You can help us by following these guidelines:
