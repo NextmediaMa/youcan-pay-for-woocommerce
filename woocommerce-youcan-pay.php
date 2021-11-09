@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Required minimums and constants
  */
-define( 'WC_YOUCAN_PAY_VERSION', '5.7.0' ); // WRCS: DEFINED_VERSION.
+define( 'WC_YOUCAN_PAY_VERSION', '1.0.0' ); // WRCS: DEFINED_VERSION.
 define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '5.6.0' );
 define( 'WC_YOUCAN_PAY_MIN_WC_VER', '3.0' );
 define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '3.3' );
@@ -363,7 +363,7 @@ function woocommerce_gateway_youcanpay() {
 				if ( plugin_basename( __FILE__ ) === $file ) {
 					$row_meta = [
 						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://docs.woocommerce.com/document/youcanpay/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-gateway-youcanpay' ) ) . '">' . __( 'Docs', 'woocommerce-gateway-youcanpay' ) . '</a>',
-						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=18627' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'woocommerce-gateway-youcanpay' ) ) . '">' . __( 'Support', 'woocommerce-gateway-youcanpay' ) . '</a>',
+						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'woocommerce-gateway-youcanpay' ) ) . '">' . __( 'Support', 'woocommerce-gateway-youcanpay' ) . '</a>',
 					];
 					return array_merge( $links, $row_meta );
 				}
@@ -390,7 +390,6 @@ function woocommerce_gateway_youcanpay() {
 					$methods[] = WC_Gateway_YouCanPay_P24::class;
 				}
 
-				
 				// These payment gateways will always be visible, regardless if UPE is enabled or disabled:
 				$methods[] = WC_Gateway_YouCanPay_Standalone::class;
 				$methods[] = WC_Gateway_YouCanPay_Multibanco::class;
