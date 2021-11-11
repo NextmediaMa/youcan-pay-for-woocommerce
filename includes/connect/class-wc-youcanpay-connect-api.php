@@ -86,7 +86,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect_API' ) ) {
 			if ( ! is_array( $body ) ) {
 				return new WP_Error(
 					'request_body_should_be_array',
-					__( 'Unable to send request to WooCommerce Connect server. Body must be an array.', 'woocommerce-gateway-youcanpay' )
+					__( 'Unable to send request to WooCommerce Connect server. Body must be an array.', 'woocommerce-youcan-pay' )
 				);
 			}
 
@@ -102,7 +102,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect_API' ) ) {
 				if ( ! $body ) {
 					return new WP_Error(
 						'unable_to_json_encode_body',
-						__( 'Unable to encode body for request to WooCommerce Connect server.', 'woocommerce-gateway-youcanpay' )
+						__( 'Unable to encode body for request to WooCommerce Connect server.', 'woocommerce-youcan-pay' )
 					);
 				}
 			}
@@ -134,7 +134,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect_API' ) ) {
 						'wcc_server_error',
 						sprintf(
 							// Translators: HTTP error code.
-							__( 'Error: The WooCommerce Connect server returned HTTP code: %d', 'woocommerce-gateway-youcanpay' ),
+							__( 'Error: The WooCommerce Connect server returned HTTP code: %d', 'woocommerce-youcan-pay' ),
 							$response_code
 						)
 					);
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect_API' ) ) {
 						'wcc_server_error_content_type',
 						sprintf(
 							// Translators: content-type error code.
-							__( 'Error: The WooCommerce Connect server returned an invalid content-type: %s.', 'woocommerce-gateway-youcanpay' ),
+							__( 'Error: The WooCommerce Connect server returned an invalid content-type: %s.', 'woocommerce-youcan-pay' ),
 							$content_type
 						)
 					);
@@ -161,7 +161,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect_API' ) ) {
 						'wcc_server_empty_response',
 						sprintf(
 							// Translators: HTTP error code.
-							__( 'Error: The WooCommerce Connect server returned ( %d ) and an empty response body.', 'woocommerce-gateway-youcanpay' ),
+							__( 'Error: The WooCommerce Connect server returned ( %d ) and an empty response body.', 'woocommerce-youcan-pay' ),
 							$response_code
 						)
 					);
@@ -175,7 +175,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect_API' ) ) {
 					'wcc_server_error_response',
 					sprintf(
 						/* translators: %1$s: error code, %2$s: error message, %3$d: HTTP response code */
-						__( 'Error: The WooCommerce Connect server returned: %1$s %2$s ( %3$d )', 'woocommerce-gateway-youcanpay' ),
+						__( 'Error: The WooCommerce Connect server returned: %1$s %2$s ( %3$d )', 'woocommerce-youcan-pay' ),
 						$error,
 						$message,
 						$response_code

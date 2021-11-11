@@ -40,7 +40,7 @@ class WC_YouCanPay_Settings_Controller {
 		$is_youcanpay_connected = woocommerce_gateway_youcanpay()->connect->is_connected();
 
 		echo '<h2>' . esc_html( $gateway->get_method_title() );
-		wc_back_link( __( 'Return to payments', 'woocommerce-gateway-youcanpay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		wc_back_link( __( 'Return to payments', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 
 		echo $is_youcanpay_connected ? '<div id="wc-youcanpay-account-settings-container"></div>' : '<div id="wc-youcanpay-new-account-container"></div>';
@@ -101,7 +101,7 @@ class WC_YouCanPay_Settings_Controller {
 		$params = [
 			'time'                    => time(),
 			'i18n_out_of_sync'        => wp_kses(
-				__( '<strong>Warning:</strong> your site\'s time does not match the time on your browser and may be incorrect. Some payment methods depend on webhook verification and verifying webhooks with a signing secret depends on your site\'s time being correct, so please check your site\'s time before setting a webhook secret. You may need to contact your site\'s hosting provider to correct the site\'s time.', 'woocommerce-gateway-youcanpay' ),
+				__( '<strong>Warning:</strong> your site\'s time does not match the time on your browser and may be incorrect. Some payment methods depend on webhook verification and verifying webhooks with a signing secret depends on your site\'s time being correct, so please check your site\'s time before setting a webhook secret. You may need to contact your site\'s hosting provider to correct the site\'s time.', 'woocommerce-youcan-pay' ),
 				[ 'strong' => [] ]
 			),
 			'is_upe_checkout_enabled' => WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled(),

@@ -86,10 +86,7 @@ class WC_YouCanPay_Apple_Pay_Registration {
 	 * @return string Whether Apple Pay required settings are enabled.
 	 */
 	private function is_enabled() {
-		$youcanpay_enabled                 = 'yes' === $this->get_option( 'enabled', 'no' );
-		$payment_request_button_enabled = 'yes' === $this->get_option( 'payment_request', 'yes' );
-
-		return $youcanpay_enabled && $payment_request_button_enabled;
+		return 'yes' === $this->get_option( 'enabled', 'no' );
 	}
 
 	/**
@@ -146,12 +143,12 @@ class WC_YouCanPay_Apple_Pay_Registration {
 
 		if ( ! file_exists( $well_known_dir ) ) {
 			if ( ! @mkdir( $well_known_dir, 0755 ) ) { // @codingStandardsIgnoreLine
-				return __( 'Unable to create domain association folder to domain root.', 'woocommerce-gateway-youcanpay' );
+				return __( 'Unable to create domain association folder to domain root.', 'woocommerce-youcan-pay' );
 			}
 		}
 
 		if ( ! @copy( WC_YOUCAN_PAY_PLUGIN_PATH . '/' . self::DOMAIN_ASSOCIATION_FILE_NAME, $fullpath ) ) { // @codingStandardsIgnoreLine
-			return __( 'Unable to copy domain association file to domain root.', 'woocommerce-gateway-youcanpay' );
+			return __( 'Unable to copy domain association file to domain root.', 'woocommerce-youcan-pay' );
 		}
 	}
 
@@ -173,10 +170,10 @@ class WC_YouCanPay_Apple_Pay_Registration {
 			WC_YouCanPay_Logger::log(
 				'Error: ' . $error_message . ' ' .
 				/* translators: expected domain association file URL */
-				sprintf( __( 'To enable Apple Pay, domain association file must be hosted at %s.', 'woocommerce-gateway-youcanpay' ), $url )
+				sprintf( __( 'To enable Apple Pay, domain association file must be hosted at %s.', 'woocommerce-youcan-pay' ), $url )
 			);
 		} else {
-			WC_YouCanPay_Logger::log( __( 'Domain association file updated.', 'woocommerce-gateway-youcanpay' ) );
+			WC_YouCanPay_Logger::log( __( 'Domain association file updated.', 'woocommerce-youcan-pay' ) );
 		}
 	}
 
@@ -229,7 +226,7 @@ class WC_YouCanPay_Apple_Pay_Registration {
 	 */
 	private function make_domain_registration_request( $secret_key ) {
 		if ( empty( $secret_key ) ) {
-			throw new Exception( __( 'Unable to verify domain - missing secret key.', 'woocommerce-gateway-youcanpay' ) );
+			throw new Exception( __( 'Unable to verify domain - missing secret key.', 'woocommerce-youcan-pay' ) );
 		}
 
 		$endpoint = 'https://api.youcanpay.com/v1/apple_pay/domains';
@@ -254,7 +251,7 @@ class WC_YouCanPay_Apple_Pay_Registration {
 
 		if ( is_wp_error( $response ) ) {
 			/* translators: error message */
-			throw new Exception( sprintf( __( 'Unable to verify domain - %s', 'woocommerce-gateway-youcanpay' ), $response->get_error_message() ) );
+			throw new Exception( sprintf( __( 'Unable to verify domain - %s', 'woocommerce-youcan-pay' ), $response->get_error_message() ) );
 		}
 
 		if ( 200 !== $response['response']['code'] ) {
@@ -263,7 +260,7 @@ class WC_YouCanPay_Apple_Pay_Registration {
 			$this->apple_pay_verify_notice = $parsed_response->error->message;
 
 			/* translators: error message */
-			throw new Exception( sprintf( __( 'Unable to verify domain - %s', 'woocommerce-gateway-youcanpay' ), $parsed_response->error->message ) );
+			throw new Exception( sprintf( __( 'Unable to verify domain - %s', 'woocommerce-youcan-pay' ), $parsed_response->error->message ) );
 		}
 	}
 
@@ -391,11 +388,11 @@ class WC_YouCanPay_Apple_Pay_Registration {
 				'title' => [],
 			],
 		];
-		$verification_failed_without_error = __( 'Apple Pay domain verification failed.', 'woocommerce-gateway-youcanpay' );
-		$verification_failed_with_error    = __( 'Apple Pay domain verification failed with the following error:', 'woocommerce-gateway-youcanpay' );
+		$verification_failed_without_error = __( 'Apple Pay domain verification failed.', 'woocommerce-youcan-pay' );
+		$verification_failed_with_error    = __( 'Apple Pay domain verification failed with the following error:', 'woocommerce-youcan-pay' );
 		$check_log_text                    = sprintf(
 			/* translators: 1) HTML anchor open tag 2) HTML anchor closing tag */
-			esc_html__( 'Please check the %1$slogs%2$s for more details on this issue. Logging must be enabled to see recorded logs.', 'woocommerce-gateway-youcanpay' ),
+			esc_html__( 'Please check the %1$slogs%2$s for more details on this issue. Logging must be enabled to see recorded logs.', 'woocommerce-youcan-pay' ),
 			'<a href="' . admin_url( 'admin.php?page=wc-status&tab=logs' ) . '">',
 			'</a>'
 		);

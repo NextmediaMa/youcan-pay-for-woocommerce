@@ -19,8 +19,8 @@ class WC_YouCanPay_Customer {
 	 * Queryable YouCan Pay payment method types.
 	 */
 	const YOUCAN_PAY_PAYMENT_METHODS = [
-		WC_YouCanPay_UPE_Payment_Method_CC::YOUCAN_PAY_ID,
-		WC_YouCanPay_UPE_Payment_Method_Sepa::YOUCAN_PAY_ID,
+		//WC_YouCanPay_UPE_Payment_Method_CC::YOUCAN_PAY_ID,
+		//WC_YouCanPay_UPE_Payment_Method_Sepa::YOUCAN_PAY_ID,
 	];
 
 	/**
@@ -140,7 +140,7 @@ class WC_YouCanPay_Customer {
 			}
 
 			// translators: %1$s First name, %2$s Second name, %3$s Username.
-			$description = sprintf( __( 'Name: %1$s %2$s, Username: %3$s', 'woocommerce-gateway-youcanpay' ), $billing_first_name, $billing_last_name, $user->user_login );
+			$description = sprintf( __( 'Name: %1$s %2$s, Username: %3$s', 'woocommerce-youcan-pay' ), $billing_first_name, $billing_last_name, $user->user_login );
 
 			$defaults = [
 				'email'       => $user->user_email,
@@ -156,7 +156,7 @@ class WC_YouCanPay_Customer {
 			$billing_last_name  = isset( $_POST['billing_last_name'] ) ? filter_var( wp_unslash( $_POST['billing_last_name'] ), FILTER_SANITIZE_STRING ) : ''; // phpcs:ignore WordPress.Security.NonceVerification
 
 			// translators: %1$s First name, %2$s Second name.
-			$description = sprintf( __( 'Name: %1$s %2$s, Guest', 'woocommerce-gateway-youcanpay' ), $billing_first_name, $billing_last_name );
+			$description = sprintf( __( 'Name: %1$s %2$s, Guest', 'woocommerce-youcan-pay' ), $billing_first_name, $billing_last_name );
 
 			$defaults = [
 				'email'       => $billing_email,
@@ -215,7 +215,7 @@ class WC_YouCanPay_Customer {
 	 */
 	public function update_customer( $args = [], $is_retry = false ) {
 		if ( empty( $this->get_id() ) ) {
-			throw new WC_YouCanPay_Exception( 'id_required_to_update_user', __( 'Attempting to update a YouCan Pay customer without a customer ID.', 'woocommerce-gateway-youcanpay' ) );
+			throw new WC_YouCanPay_Exception( 'id_required_to_update_user', __( 'Attempting to update a YouCan Pay customer without a customer ID.', 'woocommerce-youcan-pay' ) );
 		}
 
 		$args     = $this->generate_customer_request( $args );
@@ -382,7 +382,7 @@ class WC_YouCanPay_Customer {
 				return $response;
 			}
 		} elseif ( empty( $response->id ) ) {
-			return new WP_Error( 'error', __( 'Unable to add payment source.', 'woocommerce-gateway-youcanpay' ) );
+			return new WP_Error( 'error', __( 'Unable to add payment source.', 'woocommerce-youcan-pay' ) );
 		} else {
 			return $response;
 		}
@@ -685,11 +685,11 @@ class WC_YouCanPay_Customer {
 		if ( null !== $wc_customer && ! empty( $wc_customer->get_username() ) ) {
 			// We have a logged in user, so add their username to the customer description.
 			// translators: %1$s Name, %2$s Username.
-			$description = sprintf( __( 'Name: %1$s, Username: %2$s', 'woocommerce-gateway-youcanpay' ), $name, $wc_customer->get_username() );
+			$description = sprintf( __( 'Name: %1$s, Username: %2$s', 'woocommerce-youcan-pay' ), $name, $wc_customer->get_username() );
 		} else {
 			// Current user is not logged in.
 			// translators: %1$s Name.
-			$description = sprintf( __( 'Name: %1$s, Guest', 'woocommerce-gateway-youcanpay' ), $name );
+			$description = sprintf( __( 'Name: %1$s, Guest', 'woocommerce-youcan-pay' ), $name );
 		}
 
 		$data = [

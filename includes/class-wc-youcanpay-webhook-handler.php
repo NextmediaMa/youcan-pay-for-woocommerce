@@ -63,7 +63,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 		if ((isset( $_GET['wc-original'] )) && ($_GET['wc-original'] == 'wc_youcanpay')) {
 			if ( ! isset($_GET['transaction_id']) ) {
-				wc_add_notice( __( '#0020: Fatal error, please try again', 'woocommerce-gateway-youcanpay' ), 'error' );
+				wc_add_notice( __( '#0020: Fatal error, please try again', 'woocommerce-youcan-pay' ), 'error' );
 				return wp_redirect(wp_sanitize_redirect(esc_url_raw(get_home_url())));
 			}
 
@@ -71,7 +71,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			$transaction = WC_YouCanPay_API::get_transaction($_GET['transaction_id']);
 
 			if (! isset($transaction)) {
-				wc_add_notice( __( '#0022: Fatal error, please try again', 'woocommerce-gateway-youcanpay' ), 'error' );
+				wc_add_notice( __( '#0022: Fatal error, please try again', 'woocommerce-youcan-pay' ), 'error' );
 				return wp_redirect(wp_sanitize_redirect(esc_url_raw(get_home_url())));
 			}
 
@@ -80,7 +80,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			$order = wc_get_order($orderId);
 
 			if (! isset($order)) {
-				wc_add_notice( __( '#0021: Fatal error, please contact support', 'woocommerce-gateway-youcanpay' ), 'error' );
+				wc_add_notice( __( '#0021: Fatal error, please contact support', 'woocommerce-youcan-pay' ), 'error' );
 				return wp_redirect(wp_sanitize_redirect(esc_url_raw(get_home_url())));
 			}
 
@@ -88,7 +88,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				$order->payment_complete($transaction->getId());
 				return wp_redirect(wp_sanitize_redirect(esc_url_raw($this->get_return_url($order))));
 			} else {
-				wc_add_notice( __( '#0033: Payment error please try again', 'woocommerce-gateway-youcanpay' ), 'error' );
+				wc_add_notice( __( '#0033: Payment error please try again', 'woocommerce-youcan-pay' ), 'error' );
 
 				$order->set_status('failed');
 				$order->save();
@@ -277,7 +277,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 					// Source param wrong? The CARD may have been deleted on youcanpay's end. Remove token and show message.
 					$wc_token = WC_Payment_Tokens::get( $prepared_source->token_id );
 					$wc_token->delete();
-					$localized_message = __( 'This card is no longer available and has been removed.', 'woocommerce-gateway-youcanpay' );
+					$localized_message = __( 'This card is no longer available and has been removed.', 'woocommerce-youcan-pay' );
 					$order->add_order_note( $localized_message );
 					throw new WC_YouCanPay_Exception( print_r( $response, true ), $localized_message );
 				}
@@ -296,7 +296,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 						$this->retry_interval++;
 						return $this->process_webhook_payment( $notification, true );
 					} else {
-						$localized_message = __( 'Sorry, we are unable to process your payment at this time. Please retry later.', 'woocommerce-gateway-youcanpay' );
+						$localized_message = __( 'Sorry, we are unable to process your payment at this time. Please retry later.', 'woocommerce-youcan-pay' );
 						$order->add_order_note( $localized_message );
 						throw new WC_YouCanPay_Exception( print_r( $response, true ), $localized_message );
 					}
@@ -356,7 +356,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$order->update_meta_data( '_youcanpay_status_before_hold', $order->get_status() );
 
 		/* translators: 1) The URL to the order. */
-		$message = sprintf( __( 'A dispute was created for this order. Response is needed. Please go to your <a href="%s" title="YouCanPay Dashboard" target="_blank">YouCanPay Dashboard</a> to review this dispute.', 'woocommerce-gateway-youcanpay' ), $this->get_transaction_url( $order ) );
+		$message = sprintf( __( 'A dispute was created for this order. Response is needed. Please go to your <a href="%s" title="YouCanPay Dashboard" target="_blank">YouCanPay Dashboard</a> to review this dispute.', 'woocommerce-youcan-pay' ), $this->get_transaction_url( $order ) );
 		if ( ! $order->get_meta( '_youcanpay_status_final', false ) ) {
 			$order->update_status( 'on-hold', $message );
 		} else {
@@ -385,11 +385,11 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( 'lost' === $status ) {
-			$message = __( 'The dispute was lost or accepted.', 'woocommerce-gateway-youcanpay' );
+			$message = __( 'The dispute was lost or accepted.', 'woocommerce-youcan-pay' );
 		} elseif ( 'won' === $status ) {
-			$message = __( 'The dispute was resolved in your favor.', 'woocommerce-gateway-youcanpay' );
+			$message = __( 'The dispute was resolved in your favor.', 'woocommerce-youcan-pay' );
 		} elseif ( 'warning_closed' === $status ) {
-			$message = __( 'The inquiry or retrieval was closed.', 'woocommerce-gateway-youcanpay' );
+			$message = __( 'The inquiry or retrieval was closed.', 'woocommerce-youcan-pay' );
 		} else {
 			return;
 		}
@@ -442,12 +442,12 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 					$order->set_total( $partial_amount );
 					$this->update_fees( $order, $notification->data->object->refunds->data[0]->balance_transaction );
 					/* translators: partial captured amount */
-					$order->add_order_note( sprintf( __( 'This charge was partially captured via YouCanPay Dashboard in the amount of: %s', 'woocommerce-gateway-youcanpay' ), $partial_amount ) );
+					$order->add_order_note( sprintf( __( 'This charge was partially captured via YouCanPay Dashboard in the amount of: %s', 'woocommerce-youcan-pay' ), $partial_amount ) );
 				} else {
 					$order->payment_complete( $notification->data->object->id );
 
 					/* translators: transaction id */
-					$order->add_order_note( sprintf( __( 'YouCanPay charge complete (Charge ID: %s)', 'woocommerce-gateway-youcanpay' ), $notification->data->object->id ) );
+					$order->add_order_note( sprintf( __( 'YouCanPay charge complete (Charge ID: %s)', 'woocommerce-youcan-pay' ), $notification->data->object->id ) );
 				}
 
 				if ( is_callable( [ $order, 'save' ] ) ) {
@@ -492,7 +492,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$order->payment_complete( $notification->data->object->id );
 
 		/* translators: transaction id */
-		$order->add_order_note( sprintf( __( 'YouCanPay charge complete (Charge ID: %s)', 'woocommerce-gateway-youcanpay' ), $notification->data->object->id ) );
+		$order->add_order_note( sprintf( __( 'YouCanPay charge complete (Charge ID: %s)', 'woocommerce-youcan-pay' ), $notification->data->object->id ) );
 
 		if ( is_callable( [ $order, 'save' ] ) ) {
 			$order->save();
@@ -519,7 +519,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			return;
 		}
 
-		$message = __( 'This payment failed to clear.', 'woocommerce-gateway-youcanpay' );
+		$message = __( 'This payment failed to clear.', 'woocommerce-youcan-pay' );
 		if ( ! $order->get_meta( '_youcanpay_status_final', false ) ) {
 			$order->update_status( 'failed', $message );
 		} else {

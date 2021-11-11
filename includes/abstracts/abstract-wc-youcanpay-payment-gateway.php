@@ -446,8 +446,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function generate_payment_request( $order, $prepared_payment_method ) {
 		$settings              = get_option( 'woocommerce_youcanpay_settings', [] );
-		$statement_descriptor  = ! empty( $settings['statement_descriptor'] ) ? str_replace( "'", '', $settings['statement_descriptor'] ) : '';
-		$capture               = ! empty( $settings['capture'] ) && 'yes' === $settings['capture'] ? true : false;
 		$post_data             = [];
 		$post_data['currency'] = strtolower( $order->get_currency() );
 		$post_data['amount']   = WC_YouCanPay_Helper::get_youcanpay_amount( $order->get_total(), $post_data['currency'] );
@@ -459,21 +457,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 		if ( ! empty( $billing_email ) && apply_filters( 'wc_youcanpay_send_youcanpay_receipt', false ) ) {
 			$post_data['receipt_email'] = $billing_email;
-		}
-
-		switch ( $order->get_payment_method() ) {
-			case 'youcanpay':
-				if ( ! empty( $statement_descriptor ) ) {
-					$post_data['statement_descriptor'] = WC_YouCanPay_Helper::clean_statement_descriptor( $statement_descriptor );
-				}
-
-				$post_data['capture'] = $capture ? 'true' : 'false';
-				break;
-			case 'youcanpay_sepa':
-				if ( ! empty( $statement_descriptor ) ) {
-					$post_data['statement_descriptor'] = WC_YouCanPay_Helper::clean_statement_descriptor( $statement_descriptor );
-				}
-				break;
 		}
 
 		if ( method_exists( $order, 'get_shipping_postcode' ) && ! empty( $order->get_shipping_postcode() ) ) {
@@ -778,7 +761,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			 * Criteria to save to file is they are logged in, they opted to save or product requirements and the source is
 			 * actually reusable. Either that or force_save_source is true.
 			 */
-			if ( ( $user_id && $this->saved_cards && $maybe_saved_card && 'reusable' === $source_object->usage ) || $force_save_source ) {
+			if ( ( $user_id && $maybe_saved_card && 'reusable' === $source_object->usage ) || $force_save_source ) {
 				$response = $customer->attach_source( $source_object->id );
 
 				if ( ! empty( $response->error ) ) {
@@ -808,7 +791,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			$maybe_saved_card = isset( $_POST[ 'wc-' . $payment_method . '-new-payment-method' ] ) && ! empty( $_POST[ 'wc-' . $payment_method . '-new-payment-method' ] );
 
 			// This is true if the user wants to store the card to their account.
-			if ( ( $user_id && $this->saved_cards && $maybe_saved_card ) || $force_save_source ) {
+			if ( ( $user_id && $maybe_saved_card ) || $force_save_source ) {
 				$response = $customer->attach_source( $youcanpay_token );
 
 				if ( ! empty( $response->error ) ) {
@@ -1262,10 +1245,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			$request['customer'] = $prepared_source->customer;
 		}
 
-		if ( isset( $full_request['statement_descriptor'] ) ) {
-			$request['statement_descriptor'] = $full_request['statement_descriptor'];
-		}
-
 		if ( isset( $full_request['shipping'] ) ) {
 			$request['shipping'] = $full_request['shipping'];
 		}
@@ -1626,10 +1605,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			'confirm'              => 'true',
 			'confirmation_method'  => 'automatic',
 		];
-
-		if ( isset( $full_request['statement_descriptor'] ) ) {
-			$request['statement_descriptor'] = $full_request['statement_descriptor'];
-		}
 
 		if ( isset( $full_request['customer'] ) ) {
 			$request['customer'] = $full_request['customer'];

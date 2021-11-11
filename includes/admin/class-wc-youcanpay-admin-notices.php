@@ -244,26 +244,6 @@ class WC_YouCanPay_Admin_Notices {
 				$this->add_admin_notice( $method, 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-youcan-pay' ), $method, implode( ', ', $gateway->get_supported_currency() ) ), true );
 			}
 		}
-
-		if ( ! WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() || ! WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
-			return;
-		}
-
-		foreach ( WC_YouCanPay_UPE_Payment_Gateway::UPE_AVAILABLE_METHODS as $method_class ) {
-			if ( WC_YouCanPay_UPE_Payment_Method_CC::class === $method_class ) {
-				continue;
-			}
-			$method      = $method_class::YOUCAN_PAY_ID;
-			$show_notice = get_option( 'wc_youcanpay_show_' . strtolower( $method ) . '_upe_notice' );
-			$upe_method  = new $method_class();
-			if ( ! $upe_method->is_enabled() || 'no' === $show_notice ) {
-				continue;
-			}
-			if ( ! in_array( get_woocommerce_currency(), $upe_method->get_supported_currencies(), true ) ) {
-				/* translators: %1$s Payment method, %2$s List of supported currencies */
-				$this->add_admin_notice( $method . '_upe', 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-youcan-pay' ), $upe_method->get_label(), implode( ', ', $upe_method->get_supported_currencies() ) ), true );
-			}
-		}
 	}
 
 	/**

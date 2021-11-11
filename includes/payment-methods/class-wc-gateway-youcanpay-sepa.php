@@ -97,7 +97,6 @@ class WC_Gateway_YouCanPay_Sepa extends WC_YouCanPay_Payment_Gateway {
 		$this->saved_cards          = ( ! empty( $main_settings['saved_cards'] ) && 'yes' === $main_settings['saved_cards'] ) ? true : false;
 		$this->publishable_key      = ! empty( $main_settings['publishable_key'] ) ? $main_settings['publishable_key'] : '';
 		$this->secret_key           = ! empty( $main_settings['secret_key'] ) ? $main_settings['secret_key'] : '';
-		$this->statement_descriptor = ! empty( $main_settings['statement_descriptor'] ) ? $main_settings['statement_descriptor'] : '';
 
 		if ( $this->testmode ) {
 			$this->publishable_key = ! empty( $main_settings['test_publishable_key'] ) ? $main_settings['test_publishable_key'] : '';
@@ -107,12 +106,6 @@ class WC_Gateway_YouCanPay_Sepa extends WC_YouCanPay_Payment_Gateway {
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_scripts_for_banner' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'payment_scripts' ] );
-
-		if ( WC_YouCanPay_Helper::is_pre_orders_exists() ) {
-			$this->pre_orders = new WC_YouCanPay_Pre_Orders_Compat();
-
-			add_action( 'wc_pre_orders_process_pre_order_completion_payment_' . $this->id, [ $this->pre_orders, 'process_pre_order_release_payment' ] );
-		}
 	}
 
 	/**
@@ -195,7 +188,7 @@ class WC_Gateway_YouCanPay_Sepa extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function mandate_display() {
 		/* translators: statement descriptor */
-		printf( __( 'By providing your IBAN and confirming this payment, you are authorizing %s and YouCan Pay, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'woocommerce-gateway-youcanpay' ), WC_YouCanPay_Helper::clean_statement_descriptor( $this->statement_descriptor ) );
+		printf( __( 'By providing your IBAN and confirming this payment, you are authorizing %s and YouCan Pay, our payment service provider, to send instructions to your bank to debit your account and your bank to debit your account in accordance with those instructions. You are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited.', 'woocommerce-gateway-youcanpay' ), 'test' );
 	}
 
 	/**

@@ -29,15 +29,15 @@ class WC_YouCanPay_UPE_Compatibility_Note {
 		$note_class = self::get_note_class();
 		$note       = new $note_class();
 
-		$note->set_title( __( 'Important compatibility information about WooCommerce YouCan Pay', 'woocommerce-gateway-youcanpay' ) );
+		$note->set_title( __( 'Important compatibility information about WooCommerce YouCan Pay', 'woocommerce-youcan-pay' ) );
 		/* translators: $1 WordPress version installed. $2 WooCommerce version installed. */
-		$note->set_content( sprintf( __( 'Starting with version 5.6.0, WooCommerce YouCan Pay will require WordPress %1$s or greater and WooCommerce %2$s or greater to be installed and active.', 'woocommerce-gateway-youcanpay' ), WC_YouCanPay_UPE_Compatibility::MIN_WP_VERSION, WC_YouCanPay_UPE_Compatibility::MIN_WC_VERSION ) );
+		$note->set_content( sprintf( __( 'Starting with version 5.6.0, WooCommerce YouCan Pay will require WordPress %1$s or greater and WooCommerce %2$s or greater to be installed and active.', 'woocommerce-youcan-pay' ), WC_YouCanPay_UPE_Compatibility::MIN_WP_VERSION, WC_YouCanPay_UPE_Compatibility::MIN_WC_VERSION ) );
 		$note->set_type( $note_class::E_WC_ADMIN_NOTE_WARNING );
 		$note->set_name( self::NOTE_NAME );
-		$note->set_source( 'woocommerce-gateway-youcanpay' );
+		$note->set_source( 'woocommerce-youcan-pay' );
 		$note->add_action(
 			self::NOTE_NAME,
-			__( 'Learn more', 'woocommerce-gateway-youcanpay' ),
+			__( 'Learn more', 'woocommerce-youcan-pay' ),
 			WC_YouCanPay_UPE_Compatibility::LEARN_MORE_LINK,
 			$note_class::E_WC_ADMIN_NOTE_UNACTIONED,
 			true

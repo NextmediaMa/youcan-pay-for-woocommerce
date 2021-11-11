@@ -66,7 +66,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var string
 	 */
-	public $inline_cc_form;
+	//public $inline_cc_form;
 
 	/**
 	 * Pre Orders Object
@@ -106,13 +106,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->description          = $this->get_option( 'description' );
 		$this->enabled              = $this->get_option( 'enabled' );
 		$this->testmode             = 'yes' === $this->get_option( 'testmode' );
-		$this->inline_cc_form       = 'yes' === $this->get_option( 'inline_cc_form' );
 		$this->capture              = 'yes' === $this->get_option( 'capture', 'yes' );
-		$this->statement_descriptor = WC_YouCanPay_Helper::clean_statement_descriptor( $this->get_option( 'statement_descriptor' ) );
 		$this->saved_cards          = 'yes' === $this->get_option( 'saved_cards' );
 		$this->secret_key           = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
 		$this->publishable_key      = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
-		$this->payment_request      = 'yes' === $this->get_option( 'payment_request', 'yes' );
 
 		WC_YouCanPay_API::set_secret_key( $this->secret_key );
 
@@ -131,12 +128,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 		// Note: display error is in the parent class.
 		add_action( 'admin_notices', [ $this, 'display_errors' ], 9999 );
-
-		if ( WC_YouCanPay_Helper::is_pre_orders_exists() ) {
-			$this->pre_orders = new WC_YouCanPay_Pre_Orders_Compat();
-
-			add_action( 'wc_pre_orders_process_pre_order_completion_payment_' . $this->id, [ $this->pre_orders, 'process_pre_order_release_payment' ] );
-		}
 	}
 
 	/**
@@ -266,15 +257,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		<fieldset id="wc-<?php echo esc_attr( $this->id ); ?>-cc-form" class="wc-credit-card-form wc-payment-form" style="background:transparent;">
 			<?php do_action( 'woocommerce_credit_card_form_start', $this->id ); ?>
 
-			<?php if ( $this->inline_cc_form ) { ?>
-				<label for="card-element">
-					<?php esc_html_e( 'Credit or debit card', 'woocommerce-gateway-youcanpay' ); ?>
-				</label>
-
-				<div id="youcanpay-card-element" class="wc-youcanpay-elements-field">
-				<!-- a YouCanPay Element will be inserted here. -->
-				</div>
-			<?php } else { ?>
 				<div class="form-row form-row-wide">
 					<label for="youcanpay-card-number"><?php esc_html_e( 'Card Number', 'woocommerce-gateway-youcanpay' ); ?> <span class="required">*</span></label>
 					<div class="youcanpay-card-group">
@@ -301,7 +283,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				</div>
 				</div>
 				<div class="clear"></div>
-			<?php } ?>
 
 			<!-- Used to display form errors -->
 			<div class="youcanpay-source-errors" role="alert"></div>
@@ -372,12 +353,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$youcanpay_params['payment_intent_error']      = __( 'We couldn\'t initiate the payment. Please try again.', 'woocommerce-gateway-youcanpay' );
 		$youcanpay_params['sepa_mandate_notification'] = apply_filters( 'wc_youcanpay_sepa_mandate_notification', 'email' );
 		$youcanpay_params['allow_prepaid_card']        = apply_filters( 'wc_youcanpay_allow_prepaid_card', true ) ? 'yes' : 'no';
-		$youcanpay_params['inline_cc_form']            = $this->inline_cc_form ? 'yes' : 'no';
+		//$youcanpay_params['inline_cc_form']            = $this->inline_cc_form ? 'yes' : 'no';
 		$youcanpay_params['is_checkout']               = ( is_checkout() && empty( $_GET['pay_for_order'] ) ) ? 'yes' : 'no'; // wpcs: csrf ok.
 		$youcanpay_params['return_url']                = $this->get_youcanpay_return_url();
 		$youcanpay_params['ajaxurl']                   = WC_AJAX::get_endpoint( '%%endpoint%%' );
 		$youcanpay_params['youcanpay_nonce']              = wp_create_nonce( '_wc_youcanpay_nonce' );
-		$youcanpay_params['statement_descriptor']      = $this->statement_descriptor;
 		$youcanpay_params['elements_options']          = apply_filters( 'wc_youcanpay_elements_options', [] );
 		$youcanpay_params['sepa_elements_options']     = $sepa_elements_options;
 		$youcanpay_params['invalid_owner_name']        = __( 'Billing First Name and Last Name are required.', 'woocommerce-gateway-youcanpay' );
@@ -1173,9 +1153,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function settings_api_sanitized_fields( $settings ) {
 		if ( is_array( $settings ) ) {
-			if ( array_key_exists( 'statement_descriptor', $settings ) ) {
-				$settings['statement_descriptor'] = WC_YouCanPay_Helper::clean_statement_descriptor( $settings['statement_descriptor'] );
-			}
+
 		}
 		return $settings;
 	}

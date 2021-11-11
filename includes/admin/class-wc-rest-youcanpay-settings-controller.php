@@ -57,17 +57,17 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 				'permission_callback' => [ $this, 'check_permission' ],
 				'args'                => [
 					'is_youcanpay_enabled'                => [
-						'description'       => __( 'If YouCanPay should be enabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'If YouCanPay should be enabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_test_mode_enabled'             => [
-						'description'       => __( 'YouCanPay test mode setting.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'YouCanPay test mode setting.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'enabled_payment_method_ids'       => [
-						'description'       => __( 'Payment method IDs that should be enabled. Other methods will be disabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Payment method IDs that should be enabled. Other methods will be disabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'array',
 						'items'             => [
 							'type' => 'string',
@@ -76,31 +76,31 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_payment_request_enabled'       => [
-						'description'       => __( 'If YouCanPay express checkouts should be enabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'If YouCanPay express checkouts should be enabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'payment_request_button_type'      => [
-						'description'       => __( 'Express checkout button types.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Express checkout button types.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'enum'              => array_keys( $form_fields['payment_request_button_type']['options'] ),
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'payment_request_button_theme'     => [
-						'description'       => __( 'Express checkout button themes.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Express checkout button themes.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'enum'              => array_keys( $form_fields['payment_request_button_theme']['options'] ),
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'payment_request_button_size'      => [
-						'description'       => __( 'Express checkout button sizes.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Express checkout button sizes.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						// it can happen that `$form_fields['payment_request_button_size']` is empty (in tests) - fixing temporarily.
 						'enum'              => array_keys( isset( $form_fields['payment_request_button_size']['options'] ) ? $form_fields['payment_request_button_size']['options'] : [] ),
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'payment_request_button_locations' => [
-						'description'       => __( 'Express checkout locations that should be enabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Express checkout locations that should be enabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'array',
 						'items'             => [
 							'type' => 'string',
@@ -109,37 +109,37 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_manual_capture_enabled'        => [
-						'description'       => __( 'If manual capture of charges should be enabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'If manual capture of charges should be enabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_saved_cards_enabled'           => [
-						'description'       => __( 'If "Saved cards" should be enabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'If "Saved cards" should be enabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'is_separate_card_form_enabled'    => [
-						'description'       => __( 'If credit card number field, expiry date field, and CVC field should be separate.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'If credit card number field, expiry date field, and CVC field should be separate.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
-					'statement_descriptor'             => [
-						'description'       => __( 'Bank account descriptor to be displayed in customers\' bank accounts.', 'woocommerce-gateway-youcanpay' ),
+					/*'statement_descriptor'             => [
+						'description'       => __( 'Bank account descriptor to be displayed in customers\' bank accounts.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_regular_statement_descriptor' ],
-					],
+					],*/
 					'is_short_statement_descriptor_enabled' => [
-						'description'       => __( 'When enabled, we\'ll include the order number for card and express checkout transactions.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'When enabled, we\'ll include the order number for card and express checkout transactions.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'short_statement_descriptor'       => [
-						'description'       => __( 'We\'ll use the short version in combination with the customer order number.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'We\'ll use the short version in combination with the customer order number.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_short_statement_descriptor' ],
 					],
 					'is_debug_log_enabled'             => [
-						'description'       => __( 'When enabled, payment error logs will be saved to WooCommerce > Status > Logs.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'When enabled, payment error logs will be saved to WooCommerce > Status > Logs.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
@@ -218,7 +218,6 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 				'available_payment_method_ids'          => $this->gateway->get_upe_available_payment_methods(),
 
 				/* Settings > Express checkouts */
-				'is_payment_request_enabled'            => 'yes' === $this->gateway->get_option( 'payment_request' ),
 				'payment_request_button_type'           => $this->gateway->get_option( 'payment_request_button_type' ),
 				'payment_request_button_theme'          => $this->gateway->get_option( 'payment_request_button_theme' ),
 				'payment_request_button_size'           => $this->gateway->get_option( 'payment_request_button_size' ),
@@ -226,9 +225,6 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 
 				/* Settings > Payments & transactions */
 				'is_manual_capture_enabled'             => ! $this->gateway->is_automatic_capture_enabled(),
-				'is_saved_cards_enabled'                => 'yes' === $this->gateway->get_option( 'saved_cards' ),
-				'is_separate_card_form_enabled'         => 'no' === $this->gateway->get_option( 'inline_cc_form' ),
-				'statement_descriptor'                  => $this->gateway->get_option( 'statement_descriptor' ),
 				'is_short_statement_descriptor_enabled' => 'yes' === $this->gateway->get_option( 'is_short_statement_descriptor_enabled' ),
 				'short_statement_descriptor'            => $this->gateway->get_option( 'short_statement_descriptor' ),
 
@@ -252,14 +248,14 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 		$this->update_enabled_payment_methods( $request );
 
 		/* Settings > Express checkouts */
-		$this->update_is_payment_request_enabled( $request );
+		//$this->update_is_payment_request_enabled( $request );
 		$this->update_payment_request_settings( $request );
 
 		/* Settings > Payments & transactions */
 		$this->update_is_manual_capture_enabled( $request );
-		$this->update_is_saved_cards_enabled( $request );
-		$this->update_is_separate_card_form_enabled( $request );
-		$this->update_account_statement_descriptor( $request );
+		//$this->update_is_saved_cards_enabled( $request );
+		//$this->update_is_separate_card_form_enabled( $request );
+		//$this->update_account_statement_descriptor( $request );
 		$this->update_is_short_account_statement_enabled( $request );
 		$this->update_short_account_statement_descriptor( $request );
 
@@ -304,21 +300,6 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 	}
 
 	/**
-	 * Updates the "payment request" enable/disable settings.
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 */
-	private function update_is_payment_request_enabled( WP_REST_Request $request ) {
-		$is_payment_request_enabled = $request->get_param( 'is_payment_request_enabled' );
-
-		if ( null === $is_payment_request_enabled ) {
-			return;
-		}
-
-		$this->gateway->update_option( 'payment_request', $is_payment_request_enabled ? 'yes' : 'no' );
-	}
-
-	/**
 	 * Updates manual capture.
 	 *
 	 * @param WP_REST_Request $request Request object.
@@ -338,21 +319,6 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 */
-	private function update_is_saved_cards_enabled( WP_REST_Request $request ) {
-		$is_saved_cards_enabled = $request->get_param( 'is_saved_cards_enabled' );
-
-		if ( null === $is_saved_cards_enabled ) {
-			return;
-		}
-
-		$this->gateway->update_option( 'saved_cards', $is_saved_cards_enabled ? 'yes' : 'no' );
-	}
-
-	/**
-	 * Updates "saved cards" feature.
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 */
 	private function update_is_separate_card_form_enabled( WP_REST_Request $request ) {
 		$is_separate_card_form_enabled = $request->get_param( 'is_separate_card_form_enabled' );
 
@@ -361,21 +327,6 @@ class WC_REST_YouCanPay_Settings_Controller extends WC_YouCanPay_REST_Base_Contr
 		}
 
 		$this->gateway->update_option( 'inline_cc_form', $is_separate_card_form_enabled ? 'no' : 'yes' );
-	}
-
-	/**
-	 * Updates account statement descriptor.
-	 *
-	 * @param WP_REST_Request $request Request object.
-	 */
-	private function update_account_statement_descriptor( WP_REST_Request $request ) {
-		$account_statement_descriptor = $request->get_param( 'statement_descriptor' );
-
-		if ( null === $account_statement_descriptor ) {
-			return;
-		}
-
-		$this->gateway->update_option( 'statement_descriptor', $account_statement_descriptor );
 	}
 
 	/**

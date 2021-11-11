@@ -8,18 +8,18 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 	 * Constructor
 	 */
 	public function __construct() {
-		parent::__construct( __( 'YouCan Pay', 'woocommerce-gateway-youcanpay' ) );
+		parent::__construct( __( 'YouCan Pay', 'woocommerce-youcan-pay' ) );
 
-		$this->add_exporter( 'woocommerce-gateway-youcanpay-order-data', __( 'WooCommerce YouCan Pay Order Data', 'woocommerce-gateway-youcanpay' ), [ $this, 'order_data_exporter' ] );
+		$this->add_exporter( 'woocommerce-youcan-pay-order-data', __( 'WooCommerce YouCan Pay Order Data', 'woocommerce-youcan-pay' ), [ $this, 'order_data_exporter' ] );
 
 		if ( function_exists( 'wcs_get_subscriptions' ) ) {
-			$this->add_exporter( 'woocommerce-gateway-youcanpay-subscriptions-data', __( 'WooCommerce YouCan Pay Subscriptions Data', 'woocommerce-gateway-youcanpay' ), [ $this, 'subscriptions_data_exporter' ] );
+			$this->add_exporter( 'woocommerce-youcan-pay-subscriptions-data', __( 'WooCommerce YouCan Pay Subscriptions Data', 'woocommerce-youcan-pay' ), [ $this, 'subscriptions_data_exporter' ] );
 		}
 
-		$this->add_exporter( 'woocommerce-gateway-youcanpay-customer-data', __( 'WooCommerce YouCan Pay Customer Data', 'woocommerce-gateway-youcanpay' ), [ $this, 'customer_data_exporter' ] );
+		$this->add_exporter( 'woocommerce-youcan-pay-customer-data', __( 'WooCommerce YouCan Pay Customer Data', 'woocommerce-youcan-pay' ), [ $this, 'customer_data_exporter' ] );
 
-		$this->add_eraser( 'woocommerce-gateway-youcanpay-customer-data', __( 'WooCommerce YouCan Pay Customer Data', 'woocommerce-gateway-youcanpay' ), [ $this, 'customer_data_eraser' ] );
-		$this->add_eraser( 'woocommerce-gateway-youcanpay-order-data', __( 'WooCommerce YouCan Pay Data', 'woocommerce-gateway-youcanpay' ), [ $this, 'order_data_eraser' ] );
+		$this->add_eraser( 'woocommerce-youcan-pay-customer-data', __( 'WooCommerce YouCan Pay Customer Data', 'woocommerce-youcan-pay' ), [ $this, 'customer_data_eraser' ] );
+		$this->add_eraser( 'woocommerce-youcan-pay-order-data', __( 'WooCommerce YouCan Pay Data', 'woocommerce-youcan-pay' ), [ $this, 'order_data_eraser' ] );
 
 		add_filter( 'woocommerce_get_settings_account', [ $this, 'account_settings' ] );
 	}
@@ -33,11 +33,11 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 	public function account_settings( $settings ) {
 		$insert_setting = [
 			[
-				'title'       => __( 'Retain YouCan Pay Data', 'woocommerce-gateway-youcanpay' ),
-				'desc_tip'    => __( 'Retains any YouCan Pay data such as YouCan Pay customer ID, source ID.', 'woocommerce-gateway-youcanpay' ),
+				'title'       => __( 'Retain YouCan Pay Data', 'woocommerce-youcan-pay' ),
+				'desc_tip'    => __( 'Retains any YouCan Pay data such as YouCan Pay customer ID, source ID.', 'woocommerce-youcan-pay' ),
 				'id'          => 'woocommerce_gateway_youcanpay_retention',
 				'type'        => 'relative_date_selector',
-				'placeholder' => __( 'N/A', 'woocommerce-gateway-youcanpay' ),
+				'placeholder' => __( 'N/A', 'woocommerce-youcan-pay' ),
 				'default'     => '',
 				'autoload'    => false,
 			],
@@ -90,7 +90,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 	 */
 	public function get_privacy_message() {
 		/* translators: %s URL to docs */
-		return wpautop( sprintf( __( 'By using this extension, you may be storing personal data or sharing data with an external service. <a href="%s" target="_blank">Learn more about how this works, including what you may want to include in your privacy policy.</a>', 'woocommerce-gateway-youcanpay' ), 'https://docs.woocommerce.com/document/privacy-payments/#woocommerce-gateway-youcanpay' ) );
+		return wpautop( sprintf( __( 'By using this extension, you may be storing personal data or sharing data with an external service. <a href="%s" target="_blank">Learn more about how this works, including what you may want to include in your privacy policy.</a>', 'woocommerce-youcan-pay' ), 'https://docs.woocommerce.com/document/privacy-payments/#woocommerce-youcan-pay' ) );
 	}
 
 	/**
@@ -113,15 +113,15 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 			foreach ( $orders as $order ) {
 				$data_to_export[] = [
 					'group_id'    => 'woocommerce_orders',
-					'group_label' => __( 'Orders', 'woocommerce-gateway-youcanpay' ),
+					'group_label' => __( 'Orders', 'woocommerce-youcan-pay' ),
 					'item_id'     => 'order-' . $order->get_id(),
 					'data'        => [
 						[
-							'name'  => __( 'YouCan Pay payment id', 'woocommerce-gateway-youcanpay' ),
+							'name'  => __( 'YouCan Pay payment id', 'woocommerce-youcan-pay' ),
 							'value' => get_post_meta( $order->get_id(), '_youcanpay_source_id', true ),
 						],
 						[
-							'name'  => __( 'YouCan Pay customer id', 'woocommerce-gateway-youcanpay' ),
+							'name'  => __( 'YouCan Pay customer id', 'woocommerce-youcan-pay' ),
 							'value' => get_post_meta( $order->get_id(), '_youcanpay_customer_id', true ),
 						],
 					],
@@ -178,15 +178,15 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 			foreach ( $subscriptions as $subscription ) {
 				$data_to_export[] = [
 					'group_id'    => 'woocommerce_subscriptions',
-					'group_label' => __( 'Subscriptions', 'woocommerce-gateway-youcanpay' ),
+					'group_label' => __( 'Subscriptions', 'woocommerce-youcan-pay' ),
 					'item_id'     => 'subscription-' . $subscription->get_id(),
 					'data'        => [
 						[
-							'name'  => __( 'YouCan Pay payment id', 'woocommerce-gateway-youcanpay' ),
+							'name'  => __( 'YouCan Pay payment id', 'woocommerce-youcan-pay' ),
 							'value' => get_post_meta( $subscription->get_id(), '_youcanpay_source_id', true ),
 						],
 						[
-							'name'  => __( 'YouCan Pay customer id', 'woocommerce-gateway-youcanpay' ),
+							'name'  => __( 'YouCan Pay customer id', 'woocommerce-youcan-pay' ),
 							'value' => get_post_meta( $subscription->get_id(), '_youcanpay_customer_id', true ),
 						],
 					],
@@ -218,15 +218,15 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 
 			$data_to_export[] = [
 				'group_id'    => 'woocommerce_customer',
-				'group_label' => __( 'Customer Data', 'woocommerce-gateway-youcanpay' ),
+				'group_label' => __( 'Customer Data', 'woocommerce-youcan-pay' ),
 				'item_id'     => 'user',
 				'data'        => [
 					[
-						'name'  => __( 'YouCan Pay payment id', 'woocommerce-gateway-youcanpay' ),
+						'name'  => __( 'YouCan Pay payment id', 'woocommerce-youcan-pay' ),
 						'value' => get_user_option( '_youcanpay_source_id', $user->ID ),
 					],
 					[
-						'name'  => __( 'YouCan Pay customer id', 'woocommerce-gateway-youcanpay' ),
+						'name'  => __( 'YouCan Pay customer id', 'woocommerce-youcan-pay' ),
 						'value' => $youcanpay_user->get_id(),
 					],
 				],
@@ -264,7 +264,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 			$items_removed = true;
 			delete_user_option( $user->ID, '_youcanpay_customer_id' );
 			delete_user_option( $user->ID, '_youcanpay_source_id' );
-			$messages[] = __( 'YouCan Pay User Data Erased.', 'woocommerce-gateway-youcanpay' );
+			$messages[] = __( 'YouCan Pay User Data Erased.', 'woocommerce-youcan-pay' );
 		}
 
 		return [
@@ -340,12 +340,12 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 
 		if ( ! $this->is_retention_expired( $order->get_date_created()->getTimestamp() ) ) {
 			/* translators: %d Order ID */
-			return [ false, true, [ sprintf( __( 'Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)', 'woocommerce-gateway-youcanpay' ), $order->get_id() ) ] ];
+			return [ false, true, [ sprintf( __( 'Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)', 'woocommerce-youcan-pay' ), $order->get_id() ) ] ];
 		}
 
 		if ( $subscription->has_status( apply_filters( 'wc_youcanpay_privacy_eraser_subs_statuses', [ 'on-hold', 'active' ] ) ) ) {
 			/* translators: %d Order ID */
-			return [ false, true, [ sprintf( __( 'Order ID %d contains an active Subscription. Personal data retained. (YouCan Pay)', 'woocommerce-gateway-youcanpay' ), $order->get_id() ) ] ];
+			return [ false, true, [ sprintf( __( 'Order ID %d contains an active Subscription. Personal data retained. (YouCan Pay)', 'woocommerce-youcan-pay' ), $order->get_id() ) ] ];
 		}
 
 		$renewal_orders = WC_Subscriptions_Renewal_Order::get_renewal_orders( $order->get_id() );
@@ -360,7 +360,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 		delete_post_meta( $subscription_id, '_youcanpay_refund_id' );
 		delete_post_meta( $subscription_id, '_youcanpay_customer_id' );
 
-		return [ true, false, [ __( 'YouCan Pay Subscription Data Erased.', 'woocommerce-gateway-youcanpay' ) ] ];
+		return [ true, false, [ __( 'YouCan Pay Subscription Data Erased.', 'woocommerce-youcan-pay' ) ] ];
 	}
 
 	/**
@@ -377,7 +377,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 
 		if ( ! $this->is_retention_expired( $order->get_date_created()->getTimestamp() ) ) {
 			/* translators: %d Order ID */
-			return [ false, true, [ sprintf( __( 'Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)', 'woocommerce-gateway-youcanpay' ), $order->get_id() ) ] ];
+			return [ false, true, [ sprintf( __( 'Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)', 'woocommerce-youcan-pay' ), $order->get_id() ) ] ];
 		}
 
 		if ( empty( $youcanpay_source_id ) && empty( $youcanpay_refund_id ) && empty( $youcanpay_customer_id ) ) {

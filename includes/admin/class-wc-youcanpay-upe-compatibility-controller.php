@@ -59,7 +59,7 @@ class WC_YouCanPay_UPE_Compatibility_Controller {
 					'version'      => get_bloginfo( 'version' ),
 					'is_supported' => WC_YouCanPay_UPE_Compatibility::is_wp_supported(),
 					/* translators: %s. WordPress version installed. */
-					'message'      => sprintf( __( 'WordPress %s or greater', 'woocommerce-gateway-youcanpay' ), WC_YouCanPay_UPE_Compatibility::MIN_WP_VERSION ),
+					'message'      => sprintf( __( 'WordPress %s or greater', 'woocommerce-youcan-pay' ), WC_YouCanPay_UPE_Compatibility::MIN_WP_VERSION ),
 				],
 				[
 					'name'         => 'WooCommerce',
@@ -69,7 +69,7 @@ class WC_YouCanPay_UPE_Compatibility_Controller {
 					/* translators: %s. WooCommerce version installed. */
 						__(
 							'WooCommerce %s or greater to be installed and active',
-							'woocommerce-gateway-youcanpay'
+							'woocommerce-youcan-pay'
 						),
 						WC_YouCanPay_UPE_Compatibility::MIN_WC_VERSION
 					),
@@ -95,7 +95,7 @@ class WC_YouCanPay_UPE_Compatibility_Controller {
 
 	private function get_installed_versions_message( $unsatisfied_requirements ) {
 		return join(
-			__( ' and ', 'woocommerce-gateway-youcanpay' ),
+			__( ' and ', 'woocommerce-youcan-pay' ),
 			array_map(
 				function ( $requirement ) {
 					return $requirement['name'] . ' ' . $requirement['version'];
@@ -107,7 +107,7 @@ class WC_YouCanPay_UPE_Compatibility_Controller {
 
 	private function get_unsatisfied_requirements_message( $unsatisfied_requirements ) {
 		return join(
-			__( ' and ', 'woocommerce-gateway-youcanpay' ),
+			__( ' and ', 'woocommerce-youcan-pay' ),
 			array_map(
 				function ( $requirement ) {
 					return $requirement['message'];
@@ -137,7 +137,7 @@ class WC_YouCanPay_UPE_Compatibility_Controller {
 					'WooCommerce YouCanPay requires %1$s. Your version of %2$s is no longer supported.',
 					'WooCommerce YouCanPay requires %1$s. Your versions of %2$s are no longer supported.',
 					count( $unsatisfied_requirements ),
-					'woocommerce-gateway-youcanpay'
+					'woocommerce-youcan-pay'
 				),
 				$unsatisfied_requirements_message,
 				$unsatisfied_requirements_versions
@@ -166,7 +166,7 @@ class WC_YouCanPay_UPE_Compatibility_Controller {
 					'Starting with version 5.6.0, YouCanPay will require %1$s. Your version of %2$s will no longer be supported. <a href="%3$s" target="_blank">Learn more here</a>.',
 					'Starting with version 5.6.0, YouCanPay will require %1$s. Your versions of %2$s will no longer be supported. <a href="%3$s" target="_blank">Learn more here</a>.',
 					count( $unsatisfied_requirements ),
-					'woocommerce-gateway-youcanpay'
+					'woocommerce-youcan-pay'
 				),
 				$unsatisfied_requirements_message,
 				$unsatisfied_requirements_versions,

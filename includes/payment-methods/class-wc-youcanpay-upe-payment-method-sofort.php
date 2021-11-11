@@ -18,13 +18,13 @@ class WC_YouCanPay_UPE_Payment_Method_Sofort extends WC_YouCanPay_UPE_Payment_Me
 	public function __construct() {
 		parent::__construct();
 		$this->youcanpay_id            = self::YOUCAN_PAY_ID;
-		$this->title                = __( 'Pay with SOFORT', 'woocommerce-gateway-youcanpay' );
+		$this->title                = __( 'Pay with SOFORT', 'woocommerce-youcan-pay' );
 		$this->is_reusable          = true;
 		$this->supported_currencies = [ 'EUR' ];
-		$this->label                = __( 'SOFORT', 'woocommerce-gateway-youcanpay' );
+		$this->label                = __( 'SOFORT', 'woocommerce-youcan-pay' );
 		$this->description          = __(
 			'Accept secure bank transfers from Austria, Belgium, Germany, Italy, Netherlands, and Spain.',
-			'woocommerce-gateway-youcanpay'
+			'woocommerce-youcan-pay'
 		);
 	}
 }

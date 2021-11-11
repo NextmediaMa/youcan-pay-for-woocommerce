@@ -44,7 +44,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect' ) ) {
 			}
 
 			if ( substr( $return_url, 0, 8 ) !== 'https://' ) {
-				return new WP_Error( 'invalid_url_protocol', __( 'Your site must be served over HTTPS in order to connect your YouCan Pay account automatically.', 'woocommerce-gateway-youcanpay' ) );
+				return new WP_Error( 'invalid_url_protocol', __( 'Your site must be served over HTTPS in order to connect your YouCan Pay account automatically.', 'woocommerce-youcan-pay' ) );
 			}
 
 			$result = $this->api->get_youcanpay_oauth_init( $return_url );
@@ -94,7 +94,7 @@ if ( ! class_exists( 'WC_YouCanPay_Connect' ) ) {
 			} elseif ( isset( $_GET['reset_youcanpay_api_credentials'], $_GET['_wpnonce'] ) ) {
 
 				if ( ! wp_verify_nonce( wc_clean( wp_unslash( $_GET['_wpnonce'] ) ), 'reset_youcanpay_api_credentials' ) ) {
-					die( __( 'You are not authorized to clear YouCan Pay account keys.', 'woocommerce-gateway-youcanpay' ) );
+					die( __( 'You are not authorized to clear YouCan Pay account keys.', 'woocommerce-youcan-pay' ) );
 				}
 
 				$this->clear_youcanpay_keys();

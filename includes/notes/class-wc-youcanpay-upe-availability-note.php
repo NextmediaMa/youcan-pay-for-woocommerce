@@ -35,14 +35,14 @@ class WC_YouCanPay_UPE_Availability_Note {
 		$note_class = self::get_note_class();
 		$note       = new $note_class();
 
-		$note->set_title( __( 'Boost your sales with the new payment experience in YouCan Pay', 'woocommerce-gateway-youcanpay' ) );
-		$note->set_content( __( 'Get early access to an improved checkout experience, now available to select merchants. <a href="?TODO" target="_blank">Learn more</a>.', 'woocommerce-gateway-youcanpay' ) );
+		$note->set_title( __( 'Boost your sales with the new payment experience in YouCan Pay', 'woocommerce-youcan-pay' ) );
+		$note->set_content( __( 'Get early access to an improved checkout experience, now available to select merchants. <a href="?TODO" target="_blank">Learn more</a>.', 'woocommerce-youcan-pay' ) );
 		$note->set_type( $note_class::E_WC_ADMIN_NOTE_INFORMATIONAL );
 		$note->set_name( self::NOTE_NAME );
-		$note->set_source( 'woocommerce-gateway-youcanpay' );
+		$note->set_source( 'woocommerce-youcan-pay' );
 		$note->add_action(
 			self::NOTE_NAME,
-			__( 'Enable in your store', 'woocommerce-gateway-youcanpay' ),
+			__( 'Enable in your store', 'woocommerce-youcan-pay' ),
 			self::ENABLE_IN_STORE_LINK,
 			$note_class::E_WC_ADMIN_NOTE_UNACTIONED,
 			true
@@ -72,9 +72,6 @@ class WC_YouCanPay_UPE_Availability_Note {
 		 * - UPE has been manually disabled
 		 * - YouCan Pay is not enabled
 		 */
-		if ( ! WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-			return;
-		}
 
 		if ( WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
 			return;

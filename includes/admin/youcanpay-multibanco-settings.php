@@ -32,11 +32,11 @@ return apply_filters(
 			'title'       => __( 'Description', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
 			'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-youcan-pay' ),
-			'default'     => __( 'You will be redirected to Multibanco.', 'woocommerce-gateway-youcanpay' ),
+			'default'     => __( 'You will be redirected to Multibanco.', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
 		'webhook'     => [
-			'title'       => __( 'Webhook Endpoints', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Webhook Endpoints', 'woocommerce-youcan-pay' ),
 			'type'        => 'title',
 			/* translators: webhook URL */
 			'description' => $this->display_admin_settings_webhook_description(),

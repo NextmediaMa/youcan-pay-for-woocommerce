@@ -28,98 +28,98 @@ $youcanpay_settings = apply_filters(
 			'desc_tip'    => true,
 		],
 		'description'                         => [
-			'title'       => __( 'Description', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Description', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
-			'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-gateway-youcanpay' ),
-			'default'     => __( 'Pay with your credit card via YouCan Pay.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'This controls the description which the user sees during checkout.', 'woocommerce-youcan-pay' ),
+			'default'     => __( 'Pay with your credit card via YouCan Pay.', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
 		'api_credentials'                     => [
-			'title' => __( 'YouCan Pay Account Keys', 'woocommerce-gateway-youcanpay' ),
+			'title' => __( 'YouCan Pay Account Keys', 'woocommerce-youcan-pay' ),
 			'type'  => 'youcanpay_account_keys',
 		],
 		'testmode'                            => [
-			'title'       => __( 'Test mode', 'woocommerce-gateway-youcanpay' ),
-			'label'       => __( 'Enable Test Mode', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Test mode', 'woocommerce-youcan-pay' ),
+			'label'       => __( 'Enable Test Mode', 'woocommerce-youcan-pay' ),
 			'type'        => 'checkbox',
-			'description' => __( 'Place the payment gateway in test mode using test API keys.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Place the payment gateway in test mode using test API keys.', 'woocommerce-youcan-pay' ),
 			'default'     => 'yes',
 			'desc_tip'    => true,
 		],
 		'test_publishable_key'                => [
-			'title'       => __( 'Test Publishable Key', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Test Publishable Key', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
-			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pub_sandbox_" will be saved.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pub_sandbox_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
 		'test_secret_key'                     => [
-			'title'       => __( 'Test Secret Key', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Test Secret Key', 'woocommerce-youcan-pay' ),
 			'type'        => 'password',
-			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pri_sandbox_" will be saved.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pri_sandbox_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
 		'publishable_key'                     => [
-			'title'       => __( 'Live Publishable Key', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Live Publishable Key', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
-			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pub_" will be saved.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pub_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
 		'secret_key'                          => [
-			'title'       => __( 'Live Secret Key', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Live Secret Key', 'woocommerce-youcan-pay' ),
 			'type'        => 'password',
-			'description' => __( 'Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with "pri_" will be saved.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with "pri_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
 		'webhook'                             => [
-			'title'       => __( 'Webhook Endpoints', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Webhook Endpoints', 'woocommerce-youcan-pay' ),
 			'type'        => 'title',
 			'description' => $this->display_admin_settings_webhook_description(),
 		],
 		'test_webhook_secret'                 => [
-			'title'       => __( 'Test Webhook Secret', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Test Webhook Secret', 'woocommerce-youcan-pay' ),
 			'type'        => 'password',
-			'description' => __( 'Get your webhook signing secret from the webhooks section in your youcanpay account.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Get your webhook signing secret from the webhooks section in your youcanpay account.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
 		'webhook_secret'                      => [
-			'title'       => __( 'Webhook Secret', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Webhook Secret', 'woocommerce-youcan-pay' ),
 			'type'        => 'password',
-			'description' => __( 'Get your webhook signing secret from the webhooks section in your youcanpay account.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Get your webhook signing secret from the webhooks section in your youcanpay account.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
-		'inline_cc_form'                      => [
-			'title'       => __( 'Inline Credit Card Form', 'woocommerce-gateway-youcanpay' ),
+		/*'inline_cc_form'                      => [
+			'title'       => __( 'Inline Credit Card Form', 'woocommerce-youcan-pay' ),
 			'type'        => 'checkbox',
-			'description' => __( 'Choose the style you want to show for your credit card form. When unchecked, the credit card form will display separate credit card number field, expiry date field and cvc field.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Choose the style you want to show for your credit card form. When unchecked, the credit card form will display separate credit card number field, expiry date field and cvc field.', 'woocommerce-youcan-pay' ),
 			'default'     => 'no',
 			'desc_tip'    => true,
-		],
-		'statement_descriptor'                => [
-			'title'       => __( 'Statement Descriptor', 'woocommerce-gateway-youcanpay' ),
+		],*/
+		/*'statement_descriptor'                => [
+			'title'       => __( 'Statement Descriptor', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
-			'description' => __( 'Statement descriptors are limited to 22 characters, cannot use the special characters >, <, ", \, \', *, /, (, ), {, }, and must not consist solely of numbers. This will appear on your customer\'s statement in capital letters.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Statement descriptors are limited to 22 characters, cannot use the special characters >, <, ", \, \', *, /, (, ), {, }, and must not consist solely of numbers. This will appear on your customer\'s statement in capital letters.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
-		],
-		'capture'                             => [
-			'title'       => __( 'Capture', 'woocommerce-gateway-youcanpay' ),
-			'label'       => __( 'Capture charge immediately', 'woocommerce-gateway-youcanpay' ),
+		],*/
+		/*'capture'                             => [
+			'title'       => __( 'Capture', 'woocommerce-youcan-pay' ),
+			'label'       => __( 'Capture charge immediately', 'woocommerce-youcan-pay' ),
 			'type'        => 'checkbox',
-			'description' => __( 'Whether or not to immediately capture the charge. When unchecked, the charge issues an authorization and will need to be captured later. Uncaptured charges expire in 7 days.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Whether or not to immediately capture the charge. When unchecked, the charge issues an authorization and will need to be captured later. Uncaptured charges expire in 7 days.', 'woocommerce-youcan-pay' ),
 			'default'     => 'yes',
 			'desc_tip'    => true,
-		],
-		'payment_request'                     => [
-			'title'       => __( 'Payment Request Buttons', 'woocommerce-gateway-youcanpay' ),
+		],*/
+		/*'payment_request'                     => [
+			'title'       => __( 'Payment Request Buttons', 'woocommerce-youcan-pay' ),
 			'label'       => sprintf(
-				/* translators: 1) br tag 2) YouCan Pay anchor tag 3) Apple anchor tag 4) YouCan Pay dashboard opening anchor tag 5) YouCan Pay dashboard closing anchor tag */
-				__( 'Enable Payment Request Buttons. (Apple Pay/Google Pay) %1$sBy using Apple Pay, you agree to %2$s and %3$s\'s terms of service. (Apple Pay domain verification is performed automatically in live mode; configuration can be found on the %4$sYouCan Pay dashboard%5$s.)', 'woocommerce-gateway-youcanpay' ),
+				// translators: 1) br tag 2) YouCan Pay anchor tag 3) Apple anchor tag 4) YouCan Pay dashboard opening anchor tag 5) YouCan Pay dashboard closing anchor tag
+				__( 'Enable Payment Request Buttons. (Apple Pay/Google Pay) %1$sBy using Apple Pay, you agree to %2$s and %3$s\'s terms of service. (Apple Pay domain verification is performed automatically in live mode; configuration can be found on the %4$sYouCan Pay dashboard%5$s.)', 'woocommerce-youcan-pay' ),
 				'<br />',
 				'<a href="https://youcanpay.com/apple-pay/legal" target="_blank">YouCan Pay</a>',
 				'<a href="https://developer.apple.com/apple-pay/acceptable-use-guidelines-for-websites/" target="_blank">Apple</a>',
@@ -127,34 +127,34 @@ $youcanpay_settings = apply_filters(
 				'</a>'
 			),
 			'type'        => 'checkbox',
-			'description' => __( 'If enabled, users will be able to pay using Apple Pay or Chrome Payment Request if supported by the browser.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'If enabled, users will be able to pay using Apple Pay or Chrome Payment Request if supported by the browser.', 'woocommerce-youcan-pay' ),
 			'default'     => 'yes',
 			'desc_tip'    => true,
-		],
+		],*/
 		'payment_request_button_type'         => [
-			'title'       => __( 'Payment Request Button Type', 'woocommerce-gateway-youcanpay' ),
-			'label'       => __( 'Button Type', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Payment Request Button Type', 'woocommerce-youcan-pay' ),
+			'label'       => __( 'Button Type', 'woocommerce-youcan-pay' ),
 			'type'        => 'select',
-			'description' => __( 'Select the button type you would like to show.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Select the button type you would like to show.', 'woocommerce-youcan-pay' ),
 			'default'     => 'buy',
 			'desc_tip'    => true,
 			'options'     => [
-				'default' => __( 'Default', 'woocommerce-gateway-youcanpay' ),
-				'buy'     => __( 'Buy', 'woocommerce-gateway-youcanpay' ),
-				'donate'  => __( 'Donate', 'woocommerce-gateway-youcanpay' ),
-				'branded' => __( 'Branded', 'woocommerce-gateway-youcanpay' ),
-				'custom'  => __( 'Custom', 'woocommerce-gateway-youcanpay' ),
+				'default' => __( 'Default', 'woocommerce-youcan-pay' ),
+				'buy'     => __( 'Buy', 'woocommerce-youcan-pay' ),
+				'donate'  => __( 'Donate', 'woocommerce-youcan-pay' ),
+				'branded' => __( 'Branded', 'woocommerce-youcan-pay' ),
+				'custom'  => __( 'Custom', 'woocommerce-youcan-pay' ),
 			],
 		],
 		'payment_request_button_theme'        => [
-			'title'       => __( 'Payment Request Button Theme', 'woocommerce-gateway-youcanpay' ),
-			'label'       => __( 'Button Theme', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Payment Request Button Theme', 'woocommerce-youcan-pay' ),
+			'label'       => __( 'Button Theme', 'woocommerce-youcan-pay' ),
 			'type'        => 'select',
-			'description' => __( 'Select the button theme you would like to show.', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'Select the button theme you would like to show.', 'woocommerce-youcan-pay' ),
 			'default'     => 'dark',
 			'desc_tip'    => true,
 			'options'     => [
-				'dark'          => __( 'Dark', 'woocommerce-gateway-youcanpay' ),
+				'dark'          => __( 'Dark', 'woocommerce-youcan-pay' ),
 				'light'         => __( 'Light', 'woocommerce-gateway-youcanpay' ),
 				'light-outline' => __( 'Light-Outline', 'woocommerce-gateway-youcanpay' ),
 			],
@@ -215,14 +215,14 @@ $youcanpay_settings = apply_filters(
 				'large'   => __( 'Large (56px)', 'woocommerce-gateway-youcanpay' ),
 			],
 		],
-		'saved_cards'                         => [
+		/*'saved_cards'                         => [
 			'title'       => __( 'Saved Cards', 'woocommerce-gateway-youcanpay' ),
 			'label'       => __( 'Enable Payment via Saved Cards', 'woocommerce-gateway-youcanpay' ),
 			'type'        => 'checkbox',
 			'description' => __( 'If enabled, users will be able to pay with a saved card during checkout. Card details are saved on YouCan Pay servers, not on your store.', 'woocommerce-gateway-youcanpay' ),
 			'default'     => 'yes',
 			'desc_tip'    => true,
-		],
+		],*/
 		'logging'                             => [
 			'title'       => __( 'Logging', 'woocommerce-gateway-youcanpay' ),
 			'label'       => __( 'Log debug messages', 'woocommerce-gateway-youcanpay' ),
@@ -233,53 +233,6 @@ $youcanpay_settings = apply_filters(
 		],
 	]
 );
-
-if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-	// in the new settings, "checkout" is going to be enabled by default (if it is a new WC YouCan Pay installation).
-	$youcanpay_settings['payment_request_button_locations']['default'][] = 'checkout';
-
-	// no longer needed in the new settings.
-	unset( $youcanpay_settings['payment_request_button_branded_type'] );
-	unset( $youcanpay_settings['payment_request_button_height'] );
-	unset( $youcanpay_settings['payment_request_button_label'] );
-	// injecting some of the new options.
-	$youcanpay_settings['payment_request_button_type']['options']['default'] = __( 'Only icon', 'woocommerce-gateway-youcanpay' );
-	$youcanpay_settings['payment_request_button_type']['options']['book']    = __( 'Book', 'woocommerce-gateway-youcanpay' );
-	// no longer valid options.
-	unset( $youcanpay_settings['payment_request_button_type']['options']['branded'] );
-	unset( $youcanpay_settings['payment_request_button_type']['options']['custom'] );
-} else {
-	unset( $youcanpay_settings['payment_request_button_size'] );
-}
-
-if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() && ! WC_YouCanPay_Helper::is_pre_orders_exists() ) {
-	$upe_settings = [
-		WC_YouCanPay_Feature_Flags::UPE_CHECKOUT_FEATURE_ATTRIBUTE_NAME => [
-			'title'       => __( 'New checkout experience', 'woocommerce-gateway-youcanpay' ),
-			'label'       => sprintf(
-				/* translators: 1) br tag 2) YouCan Pay anchor tag 3) Apple anchor tag 4) YouCan Pay dashboard opening anchor tag 5) YouCan Pay dashboard closing anchor tag */
-				__( 'Try the new payment experience (Early access) %1$sGet early access to a new, smarter payment experience on checkout and let us know what you think by %2$s. We recommend this feature for experienced merchants as the functionality is currently limited. %3$s', 'woocommerce-gateway-youcanpay' ),
-				'<br />',
-				'<a href="https://woocommerce.survey.fm/woocommerce-youcanpay-upe-opt-out-survey" target="_blank">submitting your feedback</a>',
-				'<a href="https://docs.woocommerce.com/document/youcanpay/#new-checkout-experience" target="_blank">Learn more</a>'
-			),
-			'type'        => 'checkbox',
-			'description' => __( 'New checkout experience allows you to manage all payment methods on one screen and display them to customers based on their currency and location.', 'woocommerce-gateway-youcanpay' ),
-			'default'     => 'no',
-			'desc_tip'    => true,
-		],
-	];
-	if ( WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
-		// This adds the payment method section
-		$upe_settings['upe_checkout_experience_accepted_payments'] = [
-			'title'   => __( 'Payments accepted on checkout (Early access)', 'woocommerce-gateway-youcanpay' ),
-			'type'    => 'upe_checkout_experience_accepted_payments',
-			'default' => [ 'card' ],
-		];
-	}
-	// Insert UPE options below the 'logging' setting.
-	$youcanpay_settings = array_merge( $youcanpay_settings, $upe_settings );
-}
 
 return apply_filters(
 	'wc_youcanpay_settings',

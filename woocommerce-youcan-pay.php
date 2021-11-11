@@ -164,13 +164,14 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/abstracts/abstract-wc-youcanpay-payment-gateway.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-state.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-sepa-payment-token.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-apple-pay-registration.php';
-				require_once dirname( __FILE__ ) . '/includes/compat/class-wc-youcanpay-pre-orders-compat.php';
+				/////require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-sepa-payment-token.php';
+				/////require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-apple-pay-registration.php';
+				/////require_once dirname( __FILE__ ) . '/includes/compat/class-wc-youcanpay-pre-orders-compat.php';
+
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-gateway.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-cc.php';
+				///require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-gateway.php';
+				///require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method.php';
+				///require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-cc.php';
 				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-giropay.php';
 				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-ideal.php';
 				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-bancontact.php';
@@ -187,33 +188,28 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
 				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-sepa.php';
 				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-multibanco.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-payment-request.php';
+				/////require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-payment-request.php';
 				require_once dirname( __FILE__ ) . '/includes/compat/class-wc-youcanpay-woo-compat-utils.php';
 				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect.php';
 				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect-api.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-order-handler.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-payment-tokens.php';
+				/////require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-order-handler.php';
+				/////require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-payment-tokens.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-customer.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-intent-controller.php';
 				require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-inbox-notes.php';
 				require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-upe-compatibility-controller.php';
-				require_once dirname( __FILE__ ) . '/includes/migrations/class-allowed-payment-request-button-types-update.php';
+				/////require_once dirname( __FILE__ ) . '/includes/migrations/class-allowed-payment-request-button-types-update.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-account.php';
-				new Allowed_YouCan_Pay_Request_Button_Types_Update();
+				//new Allowed_YouCan_Pay_Request_Button_Types_Update();
 
 				$this->api                           = new WC_YouCanPay_Connect_API();
 				$this->connect                       = new WC_YouCanPay_Connect( $this->api );
-				$this->payment_request_configuration = new WC_YouCanPay_Payment_Request();
+				//$this->payment_request_configuration = new WC_YouCanPay_Payment_Request();
 				$this->account                       = new WC_YouCanPay_Account( $this->connect, 'WC_YouCanPay_API' );
 
 				if ( is_admin() ) {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-admin-notices.php';
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-settings-controller.php';
-
-					if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() && ! WC_YouCanPay_Feature_Flags::is_upe_settings_redesign_enabled() ) {
-						require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-old-settings-upe-toggle-controller.php';
-						new WC_YouCanPay_Old_Settings_UPE_Toggle_Controller();
-					}
 
 					if ( isset( $_GET['area'] ) && 'payment_requests' === $_GET['area'] ) {
 						require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-payment-requests-controller.php';
@@ -379,17 +375,6 @@ function woocommerce_gateway_youcanpay() {
 			public function add_gateways( $methods ) {
 				$methods[] = $this->get_main_youcanpay_gateway();
 
-				if ( ! WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() || ! WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
-					// These payment gateways will be hidden when UPE is enabled:
-					//$methods[] = WC_Gateway_YouCanPay_Sepa::class;
-					//$methods[] = WC_Gateway_YouCanPay_Giropay::class;
-					//$methods[] = WC_Gateway_YouCanPay_Ideal::class;
-					//$methods[] = WC_Gateway_YouCanPay_Bancontact::class;
-					//$methods[] = WC_Gateway_YouCanPay_Eps::class;
-					//$methods[] = WC_Gateway_YouCanPay_Sofort::class;
-					//$methods[] = WC_Gateway_YouCanPay_P24::class;
-				}
-
 				// These payment gateways will always be visible, regardless if UPE is enabled or disabled:
 				$methods[] = WC_Gateway_YouCanPay_Standalone::class;
 				//$methods[] = WC_Gateway_YouCanPay_Multibanco::class;
@@ -405,9 +390,6 @@ function woocommerce_gateway_youcanpay() {
 			 */
 			public function filter_gateway_order_admin( $sections ) {
 				unset( $sections['youcanpay'] );
-				if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-					unset( $sections['youcanpay_upe'] );
-				}
 				//unset( $sections['youcanpay_bancontact'] );
 				//unset( $sections['youcanpay_sofort'] );
 				//unset( $sections['youcanpay_giropay'] );
@@ -419,9 +401,6 @@ function woocommerce_gateway_youcanpay() {
 				//unset( $sections['youcanpay_multibanco'] );
 
 				$sections['youcanpay'] = 'YouCanPay';
-				if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-					$sections['youcanpay_upe'] = 'YouCanPay checkout experience';
-				}
 				//$sections['youcanpay_bancontact'] = __( 'YouCanPay Bancontact', 'woocommerce-gateway-youcanpay' );
 				//$sections['youcanpay_sofort']     = __( 'YouCanPay SOFORT', 'woocommerce-gateway-youcanpay' );
 				//$sections['youcanpay_giropay']    = __( 'YouCanPay Giropay', 'woocommerce-gateway-youcanpay' );
@@ -591,7 +570,7 @@ function woocommerce_gateway_youcanpay() {
 				$oauth_init->register_routes();
 				$oauth_connect->register_routes();
 
-				if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
+				/*if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
 					require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/admin/class-wc-youcanpay-rest-base-controller.php';
 					require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/admin/class-wc-rest-youcanpay-settings-controller.php';
 					require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/admin/class-wc-youcanpay-rest-upe-flag-toggle-controller.php';
@@ -609,7 +588,7 @@ function woocommerce_gateway_youcanpay() {
 
 					$youcanpay_account_controller = new WC_REST_YouCanPay_Account_Controller( $this->account );
 					$youcanpay_account_controller->register_routes();
-				}
+				}*/
 			}
 
 			/**
@@ -619,12 +598,6 @@ function woocommerce_gateway_youcanpay() {
 			 */
 			public function get_main_youcanpay_gateway() {
 				if ( ! is_null( $this->youcanpay_gateway ) ) {
-					return $this->youcanpay_gateway;
-				}
-
-				if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() && WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
-					$this->youcanpay_gateway = new WC_YouCanPay_UPE_Payment_Gateway();
-
 					return $this->youcanpay_gateway;
 				}
 

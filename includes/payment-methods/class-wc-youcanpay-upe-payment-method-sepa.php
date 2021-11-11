@@ -20,13 +20,13 @@ class WC_YouCanPay_UPE_Payment_Method_Sepa extends WC_YouCanPay_UPE_Payment_Meth
 	public function __construct() {
 		parent::__construct();
 		$this->youcanpay_id            = self::YOUCAN_PAY_ID;
-		$this->title                = __( 'Pay with SEPA Direct Debit', 'woocommerce-gateway-youcanpay' );
+		$this->title                = __( 'Pay with SEPA Direct Debit', 'woocommerce-youcan-pay' );
 		$this->is_reusable          = true;
 		$this->supported_currencies = [ 'EUR' ];
-		$this->label                = __( 'SEPA Direct Debit', 'woocommerce-gateway-youcanpay' );
+		$this->label                = __( 'SEPA Direct Debit', 'woocommerce-youcan-pay' );
 		$this->description          = __(
 			'Reach 500 million customers and over 20 million businesses across the European Union.',
-			'woocommerce-gateway-youcanpay'
+			'woocommerce-youcan-pay'
 		);
 	}
 

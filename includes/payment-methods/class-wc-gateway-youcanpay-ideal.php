@@ -83,7 +83,6 @@ class WC_Gateway_YouCanPay_Ideal extends WC_YouCanPay_Payment_Gateway {
 		$this->saved_cards          = ( ! empty( $main_settings['saved_cards'] ) && 'yes' === $main_settings['saved_cards'] ) ? true : false;
 		$this->publishable_key      = ! empty( $main_settings['publishable_key'] ) ? $main_settings['publishable_key'] : '';
 		$this->secret_key           = ! empty( $main_settings['secret_key'] ) ? $main_settings['secret_key'] : '';
-		$this->statement_descriptor = ! empty( $main_settings['statement_descriptor'] ) ? $main_settings['statement_descriptor'] : '';
 
 		if ( $this->testmode ) {
 			$this->publishable_key = ! empty( $main_settings['test_publishable_key'] ) ? $main_settings['test_publishable_key'] : '';
@@ -213,10 +212,6 @@ class WC_Gateway_YouCanPay_Ideal extends WC_YouCanPay_Payment_Gateway {
 		$post_data['type']     = 'ideal';
 		$post_data['owner']    = $this->get_owner_details( $order );
 		$post_data['redirect'] = [ 'return_url' => $return_url ];
-
-		if ( ! empty( $this->statement_descriptor ) ) {
-			$post_data['statement_descriptor'] = WC_YouCanPay_Helper::clean_statement_descriptor( $this->statement_descriptor );
-		}
 
 		WC_YouCanPay_Logger::log( 'Info: Begin creating iDeal source' );
 

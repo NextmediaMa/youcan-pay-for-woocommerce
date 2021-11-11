@@ -70,7 +70,6 @@ class WC_YouCanPay_Payment_Request {
 		$this->testmode        = ( ! empty( $this->youcanpay_settings['testmode'] ) && 'yes' === $this->youcanpay_settings['testmode'] ) ? true : false;
 		$this->publishable_key = ! empty( $this->youcanpay_settings['publishable_key'] ) ? $this->youcanpay_settings['publishable_key'] : '';
 		$this->secret_key      = ! empty( $this->youcanpay_settings['secret_key'] ) ? $this->youcanpay_settings['secret_key'] : '';
-		$this->total_label     = ! empty( $this->youcanpay_settings['statement_descriptor'] ) ? WC_YouCanPay_Helper::clean_statement_descriptor( $this->youcanpay_settings['statement_descriptor'] ) : '';
 
 		if ( $this->testmode ) {
 			$this->publishable_key = ! empty( $this->youcanpay_settings['test_publishable_key'] ) ? $this->youcanpay_settings['test_publishable_key'] : '';
@@ -81,11 +80,6 @@ class WC_YouCanPay_Payment_Request {
 
 		// Checks if YouCanPay Gateway is enabled.
 		if ( empty( $this->youcanpay_settings ) || ( isset( $this->youcanpay_settings['enabled'] ) && 'yes' !== $this->youcanpay_settings['enabled'] ) ) {
-			return;
-		}
-
-		// Checks if Payment Request is enabled.
-		if ( ! isset( $this->youcanpay_settings['payment_request'] ) || 'yes' !== $this->youcanpay_settings['payment_request'] ) {
 			return;
 		}
 
@@ -268,10 +262,6 @@ class WC_YouCanPay_Payment_Request {
 	 * @return  string
 	 */
 	public function get_button_height() {
-		if ( ! WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-			return isset( $this->youcanpay_settings['payment_request_button_height'] ) ? str_replace( 'px', '', $this->youcanpay_settings['payment_request_button_height'] ) : '64';
-		}
-
 		$height = isset( $this->youcanpay_settings['payment_request_button_size'] ) ? $this->youcanpay_settings['payment_request_button_size'] : 'default';
 		if ( 'medium' === $height ) {
 			return '48';
@@ -315,11 +305,6 @@ class WC_YouCanPay_Payment_Request {
 	 * @return  boolean
 	 */
 	public function is_custom_button() {
-		// no longer a valid option
-		if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-			return false;
-		}
-
 		return 'custom' === $this->get_button_type();
 	}
 
@@ -342,11 +327,6 @@ class WC_YouCanPay_Payment_Request {
 	 * @return  string
 	 */
 	public function get_button_label() {
-		// no longer a valid option
-		if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-			return '';
-		}
-
 		return isset( $this->youcanpay_settings['payment_request_button_label'] ) ? $this->youcanpay_settings['payment_request_button_label'] : 'Buy now';
 	}
 
@@ -1657,21 +1637,6 @@ class WC_YouCanPay_Payment_Request {
 		// it would be DRYer to use `array_merge`,
 		// but I thought that this approach might be more straightforward to clean up when we remove the feature flag code.
 		$button_type = $this->get_button_type();
-		if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
-			return [
-				'type'         => $button_type,
-				'theme'        => $this->get_button_theme(),
-				'height'       => $this->get_button_height(),
-				// Default format is en_US.
-				'locale'       => apply_filters( 'wc_youcanpay_payment_request_button_locale', substr( get_locale(), 0, 2 ) ),
-				'branded_type' => 'default' === $button_type ? 'short' : 'long',
-				// these values are no longer applicable - all the JS relying on them can be removed.
-				'css_selector' => '',
-				'label'        => '',
-				'is_custom'    => false,
-				'is_branded'   => false,
-			];
-		}
 
 		return [
 			'type'         => $button_type,

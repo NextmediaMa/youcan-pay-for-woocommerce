@@ -19,9 +19,8 @@ class WC_YouCanPay_Payment_Gateways_Controller {
 		// If UPE is enabled and there are enabled payment methods, we need to load the disable YouCan Pay confirmation modal.
 		$youcanpay_settings              = get_option( 'woocommerce_youcanpay_settings', [] );
 		$enabled_upe_payment_methods  = isset( $youcanpay_settings['upe_checkout_experience_accepted_payments'] ) ? $youcanpay_settings['upe_checkout_experience_accepted_payments'] : [];
-		$upe_payment_requests_enabled = 'yes' === $youcanpay_settings['payment_request'];
 
-		if ( count( $enabled_upe_payment_methods ) > 0 || $upe_payment_requests_enabled ) {
+		if ( count( $enabled_upe_payment_methods ) > 0) {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_payments_scripts' ] );
 			add_action( 'woocommerce_admin_field_payment_gateways', [ $this, 'wc_youcanpay_gateway_container' ] );
 		}

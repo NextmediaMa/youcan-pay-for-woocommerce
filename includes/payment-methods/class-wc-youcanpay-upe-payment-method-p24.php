@@ -10,7 +10,7 @@ class WC_YouCanPay_UPE_Payment_Method_P24 extends WC_YouCanPay_UPE_Payment_Metho
 
 	const YOUCAN_PAY_ID = 'p24';
 
-	const LPM_GATEWAY_CLASS = WC_Gateway_YouCanPay_P24::class;
+	//const LPM_GATEWAY_CLASS = WC_Gateway_YouCanPay_P24::class;
 
 	/**
 	 * Constructor for Przelewy24 payment method

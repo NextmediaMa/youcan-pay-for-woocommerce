@@ -47,10 +47,10 @@ class WC_YouCanPay_Inbox_Notes {
 
 	public static function get_success_title() {
 		if ( time() < self::get_campaign_2020_cutoff() ) {
-			return __( 'Boost sales this holiday season with Apple Pay!', 'woocommerce-gateway-youcanpay' );
+			return __( 'Boost sales this holiday season with Apple Pay!', 'woocommerce-youcan-pay' );
 		}
 
-		return __( 'Boost sales with Apple Pay!', 'woocommerce-gateway-youcanpay' );
+		return __( 'Boost sales with Apple Pay!', 'woocommerce-youcan-pay' );
 	}
 
 	/**
@@ -96,9 +96,8 @@ class WC_YouCanPay_Inbox_Notes {
 		// Make sure Apple Pay is enabled and setup is successful.
 		$youcanpay_settings       = get_option( 'woocommerce_youcanpay_settings', [] );
 		$youcanpay_enabled        = isset( $youcanpay_settings['enabled'] ) && 'yes' === $youcanpay_settings['enabled'];
-		$button_enabled        = isset( $youcanpay_settings['payment_request'] ) && 'yes' === $youcanpay_settings['payment_request'];
 		$verification_complete = isset( $youcanpay_settings['apple_pay_domain_set'] ) && 'yes' === $youcanpay_settings['apple_pay_domain_set'];
-		if ( ! $youcanpay_enabled || ! $button_enabled || ! $verification_complete ) {
+		if ( ! $youcanpay_enabled || ! $verification_complete ) {
 			return false;
 		}
 
@@ -129,13 +128,13 @@ class WC_YouCanPay_Inbox_Notes {
 			$admin_note_class = WC_YouCanPay_Woo_Compat_Utils::get_note_class();
 			$note             = new $admin_note_class();
 			$note->set_title( self::get_success_title() );
-			$note->set_content( __( 'Now that you accept Apple Pay® with YouCan Pay, you can increase conversion rates by letting your customers know that Apple Pay is available. Here’s a marketing guide to help you get started.', 'woocommerce-gateway-youcanpay' ) );
+			$note->set_content( __( 'Now that you accept Apple Pay® with YouCan Pay, you can increase conversion rates by letting your customers know that Apple Pay is available. Here’s a marketing guide to help you get started.', 'woocommerce-youcan-pay' ) );
 			$note->set_type( $admin_note_class::E_WC_ADMIN_NOTE_MARKETING );
 			$note->set_name( self::SUCCESS_NOTE_NAME );
-			$note->set_source( 'woocommerce-gateway-youcanpay' );
+			$note->set_source( 'woocommerce-youcan-pay' );
 			$note->add_action(
 				'marketing-guide',
-				__( 'See marketing guide', 'woocommerce-gateway-youcanpay' ),
+				__( 'See marketing guide', 'woocommerce-youcan-pay' ),
 				'https://developer.apple.com/apple-pay/marketing/'
 			);
 			$note->save();
@@ -149,14 +148,14 @@ class WC_YouCanPay_Inbox_Notes {
 		try {
 			$admin_note_class = WC_YouCanPay_Woo_Compat_Utils::get_note_class();
 			$note             = new $admin_note_class();
-			$note->set_title( __( 'Apple Pay domain verification needed', 'woocommerce-gateway-youcanpay' ) );
-			$note->set_content( __( 'The WooCommerce YouCan Pay Gateway extension attempted to perform domain verification on behalf of your store, but was unable to do so. This must be resolved before Apple Pay can be offered to your customers.', 'woocommerce-gateway-youcanpay' ) );
+			$note->set_title( __( 'Apple Pay domain verification needed', 'woocommerce-youcan-pay' ) );
+			$note->set_content( __( 'The WooCommerce YouCan Pay Gateway extension attempted to perform domain verification on behalf of your store, but was unable to do so. This must be resolved before Apple Pay can be offered to your customers.', 'woocommerce-youcan-pay' ) );
 			$note->set_type( $admin_note_class::E_WC_ADMIN_NOTE_INFORMATIONAL );
 			$note->set_name( self::FAILURE_NOTE_NAME );
-			$note->set_source( 'woocommerce-gateway-youcanpay' );
+			$note->set_source( 'woocommerce-youcan-pay' );
 			$note->add_action(
 				'learn-more',
-				__( 'Learn more', 'woocommerce-gateway-youcanpay' ),
+				__( 'Learn more', 'woocommerce-youcan-pay' ),
 				'https://docs.woocommerce.com/document/youcanpay/#apple-pay'
 			);
 			$note->save();

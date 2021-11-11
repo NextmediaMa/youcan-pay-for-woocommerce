@@ -81,9 +81,9 @@ abstract class WC_YouCanPay_Email_Failed_Authentication extends WC_Email {
 
 		$this->form_fields = [
 			'enabled'    => [
-				'title'   => _x( 'Enable/Disable', 'an email notification', 'woocommerce-gateway-youcanpay' ),
+				'title'   => _x( 'Enable/Disable', 'an email notification', 'woocommerce-youcan-pay' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable this email notification', 'woocommerce-gateway-youcanpay' ),
+				'label'   => __( 'Enable this email notification', 'woocommerce-youcan-pay' ),
 				'default' => 'yes',
 			],
 

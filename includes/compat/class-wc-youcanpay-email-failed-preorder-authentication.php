@@ -23,8 +23,8 @@ class WC_YouCanPay_Email_Failed_Preorder_Authentication extends WC_YouCanPay_Ema
 	 */
 	public function __construct( $email_classes = [] ) {
 		$this->id             = 'failed_preorder_sca_authentication';
-		$this->title          = __( 'Pre-order Payment Action Needed', 'woocommerce-gateway-youcanpay' );
-		$this->description    = __( 'This is an order notification sent to the customer once a pre-order is complete, but additional payment steps are required.', 'woocommerce-gateway-youcanpay' );
+		$this->title          = __( 'Pre-order Payment Action Needed', 'woocommerce-youcan-pay' );
+		$this->description    = __( 'This is an order notification sent to the customer once a pre-order is complete, but additional payment steps are required.', 'woocommerce-youcan-pay' );
 		$this->customer_email = true;
 
 		$this->template_html  = 'emails/failed-preorder-authentication.php';
@@ -81,7 +81,7 @@ class WC_YouCanPay_Email_Failed_Preorder_Authentication extends WC_YouCanPay_Ema
 	 * @return string
 	 */
 	public function get_default_subject() {
-		return __( 'Payment authorization needed for pre-order {order_number}', 'woocommerce-gateway-youcanpay' );
+		return __( 'Payment authorization needed for pre-order {order_number}', 'woocommerce-youcan-pay' );
 	}
 
 	/**
@@ -90,7 +90,7 @@ class WC_YouCanPay_Email_Failed_Preorder_Authentication extends WC_YouCanPay_Ema
 	 * @return string
 	 */
 	public function get_default_heading() {
-		return __( 'Payment authorization needed for pre-order {order_number}', 'woocommerce-gateway-youcanpay' );
+		return __( 'Payment authorization needed for pre-order {order_number}', 'woocommerce-youcan-pay' );
 	}
 
 	/**

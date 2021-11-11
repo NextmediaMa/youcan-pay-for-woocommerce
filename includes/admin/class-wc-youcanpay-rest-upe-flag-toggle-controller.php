@@ -38,7 +38,7 @@ class WC_YouCanPay_REST_UPE_Flag_Toggle_Controller extends WC_YouCanPay_REST_Bas
 				'permission_callback' => [ $this, 'check_permission' ],
 				'args'                => [
 					'is_upe_enabled' => [
-						'description'       => __( 'Determines if the UPE feature flag is enabled.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Determines if the UPE feature flag is enabled.', 'woocommerce-youcan-pay' ),
 						'type'              => 'boolean',
 						'validate_callback' => 'rest_validate_request_arg',
 					],

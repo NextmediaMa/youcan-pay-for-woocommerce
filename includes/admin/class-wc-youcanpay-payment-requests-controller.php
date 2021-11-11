@@ -51,8 +51,8 @@ class WC_YouCanPay_Payment_Requests_Controller {
 	public function admin_options() {
 		global $hide_save_button;
 		$hide_save_button = true;
-		echo '<h2>' . __( 'Customize express checkouts', 'woocommerce-gateway-youcanpay' );
-		wc_back_link( __( 'Return to YouCan Pay', 'woocommerce-gateway-youcanpay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
+		echo '<h2>' . __( 'Customize express checkouts', 'woocommerce-youcan-pay' );
+		wc_back_link( __( 'Return to YouCan Pay', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
 		echo '</h2>';
 		echo '<div class="wrap"><div id="wc-youcanpay-payment-request-settings-container"></div></div>';
 	}

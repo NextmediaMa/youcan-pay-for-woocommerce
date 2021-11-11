@@ -348,7 +348,7 @@ class WC_YouCanPay_Payment_Tokens {
 	public function get_account_saved_payment_methods_list_item_sepa( $item, $payment_token ) {
 		if ( 'sepa' === strtolower( $payment_token->get_type() ) ) {
 			$item['method']['last4'] = $payment_token->get_last4();
-			$item['method']['brand'] = esc_html__( 'SEPA IBAN', 'woocommerce-gateway-youcanpay' );
+			$item['method']['brand'] = esc_html__( 'SEPA IBAN', 'woocommerce-youcan-pay' );
 		}
 
 		return $item;

@@ -61,9 +61,9 @@ class WC_Gateway_YouCanPay_P24 extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = 'youcanpay_p24';
-		$this->method_title = __( 'YouCanPay P24', 'woocommerce-gateway-youcanpay' );
+		$this->method_title = __( 'YouCanPay P24', 'woocommerce-youcan-pay' );
 		/* translators: link */
-		$this->method_description = sprintf( __( 'All other general YouCanPay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-gateway-youcanpay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
+		$this->method_description = sprintf( __( 'All other general YouCanPay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
 		$this->supports           = [
 			'products',
 			'refunds',
@@ -83,7 +83,6 @@ class WC_Gateway_YouCanPay_P24 extends WC_YouCanPay_Payment_Gateway {
 		$this->saved_cards          = ( ! empty( $main_settings['saved_cards'] ) && 'yes' === $main_settings['saved_cards'] ) ? true : false;
 		$this->publishable_key      = ! empty( $main_settings['publishable_key'] ) ? $main_settings['publishable_key'] : '';
 		$this->secret_key           = ! empty( $main_settings['secret_key'] ) ? $main_settings['secret_key'] : '';
-		$this->statement_descriptor = ! empty( $main_settings['statement_descriptor'] ) ? $main_settings['statement_descriptor'] : '';
 
 		if ( $this->testmode ) {
 			$this->publishable_key = ! empty( $main_settings['test_publishable_key'] ) ? $main_settings['test_publishable_key'] : '';
@@ -179,7 +178,7 @@ class WC_Gateway_YouCanPay_P24 extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( is_add_payment_method_page() ) {
-			$pay_button_text = __( 'Add Payment', 'woocommerce-gateway-youcanpay' );
+			$pay_button_text = __( 'Add Payment', 'woocommerce-youcan-pay' );
 			$total           = '';
 		} else {
 			$pay_button_text = '';

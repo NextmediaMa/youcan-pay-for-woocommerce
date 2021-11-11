@@ -50,7 +50,7 @@ class WC_YouCanPay_Pre_Orders_Compat extends WC_YouCanPay_Payment_Gateway {
 
 			// We need a source on file to continue.
 			if ( empty( $prepared_source->customer ) || empty( $prepared_source->source ) ) {
-				throw new WC_YouCanPay_Exception( __( 'Unable to store payment details. Please try again.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( __( 'Unable to store payment details. Please try again.', 'woocommerce-youcan-pay' ) );
 			}
 
 			// Setup the response early to allow later modifications.
@@ -114,7 +114,7 @@ class WC_YouCanPay_Pre_Orders_Compat extends WC_YouCanPay_Payment_Gateway {
 
 				$order->set_transaction_id( $id );
 				/* translators: %s is the charge Id */
-				$order->update_status( 'failed', sprintf( __( 'YouCan Pay charge awaiting authentication by user: %s.', 'woocommerce-gateway-youcanpay' ), $id ) );
+				$order->update_status( 'failed', sprintf( __( 'YouCan Pay charge awaiting authentication by user: %s.', 'woocommerce-youcan-pay' ), $id ) );
 				if ( is_callable( [ $order, 'save' ] ) ) {
 					$order->save();
 				}
@@ -131,7 +131,7 @@ class WC_YouCanPay_Pre_Orders_Compat extends WC_YouCanPay_Payment_Gateway {
 		} catch ( Exception $e ) {
 			$error_message = is_callable( [ $e, 'getLocalizedMessage' ] ) ? $e->getLocalizedMessage() : $e->getMessage();
 			/* translators: error message */
-			$order_note = sprintf( __( 'YouCan Pay Transaction Failed (%s)', 'woocommerce-gateway-youcanpay' ), $error_message );
+			$order_note = sprintf( __( 'YouCan Pay Transaction Failed (%s)', 'woocommerce-youcan-pay' ), $error_message );
 
 			// Mark order as failed if not already set,
 			// otherwise, make sure we add the order note so we can detect when someone fails to check out multiple times

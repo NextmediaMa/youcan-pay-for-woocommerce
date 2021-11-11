@@ -16,14 +16,14 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 	const ID = 'youcanpay';
 
 	const UPE_AVAILABLE_METHODS = [
-		WC_YouCanPay_UPE_Payment_Method_CC::class,
-		WC_YouCanPay_UPE_Payment_Method_Giropay::class,
-		WC_YouCanPay_UPE_Payment_Method_Eps::class,
-		WC_YouCanPay_UPE_Payment_Method_Bancontact::class,
-		WC_YouCanPay_UPE_Payment_Method_Ideal::class,
-		WC_YouCanPay_UPE_Payment_Method_Sepa::class,
-		WC_YouCanPay_UPE_Payment_Method_P24::class,
-		WC_YouCanPay_UPE_Payment_Method_Sofort::class,
+		//WC_YouCanPay_UPE_Payment_Method_CC::class,
+		//WC_YouCanPay_UPE_Payment_Method_Giropay::class,
+		//WC_YouCanPay_UPE_Payment_Method_Eps::class,
+		//WC_YouCanPay_UPE_Payment_Method_Bancontact::class,
+		//WC_YouCanPay_UPE_Payment_Method_Ideal::class,
+		//WC_YouCanPay_UPE_Payment_Method_Sepa::class,
+		//WC_YouCanPay_UPE_Payment_Method_P24::class,
+		//WC_YouCanPay_UPE_Payment_Method_Sofort::class,
 	];
 
 	const UPE_APPEARANCE_TRANSIENT = 'wc_youcanpay_upe_appearance';
@@ -55,13 +55,6 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 	 * @var bool
 	 */
 	public $statement_descriptor;
-
-	/**
-	 * Are saved cards enabled
-	 *
-	 * @var bool
-	 */
-	public $saved_cards;
 
 	/**
 	 * API access secret key
@@ -119,24 +112,13 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 		$this->title                = $this->get_option( 'title_upe' );
 		$this->description          = '';
 		$this->enabled              = $this->get_option( 'enabled' );
-		$this->saved_cards          = 'yes' === $this->get_option( 'saved_cards' );
 		$this->testmode             = ! empty( $main_settings['testmode'] ) && 'yes' === $main_settings['testmode'];
 		$this->publishable_key      = ! empty( $main_settings['publishable_key'] ) ? $main_settings['publishable_key'] : '';
 		$this->secret_key           = ! empty( $main_settings['secret_key'] ) ? $main_settings['secret_key'] : '';
-		$this->statement_descriptor = ! empty( $main_settings['statement_descriptor'] ) ? $main_settings['statement_descriptor'] : '';
 
 		$enabled_at_checkout_payment_methods = $this->get_upe_enabled_at_checkout_payment_method_ids();
 		if ( count( $enabled_at_checkout_payment_methods ) === 1 ) {
 			$this->title = $this->payment_methods[ $enabled_at_checkout_payment_methods[0] ]->get_title();
-		}
-
-		// When feature flags are enabled, title shows the count of enabled payment methods in settings page only.
-		if ( WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() && WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() && isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] ) {
-			$enabled_payment_methods_count = count( $this->get_upe_enabled_payment_method_ids() );
-			$this->title                   = $enabled_payment_methods_count ?
-				/* translators: $1. Count of enabled payment methods. */
-				sprintf( _n( '%d payment method', '%d payment methods', $enabled_payment_methods_count, 'woocommerce-gateway-youcanpay' ), $enabled_payment_methods_count )
-				: $this->method_title;
 		}
 
 		if ( $this->testmode ) {
@@ -164,7 +146,7 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = require WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/admin/youcanpay-settings.php';
-		unset( $this->form_fields['inline_cc_form'] );
+		//unset( $this->form_fields['inline_cc_form'] );
 		unset( $this->form_fields['title'] );
 		unset( $this->form_fields['description'] );
 	}
@@ -282,7 +264,6 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 		$youcanpay_params['saveUPEAppearanceNonce']   = wp_create_nonce( 'wc_youcanpay_save_upe_appearance_nonce' );
 		$youcanpay_params['paymentMethodsConfig']     = $this->get_enabled_payment_method_config();
 		$youcanpay_params['genericErrorMessage']      = __( 'There was a problem processing the payment. Please check your email inbox and refresh the page to try again.', 'woocommerce-gateway-youcanpay' );
-		$youcanpay_params['accountDescriptor']        = $this->statement_descriptor;
 		$youcanpay_params['addPaymentReturnURL']      = wc_get_account_endpoint_url( 'payment-methods' );
 		$youcanpay_params['sepaElementsOptions']      = $sepa_elements_options;
 		$youcanpay_params['enabledBillingFields']     = $enabled_billing_fields;
@@ -444,7 +425,7 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 			</fieldset>
 			<?php
 			$methods_enabled_for_saved_payments = array_filter( $this->get_upe_enabled_payment_method_ids(), [ $this, 'is_enabled_for_saved_payments' ] );
-			if ( $this->is_saved_cards_enabled() && ! empty( $methods_enabled_for_saved_payments ) ) {
+			if (! empty( $methods_enabled_for_saved_payments ) ) {
 				$force_save_payment = ( $display_tokenization && ! apply_filters( 'wc_youcanpay_display_save_payment_method_checkbox', $display_tokenization ) ) || is_add_payment_method_page();
 				if ( is_user_logged_in() ) {
 					$this->save_payment_method_checkbox( $force_save_payment );
@@ -1005,15 +986,6 @@ class WC_YouCanPay_UPE_Payment_Gateway extends WC_Gateway_YouCanPay {
 	// TODO: Actually validate.
 	public function validate_upe_checkout_experience_accepted_payments_field( $key, $value ) {
 		return $value;
-	}
-
-	/**
-	 * Checks if the setting to allow the user to save cards is enabled.
-	 *
-	 * @return bool Whether the setting to allow saved cards is enabled or not.
-	 */
-	public function is_saved_cards_enabled() {
-		return $this->saved_cards;
 	}
 
 	/**
