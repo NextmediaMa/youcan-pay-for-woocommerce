@@ -131,14 +131,14 @@ class WC_YouCanPay_Admin_Notices {
 				$url = 'https://youcanpay.com/docs/payments/3d-secure#three-ds-radar';
 
 				/* translators: 1) A URL that explains YouCan Pay Radar. */
-				$message = __( 'WooCommerce YouCan Pay - We see that you had the "Require 3D secure when applicable" setting turned on. This setting is not available here anymore, because it is now replaced by YouCan Pay Radar. You can learn more about it <a href="%s" target="_blank">here</a>.', 'woocommerce-gateway-youcanpay' );
+				$message = __( 'WooCommerce YouCan Pay - We see that you had the "Require 3D secure when applicable" setting turned on. This setting is not available here anymore, because it is now replaced by YouCan Pay Radar. You can learn more about it <a href="%s" target="_blank">here</a>.', 'woocommerce-youcan-pay' );
 
 				$this->add_admin_notice( '3ds', 'notice notice-warning', sprintf( $message, $url ), true );
 			}
 
 			if ( empty( $show_style_notice ) ) {
 				/* translators: 1) int version 2) int version */
-				$message = __( 'WooCommerce YouCan Pay - We recently made changes to YouCan Pay that may impact the appearance of your checkout. If your checkout has changed unexpectedly, please follow these <a href="https://docs.woocommerce.com/document/youcanpay/#styling" target="_blank">instructions</a> to fix.', 'woocommerce-gateway-youcanpay' );
+				$message = __( 'WooCommerce YouCan Pay - We recently made changes to YouCan Pay that may impact the appearance of your checkout. If your checkout has changed unexpectedly, please follow these <a href="https://docs.woocommerce.com/document/youcanpay/#styling" target="_blank">instructions</a> to fix.', 'woocommerce-youcan-pay' );
 
 				$this->add_admin_notice( 'style', 'notice notice-warning', $message, true );
 
@@ -149,7 +149,7 @@ class WC_YouCanPay_Admin_Notices {
 			if ( empty( $show_phpver_notice ) ) {
 				if ( version_compare( phpversion(), WC_YOUCAN_PAY_MIN_PHP_VER, '<' ) ) {
 					/* translators: 1) int version 2) int version */
-					$message = __( 'WooCommerce YouCan Pay - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'woocommerce-gateway-youcanpay' );
+					$message = __( 'WooCommerce YouCan Pay - The minimum PHP version required for this plugin is %1$s. You are running %2$s.', 'woocommerce-youcan-pay' );
 
 					$this->add_admin_notice( 'phpver', 'error', sprintf( $message, WC_YOUCAN_PAY_MIN_PHP_VER, phpversion() ), true );
 
@@ -160,14 +160,14 @@ class WC_YouCanPay_Admin_Notices {
 			if ( empty( $show_wcver_notice ) ) {
 				if ( WC_YouCanPay_Helper::is_wc_lt( WC_YOUCAN_PAY_FUTURE_MIN_WC_VER ) ) {
 					/* translators: 1) int version 2) int version */
-					$message = __( 'WooCommerce YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All furture versions of the plugin will require WooCommerce %2$s or greater.', 'woocommerce-gateway-youcanpay' );
+					$message = __( 'WooCommerce YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All furture versions of the plugin will require WooCommerce %2$s or greater.', 'woocommerce-youcan-pay' );
 					$this->add_admin_notice( 'wcver', 'notice notice-warning', sprintf( $message, WC_VERSION, WC_YOUCAN_PAY_FUTURE_MIN_WC_VER ), true );
 				}
 			}
 
 			if ( empty( $show_curl_notice ) ) {
 				if ( ! function_exists( 'curl_init' ) ) {
-					$this->add_admin_notice( 'curl', 'notice notice-warning', __( 'WooCommerce YouCan Pay - cURL is not installed.', 'woocommerce-gateway-youcanpay' ), true );
+					$this->add_admin_notice( 'curl', 'notice notice-warning', __( 'WooCommerce YouCan Pay - cURL is not installed.', 'woocommerce-youcan-pay' ), true );
 				}
 			}
 			// @codeCoverageIgnoreEnd
@@ -180,7 +180,7 @@ class WC_YouCanPay_Admin_Notices {
 				if ( empty( $secret ) && $should_show_notice_on_page ) {
 					$setting_link = $this->get_setting_link();
 					/* translators: 1) link */
-					$this->add_admin_notice( 'keys', 'notice notice-warning', sprintf( __( 'YouCan Pay is almost ready. To get started, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-gateway-youcanpay' ), $setting_link ), true );
+					$this->add_admin_notice( 'keys', 'notice notice-warning', sprintf( __( 'YouCan Pay is almost ready. To get started, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 				}
 
 				// Check if keys are entered properly per live/test mode.
@@ -190,7 +190,7 @@ class WC_YouCanPay_Admin_Notices {
 						|| ! empty( $test_secret_key ) && ! preg_match( '/^pri_sandbox_/', $test_secret_key ) ) {
 						$setting_link = $this->get_setting_link();
 						/* translators: 1) link */
-						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in test mode however your test keys may not be valid. Test keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-gateway-youcanpay' ), $setting_link ), true );
+						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in test mode however your test keys may not be valid. Test keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 					}
 				} else {
 					if (
@@ -198,7 +198,7 @@ class WC_YouCanPay_Admin_Notices {
 						|| ! empty( $live_secret_key ) && ! preg_match( '/^pri_/', $live_secret_key ) ) {
 						$setting_link = $this->get_setting_link();
 						/* translators: 1) link */
-						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in live mode however your live keys may not be valid. Live keys start with pub and pri. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-gateway-youcanpay' ), $setting_link ), true );
+						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in live mode however your live keys may not be valid. Live keys start with pub and pri. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 					}
 				}
 			}
@@ -207,18 +207,18 @@ class WC_YouCanPay_Admin_Notices {
 				// Show message if enabled and FORCE SSL is disabled and WordpressHTTPS plugin is not detected.
 				if ( ! wc_checkout_is_https() ) {
 					/* translators: 1) link */
-					$this->add_admin_notice( 'ssl', 'notice notice-warning', sprintf( __( 'YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href="%1$s" target="_blank">SSL certificate</a>', 'woocommerce-gateway-youcanpay' ), 'https://en.wikipedia.org/wiki/Transport_Layer_Security' ), true );
+					$this->add_admin_notice( 'ssl', 'notice notice-warning', sprintf( __( 'YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href="%1$s" target="_blank">SSL certificate</a>', 'woocommerce-youcan-pay' ), 'https://en.wikipedia.org/wiki/Transport_Layer_Security' ), true );
 				}
 			}
 
 			if ( empty( $show_sca_notice ) ) {
 				/* translators: %1 is the URL for the link */
-				$this->add_admin_notice( 'sca', 'notice notice-success', sprintf( __( 'YouCan Pay is now ready for Strong Customer Authentication (SCA) and 3D Secure 2! <a href="%1$s" target="_blank">Read about SCA</a>', 'woocommerce-gateway-youcanpay' ), 'https://woocommerce.com/posts/introducing-strong-customer-authentication-sca/' ), true );
+				$this->add_admin_notice( 'sca', 'notice notice-success', sprintf( __( 'YouCan Pay is now ready for Strong Customer Authentication (SCA) and 3D Secure 2! <a href="%1$s" target="_blank">Read about SCA</a>', 'woocommerce-youcan-pay' ), 'https://woocommerce.com/posts/introducing-strong-customer-authentication-sca/' ), true );
 			}
 
 			if ( 'yes' === $changed_keys_notice ) {
 				// translators: %s is a the URL for the link.
-				$this->add_admin_notice( 'changed_keys', 'notice notice-warning', sprintf( __( 'The public and/or secret keys for the YouCan Pay gateway have been changed. This might cause errors for existing customers and saved payment methods. <a href="%s" target="_blank">Click here to learn more</a>.', 'woocommerce-gateway-youcanpay' ), 'https://docs.woocommerce.com/document/youcanpay-fixing-customer-errors/' ), true );
+				$this->add_admin_notice( 'changed_keys', 'notice notice-warning', sprintf( __( 'The public and/or secret keys for the YouCan Pay gateway have been changed. This might cause errors for existing customers and saved payment methods. <a href="%s" target="_blank">Click here to learn more</a>.', 'woocommerce-youcan-pay' ), 'https://docs.woocommerce.com/document/youcanpay-fixing-customer-errors/' ), true );
 			}
 		}
 	}
@@ -241,7 +241,7 @@ class WC_YouCanPay_Admin_Notices {
 
 			if ( ! in_array( get_woocommerce_currency(), $gateway->get_supported_currency(), true ) ) {
 				/* translators: %1$s Payment method, %2$s List of supported currencies */
-				$this->add_admin_notice( $method, 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-gateway-youcanpay' ), $method, implode( ', ', $gateway->get_supported_currency() ) ), true );
+				$this->add_admin_notice( $method, 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-youcan-pay' ), $method, implode( ', ', $gateway->get_supported_currency() ) ), true );
 			}
 		}
 
@@ -261,7 +261,7 @@ class WC_YouCanPay_Admin_Notices {
 			}
 			if ( ! in_array( get_woocommerce_currency(), $upe_method->get_supported_currencies(), true ) ) {
 				/* translators: %1$s Payment method, %2$s List of supported currencies */
-				$this->add_admin_notice( $method . '_upe', 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-gateway-youcanpay' ), $upe_method->get_label(), implode( ', ', $upe_method->get_supported_currencies() ) ), true );
+				$this->add_admin_notice( $method . '_upe', 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-youcan-pay' ), $upe_method->get_label(), implode( ', ', $upe_method->get_supported_currencies() ) ), true );
 			}
 		}
 	}
@@ -275,7 +275,7 @@ class WC_YouCanPay_Admin_Notices {
 	public function hide_notices() {
 		if ( isset( $_GET['wc-youcanpay-hide-notice'] ) && isset( $_GET['_wc_youcanpay_notice_nonce'] ) ) {
 			if ( ! wp_verify_nonce( wc_clean( wp_unslash( $_GET['_wc_youcanpay_notice_nonce'] ) ), 'wc_youcanpay_hide_notices_nonce' ) ) {
-				wp_die( __( 'Action failed. Please refresh the page and retry.', 'woocommerce-gateway-youcanpay' ) );
+				wp_die( __( 'Action failed. Please refresh the page and retry.', 'woocommerce-youcan-pay' ) );
 			}
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {

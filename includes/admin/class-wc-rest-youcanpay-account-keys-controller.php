@@ -60,32 +60,32 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 				'permission_callback' => [ $this, 'check_permission' ],
 				'args'                => [
 					'publishable_key'      => [
-						'description'       => __( 'Your YouCan Pay API Publishable key, obtained from your YouCan Pay dashboard.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Your YouCan Pay API Publishable key, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_publishable_key' ],
 					],
 					'secret_key'           => [
-						'description'       => __( 'Your YouCan Pay API Secret, obtained from your YouCan Pay dashboard.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Your YouCan Pay API Secret, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_secret_key' ],
 					],
 					'webhook_secret'       => [
-						'description'       => __( 'Your YouCan Pay webhook endpoint URL, obtained from your YouCan Pay dashboard.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Your YouCan Pay webhook endpoint URL, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
 					'test_publishable_key' => [
-						'description'       => __( 'Your YouCan Pay testing API Publishable key, obtained from your YouCan Pay dashboard.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Your YouCan Pay testing API Publishable key, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_test_publishable_key' ],
 					],
 					'test_secret_key'      => [
-						'description'       => __( 'Your YouCan Pay testing API Secret, obtained from your YouCan Pay dashboard.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Your YouCan Pay testing API Secret, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_test_secret_key' ],
 					],
 					'test_webhook_secret'  => [
-						'description'       => __( 'Your YouCan Pay testing webhook endpoint URL, obtained from your YouCan Pay dashboard.', 'woocommerce-gateway-youcanpay' ),
+						'description'       => __( 'Your YouCan Pay testing webhook endpoint URL, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => 'rest_validate_request_arg',
 					],
@@ -136,7 +136,7 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 			$key,
 			[
 				'regex'         => '/^pub_/',
-				'error_message' => __( 'The "Live Publishable Key" should start with "pub", enter the correct key.', 'woocommerce-gateway-youcanpay' ),
+				'error_message' => __( 'The "Live Publishable Key" should start with "pub", enter the correct key.', 'woocommerce-youcan-pay' ),
 			]
 		);
 	}
@@ -148,7 +148,7 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 			$key,
 			[
 				'regex'         => '/^pri_/',
-				'error_message' => __( 'The "Live Secret Key" should start with "pri", enter the correct key.', 'woocommerce-gateway-youcanpay' ),
+				'error_message' => __( 'The "Live Secret Key" should start with "pri", enter the correct key.', 'woocommerce-youcan-pay' ),
 			]
 		);
 	}
@@ -160,7 +160,7 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 			$key,
 			[
 				'regex'         => '/^pub_sandbox_/',
-				'error_message' => __( 'The "Test Publishable Key" should start with "pub_sandbox", enter the correct key.', 'woocommerce-gateway-youcanpay' ),
+				'error_message' => __( 'The "Test Publishable Key" should start with "pub_sandbox", enter the correct key.', 'woocommerce-youcan-pay' ),
 			]
 		);
 	}
@@ -172,7 +172,7 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 			$key,
 			[
 				'regex'         => '/^pri_sandbox_/',
-				'error_message' => __( 'The "Test Secret Key" should start with "pri_sandbox", enter the correct key.', 'woocommerce-gateway-youcanpay' ),
+				'error_message' => __( 'The "Test Secret Key" should start with "pri_sandbox", enter the correct key.', 'woocommerce-youcan-pay' ),
 			]
 		);
 	}

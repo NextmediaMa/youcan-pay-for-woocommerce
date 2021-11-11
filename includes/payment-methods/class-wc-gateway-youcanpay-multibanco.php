@@ -58,9 +58,9 @@ class WC_Gateway_YouCanPay_Multibanco extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = 'youcanpay_multibanco';
-		$this->method_title = __( 'YouCanPay Multibanco', 'woocommerce-gateway-youcanpay' );
+		$this->method_title = __( 'YouCan Pay Multibanco', 'woocommerce-youcan-pay' );
 		/* translators: link */
-		$this->method_description = sprintf( __( 'All other general YouCanPay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-gateway-youcanpay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
+		$this->method_description = sprintf( __( 'All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
 		$this->supports           = [
 			'products',
 			'refunds',
@@ -178,7 +178,7 @@ class WC_Gateway_YouCanPay_Multibanco extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( is_add_payment_method_page() ) {
-			$pay_button_text = __( 'Add Payment', 'woocommerce-gateway-youcanpay' );
+			$pay_button_text = __( 'Add Payment', 'woocommerce-youcan-pay' );
 			$total           = '';
 		} else {
 			$pay_button_text = '';
@@ -237,30 +237,30 @@ class WC_Gateway_YouCanPay_Multibanco extends WC_YouCanPay_Payment_Gateway {
 		$data = get_post_meta( $order_id, '_youcanpay_multibanco', true );
 
 		if ( $plain_text ) {
-			esc_html_e( 'MULTIBANCO INFORMAÇÕES DE ENCOMENDA:', 'woocommerce-gateway-youcanpay' ) . "\n\n";
+			esc_html_e( 'MULTIBANCO INFORMAÇÕES DE ENCOMENDA:', 'woocommerce-youcan-pay' ) . "\n\n";
 			echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
-			esc_html_e( 'Montante:', 'woocommerce-gateway-youcanpay' ) . "\n\n";
+			esc_html_e( 'Montante:', 'woocommerce-youcan-pay' ) . "\n\n";
 			echo $data['amount'] . "\n\n";
 			echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
-			esc_html_e( 'Entidade:', 'woocommerce-gateway-youcanpay' ) . "\n\n";
+			esc_html_e( 'Entidade:', 'woocommerce-youcan-pay' ) . "\n\n";
 			echo $data['entity'] . "\n\n";
 			echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
-			esc_html_e( 'Referencia:', 'woocommerce-gateway-youcanpay' ) . "\n\n";
+			esc_html_e( 'Referencia:', 'woocommerce-youcan-pay' ) . "\n\n";
 			echo $data['reference'] . "\n\n";
 		} else {
 			?>
-			<h3><?php esc_html_e( 'MULTIBANCO INFORMAÇÕES DE ENCOMENDA:', 'woocommerce-gateway-youcanpay' ); ?></h3>
+			<h3><?php esc_html_e( 'MULTIBANCO INFORMAÇÕES DE ENCOMENDA:', 'woocommerce-youcan-pay' ); ?></h3>
 			<ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
 			<li class="woocommerce-order-overview__order order">
-				<?php esc_html_e( 'Montante:', 'woocommerce-gateway-youcanpay' ); ?>
+				<?php esc_html_e( 'Montante:', 'woocommerce-youcan-pay' ); ?>
 				<strong><?php echo $data['amount']; ?></strong>
 			</li>
 			<li class="woocommerce-order-overview__order order">
-				<?php esc_html_e( 'Entidade:', 'woocommerce-gateway-youcanpay' ); ?>
+				<?php esc_html_e( 'Entidade:', 'woocommerce-youcan-pay' ); ?>
 				<strong><?php echo $data['entity']; ?></strong>
 			</li>
 			<li class="woocommerce-order-overview__order order">
-				<?php esc_html_e( 'Referencia:', 'woocommerce-gateway-youcanpay' ); ?>
+				<?php esc_html_e( 'Referencia:', 'woocommerce-youcan-pay' ); ?>
 				<strong><?php echo $data['reference']; ?></strong>
 			</li>
 			</ul>
@@ -356,7 +356,7 @@ class WC_Gateway_YouCanPay_Multibanco extends WC_YouCanPay_Payment_Gateway {
 			$this->save_instructions( $order, $response );
 
 			// Mark as on-hold (we're awaiting the payment)
-			$order->update_status( 'on-hold', __( 'Awaiting Multibanco payment', 'woocommerce-gateway-youcanpay' ) );
+			$order->update_status( 'on-hold', __( 'Awaiting Multibanco payment', 'woocommerce-youcan-pay' ) );
 
 			// Reduce stock levels
 			wc_reduce_stock_levels( $order_id );

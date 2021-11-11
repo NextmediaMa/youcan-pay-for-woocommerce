@@ -182,7 +182,7 @@ class WC_YouCanPay_Order_Handler extends WC_YouCanPay_Payment_Gateway {
 			do_action( 'wc_gateway_youcanpay_process_redirect_payment_error', $e, $order );
 
 			/* translators: error message */
-			$order->update_status( 'failed', sprintf( __( 'YouCanPay payment failed: %s', 'woocommerce-gateway-youcanpay' ), $e->getLocalizedMessage() ) );
+			$order->update_status( 'failed', sprintf( __( 'YouCan Pay payment failed: %s', 'woocommerce-gateway-youcanpay' ), $e->getLocalizedMessage() ) );
 
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
 			wp_safe_redirect( wc_get_checkout_url() );

@@ -18,13 +18,13 @@ class WC_YouCanPay_UPE_Payment_Method_Giropay extends WC_YouCanPay_UPE_Payment_M
 	public function __construct() {
 		parent::__construct();
 		$this->youcanpay_id            = self::YOUCAN_PAY_ID;
-		$this->title                = __( 'Pay with giropay', 'woocommerce-gateway-youcanpay' );
+		$this->title                = __( 'Pay with giropay', 'woocommerce-youcan-pay' );
 		$this->is_reusable          = false;
 		$this->supported_currencies = [ 'EUR' ];
-		$this->label                = __( 'giropay', 'woocommerce-gateway-youcanpay' );
+		$this->label                = __( 'giropay', 'woocommerce-youcan-pay' );
 		$this->description          = __(
 			'Expand your business with giropay — Germany’s second most popular payment system.',
-			'woocommerce-gateway-youcanpay'
+			'woocommerce-youcan-pay'
 		);
 	}
 }

@@ -218,7 +218,7 @@ class WC_YouCanPay_API {
 
 			throw new WC_YouCanPay_Exception( print_r( $response, true ),
 				__( 'There was a problem connecting to the YouCan Pay API endpoint.',
-					'woocommerce-gateway-youcanpay' ) );
+					'woocommerce-youcan-pay' ) );
 		}
 
 		if ( $with_headers ) {
@@ -275,7 +275,7 @@ class WC_YouCanPay_API {
 
 			throw new WC_YouCanPay_Exception( print_r( $token, true ),
 				__( 'There was a problem connecting to the YouCan Pay API endpoint.',
-					'woocommerce-gateway-youcanpay' ) );
+					'woocommerce-youcan-pay' ) );
 		}
 
 		$response = [
@@ -342,7 +342,7 @@ class WC_YouCanPay_API {
 
 			return new WP_Error( 'youcanpay_error',
 				__( 'There was a problem connecting to the YouCan Pay API endpoint.',
-					'woocommerce-gateway-youcanpay' ) );
+					'woocommerce-youcan-pay' ) );
 		}
 
 		return json_decode( $response['body'] );

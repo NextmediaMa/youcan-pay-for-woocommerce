@@ -45,7 +45,7 @@ class WC_YouCan_Pay_Token_SEPA extends WC_Payment_Token {
 	public function get_display_name( $deprecated = '' ) {
 		$display = sprintf(
 			/* translators: last 4 digits of IBAN account */
-			__( 'SEPA IBAN ending in %s', 'woocommerce-gateway-youcanpay' ),
+			__( 'SEPA IBAN ending in %s', 'woocommerce-youcan-pay' ),
 			$this->get_last4()
 		);
 

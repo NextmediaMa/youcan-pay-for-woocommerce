@@ -76,8 +76,8 @@ class WC_YouCanPay_Onboarding_Controller {
 		// This submenu is hidden from the admin menu
 		add_submenu_page(
 			'admin.php',
-			__( 'YouCan Pay - Onboarding Wizard', 'woocommerce-gateway-youcanpay' ),
-			__( 'Onboarding Wizard', 'woocommerce-gateway-youcanpay' ),
+			__( 'YouCan Pay - Onboarding Wizard', 'woocommerce-youcan-pay' ),
+			__( 'Onboarding Wizard', 'woocommerce-youcan-pay' ),
 			'manage_woocommerce',
 			'wc_youcanpay-onboarding_wizard',
 			[ $this, 'render_onboarding_wizard' ]
@@ -88,7 +88,7 @@ class WC_YouCanPay_Onboarding_Controller {
 			[
 				'id'        => 'wc-youcanpay-onboarding-wizard',
 				'screen_id' => self::SCREEN_ID,
-				'title'     => __( 'Onboarding Wizard', 'woocommerce-gateway-youcanpay' ),
+				'title'     => __( 'Onboarding Wizard', 'woocommerce-youcan-pay' ),
 			]
 		);
 	}

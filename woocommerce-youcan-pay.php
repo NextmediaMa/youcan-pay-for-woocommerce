@@ -10,7 +10,7 @@
  * Tested up to: 5.8
  * WC requires at least: 5.6
  * WC tested up to: 5.8
- * Text Domain: woocommerce-gateway-youcan-pay
+ * Text Domain: woocommerce-youcan-pay
  * Domain Path: /languages
  */
 

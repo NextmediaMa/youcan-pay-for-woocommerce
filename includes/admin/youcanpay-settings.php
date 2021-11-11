@@ -7,24 +7,24 @@ $youcanpay_settings = apply_filters(
 	'wc_youcanpay_settings',
 	[
 		'enabled'                             => [
-			'title'       => __( 'Enable/Disable', 'woocommerce-gateway-youcanpay' ),
-			'label'       => __( 'Enable YouCan Pay', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Enable/Disable', 'woocommerce-youcan-pay' ),
+			'label'       => __( 'Enable YouCan Pay', 'woocommerce-youcan-pay' ),
 			'type'        => 'checkbox',
 			'description' => '',
 			'default'     => 'no',
 		],
 		'title'                               => [
-			'title'       => __( 'Title', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Title', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
-			'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-gateway-youcanpay' ),
-			'default'     => __( 'Credit Card (YouCan Pay)', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce-youcan-pay' ),
+			'default'     => __( 'Credit Card (YouCan Pay)', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
 		'title_upe'                           => [
-			'title'       => __( 'Title', 'woocommerce-gateway-youcanpay' ),
+			'title'       => __( 'Title', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
-			'description' => __( 'This controls the title which the user sees during checkout when multiple payment methods are enabled.', 'woocommerce-gateway-youcanpay' ),
-			'default'     => __( 'Popular payment methods', 'woocommerce-gateway-youcanpay' ),
+			'description' => __( 'This controls the title which the user sees during checkout when multiple payment methods are enabled.', 'woocommerce-youcan-pay' ),
+			'default'     => __( 'Popular payment methods', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
 		'description'                         => [
