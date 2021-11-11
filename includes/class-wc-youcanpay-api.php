@@ -32,6 +32,13 @@ class WC_YouCanPay_API {
 	private static $public_key = '';
 
 	/**
+	 * Test Mode is enabled.
+	 *
+	 * @var string
+	 */
+	private static $is_test_mode = '';
+
+	/**
 	 * Set secret API Key.
 	 *
 	 * @param string $key
@@ -47,6 +54,15 @@ class WC_YouCanPay_API {
 	 */
 	public static function set_public_key( $public_key ) {
 		self::$public_key = $public_key;
+	}
+
+	/**
+	 * Set secret API Key.
+	 *
+	 * @param string $test_mode
+	 */
+	public static function set_test_mode( $test_mode ) {
+		self::$is_test_mode = ( 'yes' === $test_mode );
 	}
 
 	/**
@@ -81,6 +97,23 @@ class WC_YouCanPay_API {
 		}
 
 		return self::$public_key;
+	}
+
+	/**
+	 * Get public key.
+	 *
+	 * @return string
+	 */
+	public static function is_test_mode() {
+		if ( '' === self::$is_test_mode ) {
+			$options = get_option( 'woocommerce_youcanpay_settings' );
+
+			if ( isset( $options['testmode'] ) ) {
+				self::set_test_mode( $options['testmode'] );
+			}
+		}
+
+		return self::$is_test_mode;
 	}
 
 	/**
@@ -213,7 +246,9 @@ class WC_YouCanPay_API {
 	public static function requestV2( $order, $post_data, $api = 'charges' ) {
 		WC_YouCanPay_Logger::log( "{$api}" );
 
-		\YouCan\Pay\YouCanPay::setIsSandboxMode( true );
+		if (self::is_test_mode()) {
+			\YouCan\Pay\YouCanPay::setIsSandboxMode( true );
+		}
 		$py = \YouCan\Pay\YouCanPay::instance()->useKeys(
 			self::get_secret_key(),
 			self::get_public_key()

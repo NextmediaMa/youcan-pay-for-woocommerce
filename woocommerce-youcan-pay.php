@@ -171,22 +171,22 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-gateway.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-cc.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-giropay.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-ideal.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-bancontact.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-eps.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-sepa.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-p24.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-sofort.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-bancontact.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-sofort.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-giropay.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-eps.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-ideal.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-p24.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-giropay.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-ideal.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-bancontact.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-eps.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-sepa.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-p24.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-upe-payment-method-sofort.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-bancontact.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-sofort.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-giropay.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-eps.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-ideal.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-p24.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-sepa.php';
-				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-multibanco.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-sepa.php';
+				//require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-multibanco.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-youcanpay-payment-request.php';
 				require_once dirname( __FILE__ ) . '/includes/compat/class-wc-youcanpay-woo-compat-utils.php';
 				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect.php';
@@ -381,18 +381,18 @@ function woocommerce_gateway_youcanpay() {
 
 				if ( ! WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() || ! WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
 					// These payment gateways will be hidden when UPE is enabled:
-					$methods[] = WC_Gateway_YouCanPay_Sepa::class;
-					$methods[] = WC_Gateway_YouCanPay_Giropay::class;
-					$methods[] = WC_Gateway_YouCanPay_Ideal::class;
-					$methods[] = WC_Gateway_YouCanPay_Bancontact::class;
-					$methods[] = WC_Gateway_YouCanPay_Eps::class;
-					$methods[] = WC_Gateway_YouCanPay_Sofort::class;
-					$methods[] = WC_Gateway_YouCanPay_P24::class;
+					//$methods[] = WC_Gateway_YouCanPay_Sepa::class;
+					//$methods[] = WC_Gateway_YouCanPay_Giropay::class;
+					//$methods[] = WC_Gateway_YouCanPay_Ideal::class;
+					//$methods[] = WC_Gateway_YouCanPay_Bancontact::class;
+					//$methods[] = WC_Gateway_YouCanPay_Eps::class;
+					//$methods[] = WC_Gateway_YouCanPay_Sofort::class;
+					//$methods[] = WC_Gateway_YouCanPay_P24::class;
 				}
 
 				// These payment gateways will always be visible, regardless if UPE is enabled or disabled:
 				$methods[] = WC_Gateway_YouCanPay_Standalone::class;
-				$methods[] = WC_Gateway_YouCanPay_Multibanco::class;
+				//$methods[] = WC_Gateway_YouCanPay_Multibanco::class;
 
 				return $methods;
 			}
@@ -408,29 +408,29 @@ function woocommerce_gateway_youcanpay() {
 				if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
 					unset( $sections['youcanpay_upe'] );
 				}
-				unset( $sections['youcanpay_bancontact'] );
-				unset( $sections['youcanpay_sofort'] );
-				unset( $sections['youcanpay_giropay'] );
-				unset( $sections['youcanpay_eps'] );
-				unset( $sections['youcanpay_ideal'] );
-				unset( $sections['youcanpay_p24'] );
+				//unset( $sections['youcanpay_bancontact'] );
+				//unset( $sections['youcanpay_sofort'] );
+				//unset( $sections['youcanpay_giropay'] );
+				//unset( $sections['youcanpay_eps'] );
+				//unset( $sections['youcanpay_ideal'] );
+				//unset( $sections['youcanpay_p24'] );
 				unset( $sections['youcanpay_standalone'] );
-				unset( $sections['youcanpay_sepa'] );
-				unset( $sections['youcanpay_multibanco'] );
+				//unset( $sections['youcanpay_sepa'] );
+				//unset( $sections['youcanpay_multibanco'] );
 
 				$sections['youcanpay'] = 'YouCanPay';
 				if ( WC_YouCanPay_Feature_Flags::is_upe_preview_enabled() ) {
 					$sections['youcanpay_upe'] = 'YouCanPay checkout experience';
 				}
-				$sections['youcanpay_bancontact'] = __( 'YouCanPay Bancontact', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_sofort']     = __( 'YouCanPay SOFORT', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_giropay']    = __( 'YouCanPay Giropay', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_eps']        = __( 'YouCanPay EPS', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_ideal']      = __( 'YouCanPay iDeal', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_p24']        = __( 'YouCanPay P24', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_bancontact'] = __( 'YouCanPay Bancontact', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_sofort']     = __( 'YouCanPay SOFORT', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_giropay']    = __( 'YouCanPay Giropay', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_eps']        = __( 'YouCanPay EPS', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_ideal']      = __( 'YouCanPay iDeal', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_p24']        = __( 'YouCanPay P24', 'woocommerce-gateway-youcanpay' );
 				$sections['youcanpay_standalone'] = __( 'YouCanPay Standalone', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_sepa']       = __( 'YouCanPay SEPA Direct Debit', 'woocommerce-gateway-youcanpay' );
-				$sections['youcanpay_multibanco'] = __( 'YouCanPay Multibanco', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_sepa']       = __( 'YouCanPay SEPA Direct Debit', 'woocommerce-gateway-youcanpay' );
+				//$sections['youcanpay_multibanco'] = __( 'YouCanPay Multibanco', 'woocommerce-gateway-youcanpay' );
 
 				return $sections;
 			}

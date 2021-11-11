@@ -90,14 +90,14 @@ class WC_YouCanPay_Admin_Notices {
 	public function get_payment_methods() {
 		return [
 			'Standalone' => 'WC_Gateway_YouCanPay_Standalone',
-			'Bancontact' => 'WC_Gateway_YouCanPay_Bancontact',
-			'EPS'        => 'WC_Gateway_YouCanPay_EPS',
-			'Giropay'    => 'WC_Gateway_YouCanPay_Giropay',
-			'iDeal'      => 'WC_Gateway_YouCanPay_Ideal',
-			'Multibanco' => 'WC_Gateway_YouCanPay_Multibanco',
-			'P24'        => 'WC_Gateway_YouCanPay_p24',
-			'SEPA'       => 'WC_Gateway_YouCanPay_Sepa',
-			'SOFORT'     => 'WC_Gateway_YouCanPay_Sofort',
+			//'Bancontact' => 'WC_Gateway_YouCanPay_Bancontact',
+			//'EPS'        => 'WC_Gateway_YouCanPay_EPS',
+			//'Giropay'    => 'WC_Gateway_YouCanPay_Giropay',
+			//'iDeal'      => 'WC_Gateway_YouCanPay_Ideal',
+			//'Multibanco' => 'WC_Gateway_YouCanPay_Multibanco',
+			//'P24'        => 'WC_Gateway_YouCanPay_p24',
+			//'SEPA'       => 'WC_Gateway_YouCanPay_Sepa',
+			//'SOFORT'     => 'WC_Gateway_YouCanPay_Sofort',
 		];
 	}
 
@@ -309,7 +309,7 @@ class WC_YouCanPay_Admin_Notices {
 				case 'Standalone':
 					update_option( 'wc_youcanpay_show_standalone_notice', 'no' );
 					break;
-				case 'Bancontact':
+				/*case 'Bancontact':
 					update_option( 'wc_youcanpay_show_bancontact_notice', 'no' );
 					break;
 				case 'EPS':
@@ -332,7 +332,7 @@ class WC_YouCanPay_Admin_Notices {
 					break;
 				case 'SOFORT':
 					update_option( 'wc_youcanpay_show_sofort_notice', 'no' );
-					break;
+					break;*/
 				case 'sca':
 					update_option( 'wc_youcanpay_show_sca_notice', 'no' );
 					break;
