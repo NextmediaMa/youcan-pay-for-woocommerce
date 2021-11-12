@@ -280,30 +280,12 @@ final class WC_YouCanPay_Blocks_Support extends AbstractPaymentMethodType {
 				'src' => WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/visa.svg',
 				'alt' => __( 'Visa', 'woocommerce-gateway-youcanpay' ),
 			],
-			'amex'       => [
-				'src' => WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/amex.svg',
-				'alt' => __( 'American Express', 'woocommerce-gateway-youcanpay' ),
-			],
 			'mastercard' => [
 				'src' => WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/mastercard.svg',
 				'alt' => __( 'Mastercard', 'woocommerce-gateway-youcanpay' ),
 			],
 		];
 
-		if ( 'USD' === get_woocommerce_currency() ) {
-			$icons_src['discover'] = [
-				'src' => WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/discover.svg',
-				'alt' => __( 'Discover', 'woocommerce-gateway-youcanpay' ),
-			];
-			$icons_src['jcb']      = [
-				'src' => WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/jcb.svg',
-				'alt' => __( 'JCB', 'woocommerce-gateway-youcanpay' ),
-			];
-			$icons_src['diners']   = [
-				'src' => WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/diners.svg',
-				'alt' => __( 'Diners', 'woocommerce-gateway-youcanpay' ),
-			];
-		}
 		return $icons_src;
 	}
 

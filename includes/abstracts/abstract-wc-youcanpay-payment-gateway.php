@@ -352,15 +352,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			'wc_youcanpay_payment_icons',
 			[
 				'standalone' => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/standalone.svg" class="youcanpay-standalone-icon youcanpay-icon" alt="YouCan Pay Standalone" />',
-				'wechat'     => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/wechat.svg" class="youcanpay-wechat-icon youcanpay-icon" alt="Wechat Pay" />',
-				'bancontact' => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/bancontact.svg" class="youcanpay-bancontact-icon youcanpay-icon" alt="Bancontact" />',
-				'ideal'      => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/ideal.svg" class="youcanpay-ideal-icon youcanpay-icon" alt="iDeal" />',
-				'p24'        => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/p24.svg" class="youcanpay-p24-icon youcanpay-icon" alt="P24" />',
-				'giropay'    => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/giropay.svg" class="youcanpay-giropay-icon youcanpay-icon" alt="Giropay" />',
-				'eps'        => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/eps.svg" class="youcanpay-eps-icon youcanpay-icon" alt="EPS" />',
-				'multibanco' => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/multibanco.svg" class="youcanpay-multibanco-icon youcanpay-icon" alt="Multibanco" />',
-				'sofort'     => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/sofort.svg" class="youcanpay-sofort-icon youcanpay-icon" alt="SOFORT" />',
-				'sepa'       => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/sepa.svg" class="youcanpay-sepa-icon youcanpay-icon" alt="SEPA" />',
 			]
 		);
 	}

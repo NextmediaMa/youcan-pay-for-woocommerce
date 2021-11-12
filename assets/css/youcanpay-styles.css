@@ -1,1 +1,167 @@
-.wc-youcanpay-elements-field,.wc-youcanpay-iban-element-field{border:1px solid #ddd;margin:5px 0;padding:5px;background-color:#fff;outline:0}#payment .methods li.woocommerce-SavedPaymentMethods-token label{display:inline}#payment .methods li.woocommerce-SavedPaymentMethods-new label{display:inline}#add_payment_method #payment ul.payment_methods li img.youcanpay-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-icon{max-width:40px;padding-left:3px;margin:0}#add_payment_method #payment ul.payment_methods li img.youcanpay-bancontact-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-bancontact-icon{max-height:65px;max-width:45px}#add_payment_method #payment ul.payment_methods li img.youcanpay-ideal-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-ideal-icon{max-height:35px}#add_payment_method #payment ul.payment_methods li img.youcanpay-p24-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-p24-icon{max-width:65px}#add_payment_method #payment ul.payment_methods li img.youcanpay-standalone-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-standalone-icon{max-width:50px}#add_payment_method #payment ul.payment_methods li img.youcanpay-sofort-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-sofort-icon{max-width:55px}#add_payment_method #payment ul.payment_methods li img.youcanpay-sepa-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-sepa-icon{max-width:50px}#add_payment_method #payment ul.payment_methods li img.youcanpay-multibanco-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-multibanco-icon{max-height:30px}#add_payment_method #payment ul.payment_methods li img.youcanpay-eps-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-eps-icon{max-height:30px}#add_payment_method #payment ul.payment_methods li img.youcanpay-giropay-icon,.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-giropay-icon{max-width:50px}#add_payment_method #payment ul.payment_methods li .youcanpay-credit-card-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-credit-card-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/credit-card.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-visa-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-visa-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/visa.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-amex-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-amex-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/amex.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-diners-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-diners-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/diners.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-discover-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-discover-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/discover.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-jcb-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-jcb-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/jcb.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-maestro-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-maestro-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/maestro.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods li .youcanpay-mastercard-brand,.woocommerce-checkout #payment ul.payment_methods li .youcanpay-mastercard-brand{position:absolute;top:50%;margin-top:-10px;right:10px;background:no-repeat url(../images/mastercard.svg);display:block;width:30px;height:24px}#add_payment_method #payment ul.payment_methods .youcanpay-card-group,.woocommerce-checkout #payment ul.payment_methods .youcanpay-card-group{position:relative}.woocommerce-SavedPaymentMethods-token .youcanpay-source-errors .woocommerce-error{margin-top:1em;margin-bottom:2em}#wc-youcanpay-custom-button{display:block;width:100%}.gpay-button{background-origin:content-box;background-position:center center;background-repeat:no-repeat;background-size:contain;border:0;border-radius:4px;cursor:pointer;height:40px;min-height:40px;padding:11px 24px;width:100%}.gpay-button.light{width:calc(100% - 3px);background-color:#fff;margin:2px 0 3px 0}.gpay-button.light:active{background-color:#fff}.gpay-button.light:hover{background-color:#f8f8f8}.gpay-button.light:focus{box-shadow:#e8e8e8 0 1px 1px 0,#e8e8e8 0 1px 3px;outline:0}.gpay-button.light-outline{width:calc(100% - 3px);background-color:#fff;box-shadow:rgba(60,64,67,.3) 0 1px 1px 0,rgba(60,64,67,.15) 0 1px 3px 1px;margin:2px 0 3px 0}.gpay-button.light-outline:active{background-color:#fff}.gpay-button.light-outline:hover{background-color:#f8f8f8}.gpay-button.light-outline:focus{box-shadow:#e8e8e8 0 1px 1px 0,#e8e8e8 0 1px 3px;outline:0}.gpay-button.dark{background-color:#000;padding:12px 24px 10px}.gpay-button.dark:active{background-color:#5f6368}.gpay-button.dark:hover{background-color:#3c4043}.gpay-button.dark:focus{box-shadow:#5f6368 0 1px 1px 0,#5f6368 0 1px 3px;outline:0}.gpay-button.short.light,.gpay-button.short.light-outline{background-image:url(https://www.gstatic.com/instantbuy/svg/light_gpay.svg)}.gpay-button.short.dark{background-image:url(https://www.gstatic.com/instantbuy/svg/dark_gpay.svg)}
+.wc-youcanpay-elements-field,
+.wc-youcanpay-iban-element-field {
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #fff;
+    outline: 0;
+}
+#payment .methods li.woocommerce-SavedPaymentMethods-token label {
+    display: inline;
+}
+#payment .methods li.woocommerce-SavedPaymentMethods-new label {
+    display: inline;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-icon {
+    max-width: 40px;
+    padding-left: 3px;
+    margin: 0;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-bancontact-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-bancontact-icon {
+    max-height: 65px;
+    max-width: 45px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-ideal-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-ideal-icon {
+    max-height: 35px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-p24-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-p24-icon {
+    max-width: 65px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-standalone-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-standalone-icon {
+    max-width: 50px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-sofort-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-sofort-icon {
+    max-width: 55px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-sepa-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-sepa-icon {
+    max-width: 50px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-multibanco-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-multibanco-icon {
+    max-height: 30px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-eps-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-eps-icon {
+    max-height: 30px;
+}
+#add_payment_method #payment ul.payment_methods li img.youcanpay-giropay-icon,
+.woocommerce-checkout #payment ul.payment_methods li img.youcanpay-giropay-icon {
+    max-width: 50px;
+}
+#add_payment_method #payment ul.payment_methods li .youcanpay-credit-card-brand,
+.woocommerce-checkout #payment ul.payment_methods li .youcanpay-credit-card-brand {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 10px;
+    background: no-repeat url(../images/credit-card.svg);
+    display: block;
+    width: 30px;
+    height: 24px;
+}
+#add_payment_method #payment ul.payment_methods li .youcanpay-visa-brand,
+.woocommerce-checkout #payment ul.payment_methods li .youcanpay-visa-brand {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 10px;
+    background: no-repeat url(../images/visa.svg);
+    display: block;
+    width: 30px;
+    height: 24px;
+}
+#add_payment_method #payment ul.payment_methods li .youcanpay-mastercard-brand,
+.woocommerce-checkout #payment ul.payment_methods li .youcanpay-mastercard-brand {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 10px;
+    background: no-repeat url(../images/mastercard.svg);
+    display: block;
+    width: 30px;
+    height: 24px;
+}
+#add_payment_method #payment ul.payment_methods .youcanpay-card-group,
+.woocommerce-checkout #payment ul.payment_methods .youcanpay-card-group {
+    position: relative;
+}
+.woocommerce-SavedPaymentMethods-token .youcanpay-source-errors .woocommerce-error {
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+#wc-youcanpay-custom-button {
+    display: block;
+    width: 100%;
+}
+.gpay-button {
+    background-origin: content-box;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 40px;
+    min-height: 40px;
+    padding: 11px 24px;
+    width: 100%;
+}
+.gpay-button.light {
+    width: calc(100% - 3px);
+    background-color: #fff;
+    margin: 2px 0 3px 0;
+}
+.gpay-button.light:active {
+    background-color: #fff;
+}
+.gpay-button.light:hover {
+    background-color: #f8f8f8;
+}
+.gpay-button.light:focus {
+    box-shadow: #e8e8e8 0 1px 1px 0, #e8e8e8 0 1px 3px;
+    outline: 0;
+}
+.gpay-button.light-outline {
+    width: calc(100% - 3px);
+    background-color: #fff;
+    box-shadow: rgba(60, 64, 67, 0.3) 0 1px 1px 0, rgba(60, 64, 67, 0.15) 0 1px 3px 1px;
+    margin: 2px 0 3px 0;
+}
+.gpay-button.light-outline:active {
+    background-color: #fff;
+}
+.gpay-button.light-outline:hover {
+    background-color: #f8f8f8;
+}
+.gpay-button.light-outline:focus {
+    box-shadow: #e8e8e8 0 1px 1px 0, #e8e8e8 0 1px 3px;
+    outline: 0;
+}
+.gpay-button.dark {
+    background-color: #000;
+    padding: 12px 24px 10px;
+}
+.gpay-button.dark:active {
+    background-color: #5f6368;
+}
+.gpay-button.dark:hover {
+    background-color: #3c4043;
+}
+.gpay-button.dark:focus {
+    box-shadow: #5f6368 0 1px 1px 0, #5f6368 0 1px 3px;
+    outline: 0;
+}
+.gpay-button.short.light,
+.gpay-button.short.light-outline {
+    background-image: url(https://www.gstatic.com/instantbuy/svg/light_gpay.svg);
+}
+.gpay-button.short.dark {
+    background-image: url(https://www.gstatic.com/instantbuy/svg/dark_gpay.svg);
+}

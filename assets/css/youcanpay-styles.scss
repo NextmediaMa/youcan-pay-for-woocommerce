@@ -91,66 +91,6 @@
 	height: 24px;
 }
 
-.woocommerce-checkout #payment ul.payment_methods li .youcanpay-amex-brand,
-#add_payment_method #payment ul.payment_methods li .youcanpay-amex-brand {
-	position: absolute;
-	top: 50%;
-	margin-top: -10px;
-	right: 10px;
-	background: no-repeat url( '../images/amex.svg' );
-	display: block;
-	width: 30px;
-	height: 24px;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li .youcanpay-diners-brand,
-#add_payment_method #payment ul.payment_methods li .youcanpay-diners-brand {
-	position: absolute;
-	top: 50%;
-	margin-top: -10px;
-	right: 10px;
-	background: no-repeat url( '../images/diners.svg' );
-	display: block;
-	width: 30px;
-	height: 24px;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li .youcanpay-discover-brand,
-#add_payment_method #payment ul.payment_methods li .youcanpay-discover-brand {
-	position: absolute;
-	top: 50%;
-	margin-top: -10px;
-	right: 10px;
-	background: no-repeat url( '../images/discover.svg' );
-	display: block;
-	width: 30px;
-	height: 24px;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li .youcanpay-jcb-brand,
-#add_payment_method #payment ul.payment_methods li .youcanpay-jcb-brand {
-	position: absolute;
-	top: 50%;
-	margin-top: -10px;
-	right: 10px;
-	background: no-repeat url( '../images/jcb.svg' );
-	display: block;
-	width: 30px;
-	height: 24px;
-}
-
-.woocommerce-checkout #payment ul.payment_methods li .youcanpay-maestro-brand,
-#add_payment_method #payment ul.payment_methods li .youcanpay-maestro-brand {
-	position: absolute;
-	top: 50%;
-	margin-top: -10px;
-	right: 10px;
-	background: no-repeat url( '../images/maestro.svg' );
-	display: block;
-	width: 30px;
-	height: 24px;
-}
-
 .woocommerce-checkout #payment ul.payment_methods li .youcanpay-mastercard-brand,
 #add_payment_method #payment ul.payment_methods li .youcanpay-mastercard-brand {
 	position: absolute;
@@ -168,9 +108,7 @@
 	position: relative;
 }
 
-.woocommerce-SavedPaymentMethods-token
-	.youcanpay-source-errors
-	.woocommerce-error {
+.woocommerce-SavedPaymentMethods-token .youcanpay-source-errors .woocommerce-error {
 	margin-top: 1em;
 	margin-bottom: 2em;
 }
