@@ -172,13 +172,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	}
 
 	/**
-	 * Initialize Gateway Settings Form Fields.
-	 */
-	public function autoload_sdk() {
-		require WC_YOUCAN_PAY_PLUGIN_PATH . '/vendor/autoload.php';
-	}
-
-	/**
 	 * Payment form on checkout page
 	 */
 	public function payment_fields() {
@@ -249,7 +242,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	public function process_payment( $order_id, $retry = true, $force_save_save = false ) {
 		try {
 			$order = wc_get_order( $order_id );
-			$this->autoload_sdk();
 
 			// This will throw exception if not valid.
 			$this->validate_minimum_order_amount( $order );
