@@ -278,7 +278,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		return (
 			WC_YouCanPay_Helper::is_pre_orders_exists() &&
 			$this->pre_orders->is_pre_order( $order_id ) &&
-			WC_Pre_Orders_Order::order_requires_payment_tokenization( $order_id ) &&
 			! is_wc_endpoint_url( 'order-pay' )
 		);
 	}
