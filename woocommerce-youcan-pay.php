@@ -183,26 +183,8 @@ function woocommerce_gateway_youcanpay() {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-admin-notices.php';
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-settings-controller.php';
 
-					if ( isset( $_GET['area'] ) && 'payment_requests' === $_GET['area'] ) {
-						require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-payment-requests-controller.php';
-						new WC_YouCanPay_Payment_Requests_Controller();
-					} else {
-						new WC_YouCanPay_Settings_Controller( $this->account );
-					}
-
-					if ( WC_YouCanPay_Feature_Flags::is_upe_settings_redesign_enabled() ) {
-						require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-onboarding-controller.php';
-						new WC_YouCanPay_Onboarding_Controller();
-					}
-
-					if ( WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() && WC_YouCanPay_Feature_Flags::is_upe_settings_redesign_enabled() ) {
-						require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-payment-gateways-controller.php';
-						new WC_YouCanPay_Payment_Gateways_Controller();
-					}
+					new WC_YouCanPay_Settings_Controller( $this->account );
 				}
-
-				// REMOVE IN THE FUTURE.
-				require_once dirname( __FILE__ ) . '/includes/deprecated/class-wc-youcanpay-apple-pay.php';
 
 				add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateways' ] );
 				add_filter( 'pre_update_option_woocommerce_youcanpay_settings', [ $this, 'gateway_settings_update' ], 10, 2 );
@@ -217,13 +199,6 @@ function woocommerce_gateway_youcanpay() {
 				}
 
 				new WC_YouCanPay_UPE_Compatibility_Controller();
-
-				// Disable UPE if Pre Order extension is active.
-				if ( WC_YouCanPay_Helper::is_pre_orders_exists() && WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ) {
-					$youcanpay_settings = get_option( 'woocommerce_youcanpay_settings' );
-					$youcanpay_settings[ WC_YouCanPay_Feature_Flags::UPE_CHECKOUT_FEATURE_ATTRIBUTE_NAME ] = 'no';
-					update_option( 'woocommerce_youcanpay_settings', $youcanpay_settings );
-				}
 			}
 
 			/**

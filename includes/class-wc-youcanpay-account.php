@@ -31,7 +31,7 @@ class WC_YouCanPay_Account {
 	 * Constructor
 	 *
 	 * @param WC_YouCanPay_Connect $connect YouCanPay connect
-	 * @param $youcanpay_api YouCanPay API class
+	 * @param $youcanpay_api WC_YouCanPay_API class
 	 */
 	public function __construct( WC_YouCanPay_Connect $connect, $youcanpay_api ) {
 		$this->connect    = $connect;
