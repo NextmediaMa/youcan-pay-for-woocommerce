@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WC_YouCanPay_Logger {
 
 	public static $logger;
-	const WC_LOG_FILENAME = 'woocommerce-gateway-youcanpay';
+	const WC_LOG_FILENAME = 'woocommerce-youcan-pay';
 
 	/**
 	 * Utilize WC logger class

@@ -39,7 +39,7 @@ define( 'WC_YOUCAN_PAY_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE_
  */
 function woocommerce_youcanpay_missing_wc_notice() {
 	/* translators: 1. URL link. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCanPay requires WooCommerce to be installed and active. You can download %s here.', 'woocommerce-gateway-youcanpay' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCanPay requires WooCommerce to be installed and active. You can download %s here.', 'woocommerce-youcan-pay' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
 }
 
 /**
@@ -49,7 +49,7 @@ function woocommerce_youcanpay_missing_wc_notice() {
  */
 function woocommerce_youcanpay_wc_not_supported() {
 	/* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCanPay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'woocommerce-gateway-youcanpay' ), WC_YOUCAN_PAY_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCanPay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'woocommerce-youcan-pay' ), WC_YOUCAN_PAY_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
 }
 
 function woocommerce_gateway_youcanpay() {
@@ -154,25 +154,18 @@ function woocommerce_gateway_youcanpay() {
 				}
 
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-feature-flags.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-upe-compatibility.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-exception.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-logger.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-helper.php';
 				include_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-api.php';
-				require_once dirname( __FILE__ ) . '/includes/compat/trait-wc-youcanpay-subscriptions-utilities.php';
-				require_once dirname( __FILE__ ) . '/includes/compat/trait-wc-youcanpay-subscriptions.php';
 				require_once dirname( __FILE__ ) . '/includes/abstracts/abstract-wc-youcanpay-payment-gateway.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-state.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
-				require_once dirname( __FILE__ ) . '/includes/compat/class-wc-youcanpay-woo-compat-utils.php';
 				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect.php';
 				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect-api.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-customer.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-intent-controller.php';
-				require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-inbox-notes.php';
-				require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-upe-compatibility-controller.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-account.php';
 
 				$this->api                           = new WC_YouCanPay_Connect_API();
@@ -197,8 +190,6 @@ function woocommerce_gateway_youcanpay() {
 				if ( version_compare( WC_VERSION, '3.4', '<' ) ) {
 					add_filter( 'woocommerce_get_sections_checkout', [ $this, 'filter_gateway_order_admin' ] );
 				}
-
-				new WC_YouCanPay_UPE_Compatibility_Controller();
 			}
 
 			/**
@@ -232,52 +223,6 @@ function woocommerce_gateway_youcanpay() {
 
 					add_woocommerce_inbox_variant();
 					$this->update_plugin_version();
-
-					// TODO: Remove this when we're reasonably sure most merchants have had their
-					// settings updated like this. ~80% of merchants is a good threshold.
-					// - @reykjalin
-					$this->update_prb_location_settings();
-				}
-			}
-
-			/**
-			 * Updates the PRB location settings based on deprecated filters.
-			 *
-			 * The filters were removed in favor of plugin settings. This function can, and should,
-			 * be removed when we're reasonably sure most merchants have had their settings updated
-			 * through this function. Maybe ~80% of merchants is a good threshold?
-			 *
-			 * @since 5.5.0
-			 * @version 5.5.0
-			 */
-			public function update_prb_location_settings() {
-				$youcanpay_settings = get_option( 'woocommerce_youcanpay_settings', [] );
-				$prb_locations   = isset( $youcanpay_settings['payment_request_button_locations'] )
-					? $youcanpay_settings['payment_request_button_locations']
-					: [];
-				if ( ! empty( $youcanpay_settings ) && empty( $prb_locations ) ) {
-					global $post;
-
-					$should_show_on_product_page  = ! apply_filters( 'wc_youcanpay_hide_payment_request_on_product_page', false, $post );
-					$should_show_on_cart_page     = apply_filters( 'wc_youcanpay_show_payment_request_on_cart', true );
-					$should_show_on_checkout_page = apply_filters( 'wc_youcanpay_show_payment_request_on_checkout', false, $post );
-
-					$new_prb_locations = [];
-
-					if ( $should_show_on_product_page ) {
-						$new_prb_locations[] = 'product';
-					}
-
-					if ( $should_show_on_cart_page ) {
-						$new_prb_locations[] = 'cart';
-					}
-
-					if ( $should_show_on_checkout_page ) {
-						$new_prb_locations[] = 'checkout';
-					}
-
-					$youcanpay_settings['payment_request_button_locations'] = $new_prb_locations;
-					update_option( 'woocommerce_youcanpay_settings', $youcanpay_settings );
 				}
 			}
 
@@ -289,7 +234,7 @@ function woocommerce_gateway_youcanpay() {
 			 */
 			public function plugin_action_links( $links ) {
 				$plugin_links = [
-					'<a href="admin.php?page=wc-settings&tab=checkout&section=youcanpay">' . esc_html__( 'Settings', 'woocommerce-gateway-youcanpay' ) . '</a>',
+					'<a href="admin.php?page=wc-settings&tab=checkout&section=youcanpay">' . esc_html__( 'Settings', 'woocommerce-youcan-pay' ) . '</a>',
 				];
 				return array_merge( $plugin_links, $links );
 			}
@@ -305,8 +250,8 @@ function woocommerce_gateway_youcanpay() {
 			public function plugin_row_meta( $links, $file ) {
 				if ( plugin_basename( __FILE__ ) === $file ) {
 					$row_meta = [
-						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://docs.woocommerce.com/document/youcanpay/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-gateway-youcanpay' ) ) . '">' . __( 'Docs', 'woocommerce-gateway-youcanpay' ) . '</a>',
-						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'woocommerce-gateway-youcanpay' ) ) . '">' . __( 'Support', 'woocommerce-gateway-youcanpay' ) . '</a>',
+						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://docs.woocommerce.com/document/youcanpay/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Docs', 'woocommerce-youcan-pay' ) . '</a>',
+						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Support', 'woocommerce-youcan-pay' ) . '</a>',
 					];
 					return array_merge( $links, $row_meta );
 				}
@@ -340,7 +285,7 @@ function woocommerce_gateway_youcanpay() {
 				unset( $sections['youcanpay_standalone'] );
 
 				$sections['youcanpay'] = 'YouCanPay';
-				$sections['youcanpay_standalone'] = __( 'YouCanPay Standalone', 'woocommerce-gateway-youcanpay' );
+				$sections['youcanpay_standalone'] = __( 'YouCanPay Standalone', 'woocommerce-youcan-pay' );
 
 				return $sections;
 			}
@@ -394,14 +339,14 @@ function woocommerce_gateway_youcanpay() {
 			public function register_routes() {
 				/** API includes */
 				require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/abstracts/abstract-wc-youcanpay-connect-rest-controller.php';
-				require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/connect/class-wc-youcanpay-connect-rest-oauth-init-controller.php';
-				require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/connect/class-wc-youcanpay-connect-rest-oauth-connect-controller.php';
+				//require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/connect/class-wc-youcanpay-connect-rest-oauth-init-controller.php';
+				//require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/connect/class-wc-youcanpay-connect-rest-oauth-connect-controller.php';
 
-				$oauth_init    = new WC_YouCanPay_Connect_REST_Oauth_Init_Controller( $this->connect, $this->api );
-				$oauth_connect = new WC_YouCanPay_Connect_REST_Oauth_Connect_Controller( $this->connect, $this->api );
+				//$oauth_init    = new WC_YouCanPay_Connect_REST_Oauth_Init_Controller( $this->connect, $this->api );
+				//$oauth_connect = new WC_YouCanPay_Connect_REST_Oauth_Connect_Controller( $this->connect, $this->api );
 
-				$oauth_init->register_routes();
-				$oauth_connect->register_routes();
+				//$oauth_init->register_routes();
+				//$oauth_connect->register_routes();
 			}
 
 			/**
@@ -430,7 +375,7 @@ function woocommerce_gateway_youcanpay() {
 add_action( 'plugins_loaded', 'woocommerce_gateway_youcanpay_init' );
 
 function woocommerce_gateway_youcanpay_init() {
-	load_plugin_textdomain( 'woocommerce-gateway-youcanpay', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'woocommerce-youcan-pay', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		add_action( 'admin_notices', 'woocommerce_youcanpay_missing_wc_notice' );
@@ -459,58 +404,3 @@ if ( ! function_exists( 'add_woocommerce_inbox_variant' ) ) {
 	}
 }
 register_activation_hook( __FILE__, 'add_woocommerce_inbox_variant' );
-
-function wcyoucanpay_deactivated() {
-	// admin notes are not supported on older versions of WooCommerce.
-	require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/class-wc-youcanpay-upe-compatibility.php';
-	if ( WC_YouCanPay_UPE_Compatibility::are_inbox_notes_supported() ) {
-		// requirements for the note
-		require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/class-wc-youcanpay-feature-flags.php';
-		require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/notes/class-wc-youcanpay-upe-compatibility-note.php';
-		WC_YouCanPay_UPE_Compatibility_Note::possibly_delete_note();
-
-		require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/notes/class-wc-youcanpay-upe-availability-note.php';
-		WC_YouCanPay_UPE_Availability_Note::possibly_delete_note();
-	}
-}
-register_deactivation_hook( __FILE__, 'wcyoucanpay_deactivated' );
-
-// Hook in Blocks integration. This action is called in a callback on plugins loaded, so current YouCanPay plugin class
-// implementation is too late.
-add_action( 'woocommerce_blocks_loaded', 'woocommerce_gateway_youcanpay_woocommerce_block_support' );
-
-function woocommerce_gateway_youcanpay_woocommerce_block_support() {
-	if ( class_exists( 'Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType' ) ) {
-		require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-blocks-support.php';
-		// priority is important here because this ensures this integration is
-		// registered before the WooCommerce Blocks built-in YouCanPay registration.
-		// Blocks code has a check in place to only register if 'youcanpay' is not
-		// already registered.
-		add_action(
-			'woocommerce_blocks_payment_method_type_registration',
-			function( Automattic\WooCommerce\Blocks\Payments\PaymentMethodRegistry $payment_method_registry ) {
-				// I noticed some incompatibility with WP 5.x and WC 5.3 when `_wcyoucanpay_feature_upe_settings` is enabled.
-				if ( ! class_exists( 'WC_YouCanPay_Payment_Request' ) ) {
-					return;
-				}
-
-				$container = Automattic\WooCommerce\Blocks\Package::container();
-				// registers as shared instance.
-				$container->register(
-					WC_YouCanPay_Blocks_Support::class,
-					function() {
-						if ( class_exists( 'WC_YouCanPay' ) ) {
-							return new WC_YouCanPay_Blocks_Support( WC_YouCanPay::get_instance()->payment_request_configuration );
-						} else {
-							return new WC_YouCanPay_Blocks_Support();
-						}
-					}
-				);
-				$payment_method_registry->register(
-					$container->get( WC_YouCanPay_Blocks_Support::class )
-				);
-			},
-			5
-		);
-	}
-}

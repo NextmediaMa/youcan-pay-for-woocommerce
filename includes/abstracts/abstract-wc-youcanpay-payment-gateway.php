@@ -14,8 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
-	use WC_YouCanPay_Subscriptions_Trait;
-
 	/**
 	 * The delay between retries.
 	 *

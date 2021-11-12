@@ -98,9 +98,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		// Load the settings.
 		$this->init_settings();
 
-		// Check if subscriptions are enabled and add support for them.
-		$this->maybe_init_subscriptions();
-
 		// Get setting values.
 		$this->title                = $this->get_option( 'title' );
 		$this->description          = $this->get_option( 'description' );

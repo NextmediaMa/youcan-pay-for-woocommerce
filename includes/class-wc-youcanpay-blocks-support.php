@@ -104,7 +104,7 @@ final class WC_YouCanPay_Blocks_Support extends AbstractPaymentMethodType {
 		);
 		wp_set_script_translations(
 			'wc-youcanpay-blocks-integration',
-			'woocommerce-gateway-youcanpay'
+			'woocommerce-youcan-pay'
 		);
 	}
 
@@ -133,7 +133,7 @@ final class WC_YouCanPay_Blocks_Support extends AbstractPaymentMethodType {
 		);
 		wp_set_script_translations(
 			'wc-youcanpay-blocks-integration',
-			'woocommerce-gateway-youcanpay'
+			'woocommerce-youcan-pay'
 		);
 	}
 
@@ -254,8 +254,8 @@ final class WC_YouCanPay_Blocks_Support extends AbstractPaymentMethodType {
 	private function get_show_save_option() {
 		$saved_cards = $this->get_show_saved_cards();
 		// This assumes that YouCanPay supports `tokenization` - currently this is true, based on
-		// https://github.com/woocommerce/woocommerce-gateway-youcanpay/blob/master/includes/class-wc-gateway-youcanpay.php#L95 .
-		// See https://github.com/woocommerce/woocommerce-gateway-youcanpay/blob/ad19168b63df86176cbe35c3e95203a245687640/includes/class-wc-gateway-youcanpay.php#L271 and
+		// https://github.com/woocommerce/woocommerce-youcan-pay/blob/master/includes/class-wc-gateway-youcanpay.php#L95 .
+		// See https://github.com/woocommerce/woocommerce-youcan-pay/blob/ad19168b63df86176cbe35c3e95203a245687640/includes/class-wc-gateway-youcanpay.php#L271 and
 		// https://github.com/woocommerce/woocommerce/wiki/Payment-Token-API .
 		return apply_filters( 'wc_youcanpay_display_save_payment_method_checkbox', filter_var( $saved_cards, FILTER_VALIDATE_BOOLEAN ) );
 	}
@@ -266,7 +266,7 @@ final class WC_YouCanPay_Blocks_Support extends AbstractPaymentMethodType {
 	 * @return string Title / label string
 	 */
 	private function get_title() {
-		return isset( $this->settings['title'] ) ? $this->settings['title'] : __( 'Credit / Debit Card', 'woocommerce-gateway-youcanpay' );
+		return isset( $this->settings['title'] ) ? $this->settings['title'] : __( 'Credit / Debit Card', 'woocommerce-youcan-pay' );
 	}
 
 	/**

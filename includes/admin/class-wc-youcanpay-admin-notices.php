@@ -251,7 +251,7 @@ class WC_YouCanPay_Admin_Notices {
 			}
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				wp_die( __( 'Cheatin&#8217; huh?', 'woocommerce-gateway-youcanpay' ) );
+				wp_die( __( 'Cheatin&#8217; huh?', 'woocommerce-youcan-pay' ) );
 			}
 
 			$notice = wc_clean( wp_unslash( $_GET['wc-youcanpay-hide-notice'] ) );

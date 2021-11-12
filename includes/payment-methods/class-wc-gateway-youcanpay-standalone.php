@@ -61,9 +61,9 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = self::ID;
-		$this->method_title = __( 'YouCanPay Standalone', 'woocommerce-gateway-youcanpay' );
+		$this->method_title = __( 'YouCanPay Standalone', 'woocommerce-youcan-pay' );
 		/* translators: link */
-		$this->method_description = sprintf( __( 'All other general YouCanPay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-gateway-youcanpay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
+		$this->method_description = sprintf( __( 'All other general YouCanPay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
 		$this->supports           = [
 			'products',
 			'refunds',
@@ -194,7 +194,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( is_add_payment_method_page() ) {
-			$pay_button_text = __( 'Add Payment', 'woocommerce-gateway-youcanpay' );
+			$pay_button_text = __( 'Add Payment', 'woocommerce-youcan-pay' );
 			$total           = '';
 		} else {
 			$pay_button_text = '';

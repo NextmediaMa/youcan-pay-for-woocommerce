@@ -7,7 +7,7 @@ echo $email_heading . "\n\n";
 
 printf(
 	// translators: %s is a link to the payment re-authentication URL.
-	__( 'Your pre-order is now available, but payment cannot be completed automatically. Please complete the payment now: %s', 'woocommerce-gateway-youcanpay' ),
+	__( 'Your pre-order is now available, but payment cannot be completed automatically. Please complete the payment now: %s', 'woocommerce-youcan-pay' ),
 	$authorization_url
 );
 

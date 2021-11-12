@@ -388,7 +388,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 		delete_post_meta( $order_id, '_youcanpay_refund_id' );
 		delete_post_meta( $order_id, '_youcanpay_customer_id' );
 
-		return [ true, false, [ __( 'YouCan Pay personal data erased.', 'woocommerce-gateway-youcanpay' ) ] ];
+		return [ true, false, [ __( 'YouCan Pay personal data erased.', 'woocommerce-youcan-pay' ) ] ];
 	}
 
 	/**
