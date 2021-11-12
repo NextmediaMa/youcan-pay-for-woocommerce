@@ -69,11 +69,6 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_secret_key' ],
 					],
-					'webhook_secret'       => [
-						'description'       => __( 'Your YouCan Pay webhook endpoint URL, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
-						'type'              => 'string',
-						'validate_callback' => 'rest_validate_request_arg',
-					],
 					'test_publishable_key' => [
 						'description'       => __( 'Your YouCan Pay testing API Publishable key, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
@@ -83,11 +78,6 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 						'description'       => __( 'Your YouCan Pay testing API Secret, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
 						'type'              => 'string',
 						'validate_callback' => [ $this, 'validate_test_secret_key' ],
-					],
-					'test_webhook_secret'  => [
-						'description'       => __( 'Your YouCan Pay testing webhook endpoint URL, obtained from your YouCan Pay dashboard.', 'woocommerce-youcan-pay' ),
-						'type'              => 'string',
-						'validate_callback' => 'rest_validate_request_arg',
 					],
 				],
 			]
@@ -100,7 +90,7 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 	 * @return WP_REST_Response
 	 */
 	public function get_account_keys() {
-		$allowed_params  = [ 'publishable_key', 'secret_key', 'webhook_secret', 'test_publishable_key', 'test_secret_key', 'test_webhook_secret' ];
+		$allowed_params  = [ 'publishable_key', 'secret_key', 'test_publishable_key', 'test_secret_key' ];
 		$youcanpay_settings = get_option( self::YOUCAN_PAY_GATEWAY_SETTINGS_OPTION_NAME, [] );
 		// Filter only the fields we want to return
 		$account_keys = array_intersect_key( $youcanpay_settings, array_flip( $allowed_params ) );
@@ -185,18 +175,14 @@ class WC_REST_YouCanPay_Account_Keys_Controller extends WC_YouCanPay_REST_Base_C
 	public function set_account_keys( WP_REST_Request $request ) {
 		$publishable_key      = $request->get_param( 'publishable_key' );
 		$secret_key           = $request->get_param( 'secret_key' );
-		$webhook_secret       = $request->get_param( 'webhook_secret' );
 		$test_publishable_key = $request->get_param( 'test_publishable_key' );
 		$test_secret_key      = $request->get_param( 'test_secret_key' );
-		$test_webhook_secret  = $request->get_param( 'test_webhook_secret' );
 
 		$settings                         = get_option( self::YOUCAN_PAY_GATEWAY_SETTINGS_OPTION_NAME, [] );
 		$settings['publishable_key']      = is_null( $publishable_key ) ? $settings['publishable_key'] : $publishable_key;
 		$settings['secret_key']           = is_null( $secret_key ) ? $settings['secret_key'] : $secret_key;
-		$settings['webhook_secret']       = is_null( $webhook_secret ) ? $settings['webhook_secret'] : $webhook_secret;
 		$settings['test_publishable_key'] = is_null( $test_publishable_key ) ? $settings['test_publishable_key'] : $test_publishable_key;
 		$settings['test_secret_key']      = is_null( $test_secret_key ) ? $settings['test_secret_key'] : $test_secret_key;
-		$settings['test_webhook_secret']  = is_null( $test_webhook_secret ) ? $settings['test_webhook_secret'] : $test_webhook_secret;
 
 		update_option( self::YOUCAN_PAY_GATEWAY_SETTINGS_OPTION_NAME, $settings );
 		$this->account->clear_cache();

@@ -27,25 +27,19 @@ jQuery( function( $ ) {
 			$( document.body ).on( 'change', '#woocommerce_youcanpay_testmode', function() {
 				var test_secret_key = $( '#woocommerce_youcanpay_test_secret_key' ).parents( 'tr' ).eq( 0 ),
 					test_publishable_key = $( '#woocommerce_youcanpay_test_publishable_key' ).parents( 'tr' ).eq( 0 ),
-					test_webhook_secret = $( '#woocommerce_youcanpay_test_webhook_secret' ).parents( 'tr' ).eq( 0 ),
 					live_secret_key = $( '#woocommerce_youcanpay_secret_key' ).parents( 'tr' ).eq( 0 ),
-					live_publishable_key = $( '#woocommerce_youcanpay_publishable_key' ).parents( 'tr' ).eq( 0 ),
-					live_webhook_secret = $( '#woocommerce_youcanpay_webhook_secret' ).parents( 'tr' ).eq( 0 );
+					live_publishable_key = $( '#woocommerce_youcanpay_publishable_key' ).parents( 'tr' ).eq( 0 );
 
 				if ( $( this ).is( ':checked' ) ) {
 					test_secret_key.show();
 					test_publishable_key.show();
-					test_webhook_secret.show();
 					live_secret_key.hide();
 					live_publishable_key.hide();
-					live_webhook_secret.hide();
 				} else {
 					test_secret_key.hide();
 					test_publishable_key.hide();
-					test_webhook_secret.hide();
 					live_secret_key.show();
 					live_publishable_key.show();
-					live_webhook_secret.show();
 				}
 			} );
 
@@ -90,28 +84,6 @@ jQuery( function( $ ) {
 				} );
 			} );
 
-			// Add secret visibility toggles.
-			$( '#woocommerce_youcanpay_test_secret_key, #woocommerce_youcanpay_secret_key, #woocommerce_youcanpay_test_webhook_secret, #woocommerce_youcanpay_webhook_secret' ).after(
-				'<button class="wc-youcanpay-toggle-secret" style="height: 30px; margin-left: 2px; cursor: pointer"><span class="dashicons dashicons-visibility"></span></button>'
-			);
-			$( '.wc-youcanpay-toggle-secret' ).on( 'click', function( event ) {
-				event.preventDefault();
-
-				var $dashicon = $( this ).closest( 'button' ).find( '.dashicons' );
-				var $input = $( this ).closest( 'tr' ).find( '.input-text' );
-				var inputType = $input.attr( 'type' );
-
-				if ( 'text' == inputType ) {
-					$input.attr( 'type', 'password' );
-					$dashicon.removeClass( 'dashicons-hidden' );
-					$dashicon.addClass( 'dashicons-visibility' );
-				} else {
-					$input.attr( 'type', 'text' );
-					$dashicon.removeClass( 'dashicons-visibility' );
-					$dashicon.addClass( 'dashicons-hidden' );
-				}
-			} );
-
 			$( 'form' ).find( 'input, select' ).on( 'change input', function disableConnect() {
 
 				$( '#wc_youcanpay_connect_button' ).addClass( 'disabled' );
@@ -140,15 +112,6 @@ jQuery( function( $ ) {
 					$form.append( '<input type="hidden" name="woocommerce_youcanpay_upe_checkout_experience_accepted_payments[]" value="' + $( this ).closest( 'tr' ).data( 'upe_method_id' ) + '" />' );
 				});
 			});
-
-			// Webhook verification checks for timestamp within 5 minutes so warn if
-			// server time is off from browser time by > 4 minutes.
-			var timeDifference = Date.now() / 1000 - wc_youcanpay_settings_params.time;
-			var isTimeOutOfSync = Math.abs( timeDifference ) > 4 * 60;
-			if ( isTimeOutOfSync ) {
-				var $td = $( '#woocommerce_youcanpay_test_webhook_secret, #woocommerce_youcanpay_webhook_secret' ).closest( 'td' );
-				$td.append( '<p>' + wc_youcanpay_settings_params.i18n_out_of_sync + '</p>' );
-			}
 		}
 	};
 

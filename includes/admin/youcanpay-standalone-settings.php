@@ -39,11 +39,5 @@ return apply_filters(
 			'default'     => __( 'You will be redirected to YouCan Pay.', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
-		'webhook'     => [
-			'title'       => __( 'Webhook Endpoints', 'woocommerce-youcan-pay' ),
-			'type'        => 'title',
-			/* translators: webhook URL */
-			'description' => $this->display_admin_settings_webhook_description(),
-		],
 	]
 );
