@@ -22,40 +22,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	protected $retry_interval = 1;
 
 	/**
-	 * Fallback method to be inherited by all payment methods. YouCanPay UPE will override it.
-	 *
-	 * @return string[]
-	 */
-	public function get_upe_enabled_payment_method_ids() {
-		return [ 'card' ];
-	}
-
-	/**
-	 * Fallback method to be inherited by all payment methods. YouCanPay UPE will override it.
-	 *
-	 * @return string[]
-	 */
-	public function get_upe_available_payment_methods() {
-		return [ 'card' ];
-	}
-
-	/**
-	 * Displays the admin settings webhook description.
-	 *
-	 * @since 4.1.0
-	 * @version 5.0.0
-	 * @return mixed
-	 */
-	public function display_admin_settings_webhook_description() {
-		/* translators: 1) webhook url */
-		$description = sprintf( __( 'You must add the following webhook endpoint <strong style="background-color:#ddd;">&nbsp;%s&nbsp;</strong> to your <a href="https://pay.youcan.shop/dashboard" target="_blank">YouCan Pay account settings</a> (if there isn\'t one already enabled). This will enable you to receive notifications on the charge statuses.', 'woocommerce-gateway-youcanpay' ), WC_YouCanPay_Helper::get_webhook_url() );
-
-		$webhook_status = WC_YouCanPay_Webhook_State::get_webhook_status_message();
-
-		return $description . '<br><br>' . $webhook_status;
-	}
-
-	/**
 	 * Prints the admin options for the gateway.
 	 * Inserts an empty placeholder div feature flag is enabled.
 	 */

@@ -27,13 +27,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	public $statement_descriptor;
 
 	/**
-	 * Should we store the users credit cards?
-	 *
-	 * @var bool
-	 */
-	public $saved_cards;
-
-	/**
 	 * API access secret key
 	 *
 	 * @var string
@@ -104,7 +97,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->enabled              = $this->get_option( 'enabled' );
 		$this->testmode             = 'yes' === $this->get_option( 'testmode' );
 		$this->capture              = 'yes' === $this->get_option( 'capture', 'yes' );
-		$this->saved_cards          = 'yes' === $this->get_option( 'saved_cards' );
 		$this->secret_key           = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
 		$this->publishable_key      = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
 
@@ -115,9 +107,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 		add_action( 'woocommerce_admin_order_totals_after_total', [ $this, 'display_order_fee' ] );
 		add_action( 'woocommerce_admin_order_totals_after_total', [ $this, 'display_order_payout' ], 20 );
-		add_action( 'woocommerce_customer_save_address', [ $this, 'show_update_card_notice' ], 10, 2 );
+		//add_action( 'woocommerce_customer_save_address', [ $this, 'show_update_card_notice' ], 10, 2 );
 		add_filter( 'woocommerce_available_payment_gateways', [ $this, 'prepare_order_pay_page' ] );
-		add_action( 'woocommerce_account_view-order_endpoint', [ $this, 'check_intent_status_on_order_page' ], 1 );
+		//add_action( 'woocommerce_account_view-order_endpoint', [ $this, 'check_intent_status_on_order_page' ], 1 );
 		add_filter( 'woocommerce_payment_successful_result', [ $this, 'modify_successful_payment_result' ], 99999, 2 );
 		add_action( 'set_logged_in_cookie', [ $this, 'set_cookie_on_current_request' ] );
 		add_filter( 'woocommerce_get_checkout_payment_url', [ $this, 'get_checkout_payment_url' ], 10, 2 );
@@ -133,27 +125,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @since 4.0.2
 	 */
 	public function is_available() {
-		if ( is_add_payment_method_page() && ! $this->saved_cards ) {
+		if ( is_add_payment_method_page() ) {
 			return false;
 		}
 
 		return parent::is_available();
-	}
-
-	/**
-	 * Adds a notice for customer when they update their billing address.
-	 *
-	 * @since 4.1.0
-	 * @param int    $user_id      The ID of the current user.
-	 * @param string $load_address The address to load.
-	 */
-	public function show_update_card_notice( $user_id, $load_address ) {
-		if ( ! $this->saved_cards || ! WC_YouCanPay_Payment_Tokens::customer_has_saved_methods( $user_id ) || 'billing' !== $load_address ) {
-			return;
-		}
-
-		/* translators: 1) Opening anchor tag 2) closing anchor tag */
-		wc_add_notice( sprintf( __( 'If your billing address has been changed for saved payment methods, be sure to remove any %1$ssaved payment methods%2$s on file and re-add them.', 'woocommerce-gateway-youcanpay' ), '<a href="' . esc_url( wc_get_endpoint_url( 'payment-methods' ) ) . '" class="wc-youcanpay-update-card-notice" style="text-decoration:underline;">', '</a>' ), 'notice' );
 	}
 
 	/**
@@ -181,7 +157,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	public function payment_fields() {
 		global $wp;
 		$user                 = wp_get_current_user();
-		$display_tokenization = $this->supports( 'tokenization' ) && is_checkout() && $this->saved_cards;
+		$display_tokenization = $this->supports( 'tokenization' ) && is_checkout();
 		$total                = WC()->cart->total;
 		$user_email           = '';
 		$description          = $this->get_description();
@@ -887,27 +863,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	}
 
 	/**
-	 * Attempt to manually complete the payment process for orders, which are still pending
-	 * before displaying the View Order page. This is useful in case webhooks have not been set up.
-	 *
-	 * @since 4.2.0
-	 * @param int $order_id The ID that will be used for the thank you page.
-	 */
-	public function check_intent_status_on_order_page( $order_id ) {
-		if ( empty( $order_id ) || absint( $order_id ) <= 0 ) {
-			return;
-		}
-
-		$order = wc_get_order( absint( $order_id ) );
-
-		if ( ! $order ) {
-			return;
-		}
-
-		$this->verify_intent_after_checkout( $order );
-	}
-
-	/**
 	 * Attached to `woocommerce_payment_successful_result` with a late priority,
 	 * this method will combine the "naturally" generated redirect URL from
 	 * WooCommerce and a payment/setup intent secret into a hash, which contains both
@@ -956,107 +911,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function set_cookie_on_current_request( $cookie ) {
 		$_COOKIE[ LOGGED_IN_COOKIE ] = $cookie;
-	}
-
-	/**
-	 * Executed between the "Checkout" and "Thank you" pages, this
-	 * method updates orders based on the status of associated PaymentIntents.
-	 *
-	 * @since 4.2.0
-	 * @param WC_Order $order The order which is in a transitional state.
-	 */
-	public function verify_intent_after_checkout( $order ) {
-		$payment_method = $order->get_payment_method();
-		if ( $payment_method !== $this->id ) {
-			// If this is not the payment method, an intent would not be available.
-			return;
-		}
-
-		$intent = $this->get_intent_from_order( $order );
-		if ( ! $intent ) {
-			// No intent, redirect to the order received page for further actions.
-			return;
-		}
-
-		// A webhook might have modified or locked the order while the intent was retreived. This ensures we are reading the right status.
-		clean_post_cache( $order->get_id() );
-		$order = wc_get_order( $order->get_id() );
-
-		if ( ! $order->has_status(
-			apply_filters(
-				'wc_youcanpay_allowed_payment_processing_statuses',
-				[ 'pending', 'failed' ]
-			)
-		) ) {
-			// If payment has already been completed, this function is redundant.
-			return;
-		}
-
-		if ( $this->lock_order_payment( $order, $intent ) ) {
-			return;
-		}
-
-		if ( 'setup_intent' === $intent->object && 'succeeded' === $intent->status ) {
-			WC()->cart->empty_cart();
-			if ( WC_YouCanPay_Helper::is_pre_orders_exists() && WC_Pre_Orders_Order::order_contains_pre_order( $order ) ) {
-				WC_Pre_Orders_Order::mark_order_as_pre_ordered( $order );
-			} else {
-				$order->payment_complete();
-			}
-		} elseif ( 'succeeded' === $intent->status || 'requires_capture' === $intent->status ) {
-			// Proceed with the payment completion.
-			$this->handle_intent_verification_success( $order, $intent );
-		} elseif ( 'requires_payment_method' === $intent->status ) {
-			// `requires_payment_method` means that SCA got denied for the current payment method.
-			$this->handle_intent_verification_failure( $order, $intent );
-		}
-
-		$this->unlock_order_payment( $order );
-	}
-
-	/**
-	 * Called after an intent verification succeeds, this allows
-	 * specific APNs or children of this class to modify its behavior.
-	 *
-	 * @param WC_Order $order The order whose verification succeeded.
-	 * @param stdClass $intent The Payment Intent object.
-	 */
-	protected function handle_intent_verification_success( $order, $intent ) {
-		$this->process_response( end( $intent->charges->data ), $order );
-		$this->maybe_process_subscription_early_renewal_success( $order, $intent );
-	}
-
-	/**
-	 * Called after an intent verification fails, this allows
-	 * specific APNs or children of this class to modify its behavior.
-	 *
-	 * @param WC_Order $order The order whose verification failed.
-	 * @param stdClass $intent The Payment Intent object.
-	 */
-	protected function handle_intent_verification_failure( $order, $intent ) {
-		$this->failed_sca_auth( $order, $intent );
-		$this->maybe_process_subscription_early_renewal_failure( $order, $intent );
-	}
-
-	/**
-	 * Checks if the payment intent associated with an order failed and records the event.
-	 *
-	 * @since 4.2.0
-	 * @param WC_Order $order  The order which should be checked.
-	 * @param object   $intent The intent, associated with the order.
-	 */
-	public function failed_sca_auth( $order, $intent ) {
-		// If the order has already failed, do not repeat the same message.
-		if ( $order->has_status( 'failed' ) ) {
-			return;
-		}
-
-		// Load the right message and update the status.
-		$status_message = isset( $intent->last_payment_error )
-			/* translators: 1) The error message that was received from YouCanPay. */
-			? sprintf( __( 'YouCanPay SCA authentication failed. Reason: %s', 'woocommerce-gateway-youcanpay' ), $intent->last_payment_error->message )
-			: __( 'YouCanPay SCA authentication failed.', 'woocommerce-gateway-youcanpay' );
-		$order->update_status( 'failed', $status_message );
 	}
 
 	/**
@@ -1153,50 +1007,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 		}
 		return $settings;
-	}
-
-	/**
-	 * This is overloading the title type so the oauth url is only fetched if we are on the settings page.
-	 *
-	 * @param string $key Field key.
-	 * @param array  $data Field data.
-	 * @return string
-	 */
-	public function generate_youcanpay_account_keys_html( $key, $data ) {
-		if ( woocommerce_gateway_youcanpay()->connect->is_connected() ) {
-			$reset_link = add_query_arg(
-				[
-					'_wpnonce'                     => wp_create_nonce( 'reset_youcanpay_api_credentials' ),
-					'reset_youcanpay_api_credentials' => true,
-				],
-				admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' )
-			);
-
-			$api_credentials_text = sprintf(
-			/* translators: %1, %2, %3, and %4 are all HTML markup tags */
-				__( '%1$sClear all YouCan Pay account keys.%2$s %3$sThis will disable any connection to YouCan Pay.%4$s', 'woocommerce-gateway-youcanpay' ),
-				'<a id="wc_youcanpay_connect_button" href="' . $reset_link . '" class="button button-secondary">',
-				'</a>',
-				'<span style="color:red;">',
-				'</span>'
-			);
-		} else {
-			$oauth_url = woocommerce_gateway_youcanpay()->connect->get_oauth_url();
-
-			if ( ! is_wp_error( $oauth_url ) ) {
-				$api_credentials_text = sprintf(
-				/* translators: %1, %2 and %3 are all HTML markup tags */
-					__( '%1$sSet up or link an existing YouCanPay account.%2$s By clicking this button you agree to the %3$sTerms of Service%2$s. Or, manually enter YouCanPay account keys below.', 'woocommerce-gateway-youcanpay' ),
-					'<a id="wc_youcanpay_connect_button" href="' . $oauth_url . '" class="button button-primary">',
-					'</a>',
-					'<a href="https://wordpress.com/tos">'
-				);
-			} else {
-				$api_credentials_text = __( 'Manually enter YouCanPay keys below.', 'woocommerce-gateway-youcanpay' );
-			}
-		}
-		$data['description'] = $api_credentials_text;
-		return $this->generate_title_html( $key, $data );
 	}
 
 	/**

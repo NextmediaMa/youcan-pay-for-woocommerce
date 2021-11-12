@@ -80,34 +80,6 @@ function woocommerce_gateway_youcanpay() {
 			}
 
 			/**
-			 * YouCanPay Connect API
-			 *
-			 * @var WC_YouCanPay_Connect_API
-			 */
-			private $api;
-
-			/**
-			 * YouCanPay Connect
-			 *
-			 * @var WC_YouCanPay_Connect
-			 */
-			public $connect;
-
-			/**
-			 * YouCanPay Payment Request configurations.
-			 *
-			 * @var WC_YouCanPay_Payment_Request
-			 */
-			public $payment_request_configuration;
-
-			/**
-			 * YouCanPay Account.
-			 *
-			 * @var WC_YouCanPay_Account
-			 */
-			public $account;
-
-			/**
 			 * The main YouCanPay gateway instance. Use get_main_youcanpay_gateway() to access it.
 			 *
 			 * @var null|WC_YouCanPay_Payment_Gateway
@@ -138,8 +110,6 @@ function woocommerce_gateway_youcanpay() {
 				add_action( 'admin_init', [ $this, 'install' ] );
 
 				$this->init();
-
-				add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 			}
 
 			/**
@@ -163,20 +133,13 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
-				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect.php';
-				require_once dirname( __FILE__ ) . '/includes/connect/class-wc-youcanpay-connect-api.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-customer.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-account.php';
-
-				$this->api                           = new WC_YouCanPay_Connect_API();
-				$this->connect                       = new WC_YouCanPay_Connect( $this->api );
-				$this->account                       = new WC_YouCanPay_Account( $this->connect, 'WC_YouCanPay_API' );
 
 				if ( is_admin() ) {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-admin-notices.php';
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-settings-controller.php';
 
-					new WC_YouCanPay_Settings_Controller( $this->account );
+					new WC_YouCanPay_Settings_Controller();
 				}
 
 				add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateways' ] );
@@ -269,7 +232,6 @@ function woocommerce_gateway_youcanpay() {
 
 				// These payment gateways will always be visible, regardless if UPE is enabled or disabled:
 				$methods[] = WC_Gateway_YouCanPay_Standalone::class;
-				//$methods[] = WC_Gateway_YouCanPay_Multibanco::class;
 
 				return $methods;
 			}
@@ -329,24 +291,6 @@ function woocommerce_gateway_youcanpay() {
 				$email_classes['WC_YouCanPay_Email_Failed_Authentication_Retry']    = new WC_YouCanPay_Email_Failed_Authentication_Retry( $email_classes );
 
 				return $email_classes;
-			}
-
-			/**
-			 * Register REST API routes.
-			 *
-			 * New endpoints/controllers can be added here.
-			 */
-			public function register_routes() {
-				/** API includes */
-				require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/abstracts/abstract-wc-youcanpay-connect-rest-controller.php';
-				//require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/connect/class-wc-youcanpay-connect-rest-oauth-init-controller.php';
-				//require_once WC_YOUCAN_PAY_PLUGIN_PATH . '/includes/connect/class-wc-youcanpay-connect-rest-oauth-connect-controller.php';
-
-				//$oauth_init    = new WC_YouCanPay_Connect_REST_Oauth_Init_Controller( $this->connect, $this->api );
-				//$oauth_connect = new WC_YouCanPay_Connect_REST_Oauth_Connect_Controller( $this->connect, $this->api );
-
-				//$oauth_init->register_routes();
-				//$oauth_connect->register_routes();
 			}
 
 			/**

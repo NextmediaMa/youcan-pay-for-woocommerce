@@ -34,10 +34,6 @@ $youcanpay_settings = apply_filters(
 			'default'     => __( 'Pay with your credit card via YouCan Pay.', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
-		'api_credentials'                     => [
-			'title' => __( 'YouCan Pay Account Keys', 'woocommerce-youcan-pay' ),
-			'type'  => 'youcanpay_account_keys',
-		],
 		'testmode'                            => [
 			'title'       => __( 'Test mode', 'woocommerce-youcan-pay' ),
 			'label'       => __( 'Enable Test Mode', 'woocommerce-youcan-pay' ),
