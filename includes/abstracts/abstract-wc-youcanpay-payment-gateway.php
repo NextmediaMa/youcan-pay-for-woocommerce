@@ -341,11 +341,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @version 4.0.0
 	 */
 	public function get_transaction_url( $order ) {
-		if ( $this->testmode ) {
-			$this->view_transaction_url = 'https://dashboard.youcanpay.com/test/payments/%s';
-		} else {
-			$this->view_transaction_url = 'https://dashboard.youcanpay.com/payments/%s';
-		}
+		$this->view_transaction_url = 'https://pay.youcan.shop/transactions/%s';
 
 		return parent::get_transaction_url( $order );
 	}

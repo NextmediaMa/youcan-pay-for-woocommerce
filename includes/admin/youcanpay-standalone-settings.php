@@ -6,16 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 return apply_filters(
 	'wc_youcanpay_standalone_settings',
 	[
-		'geo_target'  => [
-			'description' => __( 'Customer Geography: China', 'woocommerce-youcan-pay' ),
-			'type'        => 'title',
-		],
 		'guide'       => [
-			'description' => __( '<a href="https://youcanpay.com/payments/payment-methods-guide#standalone" target="_blank">Payment Method Guide</a>', 'woocommerce-youcan-pay' ),
+			'description' => __( '<a href="https://pay.youcan.shop/docs" target="_blank">Payment Method Guide</a>', 'woocommerce-youcan-pay' ),
 			'type'        => 'title',
 		],
 		'activation'  => [
-			'description' => __( 'Must be activated from your YouCan Pay Dashboard Settings <a href="https://dashboard.youcanpay.com/account/payments/settings" target="_blank">here</a>', 'woocommerce-youcan-pay' ),
+			'description' => __( 'Must be activated from your YouCan Pay Settings <a href="https://pay.youcan.shop/settings" target="_blank">here</a>', 'woocommerce-youcan-pay' ),
 			'type'        => 'title',
 		],
 		'enabled'     => [
