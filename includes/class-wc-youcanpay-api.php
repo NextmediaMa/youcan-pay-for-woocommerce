@@ -294,7 +294,9 @@ class WC_YouCanPay_API {
 	public static function get_transaction($transaction_id) {
 		WC_YouCanPay_Logger::log( "getTransaction" );
 
-		\YouCan\Pay\YouCanPay::setIsSandboxMode( true );
+		if (self::is_test_mode()) {
+			\YouCan\Pay\YouCanPay::setIsSandboxMode( true );
+		}
 		$py = \YouCan\Pay\YouCanPay::instance()->useKeys(
 			self::get_secret_key(),
 			self::get_public_key()

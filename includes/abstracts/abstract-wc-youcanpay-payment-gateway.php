@@ -375,7 +375,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		if ( is_object( $order ) ) {
 			$args = [
 				'wc-api' => 'wc_youcanpay',
-				'wc-original' => 'wc_youcanpay',
 				'key' => $order->get_order_key(),
 			];
 
