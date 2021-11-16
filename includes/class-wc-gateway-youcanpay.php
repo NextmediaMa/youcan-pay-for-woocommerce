@@ -74,10 +74,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = self::ID;
-		$this->method_title = __( 'YouCanPay', 'woocommerce-gateway-youcanpay' );
+		$this->method_title = __( 'YouCanPay', 'woocommerce-youcan-pay' );
 		/* translators: 1) link to YouCanPay register page 2) link to YouCanPay api keys page */
 		$this->method_description = __( 'YouCanPay works by adding payment fields on the checkout and then sending the details to YouCanPay for verification.',
-			'woocommerce-gateway-youcanpay' );
+			'woocommerce-youcan-pay' );
 		$this->has_fields         = true;
 		$this->supports           = [
 			'products',
@@ -197,7 +197,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		if ( $this->testmode ) {
 			/* translators: link to YouCanPay testing page */
 			$description .= ' ' . sprintf(__( 'TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
-					'woocommerce-gateway-youcanpay' ), 'https://pay.youcan.shop/docs#testing-and-test-cards' );
+					'woocommerce-youcan-pay' ), 'https://pay.youcan.shop/docs#testing-and-test-cards' );
 		}
 
 		$description = trim( $description );
@@ -256,7 +256,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
                         e.preventDefault();
                         var $form = $(this);
 
-                        if ($('input[name=payment_method]:checked').val() === 'youcanpay') {
+                        if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.youcanpay) {
                             ycPay.pay(youcan_pay_script_vars.token_transaction)
                                 .then(function (transactionId) {
                                     $('#transaction-id').val(transactionId);
@@ -302,81 +302,27 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @return array  The configuration object to be loaded to JS.
 	 */
 	public function javascript_params() {
-		global $wp;
-
 		$youcanpay_params = [
 			'title'                => $this->title,
 			'key'                  => $this->publishable_key,
-			'i18n_terms'           => __( 'Please accept the terms and conditions first',
-				'woocommerce-gateway-youcanpay' ),
-			'i18n_required_fields' => __( 'Please fill in required checkout fields first',
-				'woocommerce-gateway-youcanpay' ),
+			'youcanpay'            => self::ID,
+			'is_test_mode'         => $this->is_in_test_mode(),
+			'youcanpay_locale'     => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
 		];
 
-		// If we're on the pay page we need to pass youcanpay.js the address of the order.
-		if ( isset( $_GET['pay_for_order'] ) && 'true' === $_GET['pay_for_order'] ) { // wpcs: csrf ok.
-			$order_id = wc_clean( $wp->query_vars['order-pay'] ); // wpcs: csrf ok, sanitization ok, xss ok.
-			$order    = wc_get_order( $order_id );
-
-			if ( is_a( $order, 'WC_Order' ) ) {
-				$youcanpay_params['billing_first_name'] = $order->get_billing_first_name();
-				$youcanpay_params['billing_last_name']  = $order->get_billing_last_name();
-				$youcanpay_params['billing_address_1']  = $order->get_billing_address_1();
-				$youcanpay_params['billing_address_2']  = $order->get_billing_address_2();
-				$youcanpay_params['billing_state']      = $order->get_billing_state();
-				$youcanpay_params['billing_city']       = $order->get_billing_city();
-				$youcanpay_params['billing_postcode']   = $order->get_billing_postcode();
-				$youcanpay_params['billing_country']    = $order->get_billing_country();
-			}
-		}
-
-		//$cart_data = WC()->session->get('cart');
-
-		//$token_id = 0;
-		//$cart_data = reset($cart_data);
-		//if ((is_array($cart_data)) && (isset($cart_data['data_hash']))) {
-		$token    = WC_YouCanPay_API::create_token(
+		$token_id = 0;
+		$token = WC_YouCanPay_API::create_token(
 			WC()->cart->get_cart_hash(),
 			$this->get_order_total(),
 			get_woocommerce_currency()
 		);
-		$token_id = $token->getId();
-
-
-		$youcanpay_params['youcanpay_locale']          = WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() );
-		$youcanpay_params['no_prepaid_card_msg']       = __( 'Sorry, we\'re not accepting prepaid cards at this time. Your credit card has not been charged. Please try with alternative payment method.',
-			'woocommerce-gateway-youcanpay' );
-		$youcanpay_params['no_sepa_owner_msg']         = __( 'Please enter your IBAN account name.',
-			'woocommerce-gateway-youcanpay' );
-		$youcanpay_params['no_sepa_iban_msg']          = __( 'Please enter your IBAN account number.',
-			'woocommerce-gateway-youcanpay' );
-		$youcanpay_params['payment_intent_error']      = __( 'We couldn\'t initiate the payment. Please try again.',
-			'woocommerce-gateway-youcanpay' );
-		$youcanpay_params['sepa_mandate_notification'] = apply_filters( 'wc_youcanpay_sepa_mandate_notification',
-			'email' );
-		$youcanpay_params['allow_prepaid_card']        = apply_filters( 'wc_youcanpay_allow_prepaid_card',
-			true ) ? 'yes' : 'no';
-		$youcanpay_params['is_checkout']               = ( is_checkout() && empty( $_GET['pay_for_order'] ) ) ? 'yes' : 'no'; // wpcs: csrf ok.
-		$youcanpay_params['return_url']                = $this->get_youcanpay_return_url();
-		$youcanpay_params['ajaxurl']                   = WC_AJAX::get_endpoint( '%%endpoint%%' );
-		$youcanpay_params['youcanpay_nonce']           = wp_create_nonce( '_wc_youcanpay_nonce' );
-		$youcanpay_params['elements_options']          = apply_filters( 'wc_youcanpay_elements_options', [] );
-		$youcanpay_params['invalid_owner_name']        = __( 'Billing First Name and Last Name are required.',
-			'woocommerce-gateway-youcanpay' );
-		$youcanpay_params['is_change_payment_page']    = isset( $_GET['change_payment_method'] ) ? 'yes' : 'no'; // wpcs: csrf ok.
-		$youcanpay_params['is_add_payment_page']       = is_wc_endpoint_url( 'add-payment-method' ) ? 'yes' : 'no';
-		$youcanpay_params['is_pay_for_order_page']     = is_wc_endpoint_url( 'order-pay' ) ? 'yes' : 'no';
-		$youcanpay_params['elements_styling']          = apply_filters( 'wc_youcanpay_elements_styling', false );
-		$youcanpay_params['elements_classes']          = apply_filters( 'wc_youcanpay_elements_classes', false );
-		$youcanpay_params['add_card_nonce']            = wp_create_nonce( 'wc_youcanpay_create_si' );
+        if (! isset($token)) {
+	        $token_id = $token->getId();
+        }
 
 		$youcanpay_params['token_transaction'] = $token_id;
-		$youcanpay_params['is_test_mode']      = $this->is_in_test_mode();
 
-		// Merge localized messages to be use in JS.
-		$youcanpay_params = array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
-
-		return $youcanpay_params;
+		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
 	}
 
 	/**
@@ -457,20 +403,20 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		try {
 			$order = wc_get_order( $order_id );
 			if ( ! isset( $order ) ) {
-				throw new WC_YouCanPay_Exception( 'Order not found', __( 'Sorry, this order does not exist.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( 'Order not found', __( 'Sorry, this order does not exist.', 'woocommerce-youcan-pay' ) );
 			}
 
 			if ( ! isset( $_POST['transaction_id'] ) ) {
-				throw new WC_YouCanPay_Exception( 'Transaction must not be null', __( 'Sorry, transaction must not be null.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( 'Transaction must not be null', __( 'Sorry, transaction must not be null.', 'woocommerce-youcan-pay' ) );
 			}
 
 			$transaction = WC_YouCanPay_API::get_transaction( $_POST['transaction_id'] );
 			if ( ! isset( $transaction ) ) {
-				throw new WC_YouCanPay_Exception( 'Transaction not found', __( 'Sorry, this transaction does not exist.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( 'Transaction not found', __( 'Sorry, this transaction does not exist.', 'woocommerce-youcan-pay' ) );
 			}
 
 			if ( $transaction->getOrderId() !== WC()->cart->get_cart_hash() ) {
-				throw new WC_YouCanPay_Exception( 'Fatal error try again', __( 'Fatal error, please try again or contact support.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( 'Fatal error try again', __( 'Fatal error, please try again or contact support.', 'woocommerce-youcan-pay' ) );
 			}
 
 			$this->validate_minimum_order_amount( $order );
@@ -491,7 +437,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 					'redirect' => $this->get_return_url( $order ),
 				];
 			} else {
-				throw new WC_YouCanPay_Exception( 'Transaction not completed', __( 'Sorry, payment not completed please try again.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( 'Transaction not completed', __( 'Sorry, payment not completed please try again.', 'woocommerce-youcan-pay' ) );
 			}
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
@@ -561,9 +507,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
             <td class="label youcanpay-fee">
 				<?php
 				echo wc_help_tip( __( 'This represents the fee YouCanPay collects for the transaction.',
-					'woocommerce-gateway-youcanpay' ) ); // wpcs: xss ok. ?>
+					'woocommerce-youcan-pay' ) ); // wpcs: xss ok. ?>
 				<?php
-				esc_html_e( 'YouCanPay Fee:', 'woocommerce-gateway-youcanpay' ); ?>
+				esc_html_e( 'YouCanPay Fee:', 'woocommerce-youcan-pay' ); ?>
             </td>
             <td width="1%"></td>
             <td class="total">
@@ -603,9 +549,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
             <td class="label youcanpay-payout">
 				<?php
 				echo wc_help_tip( __( 'This represents the net total that will be credited to your YouCanPay bank account. This may be in the currency that is set in your YouCanPay account.',
-					'woocommerce-gateway-youcanpay' ) ); // wpcs: xss ok. ?>
+					'woocommerce-youcan-pay' ) ); // wpcs: xss ok. ?>
 				<?php
-				esc_html_e( 'YouCanPay Payout:', 'woocommerce-gateway-youcanpay' ); ?>
+				esc_html_e( 'YouCanPay Payout:', 'woocommerce-youcan-pay' ); ?>
             </td>
             <td width="1%"></td>
             <td class="total">
@@ -641,7 +587,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	) {
 		if ( ! $retry ) {
 			$localized_message = __( 'Sorry, we are unable to process your payment at this time. Please retry later.',
-				'woocommerce-gateway-youcanpay' );
+				'woocommerce-youcan-pay' );
 			$order->add_order_note( $localized_message );
 			throw new WC_YouCanPay_Exception( print_r( $response, true ),
 				$localized_message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.
@@ -707,7 +653,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function change_no_available_methods_message() {
 		return wpautop( __( "Almost there!\n\nYour order has already been created, the only thing that still needs to be done is for you to authorize the payment with your bank.",
-			'woocommerce-gateway-youcanpay' ) );
+			'woocommerce-youcan-pay' ) );
 	}
 
 	/**
@@ -729,7 +675,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				'Payment Intent not found',
 				sprintf(
 				/* translators: %s is the order Id */
-					__( 'Payment Intent not found for order #%s', 'woocommerce-gateway-youcanpay' ),
+					__( 'Payment Intent not found for order #%s', 'woocommerce-youcan-pay' ),
 					$order->get_id()
 				)
 			);
@@ -911,7 +857,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_/', $value ) ) {
 			throw new Exception( __( 'The "Live Publishable Key" should start with "pub", enter the correct key.',
-				'woocommerce-gateway-youcanpay' ) );
+				'woocommerce-youcan-pay' ) );
 		}
 
 		return $value;
@@ -921,7 +867,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_/', $value ) ) {
 			throw new Exception( __( 'The "Live Secret Key" should start with "pri", enter the correct key.',
-				'woocommerce-gateway-youcanpay' ) );
+				'woocommerce-youcan-pay' ) );
 		}
 
 		return $value;
@@ -931,7 +877,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Test Publishable Key" should start with "pub_sandbox", enter the correct key.',
-				'woocommerce-gateway-youcanpay' ) );
+				'woocommerce-youcan-pay' ) );
 		}
 
 		return $value;
@@ -941,7 +887,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Test Secret Key" should start with "pri_sandbox", enter the correct key.',
-				'woocommerce-gateway-youcanpay' ) );
+				'woocommerce-youcan-pay' ) );
 		}
 
 		return $value;
@@ -1027,7 +973,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			! preg_match( $no_specials, $value )
 		) {
 			throw new InvalidArgumentException( __( 'Customer bank statement is invalid. Statement should be between 5 and 22 characters long, contain at least single Latin character and does not contain special characters: \' " * &lt; &gt;',
-				'woocommerce-gateway-youcanpay' ) );
+				'woocommerce-youcan-pay' ) );
 		}
 
 		return $value;

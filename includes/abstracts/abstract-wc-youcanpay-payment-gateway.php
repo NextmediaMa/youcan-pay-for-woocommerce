@@ -29,7 +29,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$form_fields = $this->get_form_fields();
 
 		echo '<h2>' . esc_html( $this->get_method_title() );
-		wc_back_link( __( 'Return to payments', 'woocommerce-gateway-youcanpay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		wc_back_link( __( 'Return to payments', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 
 		if ( WC_YouCanPay_Feature_Flags::is_upe_settings_redesign_enabled() ) {
@@ -110,7 +110,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			<p class="form-row woocommerce-SavedPaymentMethods-saveNew">
 				<input id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $id ); ?>" type="checkbox" value="true" style="width:auto;" <?php echo $force_checked ? 'checked' : ''; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?> />
 				<label for="<?php echo esc_attr( $id ); ?>" style="display:inline;">
-					<?php echo esc_html( apply_filters( 'wc_youcanpay_save_to_account_text', __( 'Save payment information to my account for future purchases.', 'woocommerce-gateway-youcanpay' ) ) ); ?>
+					<?php echo esc_html( apply_filters( 'wc_youcanpay_save_to_account_text', __( 'Save payment information to my account for future purchases.', 'woocommerce-youcan-pay' ) ) ); ?>
 				</label>
 			</p>
 		</fieldset>
@@ -216,7 +216,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function validate_minimum_order_amount( $order ) {
 		if ( $order->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
 			/* translators: 1) amount (including currency symbol) */
-			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-gateway-youcanpay' ), wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
+			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-youcan-pay' ), wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
 		}
 	}
 
@@ -285,7 +285,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$post_data['currency'] = strtolower( $order->get_currency() );
 		$post_data['amount']   = WC_YouCanPay_Helper::get_youcanpay_amount( $order->get_total(), $post_data['currency'] );
 		/* translators: 1) blog name 2) order number */
-		$post_data['description'] = sprintf( __( '%1$s - Order %2$s', 'woocommerce-gateway-youcanpay' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), $order->get_order_number() );
+		$post_data['description'] = sprintf( __( '%1$s - Order %2$s', 'woocommerce-youcan-pay' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), $order->get_order_number() );
 		$billing_email            = $order->get_billing_email();
 		$billing_first_name       = $order->get_billing_first_name();
 		$billing_last_name        = $order->get_billing_last_name();
@@ -311,8 +311,8 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$post_data['expand[]'] = 'balance_transaction';
 
 		$metadata = [
-			__( 'customer_name', 'woocommerce-gateway-youcanpay' ) => sanitize_text_field( $billing_first_name ) . ' ' . sanitize_text_field( $billing_last_name ),
-			__( 'customer_email', 'woocommerce-gateway-youcanpay' ) => sanitize_email( $billing_email ),
+			__( 'customer_name', 'woocommerce-youcan-pay' ) => sanitize_text_field( $billing_first_name ) . ' ' . sanitize_text_field( $billing_last_name ),
+			__( 'customer_email', 'woocommerce-youcan-pay' ) => sanitize_email( $billing_email ),
 			'order_id' => $order->get_order_number(),
 			'site_url' => esc_url( get_site_url() ),
 		];
@@ -379,19 +379,19 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 				$order->set_transaction_id( $response->id );
 				/* translators: transaction id */
-				$order->update_status( 'on-hold', sprintf( __( 'YouCanPay charge awaiting payment: %s.', 'woocommerce-gateway-youcanpay' ), $response->id ) );
+				$order->update_status( 'on-hold', sprintf( __( 'YouCanPay charge awaiting payment: %s.', 'woocommerce-youcan-pay' ), $response->id ) );
 			}
 
 			if ( 'succeeded' === $response->status ) {
 				$order->payment_complete( $response->id );
 
 				/* translators: transaction id */
-				$message = sprintf( __( 'YouCanPay charge complete (Charge ID: %s)', 'woocommerce-gateway-youcanpay' ), $response->id );
+				$message = sprintf( __( 'YouCanPay charge complete (Charge ID: %s)', 'woocommerce-youcan-pay' ), $response->id );
 				$order->add_order_note( $message );
 			}
 
 			if ( 'failed' === $response->status ) {
-				$localized_message = __( 'Payment processing failed. Please retry.', 'woocommerce-gateway-youcanpay' );
+				$localized_message = __( 'Payment processing failed. Please retry.', 'woocommerce-youcan-pay' );
 				$order->add_order_note( $localized_message );
 				throw new WC_YouCanPay_Exception( print_r( $response, true ), $localized_message );
 			}
@@ -403,7 +403,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			}
 
 			/* translators: transaction id */
-			$order->update_status( 'on-hold', sprintf( __( 'YouCanPay charge authorized (Charge ID: %s). Process order to take payment, or cancel to remove the pre-authorization. Attempting to refund the order in part or in full will release the authorization and cancel the payment.', 'woocommerce-gateway-youcanpay' ), $response->id ) );
+			$order->update_status( 'on-hold', sprintf( __( 'YouCanPay charge authorized (Charge ID: %s). Process order to take payment, or cancel to remove the pre-authorization. Attempting to refund the order in part or in full will release the authorization and cancel the payment.', 'woocommerce-youcan-pay' ), $response->id ) );
 		}
 
 		if ( is_callable( [ $order, 'save' ] ) ) {
@@ -519,7 +519,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			return;
 		}
 
-		$localized_message = __( 'Sorry, we\'re not accepting prepaid cards at this time. Your credit card has not been charged. Please try with alternative payment method.', 'woocommerce-gateway-youcanpay' );
+		$localized_message = __( 'Sorry, we\'re not accepting prepaid cards at this time. Your credit card has not been charged. Please try with alternative payment method.', 'woocommerce-youcan-pay' );
 		throw new WC_YouCanPay_Exception( print_r( $payment_method, true ), $localized_message );
 	}
 
@@ -613,7 +613,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 			if ( ! $wc_token || $wc_token->get_user_id() !== get_current_user_id() ) {
 				WC()->session->set( 'refresh_totals', true );
-				throw new WC_YouCanPay_Exception( 'Invalid payment method', __( 'Invalid payment method. Please input a new card number.', 'woocommerce-gateway-youcanpay' ) );
+				throw new WC_YouCanPay_Exception( 'Invalid payment method', __( 'Invalid payment method. Please input a new card number.', 'woocommerce-youcan-pay' ) );
 			}
 
 			$source_id = $wc_token->get_token();
@@ -735,7 +735,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function check_source( $prepared_source ) {
 		if ( empty( $prepared_source->source ) ) {
-			$localized_message = __( 'Payment processing failed. Please retry.', 'woocommerce-gateway-youcanpay' );
+			$localized_message = __( 'Payment processing failed. Please retry.', 'woocommerce-youcan-pay' );
 			throw new WC_YouCanPay_Exception( print_r( $prepared_source, true ), $localized_message );
 		}
 	}
@@ -896,7 +896,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 				'youcanpay_error',
 				sprintf(
 					/* translators: %1$s is a youcanpay error message */
-					__( 'There was a problem initiating a refund: %1$s', 'woocommerce-gateway-youcanpay' ),
+					__( 'There was a problem initiating a refund: %1$s', 'woocommerce-youcan-pay' ),
 					$response->error->message
 				)
 			);
@@ -910,12 +910,12 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			// If charge wasn't captured, skip creating a refund and cancel order.
 			if ( 'yes' !== $captured ) {
 				/* translators: amount (including currency symbol) */
-				$order->add_order_note( sprintf( __( 'Pre-Authorization for %s voided.', 'woocommerce-gateway-youcanpay' ), $formatted_amount ) );
+				$order->add_order_note( sprintf( __( 'Pre-Authorization for %s voided.', 'woocommerce-youcan-pay' ), $formatted_amount ) );
 				$order->update_status( 'cancelled' );
 				// If amount is set, that means this function was called from the manual refund form.
 				if ( ! is_null( $amount ) ) {
 					// Throw an exception to provide a custom message on why the refund failed.
-					throw new Exception( __( 'The authorization was voided and the order cancelled. Click okay to continue, then refresh the page.', 'woocommerce-gateway-youcanpay' ) );
+					throw new Exception( __( 'The authorization was voided and the order cancelled. Click okay to continue, then refresh the page.', 'woocommerce-youcan-pay' ) );
 				} else {
 					// If refund was initiaded by changing order status, prevent refund without errors.
 					return false;
@@ -929,7 +929,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			}
 
 			/* translators: 1) amount (including currency symbol) 2) transaction id 3) refund message */
-			$refund_message = sprintf( __( 'Refunded %1$s - Refund ID: %2$s - Reason: %3$s', 'woocommerce-gateway-youcanpay' ), $formatted_amount, $response->id, $reason );
+			$refund_message = sprintf( __( 'Refunded %1$s - Refund ID: %2$s - Reason: %3$s', 'woocommerce-youcan-pay' ), $formatted_amount, $response->id, $reason );
 
 			$order->add_order_note( $refund_message );
 			WC_YouCanPay_Logger::log( 'Success: ' . html_entity_decode( wp_strip_all_tags( $refund_message ) ) );
@@ -947,7 +947,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function add_payment_method() {
 		$error     = false;
-		$error_msg = __( 'There was a problem adding the payment method.', 'woocommerce-gateway-youcanpay' );
+		$error_msg = __( 'There was a problem adding the payment method.', 'woocommerce-youcan-pay' );
 		$source_id = '';
 
 		if ( empty( $_POST['youcanpay_source'] ) && empty( $_POST['youcanpay_token'] ) || ! is_user_logged_in() ) {
