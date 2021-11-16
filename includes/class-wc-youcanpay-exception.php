@@ -15,7 +15,8 @@ class WC_YouCanPay_Exception extends Exception {
 	/**
 	 * String sanitized/localized error message.
 	 *
-	 * @var string */
+	 * @var string
+	 */
 	protected $localized_message;
 
 	/**

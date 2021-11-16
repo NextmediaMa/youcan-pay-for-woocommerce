@@ -26,11 +26,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$this->testmode       = ( ! empty( $youcanpay_settings['testmode'] ) && 'yes' === $youcanpay_settings['testmode'] ) ? true : false;
 
 		add_action( 'woocommerce_api_wc_youcanpay', [ $this, 'check_for_webhook' ] );
-
-		// Get/set the time we began monitoring the health of webhooks by fetching it.
-		// This should be roughly the same as the activation time of the version of the
-		// plugin when this code first appears.
-		WC_YouCanPay_Webhook_State::get_monitoring_began_at();
 	}
 
 	/**

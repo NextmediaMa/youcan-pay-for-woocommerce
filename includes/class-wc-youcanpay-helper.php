@@ -7,10 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Provides static methods as helpers.
  */
 class WC_YouCanPay_Helper {
-	const LEGACY_META_NAME_FEE      = 'YouCan Pay Fee';
-	const LEGACY_META_NAME_NET      = 'Net Revenue From YouCan Pay';
-	const META_NAME_FEE             = '_youcanpay_fee';
-	const META_NAME_NET             = '_youcanpay_net';
 	const META_NAME_YOUCAN_PAY_CURRENCY = '_youcanpay_currency';
 
 	/**
@@ -25,132 +21,6 @@ class WC_YouCanPay_Helper {
 		}
 
 		return $order->get_meta( self::META_NAME_YOUCAN_PAY_CURRENCY, true );
-	}
-
-	/**
-	 * Updates the YouCan Pay currency for order.
-	 *
-	 * @param object $order
-	 * @param string $currency
-	 */
-	public static function update_youcanpay_currency( $order, $currency ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$order->update_meta_data( self::META_NAME_YOUCAN_PAY_CURRENCY, $currency );
-	}
-
-	/**
-	 * Gets the YouCan Pay fee for order. With legacy check.
-	 *
-	 * @param object $order
-	 * @return string $amount
-	 */
-	public static function get_youcanpay_fee( $order = null ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$amount = $order->get_meta( self::META_NAME_FEE, true );
-
-		// If not found let's check for legacy name.
-		if ( empty( $amount ) ) {
-			$amount = $order->get_meta( self::LEGACY_META_NAME_FEE, true );
-
-			// If found update to new name.
-			if ( $amount ) {
-				self::update_youcanpay_fee( $order, $amount );
-			}
-		}
-
-		return $amount;
-	}
-
-	/**
-	 * Updates the YouCan Pay fee for order.
-	 *
-	 * @param object $order
-	 * @param float  $amount
-	 */
-	public static function update_youcanpay_fee( $order = null, $amount = 0.0 ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$order->update_meta_data( self::META_NAME_FEE, $amount );
-	}
-
-	/**
-	 * Deletes the YouCan Pay fee for order.
-	 *
-	 * @param object $order
-	 */
-	public static function delete_youcanpay_fee( $order = null ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$order_id = $order->get_id();
-
-		delete_post_meta( $order_id, self::META_NAME_FEE );
-		delete_post_meta( $order_id, self::LEGACY_META_NAME_FEE );
-	}
-
-	/**
-	 * Gets the YouCan Pay net for order. With legacy check.
-	 *
-	 * @param object $order
-	 * @return string $amount
-	 */
-	public static function get_youcanpay_net( $order = null ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$amount = $order->get_meta( self::META_NAME_NET, true );
-
-		// If not found let's check for legacy name.
-		if ( empty( $amount ) ) {
-			$amount = $order->get_meta( self::LEGACY_META_NAME_NET, true );
-
-			// If found update to new name.
-			if ( $amount ) {
-				self::update_youcanpay_net( $order, $amount );
-			}
-		}
-
-		return $amount;
-	}
-
-	/**
-	 * Updates the YouCan Pay net for order.
-	 *
-	 * @param object $order
-	 * @param float  $amount
-	 */
-	public static function update_youcanpay_net( $order = null, $amount = 0.0 ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$order->update_meta_data( self::META_NAME_NET, $amount );
-	}
-
-	/**
-	 * Deletes the YouCan Pay net for order.
-	 *
-	 * @param object $order
-	 */
-	public static function delete_youcanpay_net( $order = null ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		$order_id = $order->get_id();
-
-		delete_post_meta( $order_id, self::META_NAME_NET );
-		delete_post_meta( $order_id, self::LEGACY_META_NAME_NET );
 	}
 
 	/**
@@ -234,35 +104,6 @@ class WC_YouCanPay_Helper {
 	}
 
 	/**
-	 * YouCan Pay uses smallest denomination in currencies such as cents.
-	 * We need to format the returned currency from YouCan Pay into human readable form.
-	 * The amount is not used in any calculations so returning string is sufficient.
-	 *
-	 * @param object $balance_transaction
-	 * @param string $type Type of number to format
-	 * @return string
-	 */
-	public static function format_balance_fee( $balance_transaction, $type = 'fee' ) {
-		if ( ! is_object( $balance_transaction ) ) {
-			return;
-		}
-
-		if ( in_array( strtolower( $balance_transaction->currency ), self::no_decimal_currencies() ) ) {
-			if ( 'fee' === $type ) {
-				return $balance_transaction->fee;
-			}
-
-			return $balance_transaction->net;
-		}
-
-		if ( 'fee' === $type ) {
-			return number_format( $balance_transaction->fee / 100, 2, '.', '' );
-		}
-
-		return number_format( $balance_transaction->net / 100, 2, '.', '' );
-	}
-
-	/**
 	 * Checks YouCan Pay minimum order value authorized per currency
 	 */
 	public static function get_minimum_amount() {
@@ -321,15 +162,6 @@ class WC_YouCanPay_Helper {
 	}
 
 	/**
-	 * Checks if Pre Orders is available.
-	 *
-	 * @return bool
-	 */
-	public static function is_pre_orders_exists() {
-		return class_exists( 'WC_Pre_Orders' );
-	}
-
-	/**
 	 * Checks if WC version is less than passed in version.
 	 *
 	 * @param string $version Version to check against.
@@ -348,80 +180,6 @@ class WC_YouCanPay_Helper {
 	 */
 	public static function get_webhook_url() {
 		return add_query_arg( 'wc-api', 'wc_youcanpay', trailingslashit( get_home_url() ) );
-	}
-
-	/**
-	 * Gets the order by YouCan Pay source ID.
-	 *
-	 * @param string $source_id
-	 */
-	public static function get_order_by_source_id( $source_id ) {
-		global $wpdb;
-
-		$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT DISTINCT ID FROM $wpdb->posts as posts LEFT JOIN $wpdb->postmeta as meta ON posts.ID = meta.post_id WHERE meta.meta_value = %s AND meta.meta_key = %s", $source_id, '_youcanpay_source_id' ) );
-
-		if ( ! empty( $order_id ) ) {
-			return wc_get_order( $order_id );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Gets the order by YouCan Pay charge ID.
-	 *
-	 * @param string $charge_id
-	 */
-	public static function get_order_by_charge_id( $charge_id ) {
-		global $wpdb;
-
-		if ( empty( $charge_id ) ) {
-			return false;
-		}
-
-		$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT DISTINCT ID FROM $wpdb->posts as posts LEFT JOIN $wpdb->postmeta as meta ON posts.ID = meta.post_id WHERE meta.meta_value = %s AND meta.meta_key = %s", $charge_id, '_transaction_id' ) );
-
-		if ( ! empty( $order_id ) ) {
-			return wc_get_order( $order_id );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Gets the order by YouCan Pay PaymentIntent ID.
-	 *
-	 * @param string $intent_id The ID of the intent.
-	 * @return WC_Order|bool Either an order or false when not found.
-	 */
-	public static function get_order_by_intent_id( $intent_id ) {
-		global $wpdb;
-
-		$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT DISTINCT ID FROM $wpdb->posts as posts LEFT JOIN $wpdb->postmeta as meta ON posts.ID = meta.post_id WHERE meta.meta_value = %s AND meta.meta_key = %s", $intent_id, '_youcanpay_intent_id' ) );
-
-		if ( ! empty( $order_id ) ) {
-			return wc_get_order( $order_id );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Gets the order by YouCan Pay SetupIntent ID.
-	 *
-	 * @param string $intent_id The ID of the intent.
-	 * @return WC_Order|bool Either an order or false when not found.
-	 */
-	public static function get_order_by_setup_intent_id( $intent_id ) {
-		global $wpdb;
-
-		$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT DISTINCT ID FROM $wpdb->posts as posts LEFT JOIN $wpdb->postmeta as meta ON posts.ID = meta.post_id WHERE meta.meta_value = %s AND meta.meta_key = %s", $intent_id, '_youcanpay_setup_intent' ) );
-
-		if ( ! empty( $order_id ) ) {
-			return wc_get_order( $order_id );
-		}
-
-		return false;
 	}
 
 	/**
