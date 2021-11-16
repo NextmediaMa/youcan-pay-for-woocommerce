@@ -180,7 +180,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
 		WC_YouCanPay_Logger::log( 'Info: Begin creating YouCan Pay Standalone source' );
 
-		return WC_YouCanPay_API::requestV2($order, $post_data,'sources' );
+		return WC_YouCanPay_API::request($order, $post_data,'sources' );
 	}
 
 	/**
@@ -198,15 +198,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
 			// This will throw exception if not valid.
 			$this->validate_minimum_order_amount( $order );
-
-			// This comes from the create account checkbox in the checkout page.
-			$create_account = ! empty( $_POST['createaccount'] ) ? true : false;
-
-			if ( $create_account ) {
-				$new_customer_id     = $order->get_customer_id();
-				$new_youcanpay_customer = new WC_YouCanPay_Customer( $new_customer_id );
-				$new_youcanpay_customer->create_customer();
-			}
 
 			$response = $this->create_source( $order );
 

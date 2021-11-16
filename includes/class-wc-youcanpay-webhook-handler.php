@@ -66,14 +66,15 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
 
-		$transaction = WC_YouCanPay_API::get_transaction( $_GET['transaction_id'] ?? '' );
+		$transaction_id = $_GET['transaction_id'] ?? '';
+		$transaction = WC_YouCanPay_API::get_transaction( $transaction_id );
 
 		if ( ! isset( $transaction ) ) {
 			WC_YouCanPay_Logger::log( "arrived on process payment: transaction not exists" . PHP_EOL
 			                          . print_r( 'Payment method: YouCan Pay (Standalone)', true ) . PHP_EOL
 			                          . print_r( 'Code: #0022', true ) . PHP_EOL
 			                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-			                          . print_r( $transaction->getId(), true ) . PHP_EOL
+			                          . print_r( $transaction_id, true ) . PHP_EOL
 			                          . print_r( 'Order Id: ', true ) . PHP_EOL
 			                          . print_r( $order->get_id(), true )
 			);

@@ -185,55 +185,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * Add payment method via account screen.
-	 * We don't store the token locally, but to the YouCan Pay API.
-	 */
-	public function add_payment_method() {
-		$error     = false;
-		$error_msg = __( 'There was a problem adding the payment method.', 'woocommerce-youcan-pay' );
-		$source_id = '';
-
-		if ( empty( $_POST['youcanpay_source'] ) && empty( $_POST['youcanpay_token'] ) || ! is_user_logged_in() ) {
-			$error = true;
-		}
-
-		$youcanpay_customer = new WC_YouCanPay_Customer( get_current_user_id() );
-
-		$source = ! empty( $_POST['youcanpay_source'] ) ? wc_clean( wp_unslash( $_POST['youcanpay_source'] ) ) : '';
-
-		$source_object = WC_YouCanPay_API::retrieve( 'sources/' . $source );
-
-		if ( isset( $source_object ) ) {
-			if ( ! empty( $source_object->error ) ) {
-				$error = true;
-			}
-
-			$source_id = $source_object->id;
-		} elseif ( isset( $_POST['youcanpay_token'] ) ) {
-			$source_id = wc_clean( wp_unslash( $_POST['youcanpay_token'] ) );
-		}
-
-		$response = $youcanpay_customer->add_source( $source_id );
-
-		if ( ! $response || is_wp_error( $response ) || ! empty( $response->error ) ) {
-			$error = true;
-		}
-
-		if ( $error ) {
-			wc_add_notice( $error_msg, 'error' );
-			WC_YouCanPay_Logger::log( 'Add payment method Error: ' . $error_msg );
-			return;
-		}
-
-		do_action( 'wc_youcanpay_add_payment_method_' . ( isset( $_POST['payment_method'] ) ? wc_clean( wp_unslash( $_POST['payment_method'] ) ) : '' ) . '_success', $source_id, $source_object );
-
-		return [
-			'result'   => 'success',
-			'redirect' => wc_get_endpoint_url( 'payment-methods' ),
-		];
-	}
-
-	/**
 	 * Gets the locale with normalization that only YouCan Pay accepts.
 	 *
 	 * @return string $locale

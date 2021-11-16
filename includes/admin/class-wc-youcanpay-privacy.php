@@ -11,11 +11,6 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 		parent::__construct( __( 'YouCan Pay', 'woocommerce-youcan-pay' ) );
 
 		$this->add_exporter( 'woocommerce-youcan-pay-order-data', __( 'WooCommerce YouCan Pay Order Data', 'woocommerce-youcan-pay' ), [ $this, 'order_data_exporter' ] );
-
-		if ( function_exists( 'wcs_get_subscriptions' ) ) {
-			$this->add_exporter( 'woocommerce-youcan-pay-subscriptions-data', __( 'WooCommerce YouCan Pay Subscriptions Data', 'woocommerce-youcan-pay' ), [ $this, 'subscriptions_data_exporter' ] );
-		}
-
 		$this->add_exporter( 'woocommerce-youcan-pay-customer-data', __( 'WooCommerce YouCan Pay Customer Data', 'woocommerce-youcan-pay' ), [ $this, 'customer_data_exporter' ] );
 
 		$this->add_eraser( 'woocommerce-youcan-pay-customer-data', __( 'WooCommerce YouCan Pay Customer Data', 'woocommerce-youcan-pay' ), [ $this, 'customer_data_eraser' ] );
@@ -138,71 +133,6 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 	}
 
 	/**
-	 * Handle exporting data for Subscriptions.
-	 *
-	 * @param string $email_address E-mail address to export.
-	 * @param int    $page          Pagination of data.
-	 *
-	 * @return array
-	 */
-	public function subscriptions_data_exporter( $email_address, $page = 1 ) {
-		$done           = false;
-		$page           = (int) $page;
-		$data_to_export = [];
-
-		$meta_query = [
-			'relation' => 'AND',
-			[
-				'key'     => '_payment_method',
-				'value'   => [ 'youcanpay', 'youcanpay_standalone', 'youcanpay_bancontact', 'youcanpay_eps', 'youcanpay_giropay', 'youcanpay_ideal', 'youcanpay_multibanco', 'youcanpay_p24', 'youcanpay_sepa', 'youcanpay_sofort' ],
-				'compare' => 'IN',
-			],
-			[
-				'key'     => '_billing_email',
-				'value'   => $email_address,
-				'compare' => '=',
-			],
-		];
-
-		$subscription_query = [
-			'posts_per_page' => 10,
-			'page'           => $page,
-			'meta_query'     => $meta_query,
-		];
-
-		$subscriptions = wcs_get_subscriptions( $subscription_query );
-
-		$done = true;
-
-		if ( 0 < count( $subscriptions ) ) {
-			foreach ( $subscriptions as $subscription ) {
-				$data_to_export[] = [
-					'group_id'    => 'woocommerce_subscriptions',
-					'group_label' => __( 'Subscriptions', 'woocommerce-youcan-pay' ),
-					'item_id'     => 'subscription-' . $subscription->get_id(),
-					'data'        => [
-						[
-							'name'  => __( 'YouCan Pay payment id', 'woocommerce-youcan-pay' ),
-							'value' => get_post_meta( $subscription->get_id(), '_youcanpay_source_id', true ),
-						],
-						[
-							'name'  => __( 'YouCan Pay customer id', 'woocommerce-youcan-pay' ),
-							'value' => get_post_meta( $subscription->get_id(), '_youcanpay_customer_id', true ),
-						],
-					],
-				];
-			}
-
-			$done = 10 > count( $subscriptions );
-		}
-
-		return [
-			'data' => $data_to_export,
-			'done' => $done,
-		];
-	}
-
-	/**
 	 * Finds and exports customer data by email address.
 	 *
 	 * @param string $email_address The user email address.
@@ -214,8 +144,6 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 		$data_to_export = [];
 
 		if ( $user instanceof WP_User ) {
-			$youcanpay_user = new WC_YouCanPay_Customer( $user->ID );
-
 			$data_to_export[] = [
 				'group_id'    => 'woocommerce_customer',
 				'group_label' => __( 'Customer Data', 'woocommerce-youcan-pay' ),
@@ -224,11 +152,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 					[
 						'name'  => __( 'YouCan Pay payment id', 'woocommerce-youcan-pay' ),
 						'value' => get_user_option( '_youcanpay_source_id', $user->ID ),
-					],
-					[
-						'name'  => __( 'YouCan Pay customer id', 'woocommerce-youcan-pay' ),
-						'value' => $youcanpay_user->get_id(),
-					],
+					]
 				],
 			];
 		}

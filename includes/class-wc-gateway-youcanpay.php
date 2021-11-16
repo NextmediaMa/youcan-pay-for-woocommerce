@@ -75,9 +75,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->supports           = [
 			'products',
 			'refunds',
-			'tokenization',
-			'add_payment_method',
-			'pre-orders',
+			//'tokenization',
+			//'add_payment_method',
+			//'pre-orders',
 		];
 
 		// Load the form fields.
@@ -373,13 +373,15 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				throw new WC_YouCanPay_Exception( 'Transaction must not be null', __( 'Sorry, transaction must not be null.', 'woocommerce-youcan-pay' ) );
 			}
 
-			$transaction = WC_YouCanPay_API::get_transaction($_POST['transaction_id']);
+			$transaction_id = $_POST['transaction_id'] ?? '';
+			$transaction = WC_YouCanPay_API::get_transaction($transaction_id);
+
 			if ( ! isset( $transaction ) ) {
 				WC_YouCanPay_Logger::log( "arrived on process payment: transaction not exists" . PHP_EOL
 				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
 				                          . print_r( 'Code: #0023', true ) . PHP_EOL
 				                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-				                          . print_r( $transaction->getId(), true ) . PHP_EOL
+				                          . print_r( $transaction_id, true ) . PHP_EOL
 				                          . print_r( 'Order Id: ', true ) . PHP_EOL
 				                          . print_r( $order->get_id(), true )
 				);

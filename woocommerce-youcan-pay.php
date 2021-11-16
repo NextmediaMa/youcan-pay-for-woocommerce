@@ -125,7 +125,6 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
 				require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-customer.php';
 
 				if ( is_admin() ) {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-admin-notices.php';
