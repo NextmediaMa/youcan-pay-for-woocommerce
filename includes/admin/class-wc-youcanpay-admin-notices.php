@@ -88,7 +88,6 @@ class WC_YouCanPay_Admin_Notices {
 		$show_phpver_notice  = get_option( 'wc_youcanpay_show_phpver_notice' );
 		$show_wcver_notice   = get_option( 'wc_youcanpay_show_wcver_notice' );
 		$show_curl_notice    = get_option( 'wc_youcanpay_show_curl_notice' );
-		$changed_keys_notice = get_option( 'wc_youcanpay_show_changed_keys_notice' );
 		$options             = get_option( 'woocommerce_youcanpay_settings' );
 		$testmode            = ( isset( $options['testmode'] ) && 'yes' === $options['testmode'] ) ? true : false;
 		$test_pub_key        = isset( $options['test_publishable_key'] ) ? $options['test_publishable_key'] : '';
@@ -157,13 +156,8 @@ class WC_YouCanPay_Admin_Notices {
 				// Show message if enabled and FORCE SSL is disabled and WordpressHTTPS plugin is not detected.
 				if ( ! wc_checkout_is_https() ) {
 					/* translators: 1) link */
-					$this->add_admin_notice( 'ssl', 'notice notice-warning', sprintf( __( 'YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href="%1$s" target="_blank">SSL certificate</a>', 'woocommerce-youcan-pay' ), 'https://en.wikipedia.org/wiki/Transport_Layer_Security' ), true );
+					$this->add_admin_notice( 'ssl', 'notice notice-warning', sprintf( __( 'YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href="%1$s" target="_blank">SSL certificate</a>', 'woocommerce-youcan-pay' ), 'https://woocommerce.com/document/ssl-and-https/' ), true );
 				}
-			}
-
-			if ( 'yes' === $changed_keys_notice ) {
-				// translators: %s is a the URL for the link.
-				$this->add_admin_notice( 'changed_keys', 'notice notice-warning', sprintf( __( 'The public and/or secret keys for the YouCan Pay gateway have been changed. This might cause errors for existing customers and saved payment methods. <a href="%s" target="_blank">Click here to learn more</a>.', 'woocommerce-youcan-pay' ), 'https://docs.woocommerce.com/document/youcanpay-fixing-customer-errors/' ), true );
 			}
 		}
 	}
@@ -201,9 +195,6 @@ class WC_YouCanPay_Admin_Notices {
 					break;
 				case 'Standalone':
 					update_option( 'wc_youcanpay_show_standalone_notice', 'no' );
-					break;
-				case 'changed_keys':
-					update_option( 'wc_youcanpay_show_changed_keys_notice', 'no' );
 					break;
 			}
 		}
