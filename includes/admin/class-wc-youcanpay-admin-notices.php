@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Class that represents admin notices.
- *
- * @since 4.1.0
  */
 class WC_YouCanPay_Admin_Notices {
 	/**
@@ -18,8 +16,6 @@ class WC_YouCanPay_Admin_Notices {
 
 	/**
 	 * Constructor
-	 *
-	 * @since 4.1.0
 	 */
 	public function __construct() {
 		add_action( 'admin_notices', [ $this, 'admin_notices' ] );
@@ -29,9 +25,6 @@ class WC_YouCanPay_Admin_Notices {
 
 	/**
 	 * Allow this class and other classes to add slug keyed notices (to avoid duplication).
-	 *
-	 * @since 1.0.0
-	 * @version 4.0.0
 	 */
 	public function add_admin_notice( $slug, $class, $message, $dismissible = false ) {
 		$this->notices[ $slug ] = [
@@ -43,9 +36,6 @@ class WC_YouCanPay_Admin_Notices {
 
 	/**
 	 * Display any notices we've collected thus far.
-	 *
-	 * @since 1.0.0
-	 * @version 4.0.0
 	 */
 	public function admin_notices() {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
@@ -54,9 +44,6 @@ class WC_YouCanPay_Admin_Notices {
 
 		// Main YouCan Pay payment method.
 		$this->youcanpay_check_environment();
-
-		// All other payment methods.
-		$this->payment_methods_check_environment();
 
 		foreach ( (array) $this->notices as $notice_key => $notice ) {
 			echo '<div class="' . esc_attr( $notice['class'] ) . '" style="position:relative;">';
@@ -83,8 +70,6 @@ class WC_YouCanPay_Admin_Notices {
 
 	/**
 	 * List of available payment methods.
-	 *
-	 * @since 4.1.0
 	 * @return array
 	 */
 	public function get_payment_methods() {
@@ -96,19 +81,13 @@ class WC_YouCanPay_Admin_Notices {
 	/**
 	 * The backup sanity check, in case the plugin is activated in a weird way,
 	 * or the environment changes after activation. Also handles upgrade routines.
-	 *
-	 * @since 1.0.0
-	 * @version 4.0.0
 	 */
 	public function youcanpay_check_environment() {
-		$show_style_notice   = get_option( 'wc_youcanpay_show_style_notice' );
 		$show_ssl_notice     = get_option( 'wc_youcanpay_show_ssl_notice' );
 		$show_keys_notice    = get_option( 'wc_youcanpay_show_keys_notice' );
-		$show_3ds_notice     = get_option( 'wc_youcanpay_show_3ds_notice' );
 		$show_phpver_notice  = get_option( 'wc_youcanpay_show_phpver_notice' );
 		$show_wcver_notice   = get_option( 'wc_youcanpay_show_wcver_notice' );
 		$show_curl_notice    = get_option( 'wc_youcanpay_show_curl_notice' );
-		$show_sca_notice     = get_option( 'wc_youcanpay_show_sca_notice' );
 		$changed_keys_notice = get_option( 'wc_youcanpay_show_changed_keys_notice' );
 		$options             = get_option( 'woocommerce_youcanpay_settings' );
 		$testmode            = ( isset( $options['testmode'] ) && 'yes' === $options['testmode'] ) ? true : false;
@@ -116,28 +95,8 @@ class WC_YouCanPay_Admin_Notices {
 		$test_secret_key     = isset( $options['test_secret_key'] ) ? $options['test_secret_key'] : '';
 		$live_pub_key        = isset( $options['publishable_key'] ) ? $options['publishable_key'] : '';
 		$live_secret_key     = isset( $options['secret_key'] ) ? $options['secret_key'] : '';
-		$three_d_secure      = isset( $options['three_d_secure'] ) && 'yes' === $options['three_d_secure'];
 
 		if ( isset( $options['enabled'] ) && 'yes' === $options['enabled'] ) {
-			if ( empty( $show_3ds_notice ) && $three_d_secure ) {
-				$url = 'https://youcanpay.com/docs/payments/3d-secure#three-ds-radar';
-
-				/* translators: 1) A URL that explains YouCan Pay Radar. */
-				$message = __( 'WooCommerce YouCan Pay - We see that you had the "Require 3D secure when applicable" setting turned on. This setting is not available here anymore, because it is now replaced by YouCan Pay Radar. You can learn more about it <a href="%s" target="_blank">here</a>.', 'woocommerce-youcan-pay' );
-
-				$this->add_admin_notice( '3ds', 'notice notice-warning', sprintf( $message, $url ), true );
-			}
-
-			if ( empty( $show_style_notice ) ) {
-				/* translators: 1) int version 2) int version */
-				$message = __( 'WooCommerce YouCan Pay - We recently made changes to YouCan Pay that may impact the appearance of your checkout. If your checkout has changed unexpectedly, please follow these <a href="https://docs.woocommerce.com/document/youcanpay/#styling" target="_blank">instructions</a> to fix.', 'woocommerce-youcan-pay' );
-
-				$this->add_admin_notice( 'style', 'notice notice-warning', $message, true );
-
-				return;
-			}
-
-			// @codeCoverageIgnoreStart
 			if ( empty( $show_phpver_notice ) ) {
 				if ( version_compare( phpversion(), WC_YOUCAN_PAY_MIN_PHP_VER, '<' ) ) {
 					/* translators: 1) int version 2) int version */
@@ -152,7 +111,7 @@ class WC_YouCanPay_Admin_Notices {
 			if ( empty( $show_wcver_notice ) ) {
 				if ( WC_YouCanPay_Helper::is_wc_lt( WC_YOUCAN_PAY_FUTURE_MIN_WC_VER ) ) {
 					/* translators: 1) int version 2) int version */
-					$message = __( 'WooCommerce YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All furture versions of the plugin will require WooCommerce %2$s or greater.', 'woocommerce-youcan-pay' );
+					$message = __( 'WooCommerce YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All future versions of the plugin will require WooCommerce %2$s or greater.', 'woocommerce-youcan-pay' );
 					$this->add_admin_notice( 'wcver', 'notice notice-warning', sprintf( $message, WC_VERSION, WC_YOUCAN_PAY_FUTURE_MIN_WC_VER ), true );
 				}
 			}
@@ -162,7 +121,6 @@ class WC_YouCanPay_Admin_Notices {
 					$this->add_admin_notice( 'curl', 'notice notice-warning', __( 'WooCommerce YouCan Pay - cURL is not installed.', 'woocommerce-youcan-pay' ), true );
 				}
 			}
-			// @codeCoverageIgnoreEnd
 
 			if ( empty( $show_keys_notice ) ) {
 				$secret = WC_YouCanPay_API::get_secret_key();
@@ -203,11 +161,6 @@ class WC_YouCanPay_Admin_Notices {
 				}
 			}
 
-			if ( empty( $show_sca_notice ) ) {
-				/* translators: %1 is the URL for the link */
-				$this->add_admin_notice( 'sca', 'notice notice-success', sprintf( __( 'YouCan Pay is now ready for Strong Customer Authentication (SCA) and 3D Secure 2! <a href="%1$s" target="_blank">Read about SCA</a>', 'woocommerce-youcan-pay' ), 'https://woocommerce.com/posts/introducing-strong-customer-authentication-sca/' ), true );
-			}
-
 			if ( 'yes' === $changed_keys_notice ) {
 				// translators: %s is a the URL for the link.
 				$this->add_admin_notice( 'changed_keys', 'notice notice-warning', sprintf( __( 'The public and/or secret keys for the YouCan Pay gateway have been changed. This might cause errors for existing customers and saved payment methods. <a href="%s" target="_blank">Click here to learn more</a>.', 'woocommerce-youcan-pay' ), 'https://docs.woocommerce.com/document/youcanpay-fixing-customer-errors/' ), true );
@@ -216,33 +169,7 @@ class WC_YouCanPay_Admin_Notices {
 	}
 
 	/**
-	 * Environment check for all other payment methods.
-	 *
-	 * @since 4.1.0
-	 */
-	public function payment_methods_check_environment() {
-		$payment_methods = $this->get_payment_methods();
-
-		foreach ( $payment_methods as $method => $class ) {
-			$show_notice = get_option( 'wc_youcanpay_show_' . strtolower( $method ) . '_notice' );
-			$gateway     = new $class();
-
-			if ( 'yes' !== $gateway->enabled || 'no' === $show_notice ) {
-				continue;
-			}
-
-			if ( ! in_array( get_woocommerce_currency(), $gateway->get_supported_currency(), true ) ) {
-				/* translators: %1$s Payment method, %2$s List of supported currencies */
-				$this->add_admin_notice( $method, 'notice notice-error', sprintf( __( '%1$s is enabled - it requires store currency to be set to %2$s', 'woocommerce-youcan-pay' ), $method, implode( ', ', $gateway->get_supported_currency() ) ), true );
-			}
-		}
-	}
-
-	/**
 	 * Hides any admin notices.
-	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 */
 	public function hide_notices() {
 		if ( isset( $_GET['wc-youcanpay-hide-notice'] ) && isset( $_GET['_wc_youcanpay_notice_nonce'] ) ) {
@@ -257,9 +184,6 @@ class WC_YouCanPay_Admin_Notices {
 			$notice = wc_clean( wp_unslash( $_GET['wc-youcanpay-hide-notice'] ) );
 
 			switch ( $notice ) {
-				case 'style':
-					update_option( 'wc_youcanpay_show_style_notice', 'no' );
-					break;
 				case 'phpver':
 					update_option( 'wc_youcanpay_show_phpver_notice', 'no' );
 					break;
@@ -275,22 +199,11 @@ class WC_YouCanPay_Admin_Notices {
 				case 'keys':
 					update_option( 'wc_youcanpay_show_keys_notice', 'no' );
 					break;
-				case '3ds':
-					update_option( 'wc_youcanpay_show_3ds_notice', 'no' );
-					break;
 				case 'Standalone':
 					update_option( 'wc_youcanpay_show_standalone_notice', 'no' );
 					break;
-				case 'sca':
-					update_option( 'wc_youcanpay_show_sca_notice', 'no' );
-					break;
 				case 'changed_keys':
 					update_option( 'wc_youcanpay_show_changed_keys_notice', 'no' );
-					break;
-				default:
-					if ( false !== strpos( $notice, '_upe' ) ) {
-						update_option( 'wc_youcanpay_show_' . $notice . '_notice', 'no' );
-					}
 					break;
 			}
 		}
@@ -298,9 +211,7 @@ class WC_YouCanPay_Admin_Notices {
 
 	/**
 	 * Get setting link.
-	 *
-	 * @since 1.0.0
-	 *
+     *
 	 * @return string Setting link
 	 */
 	public function get_setting_link() {
@@ -309,21 +220,9 @@ class WC_YouCanPay_Admin_Notices {
 
 	/**
 	 * Saves options in order to hide notices based on the gateway's version.
-	 *
-	 * @since 4.3.0
 	 */
 	public function youcanpay_updated() {
-		$previous_version = get_option( 'wc_youcanpay_version' );
 
-		// Only show the style notice if the plugin was installed and older than 4.1.4.
-		if ( empty( $previous_version ) || version_compare( $previous_version, '4.1.4', 'ge' ) ) {
-			update_option( 'wc_youcanpay_show_style_notice', 'no' );
-		}
-
-		// Only show the SCA notice on pre-4.3.0 installs.
-		if ( empty( $previous_version ) || version_compare( $previous_version, '4.3.0', 'ge' ) ) {
-			update_option( 'wc_youcanpay_show_sca_notice', 'no' );
-		}
 	}
 }
 

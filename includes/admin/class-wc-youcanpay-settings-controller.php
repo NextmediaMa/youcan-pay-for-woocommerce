@@ -6,8 +6,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Controls whether we're on the settings page and enqueues the JS code.
- *
- * @since 5.4.1
  */
 class WC_YouCanPay_Settings_Controller {
 

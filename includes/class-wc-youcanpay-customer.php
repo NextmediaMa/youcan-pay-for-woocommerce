@@ -263,7 +263,6 @@ class WC_YouCanPay_Customer {
 	 * Checks to see if error is of invalid request
 	 * error and it is no such customer.
 	 *
-	 * @since 4.1.2
 	 * @param array $error
 	 */
 	public function is_no_such_customer_error( $error ) {
@@ -278,7 +277,6 @@ class WC_YouCanPay_Customer {
 	 * Checks to see if error is of invalid request
 	 * error and it is no such customer.
 	 *
-	 * @since 4.5.6
 	 * @param array $error
 	 * @return bool
 	 */

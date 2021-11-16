@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * An email sent to the admin when payment fails to go through due to authentication_required error.
- *
- * @since 4.3.0
  */
 class WC_YouCanPay_Email_Failed_Authentication_Retry extends WC_Email_Failed_Order {
 

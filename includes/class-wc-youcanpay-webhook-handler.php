@@ -8,8 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class WC_YouCanPay_Webhook_Handler.
  *
  * Handles webhooks from YouCanPay on sources that are not immediately chargeable.
- *
- * @since 4.0.0
  */
 class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	/**
@@ -21,9 +19,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 	/**
 	 * Constructor.
-	 *
-	 * @since 4.0.0
-	 * @version 5.0.0
 	 */
 	public function __construct() {
 		$this->retry_interval = 2;
@@ -40,9 +35,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 	/**
 	 * Check incoming requests for YouCanPay Webhook data and process them.
-	 *
-	 * @since 4.0.0
-	 * @version 5.0.0
 	 */
 	public function check_for_webhook() {
 		if ( ! isset( $_SERVER['REQUEST_METHOD'] )

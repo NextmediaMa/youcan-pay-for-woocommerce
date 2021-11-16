@@ -30,12 +30,8 @@ define( 'WC_YOUCAN_PAY_ABSPATH', __DIR__ . '/' );
 define( 'WC_YOUCAN_PAY_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
 define( 'WC_YOUCAN_PAY_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
-// phpcs:disable WordPress.Files.FileName
-
 /**
  * WooCommerce fallback notice.
- *
- * @since 4.1.2
  */
 function woocommerce_youcanpay_missing_wc_notice() {
 	/* translators: 1. URL link. */
@@ -44,8 +40,6 @@ function woocommerce_youcanpay_missing_wc_notice() {
 
 /**
  * WooCommerce not supported fallback notice.
- *
- * @since 4.4.0
  */
 function woocommerce_youcanpay_wc_not_supported() {
 	/* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
@@ -114,9 +108,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Init the plugin after plugins_loaded so environment variables are set.
-			 *
-			 * @since 1.0.0
-			 * @version 5.0.0
 			 */
 			public function init() {
 				if ( is_admin() ) {
@@ -158,9 +149,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Updates the plugin version in db
-			 *
-			 * @since 3.1.0
-			 * @version 4.0.0
 			 */
 			public function update_plugin_version() {
 				delete_option( 'wc_youcanpay_version' );
@@ -169,9 +157,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Handles upgrade routines.
-			 *
-			 * @since 3.1.0
-			 * @version 3.1.0
 			 */
 			public function install() {
 				if ( ! is_plugin_active( plugin_basename( __FILE__ ) ) ) {
@@ -192,9 +177,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Add plugin action links.
-			 *
-			 * @since 1.0.0
-			 * @version 4.0.0
 			 */
 			public function plugin_action_links( $links ) {
 				$plugin_links = [
@@ -206,7 +188,6 @@ function woocommerce_gateway_youcanpay() {
 			/**
 			 * Add plugin action links.
 			 *
-			 * @since 4.3.4
 			 * @param  array  $links Original list of plugin links.
 			 * @param  string $file  Name of current file.
 			 * @return array  $links Update list of plugin links.
@@ -224,9 +205,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Add the gateways to WooCommerce.
-			 *
-			 * @since 1.0.0
-			 * @version 5.6.0
 			 */
 			public function add_gateways( $methods ) {
 				$methods[] = $this->get_main_youcanpay_gateway();
@@ -239,9 +217,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Modifies the order of the gateways displayed in admin.
-			 *
-			 * @since 4.0.0
-			 * @version 4.0.0
 			 */
 			public function filter_gateway_order_admin( $sections ) {
 				unset( $sections['youcanpay'] );
@@ -255,9 +230,6 @@ function woocommerce_gateway_youcanpay() {
 
 			/**
 			 * Provide default values for missing settings on initial gateway settings save.
-			 *
-			 * @since 4.5.4
-			 * @version 4.5.4
 			 *
 			 * @param array      $settings New settings to save.
 			 * @param array|bool $old_settings Existing settings, if any.

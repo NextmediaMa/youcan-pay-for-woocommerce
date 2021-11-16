@@ -5,9 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Log all things!
- *
- * @since 4.0.0
- * @version 4.0.0
  */
 class WC_YouCanPay_Logger {
 
@@ -16,9 +13,6 @@ class WC_YouCanPay_Logger {
 
 	/**
 	 * Utilize WC logger class
-	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 */
 	public static function log( $message, $start_time = null, $end_time = null ) {
 		if ( ! class_exists( 'WC_Logger' ) ) {

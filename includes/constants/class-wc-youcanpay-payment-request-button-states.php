@@ -5,8 +5,6 @@
  * Provides a map between WC states and Payment Request API states.
  * The list is based on libaddressinput: https://github.com/google/libaddressinput,
  * which is used by Chromium based browsers in the native Payment Request address dialog.
- *
- * @since 5.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

@@ -7,8 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class that handles Standalone payment method.
  *
  * @extends WC_Gateway_YouCanPay
- *
- * @since 4.0.0
  */
 class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
@@ -89,43 +87,13 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 			$this->secret_key      = ! empty( $main_settings['test_secret_key'] ) ? $main_settings['test_secret_key'] : '';
 		}
 
-		//var_dump($this);die();
-
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'payment_scripts' ] );
 	}
 
 	/**
-	 * Returns all supported currencies for this payment method.
-	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
-	 * @return array
-	 */
-	public function get_supported_currency() {
-		return apply_filters(
-			'wc_youcanpay_standalone_supported_currencies',
-			[
-				'MAD',
-				'EUR',
-				'AUD',
-				'CAD',
-				'CNY',
-				'GBP',
-				'HKD',
-				'JPY',
-				'NZD',
-				'SGD',
-				'USD',
-			]
-		);
-	}
-
-	/**
 	 * Checks to see if all criteria is met before showing payment method.
 	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 * @return bool
 	 */
 	public function is_available() {
@@ -135,8 +103,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	/**
 	 * Get_icon function.
 	 *
-	 * @since 1.0.0
-	 * @version 4.0.0
 	 * @return string
 	 */
 	public function get_icon() {
@@ -151,9 +117,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
 	/**
 	 * Payment_scripts function.
-	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 */
 	public function payment_scripts() {
 		if ( ! is_cart() && ! is_checkout() && ! isset( $_GET['pay_for_order'] ) && ! is_add_payment_method_page() ) {
@@ -176,7 +139,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function payment_fields() {
 		global $wp;
-		$user        = wp_get_current_user();
 		$total       = WC()->cart->total;
 		$description = $this->get_description();
 
@@ -184,13 +146,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		if ( isset( $_GET['pay_for_order'] ) && ! empty( $_GET['key'] ) ) {
 			$order = wc_get_order( wc_clean( $wp->query_vars['order-pay'] ) );
 			$total = $order->get_total();
-		}
-
-		if ( is_add_payment_method_page() ) {
-			$pay_button_text = __( 'Add Payment', 'woocommerce-youcan-pay' );
-			$total           = '';
-		} else {
-			$pay_button_text = '';
 		}
 
 		echo '<div
@@ -208,10 +163,10 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	/**
 	 * Creates the source for charge.
 	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 * @param object $order
+	 *
 	 * @return mixed
+	 * @throws WC_YouCanPay_Exception
 	 */
 	public function create_source( $order ) {
 		$currency              = $order->get_currency();
@@ -231,11 +186,9 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	/**
 	 * Process the payment
 	 *
-	 * @param int  $order_id Reference.
+	 * @param int $order_id Reference.
 	 * @param bool $retry Should we retry on fail.
-	 * @param bool $force_save_source Force payment source to be saved.
-	 *
-	 * @throws Exception If payment will not be accepted.
+	 * @param bool $force_save_save
 	 *
 	 * @return array|void
 	 */

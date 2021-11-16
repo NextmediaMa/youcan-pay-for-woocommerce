@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Provides static methods as helpers.
- *
- * @since 4.0.0
  */
 class WC_YouCanPay_Helper {
 	const LEGACY_META_NAME_FEE      = 'YouCan Pay Fee';
@@ -18,7 +16,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the YouCan Pay currency for order.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 * @return string $currency
 	 */
@@ -33,7 +30,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Updates the YouCan Pay currency for order.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 * @param string $currency
 	 */
@@ -48,7 +44,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the YouCan Pay fee for order. With legacy check.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 * @return string $amount
 	 */
@@ -75,7 +70,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Updates the YouCan Pay fee for order.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 * @param float  $amount
 	 */
@@ -90,7 +84,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Deletes the YouCan Pay fee for order.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 */
 	public static function delete_youcanpay_fee( $order = null ) {
@@ -107,7 +100,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the YouCan Pay net for order. With legacy check.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 * @return string $amount
 	 */
@@ -134,7 +126,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Updates the YouCan Pay net for order.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 * @param float  $amount
 	 */
@@ -149,7 +140,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Deletes the YouCan Pay net for order.
 	 *
-	 * @since 4.1.0
 	 * @param object $order
 	 */
 	public static function delete_youcanpay_net( $order = null ) {
@@ -186,8 +176,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Localize YouCan Pay messages based on code
 	 *
-	 * @since 3.0.6
-	 * @version 3.0.6
 	 * @return array
 	 */
 	public static function get_localized_messages() {
@@ -319,8 +307,6 @@ class WC_YouCanPay_Helper {
 	 * Gets all the saved setting options from a specific method.
 	 * If specific setting is passed, only return that.
 	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 * @param string $method The payment method to get the settings from.
 	 * @param string $setting The name of the setting to get.
 	 */
@@ -337,7 +323,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Checks if Pre Orders is available.
 	 *
-	 * @since 4.1.0
 	 * @return bool
 	 */
 	public static function is_pre_orders_exists() {
@@ -347,7 +332,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Checks if WC version is less than passed in version.
 	 *
-	 * @since 4.1.11
 	 * @param string $version Version to check against.
 	 * @return bool
 	 */
@@ -360,8 +344,6 @@ class WC_YouCanPay_Helper {
 	 * asyncronous redirect payment methods in which statuses are
 	 * not immediately chargeable.
 	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 * @return string
 	 */
 	public static function get_webhook_url() {
@@ -371,8 +353,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the order by YouCan Pay source ID.
 	 *
-	 * @since 4.0.0
-	 * @version 4.0.0
 	 * @param string $source_id
 	 */
 	public static function get_order_by_source_id( $source_id ) {
@@ -390,8 +370,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the order by YouCan Pay charge ID.
 	 *
-	 * @since 4.0.0
-	 * @since 4.1.16 Return false if charge_id is empty.
 	 * @param string $charge_id
 	 */
 	public static function get_order_by_charge_id( $charge_id ) {
@@ -413,7 +391,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the order by YouCan Pay PaymentIntent ID.
 	 *
-	 * @since 4.2
 	 * @param string $intent_id The ID of the intent.
 	 * @return WC_Order|bool Either an order or false when not found.
 	 */
@@ -432,7 +409,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Gets the order by YouCan Pay SetupIntent ID.
 	 *
-	 * @since 4.3
 	 * @param string $intent_id The ID of the intent.
 	 * @return WC_Order|bool Either an order or false when not found.
 	 */
@@ -450,10 +426,8 @@ class WC_YouCanPay_Helper {
 
 	/**
 	 * Sanitize statement descriptor text.
-	 *
 	 * YouCan Pay requires max of 22 characters and no special characters.
 	 *
-	 * @since 4.0.0
 	 * @param string $statement_descriptor
 	 * @return string $statement_descriptor Sanitized statement descriptor
 	 */
@@ -564,7 +538,6 @@ class WC_YouCanPay_Helper {
 	/**
 	 * Checks if this page is a cart or checkout page.
 	 *
-	 * @since 5.2.3
 	 * @return boolean
 	 */
 	public static function has_cart_or_checkout_on_current_page() {
