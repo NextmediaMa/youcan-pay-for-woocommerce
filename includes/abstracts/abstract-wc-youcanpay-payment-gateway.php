@@ -118,126 +118,12 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * Checks to see if request is invalid and that
-	 * they are worth retrying.
-	 *
-	 * @since 4.0.5
-	 * @param array $error
-	 */
-	public function is_retryable_error( $error ) {
-		return (
-			'invalid_request_error' === $error->type ||
-			'idempotency_error' === $error->type ||
-			'rate_limit_error' === $error->type ||
-			'api_connection_error' === $error->type ||
-			'api_error' === $error->type
-		);
-	}
-
-	/**
-	 * Checks to see if error is of same idempotency key
-	 * error due to retries with different parameters.
-	 *
-	 * @since 4.1.0
-	 * @param array $error
-	 */
-	public function is_same_idempotency_error( $error ) {
-		return (
-			$error &&
-			'idempotency_error' === $error->type &&
-			preg_match( '/Keys for idempotent requests can only be used with the same parameters they were first used with./i', $error->message )
-		);
-	}
-
-	/**
-	 * Checks to see if error is of invalid request
-	 * error and it is no such customer.
-	 *
-	 * @since 4.1.0
-	 * @param array $error
-	 */
-	public function is_no_such_customer_error( $error ) {
-		return (
-			$error &&
-			'invalid_request_error' === $error->type &&
-			preg_match( '/No such customer/i', $error->message )
-		);
-	}
-
-	/**
-	 * Checks to see if error is of invalid request
-	 * error and it is no such token.
-	 *
-	 * @since 4.1.0
-	 * @param array $error
-	 */
-	public function is_no_such_token_error( $error ) {
-		return (
-			$error &&
-			'invalid_request_error' === $error->type &&
-			preg_match( '/No such token/i', $error->message )
-		);
-	}
-
-	/**
-	 * Checks to see if error is of invalid request
-	 * error and it is no such source.
-	 *
-	 * @since 4.1.0
-	 * @param array $error
-	 */
-	public function is_no_such_source_error( $error ) {
-		return (
-			$error &&
-			'invalid_request_error' === $error->type &&
-			preg_match( '/No such (source|PaymentMethod)/i', $error->message )
-		);
-	}
-
-	/**
-	 * Checks to see if error is of invalid request
-	 * error and it is no such source linked to customer.
-	 *
-	 * @since 4.1.0
-	 * @param array $error
-	 */
-	public function is_no_linked_source_error( $error ) {
-		return (
-			$error &&
-			'invalid_request_error' === $error->type &&
-			preg_match( '/does not have a linked source with ID/i', $error->message )
-		);
-	}
-
-	/**
-	 * Check to see if we need to update the idempotency
-	 * key to be different from previous charge request.
-	 *
-	 * @since 4.1.0
-	 * @param object $source_object
-	 * @param object $error
-	 * @return bool
-	 */
-	public function need_update_idempotency_key( $source_object, $error ) {
-		return (
-			$error &&
-			1 < $this->retry_interval &&
-			! empty( $source_object ) &&
-			'chargeable' === $source_object->status &&
-			self::is_same_idempotency_error( $error )
-		);
-	}
-
-	/**
 	 * Checks if keys are set and valid.
 	 *
 	 * @since 4.0.6
 	 * @return bool True if the keys are set *and* valid, false otherwise (for example, if keys are empty or the secret key was pasted as publishable key).
 	 */
 	public function are_keys_set() {
-		// NOTE: updates to this function should be added to are_keys_set()
-		// in includes/payment-methods/class-wc-youcanpay-payment-request.php
-
 		if ( $this->testmode ) {
 			return preg_match( '/^pub_sandbox_/', $this->publishable_key )
 				&& preg_match( '/^pri_sandbox_/', $this->secret_key );
@@ -341,7 +227,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @version 4.0.0
 	 */
 	public function get_transaction_url( $order ) {
-		$this->view_transaction_url = 'https://pay.youcan.shop/transactions/%s';
+		$this->view_transaction_url = 'https://pay.youcan.shop/backoffice/transactions/%s';
 
 		return parent::get_transaction_url( $order );
 	}
@@ -1488,126 +1374,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		delete_transient( 'wc_youcanpay_processing_intent_' . $order_id );
 	}
 
-	/**
-	 * Given a response from YouCanPay, check if it's a card error where authentication is required
-	 * to complete the payment.
-	 *
-	 * @param object $response The response from YouCanPay.
-	 * @return boolean Whether or not it's a 'authentication_required' error
-	 */
-	public function is_authentication_required_for_payment( $response ) {
-		return ( ! empty( $response->error ) && 'authentication_required' === $response->error->code )
-			|| ( ! empty( $response->last_payment_error ) && 'authentication_required' === $response->last_payment_error->code );
-	}
-
-	/**
-	 * Creates a SetupIntent for future payments, and saves it to the order.
-	 *
-	 * @param WC_Order $order           The ID of the (free/pre- order).
-	 * @param object   $prepared_source The source, entered/chosen by the customer.
-	 * @return string                   The client secret of the intent, used for confirmation in JS.
-	 */
-	public function setup_intent( $order, $prepared_source ) {
-		$order_id     = $order->get_id();
-		$setup_intent = WC_YouCanPay_API::request(
-			[
-				'payment_method' => $prepared_source->source,
-				'customer'       => $prepared_source->customer,
-				'confirm'        => 'true',
-			],
-			'setup_intents'
-		);
-
-		if ( is_wp_error( $setup_intent ) ) {
-			WC_YouCanPay_Logger::log( "Unable to create SetupIntent for Order #$order_id: " . print_r( $setup_intent, true ) );
-		} elseif ( 'requires_action' === $setup_intent->status ) {
-			$order->update_meta_data( '_youcanpay_setup_intent', $setup_intent->id );
-			$order->save();
-
-			return $setup_intent->client_secret;
-		}
-	}
-
-	/**
-	 * Create and confirm a new PaymentIntent.
-	 *
-	 * @param WC_Order $order           The order that is being paid for.
-	 * @param object   $prepared_source The source that is used for the payment.
-	 * @param float    $amount          The amount to charge. If not specified, it will be read from the order.
-	 * @return object                   An intent or an error.
-	 */
-	public function create_and_confirm_intent_for_off_session( $order, $prepared_source, $amount = null ) {
-		// The request for a charge contains metadata for the intent.
-		$full_request = $this->generate_payment_request( $order, $prepared_source );
-
-		$payment_method_types = WC_YouCanPay_Feature_Flags::is_upe_checkout_enabled() ?
-			$this->get_upe_enabled_at_checkout_payment_method_ids() :
-			[ 'card' ];
-
-		$request = [
-			'amount'               => $amount ? WC_YouCanPay_Helper::get_youcanpay_amount( $amount, $full_request['currency'] ) : $full_request['amount'],
-			'currency'             => $full_request['currency'],
-			'description'          => $full_request['description'],
-			'metadata'             => $full_request['metadata'],
-			'payment_method_types' => $payment_method_types,
-			'off_session'          => 'true',
-			'confirm'              => 'true',
-			'confirmation_method'  => 'automatic',
-		];
-
-		if ( isset( $full_request['customer'] ) ) {
-			$request['customer'] = $full_request['customer'];
-		}
-
-		if ( isset( $full_request['source'] ) ) {
-			$is_source = 'src_' === substr( $full_request['source'], 0, 4 );
-			$request[ $is_source ? 'source' : 'payment_method' ] = $full_request['source'];
-		}
-
-		/**
-		 * Filter the value of the request.
-		 *
-		 * @since 4.5.0
-		 * @param array $request
-		 * @param WC_Order $order
-		 * @param object $source
-		 */
-		$request = apply_filters( 'wc_youcanpay_generate_create_intent_request', $request, $order, $prepared_source );
-
-		if ( isset( $full_request['shipping'] ) ) {
-			$request['shipping'] = $full_request['shipping'];
-		}
-
-		$level3_data                = $this->get_level3_data_from_order( $order );
-		$intent                     = WC_YouCanPay_API::request_with_level3_data(
-			$request,
-			'payment_intents',
-			$level3_data,
-			$order
-		);
-		$is_authentication_required = $this->is_authentication_required_for_payment( $intent );
-
-		if ( ! empty( $intent->error ) && ! $is_authentication_required ) {
-			return $intent;
-		}
-
-		$intent_id      = ( ! empty( $intent->error )
-			? $intent->error->payment_intent->id
-			: $intent->id
-		);
-		$payment_intent = ( ! empty( $intent->error )
-			? $intent->error->payment_intent
-			: $intent
-		);
-		$order_id       = $order->get_id();
-		WC_YouCanPay_Logger::log( "YouCanPay PaymentIntent $intent_id initiated for order $order_id" );
-
-		// Save the intent ID to the order.
-		$this->save_intent_to_order( $order, $payment_intent );
-
-		return $intent;
-	}
-
 	/** Verifies whether a certain ZIP code is valid for the US, incl. 4-digit extensions.
 	 *
 	 * @param string $zip The ZIP code to verify.
@@ -1615,22 +1381,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function is_valid_us_zip_code( $zip ) {
 		return ! empty( $zip ) && preg_match( '/^\d{5,5}(-\d{4,4})?$/', $zip );
-	}
-
-	/**
-	 * Gets a localized message for an error from a response, adds it as a note to the order, and throws it.
-	 *
-	 * @since 4.2.0
-	 * @param  stdClass $response  The response from the YouCanPay API.
-	 * @param  WC_Order $order     The order to add a note to.
-	 * @throws WC_YouCanPay_Exception An exception with the right message.
-	 */
-	public function throw_localized_message( $response, $order ) {
-		$localized_message = $this->get_localized_error_message_from_response( $response );
-
-		$order->add_order_note( $localized_message );
-
-		throw new WC_YouCanPay_Exception( print_r( $response, true ), $localized_message );
 	}
 
 	/**

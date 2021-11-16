@@ -305,6 +305,25 @@ class WC_YouCanPay_API {
 		return $py->transaction->get($transaction_id);
 	}
 
+	public static function create_token($order_id, $total, $currency) {
+		$amount = WC_YouCanPay_Helper::get_youcanpay_amount($total, $currency);
+
+		if (self::is_test_mode()) {
+			\YouCan\Pay\YouCanPay::setIsSandboxMode(true);
+		}
+		$py = \YouCan\Pay\YouCanPay::instance()->useKeys(
+			self::get_secret_key(),
+			self::get_public_key()
+		);
+
+		return $py->token->create(
+			$order_id,
+			$amount,
+			strtoupper($currency),
+			self::get_the_user_ip()
+		);
+	}
+
 	public static function get_the_user_ip() {
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
 			//check ip from share internet
