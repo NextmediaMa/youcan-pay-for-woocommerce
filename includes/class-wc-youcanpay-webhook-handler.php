@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class WC_YouCanPay_Webhook_Handler.
  *
- * Handles webhooks from YouCanPay on sources that are not immediately chargeable.
+ * Handles webhooks from YouCan Pay on sources that are not immediately chargeable.
  */
 class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	/**
@@ -34,7 +34,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	}
 
 	/**
-	 * Check incoming requests for YouCanPay Webhook data and process them.
+	 * Check incoming requests for YouCan Pay Webhook data and process them.
 	 */
 	public function check_for_webhook() {
 		if ( ! isset( $_SERVER['REQUEST_METHOD'] )

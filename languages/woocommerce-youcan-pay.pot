@@ -130,11 +130,11 @@ msgid ""
 msgstr ""
 
 #: client/settings/general-settings-section/remove-method-confirmation-modal.js:47
-msgid "You can add it again at any time in YouCanPay settings."
+msgid "You can add it again at any time in YouCan Pay settings."
 msgstr ""
 
 #: client/settings/general-settings-section/upe-opt-in-banner.js:24
-msgid "Enable the new YouCanPay checkout experience"
+msgid "Enable the new YouCan Pay checkout experience"
 msgstr ""
 
 #: client/settings/general-settings-section/upe-opt-in-banner.js:28
@@ -169,7 +169,7 @@ msgstr ""
 
 #: client/settings/payment-request-section/index.js:74
 msgid ""
-"By enabling this feature, you agree to {{youcanpayLink}}YouCanPay{{/youcanpayLink}}, "
+"By enabling this feature, you agree to {{youcanpayLink}}YouCan Pay{{/youcanpayLink}}, "
 "{{appleLink}}Apple{{/appleLink}}, and {{googleLink}}Google{{/googleLink}}'s "
 "terms of use."
 msgstr ""
@@ -226,7 +226,7 @@ msgstr ""
 #: client/settings/payments-and-transactions-section/index.js:59
 msgid ""
 "If enabled, users will be able to pay with a saved card during checkout. "
-"Card details are saved on YouCanPay servers, not on your store."
+"Card details are saved on YouCan Pay servers, not on your store."
 msgstr ""
 
 #: client/settings/payments-and-transactions-section/index.js:67

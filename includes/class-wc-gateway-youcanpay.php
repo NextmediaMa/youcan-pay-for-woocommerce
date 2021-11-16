@@ -67,9 +67,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = self::ID;
-		$this->method_title = __( 'YouCanPay', 'woocommerce-youcan-pay' );
-		/* translators: 1) link to YouCanPay register page 2) link to YouCanPay api keys page */
-		$this->method_description = __( 'YouCanPay works by adding payment fields on the checkout and then sending the details to YouCanPay for verification.',
+		$this->method_title = __( 'YouCan Pay', 'woocommerce-youcan-pay' );
+		/* translators: 1) link to YouCan Pay register page 2) link to YouCan Pay api keys page */
+		$this->method_description = __( 'YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification.',
 			'woocommerce-youcan-pay' );
 		$this->has_fields         = true;
 		$this->supports           = [
@@ -176,7 +176,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		>';
 
 		if ( $this->testmode ) {
-			/* translators: link to YouCanPay testing page */
+			/* translators: link to YouCan Pay testing page */
 			$description .= ' ' . sprintf(__( 'TEST MODE ENABLED. In test mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
 					'woocommerce-youcan-pay' ), 'https://pay.youcan.shop/docs#testing-and-test-cards' );
 		}
@@ -198,7 +198,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	}
 
 	/**
-	 * Renders the YouCanPay elements form.
+	 * Renders the YouCan Pay elements form.
 	 */
 	public function elements_form() {
 		?>
@@ -311,7 +311,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			return;
 		}
 
-		// If YouCanPay is not enabled bail.
+		// If YouCan Pay is not enabled bail.
 		if ( 'no' === $this->enabled ) {
 			return;
 		}
@@ -325,7 +325,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 		// If no SSL bail.
 		if ( ! $this->testmode && ! is_ssl() ) {
-			WC_YouCanPay_Logger::log( 'YouCanPay live mode requires SSL.' );
+			WC_YouCanPay_Logger::log( 'YouCan Pay live mode requires SSL.' );
 
 			return;
 		}

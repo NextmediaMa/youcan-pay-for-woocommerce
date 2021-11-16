@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce YouCanPay Exception Class
+ * WooCommerce YouCan Pay Exception Class
  *
  * Extends Exception to provide additional data
  *

@@ -35,7 +35,7 @@ define( 'WC_YOUCAN_PAY_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE_
  */
 function woocommerce_youcanpay_missing_wc_notice() {
 	/* translators: 1. URL link. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCanPay requires WooCommerce to be installed and active. You can download %s here.', 'woocommerce-youcan-pay' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCan Pay requires WooCommerce to be installed and active. You can download %s here.', 'woocommerce-youcan-pay' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
 }
 
 /**
@@ -43,7 +43,7 @@ function woocommerce_youcanpay_missing_wc_notice() {
  */
 function woocommerce_youcanpay_wc_not_supported() {
 	/* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCanPay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'woocommerce-youcan-pay' ), WC_YOUCAN_PAY_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'woocommerce-youcan-pay' ), WC_YOUCAN_PAY_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
 }
 
 function woocommerce_gateway_youcanpay() {
@@ -74,7 +74,7 @@ function woocommerce_gateway_youcanpay() {
 			}
 
 			/**
-			 * The main YouCanPay gateway instance. Use get_main_youcanpay_gateway() to access it.
+			 * The main YouCan Pay gateway instance. Use get_main_youcanpay_gateway() to access it.
 			 *
 			 * @var null|WC_YouCanPay_Payment_Gateway
 			 */
@@ -223,7 +223,7 @@ function woocommerce_gateway_youcanpay() {
 				unset( $sections['youcanpay_standalone'] );
 
 				$sections['youcanpay'] = 'YouCanPay';
-				$sections['youcanpay_standalone'] = __( 'YouCanPay Standalone', 'woocommerce-youcan-pay' );
+				$sections['youcanpay_standalone'] = __( 'YouCan Pay Standalone', 'woocommerce-youcan-pay' );
 
 				return $sections;
 			}
@@ -267,7 +267,7 @@ function woocommerce_gateway_youcanpay() {
 			}
 
 			/**
-			 * Returns the main YouCanPay payment gateway class instance.
+			 * Returns the main YouCan Pay payment gateway class instance.
 			 *
 			 * @return WC_YouCanPay_Payment_Gateway
 			 */

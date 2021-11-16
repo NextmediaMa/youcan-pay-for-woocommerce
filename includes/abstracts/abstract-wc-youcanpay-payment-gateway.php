@@ -76,7 +76,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * All payment icons that work with YouCanPay. Some icons references
+	 * All payment icons that work with YouCan Pay. Some icons reference
 	 * WC core icons.
 	 *
 	 * @return array
@@ -92,7 +92,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 	/**
 	 * Validates that the order meets the minimum order amount
-	 * set by YouCanPay.
+	 * set by YouCan Pay.
 	 *
 	 * @param object $order
 	 *
@@ -106,7 +106,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * Gets the transaction URL linked to YouCanPay dashboard.
+	 * Gets the transaction URL linked to YouCan Pay dashboard.
 	 */
 	public function get_transaction_url( $order ) {
 		$this->view_transaction_url = 'https://pay.youcan.shop/backoffice/transactions/%s';
@@ -118,7 +118,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * Builds the return URL from redirects.
 	 *
 	 * @param object $order
-	 * @param int    $id YouCanPay session id.
+	 * @param int    $id YouCan Pay session id.
 	 */
 	public function get_youcanpay_return_url( $order = null, $id = null ) {
 		if ( is_object( $order ) ) {
@@ -186,7 +186,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 	/**
 	 * Add payment method via account screen.
-	 * We don't store the token locally, but to the YouCanPay API.
+	 * We don't store the token locally, but to the YouCan Pay API.
 	 */
 	public function add_payment_method() {
 		$error     = false;
@@ -234,7 +234,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * Gets the locale with normalization that only YouCanPay accepts.
+	 * Gets the locale with normalization that only YouCan Pay accepts.
 	 *
 	 * @return string $locale
 	 */
@@ -242,7 +242,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$locale = get_locale();
 
 		/*
-		 * YouCanPay expects Norwegian to only be passed NO.
+		 * YouCan Pay expects Norwegian to only be passed NO.
 		 * But WP has different dialects.
 		 */
 		if ( 'NO' === substr( $locale, 3, 2 ) ) {

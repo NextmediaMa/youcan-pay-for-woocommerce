@@ -28,7 +28,7 @@ class WC_YouCanPay_Webhook_State {
 	const VALIDATION_FAILED_SIGNATURE_MISMATCH = 'signature_mismatch';
 
 	/**
-	 * Gets whether YouCanPay is in test mode or not
+	 * Gets whether YouCan Pay is in test mode or not
 	 *
 	 * @return bool
 	 */
@@ -134,7 +134,7 @@ class WC_YouCanPay_Webhook_State {
 		}
 
 		if ( self::VALIDATION_FAILED_USER_AGENT_INVALID == $last_error ) {
-			return( __( 'The webhook received did not come from YouCanPay', 'woocommerce-youcan-pay' ) );
+			return( __( 'The webhook received did not come from YouCan Pay', 'woocommerce-youcan-pay' ) );
 		}
 
 		if ( self::VALIDATION_FAILED_SIGNATURE_INVALID == $last_error ) {

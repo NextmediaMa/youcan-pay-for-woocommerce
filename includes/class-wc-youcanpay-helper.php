@@ -460,7 +460,6 @@ class WC_YouCanPay_Helper {
 	 * @return string Closest locale supported by YouCan Pay ('auto' if NONE).
 	 */
 	public static function convert_wc_locale_to_youcanpay_locale( $wc_locale ) {
-		// List copied from: https://youcanpay.com/docs/js/appendix/supported_locales.
 		$supported = [
 			'ar',     // Arabic.
 			'bg',     // Bulgarian (Bulgaria).
@@ -511,7 +510,7 @@ class WC_YouCanPay_Helper {
 
 		// The plugin has been fully translated for Spanish (Ecuador), Spanish (Mexico), and
 		// Spanish(Venezuela), and partially (88% at 2021-05-14) for Spanish (Colombia).
-		// We need to map these locales to YouCanPay's Spanish (Latin America) 'es-419' locale.
+		// We need to map these locales to YouCan Pay's Spanish (Latin America) 'es-419' locale.
 		// This list should be updated if more localized versions of Latin American Spanish are
 		// made available.
 		$lowercase_locale                  = strtolower( $wc_locale );
@@ -531,7 +530,6 @@ class WC_YouCanPay_Helper {
 			return $base_locale;
 		}
 
-		// Default to 'auto' so YouCanPay.js uses the browser locale.
 		return 'auto';
 	}
 

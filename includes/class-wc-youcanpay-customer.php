@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * WC_YouCanPay_Customer class.
  *
- * Represents a YouCanPay Customer.
+ * Represents a YouCan Pay Customer.
  */
 class WC_YouCanPay_Customer {
 
@@ -350,7 +350,7 @@ class WC_YouCanPay_Customer {
 	}
 
 	/**
-	 * Attaches a source to the YouCanPay customer.
+	 * Attaches a source to the YouCan Pay customer.
 	 *
 	 * @param string $source_id The ID of the new source.
 	 * @return object|WP_Error Either a source object, or a WP error.
@@ -368,7 +368,7 @@ class WC_YouCanPay_Customer {
 		);
 
 		if ( ! empty( $response->error ) ) {
-			// It is possible the WC user once was linked to a customer on YouCanPay
+			// It is possible the WC user once was linked to a customer on YouCan Pay
 			// but no longer exists. Instead of failing, lets try to create a
 			// new customer.
 			if ( $this->is_no_such_customer_error( $response->error ) ) {
@@ -387,7 +387,7 @@ class WC_YouCanPay_Customer {
 	}
 
 	/**
-	 * Get a customers saved sources using their YouCanPay ID.
+	 * Get a customers saved sources using their YouCan Pay ID.
 	 *
 	 * @param  string $customer_id
 	 * @return array
@@ -425,7 +425,7 @@ class WC_YouCanPay_Customer {
 	/**
 	 * Gets saved payment methods for a customer using Intentions API.
 	 *
-	 * @param string $payment_method_type YouCanPay ID of payment method type
+	 * @param string $payment_method_type YouCan Pay ID of payment method type
 	 *
 	 * @return array
 	 */
@@ -509,7 +509,7 @@ class WC_YouCanPay_Customer {
 	}
 
 	/**
-	 * Set default source in YouCanPay
+	 * Set default source in YouCan Pay
 	 *
 	 * @param string $source_id
 	 */
@@ -534,7 +534,7 @@ class WC_YouCanPay_Customer {
 	}
 
 	/**
-	 * Set default payment method in YouCanPay
+	 * Set default payment method in YouCan Pay
 	 *
 	 * @param string $payment_method_id
 	 */
@@ -573,19 +573,19 @@ class WC_YouCanPay_Customer {
 	}
 
 	/**
-	 * Retrieves the YouCanPay Customer ID from the user meta.
+	 * Retrieves the YouCan Pay Customer ID from the user meta.
 	 *
 	 * @param  int $user_id The ID of the WordPress user.
-	 * @return string|bool  Either the YouCanPay ID or false.
+	 * @return string|bool  Either the YouCan Pay ID or false.
 	 */
 	public function get_id_from_meta( $user_id ) {
 		return get_user_option( '_youcanpay_customer_id', $user_id );
 	}
 
 	/**
-	 * Updates the current user with the right YouCanPay ID in the meta table.
+	 * Updates the current user with the right YouCan Pay ID in the meta table.
 	 *
-	 * @param string $id The YouCanPay customer ID.
+	 * @param string $id The YouCan Pay customer ID.
 	 */
 	public function update_id_in_meta( $id ) {
 		update_user_option( $this->get_user_id(), '_youcanpay_customer_id', $id, false );
@@ -617,7 +617,7 @@ class WC_YouCanPay_Customer {
 	public function get_customer_preferred_locale( $user ) {
 		$locale = $this->get_customer_locale( $user );
 
-		// Options based on YouCanPay locales.
+		// Options based on YouCan Pay locales.
 		// https://support.youcanpay.com/questions/language-options-for-customer-emails
 		$youcanpay_locales = [
 			'ar'    => 'ar-AR',
@@ -663,7 +663,7 @@ class WC_YouCanPay_Customer {
 	}
 
 	/**
-	 * Given a WC_Order or WC_Customer, returns an array representing a YouCanPay customer object.
+	 * Given a WC_Order or WC_Customer, returns an array representing a YouCan Pay customer object.
 	 * At least one parameter has to not be null.
 	 *
 	 * @param WC_Order    $wc_order    The Woo order to parse.
