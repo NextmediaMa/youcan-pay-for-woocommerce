@@ -199,32 +199,15 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
             <input type="hidden" name="transaction_id" id="transaction-id">
 
             <div class="form-row form-row-wide" id="payment-card"></div>
-
-            <script type="text/javascript">
+            <script>
                 jQuery(function ($) {
-                    var ycPay = new YCPay(youcan_pay_script_vars.key);
-                    if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
-                        ycPay.isSandboxMode = true;
-                    }
-                    ycPay.renderForm('#payment-card');
-
-                    $('#place_order').on('click', function (e) {
-                        e.preventDefault();
-                        var $form = $(this);
-
-                        if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.youcanpay) {
-                            ycPay.pay(youcan_pay_script_vars.token_transaction)
-                                .then(function (transactionId) {
-                                    $('#transaction-id').val(transactionId);
-                                    $form.submit();
-                                })
-                                .catch(function (errorMessage) {
-                                    console.log(errorMessage);
-                                });
-                        } else {
-                            $form.submit();
+                    window.ycPay = new YCPay(youcan_pay_script_vars.key);
+                    if (window.ycPay != null) {
+                        if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
+                            window.ycPay.isSandboxMode = true;
                         }
-                    });
+                        window.ycPay.renderForm('#payment-card');
+                    }
                 });
             </script>
 
@@ -313,9 +296,24 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	}
 
 	public function pw_load_scripts() {
+		$extension = '.js';
+        if (! $this->testmode) {
+	        $extension = '.min.js';
+        }
+
 		wp_enqueue_script( 'py-script', 'https://pay.youcan.shop/js/ycpay.js');
+		wp_enqueue_script( 'youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . "/assets/js/youcan-pay{$extension}");
 		wp_localize_script( 'py-script', 'youcan_pay_script_vars', $this->javascript_params() );
 	}
+
+	/**
+	 * @throws WC_YouCanPay_Exception
+	 */
+	public function validate_fields() {
+        parent::validate_fields();
+
+	    $this->validate_minimum_cart_amount();
+    }
 
 	/**
 	 * Process the payment
