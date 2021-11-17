@@ -371,7 +371,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				throw new WC_YouCanPay_Exception( 'Transaction not found', __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ) );
 			}
 
-			if ( $transaction->getOrderId() !== WC()->cart->get_cart_hash() ) {
+			//Todo: Check if amount of Order equals to the amount received from YouCan Pay
+			/*if ( $transaction->getOrderId() !== WC()->cart->get_cart_hash() ) {
 				WC_YouCanPay_Logger::log( "arrived on process payment: order not identical with transaction" . PHP_EOL
 				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
 				                          . print_r( 'Code: #0024', true ) . PHP_EOL
@@ -383,7 +384,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				                          . print_r( WC()->cart->get_cart_hash(), true )
 				);
 				throw new WC_YouCanPay_Exception( 'Fatal error try again', __( 'Fatal error, please try again or contact support.', 'woocommerce-youcan-pay' ) );
-			}
+			}*/
 
 			$this->validate_minimum_order_amount( $order );
 
