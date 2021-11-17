@@ -57,14 +57,14 @@ function woocommerce_gateway_youcanpay() {
 			/**
 			 * The *Singleton* instance of this class
 			 *
-			 * @var Singleton
+			 * @var WC_YouCanPay
 			 */
 			private static $instance;
 
 			/**
 			 * Returns the *Singleton* instance of this class.
 			 *
-			 * @return Singleton The *Singleton* instance.
+			 * @return WC_YouCanPay The *Singleton* instance.
 			 */
 			public static function get_instance() {
 				if ( null === self::$instance ) {
@@ -114,7 +114,7 @@ function woocommerce_gateway_youcanpay() {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-privacy.php';
 				}
 
-				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-feature-flags.php';
+				//require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-feature-flags.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-exception.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-logger.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-helper.php';
@@ -193,7 +193,7 @@ function woocommerce_gateway_youcanpay() {
 			public function plugin_row_meta( $links, $file ) {
 				if ( plugin_basename( __FILE__ ) === $file ) {
 					$row_meta = [
-						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://docs.woocommerce.com/document/youcanpay/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Docs', 'woocommerce-youcan-pay' ) . '</a>',
+						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://youcan.shop/help/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Docs', 'woocommerce-youcan-pay' ) . '</a>',
 						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Support', 'woocommerce-youcan-pay' ) . '</a>',
 					];
 					return array_merge( $links, $row_meta );

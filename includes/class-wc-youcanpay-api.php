@@ -1,5 +1,8 @@
 <?php
 
+use YouCan\Pay\Models\Transaction;
+use YouCan\Pay\YouCanPay;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -124,9 +127,9 @@ class WC_YouCanPay_API {
 		WC_YouCanPay_Logger::log( "{$api}" );
 
 		if (self::is_test_mode()) {
-			\YouCan\Pay\YouCanPay::setIsSandboxMode( true );
+			YouCanPay::setIsSandboxMode( true );
 		}
-		$py = \YouCan\Pay\YouCanPay::instance()->useKeys(
+		$py = YouCanPay::instance()->useKeys(
 			self::get_secret_key(),
 			self::get_public_key()
 		);
@@ -165,15 +168,15 @@ class WC_YouCanPay_API {
 	}
 
 	/**
-	 * @return \YouCan\Pay\Models\Transaction|null
+	 * @return Transaction|null
 	 */
 	public static function get_transaction($transaction_id) {
 		WC_YouCanPay_Logger::log( "getTransaction" );
 
 		if (self::is_test_mode()) {
-			\YouCan\Pay\YouCanPay::setIsSandboxMode( true );
+			YouCanPay::setIsSandboxMode( true );
 		}
-		$py = \YouCan\Pay\YouCanPay::instance()->useKeys(
+		$py = YouCanPay::instance()->useKeys(
 			self::get_secret_key(),
 			self::get_public_key()
 		);
@@ -185,9 +188,9 @@ class WC_YouCanPay_API {
 		$amount = WC_YouCanPay_Helper::get_youcanpay_amount($total, $currency);
 
 		if (self::is_test_mode()) {
-			\YouCan\Pay\YouCanPay::setIsSandboxMode(true);
+			YouCanPay::setIsSandboxMode(true);
 		}
-		$py = \YouCan\Pay\YouCanPay::instance()->useKeys(
+		$py = YouCanPay::instance()->useKeys(
 			self::get_secret_key(),
 			self::get_public_key()
 		);

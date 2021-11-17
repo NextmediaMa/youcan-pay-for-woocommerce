@@ -33,23 +33,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * Displays the save to account checkbox.
-	 */
-	public function save_payment_method_checkbox( $force_checked = false ) {
-		$id = 'wc-' . $this->id . '-new-payment-method';
-		?>
-		<fieldset <?php echo $force_checked ? 'style="display:none;"' : ''; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>>
-			<p class="form-row woocommerce-SavedPaymentMethods-saveNew">
-				<input id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $id ); ?>" type="checkbox" value="true" style="width:auto;" <?php echo $force_checked ? 'checked' : ''; /* phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped */ ?> />
-				<label for="<?php echo esc_attr( $id ); ?>" style="display:inline;">
-					<?php echo esc_html( apply_filters( 'wc_youcanpay_save_to_account_text', __( 'Save payment information to my account for future purchases.', 'woocommerce-youcan-pay' ) ) ); ?>
-				</label>
-			</p>
-		</fieldset>
-		<?php
-	}
-
-	/**
 	 * Checks if keys are set and valid.
 	 *
 	 * @return bool True if the keys are set *and* valid, false otherwise (for example, if keys are empty or the secret key was pasted as publishable key).

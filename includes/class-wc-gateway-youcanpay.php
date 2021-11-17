@@ -14,13 +14,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	const ID = 'youcanpay';
 
 	/**
-	 * Should we capture Credit cards
-	 *
-	 * @var bool
-	 */
-	public $capture;
-
-	/**
 	 * Alternate credit card statement name
 	 *
 	 * @var bool
@@ -75,9 +68,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->supports           = [
 			'products',
 			'refunds',
-			//'tokenization',
-			//'add_payment_method',
-			//'pre-orders',
 		];
 
 		// Load the form fields.
@@ -91,7 +81,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->description     = $this->get_option( 'description' );
 		$this->enabled         = $this->get_option( 'enabled' );
 		$this->testmode        = 'yes' === $this->get_option( 'testmode' );
-		$this->capture         = 'yes' === $this->get_option( 'capture', 'yes' );
 		$this->secret_key      = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
 		$this->publishable_key = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
 
@@ -132,7 +121,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 		$this->form_fields = require dirname( __FILE__ ) . '/admin/youcanpay-settings.php';
-		unset( $this->form_fields['title_upe'] );
 	}
 
 	/**
@@ -255,13 +243,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * Maybe override the parent admin_options method.
 	 */
 	public function admin_options() {
-		if ( ! WC_YouCanPay_Feature_Flags::is_upe_settings_redesign_enabled() ) {
-			parent::admin_options();
+		parent::admin_options();
 
-			return;
-		}
-
-		do_action( 'wc_youcanpay_gateway_admin_options_wrapper', $this );
 	}
 
 	/**
