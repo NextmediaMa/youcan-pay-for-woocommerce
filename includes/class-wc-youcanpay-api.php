@@ -171,8 +171,6 @@ class WC_YouCanPay_API {
 	 * @return Transaction|null
 	 */
 	public static function get_transaction($transaction_id) {
-		WC_YouCanPay_Logger::log( "getTransaction" );
-
 		if (self::is_test_mode()) {
 			YouCanPay::setIsSandboxMode( true );
 		}

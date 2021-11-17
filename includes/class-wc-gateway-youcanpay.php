@@ -261,17 +261,13 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			'youcanpay_locale'     => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
 		];
 
-		$token_id = 0;
 		$token = WC_YouCanPay_API::create_token(
 			WC()->cart->get_cart_hash(),
 			$this->get_order_total(),
 			get_woocommerce_currency()
 		);
-        if (isset($token)) {
-	        $token_id = $token->getId();
-        }
 
-		$youcanpay_params['token_transaction'] = $token_id;
+		$youcanpay_params['token_transaction'] = (isset($token)) ? $token->getId() : 0;
 
 		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
 	}
@@ -371,20 +367,19 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				throw new WC_YouCanPay_Exception( 'Transaction not found', __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ) );
 			}
 
-			//Todo: Check if amount of Order equals to the amount received from YouCan Pay
-			/*if ( $transaction->getOrderId() !== WC()->cart->get_cart_hash() ) {
+			if ($transaction->getOrderId() != WC()->cart->get_cart_hash()) {
 				WC_YouCanPay_Logger::log( "arrived on process payment: order not identical with transaction" . PHP_EOL
 				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
 				                          . print_r( 'Code: #0024', true ) . PHP_EOL
 				                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
 				                          . print_r( $transaction->getId(), true ) . PHP_EOL
-				                          . print_r( 'Transaction Order Id: ', true ) . PHP_EOL
-				                          . print_r( $transaction->getOrderId(), true ) . PHP_EOL
 				                          . print_r( 'Cart Hash: ', true ) . PHP_EOL
-				                          . print_r( WC()->cart->get_cart_hash(), true )
+				                          . print_r( WC()->cart->get_cart_hash(), true ) . PHP_EOL
+				                          . print_r( 'Transaction Order Id: ', true ) . PHP_EOL
+				                          . print_r( $transaction->getOrderId(), true )
 				);
 				throw new WC_YouCanPay_Exception( 'Fatal error try again', __( 'Fatal error, please try again or contact support.', 'woocommerce-youcan-pay' ) );
-			}*/
+			}
 
 			$this->validate_minimum_order_amount( $order );
 

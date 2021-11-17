@@ -44,6 +44,26 @@ class WC_YouCanPay_Helper {
 	}
 
 	/**
+	 * Get Total Payed to YouCan Pay
+	 *
+	 * @param float  $amount Amount.
+	 * @param string $currency Accepted currency.
+	 *
+	 * @return float|int
+	 */
+	public static function get_youcanpay_order_total( $amount, $currency = '' ) {
+		if ( ! $currency ) {
+			$currency = get_woocommerce_currency();
+		}
+
+		if ( in_array( strtolower( $currency ), self::no_decimal_currencies() ) ) {
+			return absint( $amount );
+		} else {
+			return abs($amount / 100);
+		}
+	}
+
+	/**
 	 * Localize YouCan Pay messages based on code
 	 *
 	 * @return array
