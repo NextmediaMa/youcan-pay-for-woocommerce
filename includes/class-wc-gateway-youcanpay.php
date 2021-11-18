@@ -196,8 +196,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			<?php
 			do_action( 'woocommerce_credit_card_form_start', $this->id ); ?>
 
-            <input type="hidden" name="transaction_id" id="transaction-id">
-
             <div class="form-row form-row-wide" id="payment-card"></div>
             <script>
                 jQuery(function ($) {

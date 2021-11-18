@@ -15,10 +15,9 @@ jQuery(function ($) {
         e.preventDefault();
 
         var $form = $('form[name=checkout]');
-        var $transactionInput = $('#transaction-id');
 
-        if ($transactionInput.val() !== '') {
-            $form.submit();
+        if ( $form.is( '.processing' ) ) {
+            return false;
         }
 
         if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.youcanpay) {
@@ -28,7 +27,14 @@ jQuery(function ($) {
                 data: $form.serialize(),
                 dataType: "json",
                 beforeSend: function( xhr ) {
-                    //xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+                    $form.addClass('processing');
+                    $form.block({
+                        message: null,
+                        overlayCSS: {
+                            background: '#fff',
+                            opacity: 0.6
+                        }
+                    });
                 }
             }).done(function(data) {
                 if (typeof(data.token_transaction) !== 'undefined') {
@@ -47,6 +53,9 @@ jQuery(function ($) {
                 console.log('Done');
                 console.log(data);
             }).always(function() {
+                $('html, body').animate({scrollTop: 0}, 400);
+                $('.blockOverlay').remove();
+                $form.removeClass('processing');
             });
         } else {
             $form.submit();
