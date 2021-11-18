@@ -170,7 +170,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function create_source( $order ) {
 		$currency              = $order->get_currency();
-		$return_url            = $this->get_youcanpay_return_url( $order );
+		$return_url            = $this->get_youcanpay_return_url( $order, self::ID );
 		$post_data             = [];
 		$post_data['amount']   = WC_YouCanPay_Helper::get_youcanpay_amount( $order->get_total(), $currency );
 		$post_data['currency'] = strtoupper( $currency );
@@ -220,15 +220,16 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
 			WC_YouCanPay_Logger::log( 'Error: ' . $e->getMessage() );
 
-			do_action( 'wc_gateway_youcanpay_process_payment_error', $e, $order );
-
 			$statuses = apply_filters(
 				'wc_youcanpay_allowed_payment_processing_statuses',
 				[ 'pending', 'failed' ]
 			);
 
-			if ( $order->has_status( $statuses ) ) {
-				$this->send_failed_order_email( $order_id );
+			if (isset($order)) {
+				$order->update_status( 'failed' );
+				if ( $order->has_status( $statuses ) ) {
+					$this->send_failed_order_email( $order_id );
+				}
 			}
 
 			return [

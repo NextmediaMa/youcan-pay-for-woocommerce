@@ -201,13 +201,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
             <div class="form-row form-row-wide" id="payment-card"></div>
             <script>
                 jQuery(function ($) {
-                    window.ycPay = new YCPay(youcan_pay_script_vars.key);
-                    if (window.ycPay != null) {
-                        if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
-                            window.ycPay.isSandboxMode = true;
-                        }
-                        window.ycPay.renderForm('#payment-card');
-                    }
+                    window.setupYouCanPayForm();
                 });
             </script>
 
@@ -242,15 +236,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			'youcanpay'            => self::ID,
 			'is_test_mode'         => $this->is_in_test_mode(),
 			'youcanpay_locale'     => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
+            'checkout_url'         => get_site_url() . '?wc-ajax=checkout'
 		];
-
-		$token = WC_YouCanPay_API::create_token(
-			WC()->cart->get_cart_hash(),
-			$this->get_order_total(),
-			get_woocommerce_currency()
-		);
-
-		$youcanpay_params['token_transaction'] = (isset($token)) ? $token->getId() : 0;
 
 		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
 	}
@@ -307,15 +294,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	}
 
 	/**
-	 * @throws WC_YouCanPay_Exception
-	 */
-	public function validate_fields() {
-        parent::validate_fields();
-
-	    $this->validate_minimum_cart_amount();
-    }
-
-	/**
 	 * Process the payment
 	 *
 	 * @param int $order_id Reference.
@@ -340,71 +318,28 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				throw new WC_YouCanPay_Exception( 'Order not found', __( 'Fatal error! Please contact support.', 'woocommerce-youcan-pay' ) );
 			}
 
-			if ( ! isset( $_POST['transaction_id'] ) ) {
-				WC_YouCanPay_Logger::log( "arrived on process payment: transaction_id is null" . PHP_EOL
-				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
-				                          . print_r( 'Code: #0022', true ) . PHP_EOL
-				                          . print_r( 'Order Id: ', true ) . PHP_EOL
-				                          . print_r( $order->get_id(), true )
-				);
-				throw new WC_YouCanPay_Exception( 'Transaction must not be null', __( 'Sorry, transaction must not be null.', 'woocommerce-youcan-pay' ) );
-			}
-
-			$transaction_id = $_POST['transaction_id'] ?? '';
-			$transaction = WC_YouCanPay_API::get_transaction($transaction_id);
-
-			if ( ! isset( $transaction ) ) {
-				WC_YouCanPay_Logger::log( "arrived on process payment: transaction not exists" . PHP_EOL
-				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
-				                          . print_r( 'Code: #0023', true ) . PHP_EOL
-				                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-				                          . print_r( $transaction_id, true ) . PHP_EOL
-				                          . print_r( 'Order Id: ', true ) . PHP_EOL
-				                          . print_r( $order->get_id(), true )
-				);
-				throw new WC_YouCanPay_Exception( 'Transaction not found', __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ) );
-			}
-
-			if ($transaction->getOrderId() != WC()->cart->get_cart_hash()) {
-				WC_YouCanPay_Logger::log( "arrived on process payment: order not identical with transaction" . PHP_EOL
-				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
-				                          . print_r( 'Code: #0024', true ) . PHP_EOL
-				                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-				                          . print_r( $transaction->getId(), true ) . PHP_EOL
-				                          . print_r( 'Cart Hash: ', true ) . PHP_EOL
-				                          . print_r( WC()->cart->get_cart_hash(), true ) . PHP_EOL
-				                          . print_r( 'Transaction Order Id: ', true ) . PHP_EOL
-				                          . print_r( $transaction->getOrderId(), true )
-				);
-				throw new WC_YouCanPay_Exception( 'Fatal error try again', __( 'Fatal error, please try again or contact support.', 'woocommerce-youcan-pay' ) );
-			}
-
 			$this->validate_minimum_order_amount( $order );
 
-			if ( $transaction->getStatus() === 1 ) {
-				WC_YouCanPay_Logger::log( "info: payment complete for order {$order->get_id()} for the amount of {$order->get_total()}" );
+            $order->set_status('on-hold');
 
-				$order->payment_complete( $transaction->getId() );
+			$token = WC_YouCanPay_API::create_token(
+				$order->get_id(),
+				$order->get_total(),
+				$order->get_currency()
+			);
 
-				if ( isset( WC()->cart ) ) {
-					WC()->cart->empty_cart();
-				}
-
-				return [
-					'result'   => 'success',
-					'redirect' => $this->get_return_url( $order ),
-				];
-			} else {
-				throw new WC_YouCanPay_Exception( 'Transaction not completed', __( 'Sorry, payment not completed please try again.', 'woocommerce-youcan-pay' ) );
-			}
+			return [
+				'result'   => 'success',
+				'redirect'   => $this->get_youcanpay_return_url( $order, self::ID ),
+                'token_transaction' => (isset($token)) ? $token->getId() : 0
+			];
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
 			WC_YouCanPay_Logger::log( 'Error: ' . $e->getMessage() );
 
-			do_action( 'wc_gateway_youcanpay_process_payment_error', $e, $order );
-
-			/* translators: error message */
-			$order->update_status( 'failed' );
+			if (isset($order)) {
+				$order->update_status( 'failed' );
+			}
 			$this->send_failed_order_email( $order_id );
 
 			return [

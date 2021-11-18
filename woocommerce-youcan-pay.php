@@ -114,7 +114,6 @@ function woocommerce_gateway_youcanpay() {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-privacy.php';
 				}
 
-				//require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-feature-flags.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-exception.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-logger.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-helper.php';

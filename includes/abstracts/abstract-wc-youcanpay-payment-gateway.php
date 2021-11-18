@@ -113,12 +113,15 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	/**
 	 * Builds the return URL from redirects.
 	 *
-	 * @param object $order
-	 * @param int    $id YouCan Pay session id.
+	 * @param null $order
+	 * @param null $gateway
+	 *
+	 * @return string
 	 */
-	public function get_youcanpay_return_url( $order = null, $id = null ) {
+	public function get_youcanpay_return_url( $order = null, $gateway = null ) {
 		if ( is_object( $order ) ) {
 			$args = [
+				'gateway' => $gateway,
 				'wc-api' => 'wc_youcanpay',
 				'key' => $order->get_order_key(),
 			];

@@ -124,9 +124,7 @@ class WC_YouCanPay_API {
 	 * @throws WC_YouCanPay_Exception
 	 */
 	public static function request( $order, $post_data, $api = '' ) {
-		WC_YouCanPay_Logger::log( "{$api}" );
-
-		if (self::is_test_mode()) {
+		if ( self::is_test_mode() ) {
 			YouCanPay::setIsSandboxMode( true );
 		}
 		$py = YouCanPay::instance()->useKeys(
@@ -144,13 +142,10 @@ class WC_YouCanPay_API {
 		);
 
 		if ( is_wp_error( $token ) || empty( $token ) ) {
-			WC_YouCanPay_Logger::log(
-				'Error Response: ' . print_r( $token, true ) . PHP_EOL . PHP_EOL . 'Failed request: ' . print_r(
-					[
-						'api'             => $api,
-					],
-					true
-				)
+			WC_YouCanPay_Logger::log( 'Error Response: '
+			                          . print_r( $token, true ) . PHP_EOL
+			                          . 'Failed request API: ' . PHP_EOL
+			                          . print_r( $api, true )
 			);
 
 			throw new WC_YouCanPay_Exception( print_r( $token, true ),
@@ -158,20 +153,20 @@ class WC_YouCanPay_API {
 		}
 
 		$response = [
-			'id' => $token->getId(),
+			'id'       => $token->getId(),
 			'redirect' => [
 				'url' => $token->getPaymentURL()
 			]
 		];
 
-		return json_decode(json_encode($response), FALSE);
+		return json_decode( json_encode( $response ), false );
 	}
 
 	/**
 	 * @return Transaction|null
 	 */
-	public static function get_transaction($transaction_id) {
-		if (self::is_test_mode()) {
+	public static function get_transaction( $transaction_id ) {
+		if ( self::is_test_mode() ) {
 			YouCanPay::setIsSandboxMode( true );
 		}
 		$py = YouCanPay::instance()->useKeys(
@@ -179,14 +174,14 @@ class WC_YouCanPay_API {
 			self::get_public_key()
 		);
 
-		return $py->transaction->get($transaction_id);
+		return $py->transaction->get( $transaction_id );
 	}
 
-	public static function create_token($order_id, $total, $currency) {
-		$amount = WC_YouCanPay_Helper::get_youcanpay_amount($total, $currency);
+	public static function create_token( $order_id, $total, $currency ) {
+		$amount = WC_YouCanPay_Helper::get_youcanpay_amount( $total, $currency );
 
-		if (self::is_test_mode()) {
-			YouCanPay::setIsSandboxMode(true);
+		if ( self::is_test_mode() ) {
+			YouCanPay::setIsSandboxMode( true );
 		}
 		$py = YouCanPay::instance()->useKeys(
 			self::get_secret_key(),
@@ -196,7 +191,7 @@ class WC_YouCanPay_API {
 		return $py->token->create(
 			$order_id,
 			$amount,
-			strtoupper($currency),
+			strtoupper( $currency ),
 			self::get_the_user_ip()
 		);
 	}
