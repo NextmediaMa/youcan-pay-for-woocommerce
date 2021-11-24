@@ -14,6 +14,15 @@ window.setupYouCanPayForm = () => {
 };
 
 jQuery(function ($) {
+
+    function detachLoader($form) {
+        $('html, body').animate({
+            scrollTop: $('.woocommerce').offset().top
+        }, 400);
+        $('.blockOverlay').remove();
+        $form.removeClass('processing');
+    }
+
     var $noticeGroup = $('<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"></div>');
 
     $(document).on('click', '#place_order', function (e) {
@@ -63,6 +72,8 @@ jQuery(function ($) {
                                 window.location.href = url.href;
                             })
                             .catch(function (errorMessage) {
+                                detachLoader($form);
+
                                 let notice = $noticeGroup.clone();
 
                                 notice.append('<ul class="woocommerce-error" role="alert"></ul>');
@@ -79,11 +90,12 @@ jQuery(function ($) {
                 if (typeof(data.token_transaction) !== 'undefined') {
                     return;
                 }
-                $('html, body').animate({
+                detachLoader($form);
+                /*$('html, body').animate({
                     scrollTop: $('.woocommerce').offset().top
                 }, 400);
                 $('.blockOverlay').remove();
-                $form.removeClass('processing');
+                $form.removeClass('processing');*/
             });
         } else {
             $form.submit();
