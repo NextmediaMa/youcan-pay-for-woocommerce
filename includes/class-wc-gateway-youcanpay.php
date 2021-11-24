@@ -25,14 +25,14 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var string
 	 */
-	public $secret_key;
+	public $private_key;
 
 	/**
 	 * Api access publishable key
 	 *
 	 * @var string
 	 */
-	public $publishable_key;
+	public $public_key;
 
 	/**
 	 * Do we accept Payment Request?
@@ -46,7 +46,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var bool
 	 */
-	public $testmode;
+	public $sandbox_mode;
 
 	/**
 	 * Pre Orders Object
@@ -80,11 +80,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->title           = $this->get_option( 'title' );
 		$this->description     = $this->get_option( 'description' );
 		$this->enabled         = $this->get_option( 'enabled' );
-		$this->testmode        = 'yes' === $this->get_option( 'testmode' );
-		$this->secret_key      = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
-		$this->publishable_key = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
+		$this->sandbox_mode    = 'yes' === $this->get_option( 'sandbox_mode' );
+		$this->private_key     = $this->sandbox_mode ? $this->get_option( 'sandbox_private_key' ) : $this->get_option( 'production_private_key' );
+		$this->public_key      = $this->sandbox_mode ? $this->get_option( 'sandbox_public_key' ) : $this->get_option( 'production_public_key' );
 
-		WC_YouCanPay_API::set_secret_key( $this->secret_key );
+		WC_YouCanPay_API::set_private_key( $this->private_key );
 
 		// Hooks.
 		add_action( 'wp_enqueue_scripts', [ $this, 'payment_scripts' ] );
@@ -163,7 +163,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			data-currency="' . esc_attr( strtolower( get_woocommerce_currency() ) ) . '"
 		>';
 
-		if ( $this->testmode ) {
+		if ( $this->sandbox_mode ) {
 			/* translators: link to YouCan Pay testing page */
 			$description .= ' ' . sprintf(__( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
 					'woocommerce-youcan-pay' ), 'https://pay.youcan.shop/docs#testing-and-test-cards' );
@@ -199,7 +199,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
             <div class="form-row form-row-wide" id="payment-card"></div>
             <script>
                 jQuery(function ($) {
-                    window.setupYouCanPayForm();
+                    if (typeof(window.setupYouCanPayForm) !== "undefined") {
+                        window.setupYouCanPayForm();
+                    }
                 });
             </script>
 
@@ -230,7 +232,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	public function javascript_params() {
 		$youcanpay_params = [
 			'title'                => $this->title,
-			'key'                  => $this->publishable_key,
+			'key'                  => $this->public_key,
 			'youcanpay'            => self::ID,
 			'is_test_mode'         => $this->is_in_test_mode(),
 			'youcanpay_locale'     => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
@@ -271,7 +273,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		// If no SSL bail.
-		if ( ! $this->testmode && ! is_ssl() ) {
+		if ( ! $this->sandbox_mode && ! is_ssl() ) {
 			WC_YouCanPay_Logger::log( 'YouCan Pay live mode requires SSL.' );
 
 			return;
@@ -282,7 +284,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 	public function pw_load_scripts() {
 		$extension = '.js';
-        if (! $this->testmode) {
+        if (! $this->sandbox_mode) {
 	        $extension = '.min.js';
         }
 
@@ -378,7 +380,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		parent::process_admin_options();
 	}
 
-	public function validate_publishable_key_field( $key, $value ) {
+	public function validate_production_public_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_/', $value ) ) {
 			throw new Exception( __( 'The "Production Public key" should start with "pub", enter the correct key.',
@@ -388,7 +390,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
-	public function validate_secret_key_field( $key, $value ) {
+	public function validate_private_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_/', $value ) ) {
 			throw new Exception( __( 'The "Production Private key" should start with "pri", enter the correct key.',
@@ -398,7 +400,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
-	public function validate_test_publishable_key_field( $key, $value ) {
+	public function validate_sandbox_public_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Sandbox Public key" should start with "pub_sandbox", enter the correct key.',
@@ -408,7 +410,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
-	public function validate_test_secret_key_field( $key, $value ) {
+	public function validate_sandbox_private_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Sandbox Private key" should start with "pri_sandbox", enter the correct key.',
@@ -447,6 +449,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @return boolean Sandbox mode enabled if true, disabled if false.
 	 */
 	public function is_in_test_mode() {
-		return 'yes' === $this->get_option( 'testmode' );
+		return 'yes' === $this->get_option( 'sandbox_mode' );
 	}
 }

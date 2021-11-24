@@ -83,17 +83,17 @@ class WC_YouCanPay_Admin_Notices {
 	 * or the environment changes after activation. Also handles upgrade routines.
 	 */
 	public function youcanpay_check_environment() {
-		$show_ssl_notice     = get_option( 'wc_youcanpay_show_ssl_notice' );
-		$show_keys_notice    = get_option( 'wc_youcanpay_show_keys_notice' );
-		$show_phpver_notice  = get_option( 'wc_youcanpay_show_phpver_notice' );
-		$show_wcver_notice   = get_option( 'wc_youcanpay_show_wcver_notice' );
-		$show_curl_notice    = get_option( 'wc_youcanpay_show_curl_notice' );
-		$options             = get_option( 'woocommerce_youcanpay_settings' );
-		$testmode            = ( isset( $options['testmode'] ) && 'yes' === $options['testmode'] ) ? true : false;
-		$test_pub_key        = isset( $options['test_publishable_key'] ) ? $options['test_publishable_key'] : '';
-		$test_secret_key     = isset( $options['test_secret_key'] ) ? $options['test_secret_key'] : '';
-		$live_pub_key        = isset( $options['publishable_key'] ) ? $options['publishable_key'] : '';
-		$live_secret_key     = isset( $options['secret_key'] ) ? $options['secret_key'] : '';
+		$show_ssl_notice        = get_option( 'wc_youcanpay_show_ssl_notice' );
+		$show_keys_notice       = get_option( 'wc_youcanpay_show_keys_notice' );
+		$show_phpver_notice     = get_option( 'wc_youcanpay_show_phpver_notice' );
+		$show_wcver_notice      = get_option( 'wc_youcanpay_show_wcver_notice' );
+		$show_curl_notice       = get_option( 'wc_youcanpay_show_curl_notice' );
+		$options                = get_option( 'woocommerce_youcanpay_settings' );
+		$sandbox_mode           = ( isset( $options['sandbox_mode'] ) && 'yes' === $options['sandbox_mode'] ) ? true : false;
+		$sandbox_public_key     = isset( $options['sandbox_public_key'] ) ? $options['sandbox_public_key'] : '';
+		$sandbox_private_key    = isset( $options['sandbox_private_key'] ) ? $options['sandbox_private_key'] : '';
+		$production_public_key  = isset( $options['production_public_key'] ) ? $options['production_public_key'] : '';
+		$production_private_key = isset( $options['production_private_key'] ) ? $options['production_private_key'] : '';
 
 		if ( isset( $options['enabled'] ) && 'yes' === $options['enabled'] ) {
 			if ( empty( $show_phpver_notice ) ) {
@@ -122,7 +122,7 @@ class WC_YouCanPay_Admin_Notices {
 			}
 
 			if ( empty( $show_keys_notice ) ) {
-				$secret = WC_YouCanPay_API::get_secret_key();
+				$secret = WC_YouCanPay_API::get_private_key();
 				// phpcs:ignore
 				$should_show_notice_on_page = ! ( isset( $_GET['page'], $_GET['section'] ) && 'wc-settings' === $_GET['page'] && 0 === strpos( $_GET['section'], 'youcanpay' ) );
 
@@ -133,18 +133,18 @@ class WC_YouCanPay_Admin_Notices {
 				}
 
 				// Check if keys are entered properly per live/Sandbox mode.
-				if ( $testmode ) {
+				if ( $sandbox_mode ) {
 					if (
-						! empty( $test_pub_key ) && ! preg_match( '/^pub_sandbox_/', $test_pub_key )
-						|| ! empty( $test_secret_key ) && ! preg_match( '/^pri_sandbox_/', $test_secret_key ) ) {
+						! empty( $sandbox_public_key ) && ! preg_match( '/^pub_sandbox_/', $sandbox_public_key )
+						|| ! empty( $sandbox_private_key ) && ! preg_match( '/^pri_sandbox_/', $sandbox_private_key ) ) {
 						$setting_link = $this->get_setting_link();
 						/* translators: 1) link */
 						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 					}
 				} else {
 					if (
-						! empty( $live_pub_key ) && ! preg_match( '/^pub_/', $live_pub_key )
-						|| ! empty( $live_secret_key ) && ! preg_match( '/^pri_/', $live_secret_key ) ) {
+						! empty( $production_public_key ) && ! preg_match( '/^pub_/', $production_public_key )
+						|| ! empty( $production_private_key ) && ! preg_match( '/^pri_/', $production_private_key ) ) {
 						$setting_link = $this->get_setting_link();
 						/* translators: 1) link */
 						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );

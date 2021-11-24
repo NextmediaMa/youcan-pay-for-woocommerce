@@ -1,4 +1,5 @@
 <?php
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -24,7 +25,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var bool
 	 */
-	public $testmode;
+	public $sandbox_mode;
 
 	/**
 	 * Alternate credit card statement name
@@ -38,14 +39,14 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var string
 	 */
-	public $secret_key;
+	public $private_key;
 
 	/**
 	 * Api access publishable key
 	 *
 	 * @var string
 	 */
-	public $publishable_key;
+	public $public_key;
 
 	/**
 	 * Should we store the users credit cards?
@@ -61,7 +62,9 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		$this->id           = self::ID;
 		$this->method_title = __( 'YouCan Pay Standalone', 'woocommerce-youcan-pay' );
 		/* translators: link */
-		$this->method_description = sprintf( __( 'All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
+		$this->method_description = sprintf( __( 'All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.',
+			'woocommerce-youcan-pay' ),
+			admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
 		$this->supports           = [
 			'products',
 			'refunds',
@@ -73,18 +76,18 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		// Load the settings.
 		$this->init_settings();
 
-		$main_settings              = get_option( 'woocommerce_youcanpay_settings' );
-		$this->title                = $this->get_option( 'title' );
-		$this->description          = $this->get_option( 'description' );
-		$this->enabled              = $this->get_option( 'enabled' );
-		$this->testmode             = ( ! empty( $main_settings['testmode'] ) && 'yes' === $main_settings['testmode'] ) ? true : false;
-		$this->saved_cards          = ( ! empty( $main_settings['saved_cards'] ) && 'yes' === $main_settings['saved_cards'] ) ? true : false;
-		$this->publishable_key      = ! empty( $main_settings['publishable_key'] ) ? $main_settings['publishable_key'] : '';
-		$this->secret_key           = ! empty( $main_settings['secret_key'] ) ? $main_settings['secret_key'] : '';
+		$main_settings                = get_option( 'woocommerce_youcanpay_settings' );
+		$this->title                  = $this->get_option( 'title' );
+		$this->description            = $this->get_option( 'description' );
+		$this->enabled                = $this->get_option( 'enabled' );
+		$this->sandbox_mode           = ( ! empty( $main_settings['sandbox_mode'] ) && 'yes' === $main_settings['sandbox_mode'] ) ? true : false;
+		$this->saved_cards            = ( ! empty( $main_settings['saved_cards'] ) && 'yes' === $main_settings['saved_cards'] ) ? true : false;
+		$this->public_key             = ! empty( $main_settings['production_public_key'] ) ? $main_settings['production_public_key'] : '';
+		$this->private_key            = ! empty( $main_settings['production_private_key'] ) ? $main_settings['production_private_key'] : '';
 
-		if ( $this->testmode ) {
-			$this->publishable_key = ! empty( $main_settings['test_publishable_key'] ) ? $main_settings['test_publishable_key'] : '';
-			$this->secret_key      = ! empty( $main_settings['test_secret_key'] ) ? $main_settings['test_secret_key'] : '';
+		if ( $this->sandbox_mode ) {
+			$this->public_key       = ! empty( $main_settings['sandbox_public_key'] ) ? $main_settings['sandbox_public_key'] : '';
+			$this->private_key      = ! empty( $main_settings['sandbox_private_key'] ) ? $main_settings['sandbox_private_key'] : '';
 		}
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );
@@ -180,7 +183,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
 		WC_YouCanPay_Logger::log( 'Info: Begin creating YouCan Pay Standalone source' );
 
-		return WC_YouCanPay_API::request($order, $post_data,'sources' );
+		return WC_YouCanPay_API::request( $order, $post_data, 'sources' );
 	}
 
 	/**
@@ -225,7 +228,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 				[ 'pending', 'failed' ]
 			);
 
-			if (isset($order)) {
+			if ( isset( $order ) ) {
 				$order->update_status( 'failed' );
 				if ( $order->has_status( $statuses ) ) {
 					$this->send_failed_order_email( $order_id );

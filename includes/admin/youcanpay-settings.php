@@ -27,7 +27,7 @@ $youcanpay_settings = apply_filters(
 			'default'     => __( 'Pay with your credit card via YouCan Pay.', 'woocommerce-youcan-pay' ),
 			'desc_tip'    => true,
 		],
-		'testmode'                            => [
+		'sandbox_mode'                            => [
 			'title'       => __( 'Sandbox mode', 'woocommerce-youcan-pay' ),
 			'label'       => __( 'Enable Sandbox mode', 'woocommerce-youcan-pay' ),
 			'type'        => 'checkbox',
@@ -35,28 +35,28 @@ $youcanpay_settings = apply_filters(
 			'default'     => 'yes',
 			'desc_tip'    => true,
 		],
-		'test_publishable_key'                => [
+		'sandbox_public_key'                => [
 			'title'       => __( 'Sandbox Public key', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
 			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pub_sandbox_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
-		'test_secret_key'                     => [
+		'sandbox_private_key'                     => [
 			'title'       => __( 'Sandbox Private key', 'woocommerce-youcan-pay' ),
 			'type'        => 'password',
 			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pri_sandbox_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
-		'publishable_key'                     => [
+		'production_public_key'                     => [
 			'title'       => __( 'Production Public key', 'woocommerce-youcan-pay' ),
 			'type'        => 'text',
 			'description' => __( 'Get your API keys from your youcanpay account. Invalid values will be rejected. Only values starting with "pub_" will be saved.', 'woocommerce-youcan-pay' ),
 			'default'     => '',
 			'desc_tip'    => true,
 		],
-		'secret_key'                          => [
+		'production_private_key'                          => [
 			'title'       => __( 'Production Private key', 'woocommerce-youcan-pay' ),
 			'type'        => 'password',
 			'description' => __( 'Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with "pri_" will be saved.', 'woocommerce-youcan-pay' ),
