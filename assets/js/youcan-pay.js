@@ -91,11 +91,6 @@ jQuery(function ($) {
                     return;
                 }
                 detachLoader($form);
-                /*$('html, body').animate({
-                    scrollTop: $('.woocommerce').offset().top
-                }, 400);
-                $('.blockOverlay').remove();
-                $form.removeClass('processing');*/
             });
         } else {
             $form.submit();

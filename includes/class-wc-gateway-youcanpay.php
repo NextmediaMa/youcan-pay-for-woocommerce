@@ -14,13 +14,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	const ID = 'youcanpay';
 
 	/**
-	 * Alternate credit card statement name
-	 *
-	 * @var bool
-	 */
-	public $statement_descriptor;
-
-	/**
 	 * API access private key
 	 *
 	 * @var string
@@ -47,13 +40,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @var bool
 	 */
 	public $sandbox_mode;
-
-	/**
-	 * Pre Orders Object
-	 *
-	 * @var object
-	 */
-	public $pre_orders;
 
 	/**
 	 * Constructor
