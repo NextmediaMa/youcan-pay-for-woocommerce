@@ -19,7 +19,7 @@ class WC_YouCanPay_API {
 	 *
 	 * @var string
 	 */
-	private static $secret_key = '';
+	private static $private_key = '';
 
 	/**
 	 * Secret API Key.
@@ -40,8 +40,8 @@ class WC_YouCanPay_API {
 	 *
 	 * @param string $key
 	 */
-	public static function set_secret_key( $secret_key ) {
-		self::$secret_key = $secret_key;
+	public static function set_private_key( $private_key ) {
+		self::$private_key = $private_key;
 	}
 
 	/**
@@ -67,16 +67,16 @@ class WC_YouCanPay_API {
 	 *
 	 * @return string
 	 */
-	public static function get_secret_key() {
-		if ( ! self::$secret_key ) {
+	public static function get_private_key() {
+		if ( ! self::$private_key ) {
 			$options = get_option( 'woocommerce_youcanpay_settings' );
 
-			if ( isset( $options['testmode'], $options['secret_key'], $options['test_secret_key'] ) ) {
-				self::set_secret_key( 'yes' === $options['testmode'] ? $options['test_secret_key'] : $options['secret_key'] );
+			if ( isset( $options['sandbox_mode'], $options['private_key'], $options['sandbox_private_key'] ) ) {
+				self::set_private_key( 'yes' === $options['sandbox_mode'] ? $options['sandbox_private_key'] : $options['private_key'] );
 			}
 		}
 
-		return self::$secret_key;
+		return self::$private_key;
 	}
 
 	/**
@@ -88,8 +88,8 @@ class WC_YouCanPay_API {
 		if ( ! self::$public_key ) {
 			$options = get_option( 'woocommerce_youcanpay_settings' );
 
-			if ( isset( $options['testmode'], $options['publishable_key'], $options['test_publishable_key'] ) ) {
-				self::set_public_key( 'yes' === $options['testmode'] ? $options['test_publishable_key'] : $options['publishable_key'] );
+			if ( isset( $options['sandbox_mode'], $options['public_key'], $options['sandbox_public_key'] ) ) {
+				self::set_public_key( 'yes' === $options['sandbox_mode'] ? $options['sandbox_public_key'] : $options['public_key'] );
 			}
 		}
 
@@ -105,8 +105,8 @@ class WC_YouCanPay_API {
 		if ( '' === self::$is_test_mode ) {
 			$options = get_option( 'woocommerce_youcanpay_settings' );
 
-			if ( isset( $options['testmode'] ) ) {
-				self::set_test_mode( $options['testmode'] );
+			if ( isset( $options['sandbox_mode'] ) ) {
+				self::set_test_mode( $options['sandbox_mode'] );
 			}
 		}
 
@@ -128,7 +128,7 @@ class WC_YouCanPay_API {
 			YouCanPay::setIsSandboxMode( true );
 		}
 		$py = YouCanPay::instance()->useKeys(
-			self::get_secret_key(),
+			self::get_private_key(),
 			self::get_public_key()
 		);
 
@@ -170,7 +170,7 @@ class WC_YouCanPay_API {
 			YouCanPay::setIsSandboxMode( true );
 		}
 		$py = YouCanPay::instance()->useKeys(
-			self::get_secret_key(),
+			self::get_private_key(),
 			self::get_public_key()
 		);
 
@@ -184,7 +184,7 @@ class WC_YouCanPay_API {
 			YouCanPay::setIsSandboxMode( true );
 		}
 		$py = YouCanPay::instance()->useKeys(
-			self::get_secret_key(),
+			self::get_private_key(),
 			self::get_public_key()
 		);
 

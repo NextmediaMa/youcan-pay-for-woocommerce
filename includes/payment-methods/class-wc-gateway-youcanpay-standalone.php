@@ -24,7 +24,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var bool
 	 */
-	public $testmode;
+	public $sandbox_mode;
 
 	/**
 	 * Alternate credit card statement name
@@ -38,14 +38,14 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var string
 	 */
-	public $secret_key;
+	public $private_key;
 
 	/**
 	 * Api access publishable key
 	 *
 	 * @var string
 	 */
-	public $publishable_key;
+	public $public_key;
 
 	/**
 	 * Should we store the users credit cards?
@@ -77,14 +77,14 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		$this->title                = $this->get_option( 'title' );
 		$this->description          = $this->get_option( 'description' );
 		$this->enabled              = $this->get_option( 'enabled' );
-		$this->testmode             = ( ! empty( $main_settings['testmode'] ) && 'yes' === $main_settings['testmode'] ) ? true : false;
+		$this->sandbox_mode             = ( ! empty( $main_settings['sandbox_mode'] ) && 'yes' === $main_settings['sandbox_mode'] ) ? true : false;
 		$this->saved_cards          = ( ! empty( $main_settings['saved_cards'] ) && 'yes' === $main_settings['saved_cards'] ) ? true : false;
-		$this->publishable_key      = ! empty( $main_settings['publishable_key'] ) ? $main_settings['publishable_key'] : '';
-		$this->secret_key           = ! empty( $main_settings['secret_key'] ) ? $main_settings['secret_key'] : '';
+		$this->public_key      = ! empty( $main_settings['public_key'] ) ? $main_settings['public_key'] : '';
+		$this->private_key           = ! empty( $main_settings['private_key'] ) ? $main_settings['private_key'] : '';
 
-		if ( $this->testmode ) {
-			$this->publishable_key = ! empty( $main_settings['test_publishable_key'] ) ? $main_settings['test_publishable_key'] : '';
-			$this->secret_key      = ! empty( $main_settings['test_secret_key'] ) ? $main_settings['test_secret_key'] : '';
+		if ( $this->sandbox_mode ) {
+			$this->public_key = ! empty( $main_settings['sandbox_public_key'] ) ? $main_settings['sandbox_public_key'] : '';
+			$this->private_key      = ! empty( $main_settings['sandbox_private_key'] ) ? $main_settings['sandbox_private_key'] : '';
 		}
 
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, [ $this, 'process_admin_options' ] );

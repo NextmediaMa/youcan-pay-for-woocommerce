@@ -21,18 +21,18 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	public $statement_descriptor;
 
 	/**
-	 * API access secret key
+	 * API access private key
 	 *
 	 * @var string
 	 */
-	public $secret_key;
+	public $private_key;
 
 	/**
-	 * Api access publishable key
+	 * Api access public key
 	 *
 	 * @var string
 	 */
-	public $publishable_key;
+	public $public_key;
 
 	/**
 	 * Do we accept Payment Request?
@@ -46,7 +46,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var bool
 	 */
-	public $testmode;
+	public $sandbox_mode;
 
 	/**
 	 * Pre Orders Object
@@ -77,14 +77,14 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$this->init_settings();
 
 		// Get setting values.
-		$this->title           = $this->get_option( 'title' );
-		$this->description     = $this->get_option( 'description' );
-		$this->enabled         = $this->get_option( 'enabled' );
-		$this->testmode        = 'yes' === $this->get_option( 'testmode' );
-		$this->secret_key      = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
-		$this->publishable_key = $this->testmode ? $this->get_option( 'test_publishable_key' ) : $this->get_option( 'publishable_key' );
+		$this->title        = $this->get_option( 'title' );
+		$this->description  = $this->get_option( 'description' );
+		$this->enabled      = $this->get_option( 'enabled' );
+		$this->sandbox_mode = 'yes' === $this->get_option( 'sandbox_mode' );
+		$this->private_key  = $this->sandbox_mode ? $this->get_option( 'sandbox_private_key' ) : $this->get_option( 'private_key' );
+		$this->public_key   = $this->sandbox_mode ? $this->get_option( 'sandbox_public_key' ) : $this->get_option( 'public_key' );
 
-		WC_YouCanPay_API::set_secret_key( $this->secret_key );
+		WC_YouCanPay_API::set_private_key( $this->private_key );
 
 		// Hooks.
 		add_action( 'wp_enqueue_scripts', [ $this, 'payment_scripts' ] );
@@ -163,15 +163,18 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			data-currency="' . esc_attr( strtolower( get_woocommerce_currency() ) ) . '"
 		>';
 
-		if ( $this->testmode ) {
+		if ( $this->sandbox_mode ) {
 			/* translators: link to YouCan Pay testing page */
-			$description .= ' ' . sprintf(__( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
-					'woocommerce-youcan-pay' ), 'https://pay.youcan.shop/docs#testing-and-test-cards' );
+			$description .= ' ' . sprintf( __( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
+					'woocommerce-youcan-pay' ),
+					'https://pay.youcan.shop/docs#testing-and-test-cards' );
 		}
 
 		$description = trim( $description );
 
-		echo apply_filters( 'wc_youcanpay_description', wpautop( wp_kses_post( $description ) ), $this->id ); // wpcs: xss ok.
+		echo apply_filters( 'wc_youcanpay_description',
+			wpautop( wp_kses_post( $description ) ),
+			$this->id ); // wpcs: xss ok.
 
 		if ( $display_tokenization ) {
 			$this->tokenization_script();
@@ -199,7 +202,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
             <div class="form-row form-row-wide" id="payment-card"></div>
             <script>
                 jQuery(function ($) {
-                    window.setupYouCanPayForm();
+                    if (typeof (window.setupYouCanPayForm) !== "undefined") {
+                        window.setupYouCanPayForm();
+                    }
                 });
             </script>
 
@@ -219,7 +224,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function admin_options() {
 		parent::admin_options();
-
 	}
 
 	/**
@@ -229,12 +233,12 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function javascript_params() {
 		$youcanpay_params = [
-			'title'                => $this->title,
-			'key'                  => $this->publishable_key,
-			'youcanpay'            => self::ID,
-			'is_test_mode'         => $this->is_in_test_mode(),
-			'youcanpay_locale'     => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
-            'checkout_url'         => get_site_url() . '?wc-ajax=checkout'
+			'title'            => $this->title,
+			'key'              => $this->public_key,
+			'youcanpay'        => self::ID,
+			'is_test_mode'     => $this->is_in_test_mode(),
+			'youcanpay_locale' => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
+			'checkout_url'     => get_site_url() . '?wc-ajax=checkout'
 		];
 
 		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
@@ -271,7 +275,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		// If no SSL bail.
-		if ( ! $this->testmode && ! is_ssl() ) {
+		if ( ! $this->sandbox_mode && ! is_ssl() ) {
 			WC_YouCanPay_Logger::log( 'YouCan Pay live mode requires SSL.' );
 
 			return;
@@ -282,12 +286,12 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 	public function pw_load_scripts() {
 		$extension = '.js';
-        if (! $this->testmode) {
-	        $extension = '.min.js';
-        }
+		if ( ! $this->sandbox_mode ) {
+			$extension = '.min.js';
+		}
 
-		wp_enqueue_script( 'py-script', 'https://pay.youcan.shop/js/ycpay.js');
-		wp_enqueue_script( 'youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . "/assets/js/youcan-pay{$extension}");
+		wp_enqueue_script( 'py-script', 'https://pay.youcan.shop/js/ycpay.js' );
+		wp_enqueue_script( 'youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . "/assets/js/youcan-pay{$extension}" );
 		wp_localize_script( 'py-script', 'youcan_pay_script_vars', $this->javascript_params() );
 	}
 
@@ -303,7 +307,13 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @return array|void
 	 * @throws Exception If payment will not be accepted.
 	 */
-	public function process_payment( $order_id, $retry = true, $force_save_source = false, $previous_error = false, $use_order_source = false ) {
+	public function process_payment(
+		$order_id,
+		$retry = true,
+		$force_save_source = false,
+		$previous_error = false,
+		$use_order_source = false
+	) {
 		try {
 			$order = wc_get_order( $order_id );
 			if ( ! isset( $order ) ) {
@@ -313,12 +323,13 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				                          . print_r( 'Order Id: ', true ) . PHP_EOL
 				                          . print_r( $order_id, true )
 				);
-				throw new WC_YouCanPay_Exception( 'Order not found', __( 'Fatal error! Please contact support.', 'woocommerce-youcan-pay' ) );
+				throw new WC_YouCanPay_Exception( 'Order not found',
+					__( 'Fatal error! Please contact support.', 'woocommerce-youcan-pay' ) );
 			}
 
 			$this->validate_minimum_order_amount( $order );
 
-            $order->set_status('on-hold');
+			$order->set_status( 'on-hold' );
 
 			$token = WC_YouCanPay_API::create_token(
 				$order->get_id(),
@@ -327,15 +338,15 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			);
 
 			return [
-				'result'   => 'success',
-				'redirect'   => $this->get_youcanpay_return_url( $order, self::ID ),
-                'token_transaction' => (isset($token)) ? $token->getId() : 0
+				'result'            => 'success',
+				'redirect'          => $this->get_youcanpay_return_url( $order, self::ID ),
+				'token_transaction' => ( isset( $token ) ) ? $token->getId() : 0
 			];
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
 			WC_YouCanPay_Logger::log( 'Error: ' . $e->getMessage() );
 
-			if (isset($order)) {
+			if ( isset( $order ) ) {
 				$order->update_status( 'failed' );
 			}
 			$this->send_failed_order_email( $order_id );
@@ -378,7 +389,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		parent::process_admin_options();
 	}
 
-	public function validate_publishable_key_field( $key, $value ) {
+	public function validate_public_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_/', $value ) ) {
 			throw new Exception( __( 'The "Production Public key" should start with "pub", enter the correct key.',
@@ -388,7 +399,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
-	public function validate_secret_key_field( $key, $value ) {
+	public function validate_private_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_/', $value ) ) {
 			throw new Exception( __( 'The "Production Private key" should start with "pri", enter the correct key.',
@@ -398,7 +409,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
-	public function validate_test_publishable_key_field( $key, $value ) {
+	public function validate_sandbox_public_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Sandbox Public key" should start with "pub_sandbox", enter the correct key.',
@@ -408,7 +419,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
-	public function validate_test_secret_key_field( $key, $value ) {
+	public function validate_sandbox_private_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Sandbox Private key" should start with "pri_sandbox", enter the correct key.',
@@ -447,6 +458,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @return boolean Sandbox mode enabled if true, disabled if false.
 	 */
 	public function is_in_test_mode() {
-		return 'yes' === $this->get_option( 'testmode' );
+		return 'yes' === $this->get_option( 'sandbox_mode' );
 	}
 }

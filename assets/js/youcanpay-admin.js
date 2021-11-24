@@ -8,15 +8,15 @@ jQuery( function( $ ) {
 	 */
 	var wc_youcanpay_admin = {
 
-		isTestMode: function() {
-			return $( '#woocommerce_youcanpay_testmode' ).is( ':checked' );
+		isSandboxMode: function() {
+			return $( '#woocommerce_youcanpay_sandbox_mode' ).is( ':checked' );
 		},
 
 		getSecretKey: function() {
-			if ( wc_youcanpay_admin.isTestMode() ) {
-				return $( '#woocommerce_youcanpay_test_secret_key' ).val();
+			if ( wc_youcanpay_admin.isSandboxMode() ) {
+				return $( '#woocommerce_youcanpay_sandbox_private_key' ).val();
 			} else {
-				return $( '#woocommerce_youcanpay_secret_key' ).val();
+				return $( '#woocommerce_youcanpay_private_key' ).val();
 			}
 		},
 
@@ -24,26 +24,26 @@ jQuery( function( $ ) {
 		 * Initialize.
 		 */
 		init: function() {
-			$( document.body ).on( 'change', '#woocommerce_youcanpay_testmode', function() {
-				var test_secret_key = $( '#woocommerce_youcanpay_test_secret_key' ).parents( 'tr' ).eq( 0 ),
-					test_publishable_key = $( '#woocommerce_youcanpay_test_publishable_key' ).parents( 'tr' ).eq( 0 ),
-					live_secret_key = $( '#woocommerce_youcanpay_secret_key' ).parents( 'tr' ).eq( 0 ),
-					live_publishable_key = $( '#woocommerce_youcanpay_publishable_key' ).parents( 'tr' ).eq( 0 );
+			$( document.body ).on( 'change', '#woocommerce_youcanpay_sandbox_mode', function() {
+				var sandbox_private_key = $( '#woocommerce_youcanpay_sandbox_private_key' ).parents( 'tr' ).eq( 0 ),
+					sandbox_public_key = $( '#woocommerce_youcanpay_sandbox_public_key' ).parents( 'tr' ).eq( 0 ),
+					production_private_key = $( '#woocommerce_youcanpay_private_key' ).parents( 'tr' ).eq( 0 ),
+					production_public_key = $( '#woocommerce_youcanpay_public_key' ).parents( 'tr' ).eq( 0 );
 
 				if ( $( this ).is( ':checked' ) ) {
-					test_secret_key.show();
-					test_publishable_key.show();
-					live_secret_key.hide();
-					live_publishable_key.hide();
+					sandbox_private_key.show();
+					sandbox_public_key.show();
+					production_private_key.hide();
+					production_public_key.hide();
 				} else {
-					test_secret_key.hide();
-					test_publishable_key.hide();
-					live_secret_key.show();
-					live_publishable_key.show();
+					sandbox_private_key.hide();
+					sandbox_public_key.hide();
+					production_private_key.show();
+					production_public_key.show();
 				}
 			} );
 
-			$( '#woocommerce_youcanpay_testmode' ).trigger( 'change' );
+			$( '#woocommerce_youcanpay_sandbox_mode' ).trigger( 'change' );
 
 			// Toggle Payment Request buttons settings.
 			$( '#woocommerce_youcanpay_payment_request' ).on( 'change', function() {

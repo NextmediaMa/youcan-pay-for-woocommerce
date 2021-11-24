@@ -15,7 +15,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	 *
 	 * @var bool
 	 */
-	public $testmode;
+	public $sandbox_mode;
 
 	/**
 	 * Constructor.
@@ -23,7 +23,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	public function __construct() {
 		$this->retry_interval = 2;
 		$youcanpay_settings   = get_option( 'woocommerce_youcanpay_settings', [] );
-		$this->testmode       = ( ! empty( $youcanpay_settings['testmode'] ) && 'yes' === $youcanpay_settings['testmode'] ) ? true : false;
+		$this->sandbox_mode   = ( ! empty( $youcanpay_settings['sandbox_mode'] ) && 'yes' === $youcanpay_settings['sandbox_mode'] ) ? true : false;
 
 		add_action( 'woocommerce_api_wc_youcanpay', [ $this, 'check_for_webhook' ] );
 	}
@@ -65,7 +65,8 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			                          . print_r( $transaction_id, true ) . PHP_EOL
 			);
 
-			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ),
+				'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
 		}

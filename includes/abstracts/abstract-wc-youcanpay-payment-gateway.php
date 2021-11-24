@@ -38,12 +38,12 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @return bool True if the keys are set *and* valid, false otherwise (for example, if keys are empty or the secret key was pasted as publishable key).
 	 */
 	public function are_keys_set() {
-		if ( $this->testmode ) {
-			return preg_match( '/^pub_sandbox_/', $this->publishable_key )
-				&& preg_match( '/^pri_sandbox_/', $this->secret_key );
+		if ( $this->sandbox_mode ) {
+			return preg_match( '/^pub_sandbox_/', $this->public_key )
+				&& preg_match( '/^pri_sandbox_/', $this->private_key );
 		} else {
-			return preg_match( '/^pub_/', $this->publishable_key )
-				&& preg_match( '/^pri_/', $this->secret_key );
+			return preg_match( '/^pub_/', $this->public_key )
+				&& preg_match( '/^pri_/', $this->private_key );
 		}
 	}
 
