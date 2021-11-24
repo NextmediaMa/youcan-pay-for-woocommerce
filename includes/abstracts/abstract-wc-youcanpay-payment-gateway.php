@@ -68,7 +68,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		return apply_filters(
 			'wc_youcanpay_payment_icons',
 			[
-				'standalone' => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/standalone.svg" class="youcanpay-standalone-icon youcanpay-icon" alt="YouCan Pay Standalone" />',
+				'standalone' => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/youcan-pay.svg" class="youcanpay-standalone-icon youcanpay-icon" alt="YouCan Pay Standalone" />',
 			]
 		);
 	}
