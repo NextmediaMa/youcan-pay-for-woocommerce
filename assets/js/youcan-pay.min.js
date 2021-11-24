@@ -1,10 +1,15 @@
+window.ycPay = null;
 window.setupYouCanPayForm = () => {
-    window.ycPay = new YCPay(youcan_pay_script_vars.key, {locale: youcan_pay_script_vars.youcanpay_locale});
-    if (window.ycPay != null) {
-        if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
-            window.ycPay.isSandboxMode = true;
+    try {
+        if (window.ycPay == null) {
+            window.ycPay = new YCPay(youcan_pay_script_vars.key, {locale: youcan_pay_script_vars.youcanpay_locale});
+            if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
+                window.ycPay.isSandboxMode = true;
+            }
         }
         window.ycPay.renderForm('#payment-card');
+    } catch (error) {
+        console.error(error);
     }
 };
 
@@ -50,23 +55,30 @@ jQuery(function ($) {
                     return;
                 }
                 if (typeof(data.token_transaction) !== 'undefined') {
-                    window.ycPay.pay(data.token_transaction)
-                        .then(function (transactionId) {
-                            var url = new URL(data.redirect);
-                            url.searchParams.set('transaction_id', transactionId);
-                            window.location.href = url.href;
-                        })
-                        .catch(function (errorMessage) {
-                            let notice = $noticeGroup.clone();
+                    try {
+                        window.ycPay.pay(data.token_transaction)
+                            .then(function (transactionId) {
+                                var url = new URL(data.redirect);
+                                url.searchParams.set('transaction_id', transactionId);
+                                window.location.href = url.href;
+                            })
+                            .catch(function (errorMessage) {
+                                let notice = $noticeGroup.clone();
 
-                            notice.append('<ul class="woocommerce-error" role="alert"></ul>');
-                            notice.find('ul').append('<li>' + errorMessage + '</li>');
-                            $form.prepend(notice);
-                        });
+                                notice.append('<ul class="woocommerce-error" role="alert"></ul>');
+                                notice.find('ul').append('<li>' + errorMessage + '</li>');
+                                $form.prepend(notice);
+                            });
+                    } catch (error) {
+                        console.error(error);
+                    }
                 }
             }).fail(function(data) {
 
-            }).always(function() {
+            }).always(function(data) {
+                if (typeof(data.token_transaction) !== 'undefined') {
+                    return;
+                }
                 $('html, body').animate({
                     scrollTop: $('.woocommerce').offset().top
                 }, 400);
