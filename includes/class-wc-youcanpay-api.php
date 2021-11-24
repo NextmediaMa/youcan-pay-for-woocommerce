@@ -29,7 +29,7 @@ class WC_YouCanPay_API {
 	private static $public_key = '';
 
 	/**
-	 * Test Mode is enabled.
+	 * Sandbox Mode is enabled.
 	 *
 	 * @var string
 	 */

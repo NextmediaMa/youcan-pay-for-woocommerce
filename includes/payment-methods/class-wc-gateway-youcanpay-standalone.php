@@ -20,7 +20,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	public $notices = [];
 
 	/**
-	 * Is test mode active?
+	 * Is sandbox mode active?
 	 *
 	 * @var bool
 	 */

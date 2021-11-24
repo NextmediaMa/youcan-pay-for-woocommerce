@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	/**
-	 * Is test mode active?
+	 * Is sandbox mode active?
 	 *
 	 * @var bool
 	 */

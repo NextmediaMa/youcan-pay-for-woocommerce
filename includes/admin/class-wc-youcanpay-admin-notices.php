@@ -132,14 +132,14 @@ class WC_YouCanPay_Admin_Notices {
 					$this->add_admin_notice( 'keys', 'notice notice-warning', sprintf( __( 'YouCan Pay is almost ready. To get started, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 				}
 
-				// Check if keys are entered properly per live/test mode.
+				// Check if keys are entered properly per live/Sandbox mode.
 				if ( $testmode ) {
 					if (
 						! empty( $test_pub_key ) && ! preg_match( '/^pub_sandbox_/', $test_pub_key )
 						|| ! empty( $test_secret_key ) && ! preg_match( '/^pri_sandbox_/', $test_secret_key ) ) {
 						$setting_link = $this->get_setting_link();
 						/* translators: 1) link */
-						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in test mode however your test keys may not be valid. Test keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
+						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 					}
 				} else {
 					if (
@@ -147,7 +147,7 @@ class WC_YouCanPay_Admin_Notices {
 						|| ! empty( $live_secret_key ) && ! preg_match( '/^pri_/', $live_secret_key ) ) {
 						$setting_link = $this->get_setting_link();
 						/* translators: 1) link */
-						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in live mode however your live keys may not be valid. Live keys start with pub and pri. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
+						$this->add_admin_notice( 'keys', 'notice notice-error', sprintf( __( 'YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.', 'woocommerce-youcan-pay' ), $setting_link ), true );
 					}
 				}
 			}
