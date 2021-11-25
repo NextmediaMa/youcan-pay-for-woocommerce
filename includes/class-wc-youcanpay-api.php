@@ -149,7 +149,7 @@ class WC_YouCanPay_API {
 			);
 
 			throw new WC_YouCanPay_Exception( print_r( $token, true ),
-				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'woocommerce-youcan-pay' ) );
+				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay-for-woocommerce' ) );
 		}
 
 		$response = [

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Woocommerce YouCan Pay
+ * Plugin Name: YouCan Pay for Woocommerce
  * Plugin URI: https://pay.youcan.shop
- * Description: Woocommerce YouCan Pay: allows you to receive fast and secure online card payments.
+ * Description: YouCan Pay for Woocommerce: allows you to receive fast and secure online card payments.
  * Author:  YouCan Pay.
  * Author URI: https://pay.youcan.shop
  * Version: 1.0
@@ -10,7 +10,7 @@
  * Tested up to: 5.8
  * WC requires at least: 5.6
  * WC tested up to: 5.8
- * Text Domain: woocommerce-youcan-pay
+ * Text Domain: youcan-pay-for-woocommerce
  * Domain Path: /languages
  */
 
@@ -35,7 +35,7 @@ define( 'WC_YOUCAN_PAY_PLUGIN_PATH', untrailingslashit( plugin_dir_path( __FILE_
  */
 function woocommerce_youcanpay_missing_wc_notice() {
 	/* translators: 1. URL link. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCan Pay requires WooCommerce to be installed and active. You can download %s here.', 'woocommerce-youcan-pay' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCan Pay requires WooCommerce to be installed and active. You can download %s here.', 'youcan-pay-for-woocommerce' ), '<a href="https://woocommerce.com/" target="_blank">WooCommerce</a>' ) . '</strong></p></div>';
 }
 
 /**
@@ -43,7 +43,7 @@ function woocommerce_youcanpay_missing_wc_notice() {
  */
 function woocommerce_youcanpay_wc_not_supported() {
 	/* translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version. */
-	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'woocommerce-youcan-pay' ), WC_YOUCAN_PAY_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
+	echo '<div class="error"><p><strong>' . sprintf( esc_html__( 'YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported.', 'youcan-pay-for-woocommerce' ), WC_YOUCAN_PAY_MIN_WC_VER, WC_VERSION ) . '</strong></p></div>';
 }
 
 function woocommerce_gateway_youcanpay() {
@@ -177,7 +177,7 @@ function woocommerce_gateway_youcanpay() {
 			 */
 			public function plugin_action_links( $links ) {
 				$plugin_links = [
-					'<a href="admin.php?page=wc-settings&tab=checkout&section=youcanpay">' . esc_html__( 'Settings', 'woocommerce-youcan-pay' ) . '</a>',
+					'<a href="admin.php?page=wc-settings&tab=checkout&section=youcanpay">' . esc_html__( 'Settings', 'youcan-pay-for-woocommerce' ) . '</a>',
 				];
 				return array_merge( $plugin_links, $links );
 			}
@@ -192,8 +192,8 @@ function woocommerce_gateway_youcanpay() {
 			public function plugin_row_meta( $links, $file ) {
 				if ( plugin_basename( __FILE__ ) === $file ) {
 					$row_meta = [
-						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://youcan.shop/help/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Docs', 'woocommerce-youcan-pay' ) . '</a>',
-						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'woocommerce-youcan-pay' ) ) . '">' . __( 'Support', 'woocommerce-youcan-pay' ) . '</a>',
+						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url', 'https://youcan.shop/help/' ) ) . '" title="' . esc_attr( __( 'View Documentation', 'youcan-pay-for-woocommerce' ) ) . '">' . __( 'Docs', 'youcan-pay-for-woocommerce' ) . '</a>',
+						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url', 'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com', 'youcan-pay-for-woocommerce' ) ) . '">' . __( 'Support', 'youcan-pay-for-woocommerce' ) . '</a>',
 					];
 					return array_merge( $links, $row_meta );
 				}
@@ -220,7 +220,7 @@ function woocommerce_gateway_youcanpay() {
 				unset( $sections['youcanpay_standalone'] );
 
 				$sections['youcanpay'] = 'YouCanPay';
-				$sections['youcanpay_standalone'] = __( 'YouCan Pay Standalone', 'woocommerce-youcan-pay' );
+				$sections['youcanpay_standalone'] = __( 'YouCan Pay Standalone', 'youcan-pay-for-woocommerce' );
 
 				return $sections;
 			}
@@ -284,7 +284,7 @@ function woocommerce_gateway_youcanpay() {
 add_action( 'plugins_loaded', 'woocommerce_gateway_youcanpay_init' );
 
 function woocommerce_gateway_youcanpay_init() {
-	load_plugin_textdomain( 'woocommerce-youcan-pay', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'youcan-pay-for-woocommerce', false, plugin_basename( dirname( __FILE__ ) ) . '/languages' );
 
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		add_action( 'admin_notices', 'woocommerce_youcanpay_missing_wc_notice' );

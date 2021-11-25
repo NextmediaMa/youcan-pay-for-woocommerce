@@ -75,7 +75,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			                          . print_r( $transaction_id, true ) . PHP_EOL
 			);
 
-			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ),
+			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
@@ -89,7 +89,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			                          . print_r( 'Order Id: ', true ) . PHP_EOL
 			                          . print_r( $order->get_id(), true )
 			);
-			wc_add_notice( __( 'Fatal error! Please contact support.', 'woocommerce-youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
@@ -105,7 +105,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
 		} else {
-			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'woocommerce-youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			$order->set_status( 'failed' );
 			$order->save();
@@ -119,7 +119,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	 */
 	private function youcanpay_standalone() {
 		if ( ! isset( $_GET['key'] ) ) {
-			wc_add_notice( __( '#0020: Fatal error, please try again', 'woocommerce-youcan-pay' ), 'error' );
+			wc_add_notice( __( '#0020: Fatal error, please try again', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
@@ -135,7 +135,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			                          . print_r( 'Order Id: ', true ) . PHP_EOL
 			                          . print_r( $order_id, true )
 			);
-			wc_add_notice( __( 'Fatal error! Please contact support.', 'woocommerce-youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
@@ -152,7 +152,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			                          . print_r( 'Order Id: ', true ) . PHP_EOL
 			                          . print_r( $order->get_id(), true )
 			);
-			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'woocommerce-youcan-pay' ),
+			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
@@ -169,7 +169,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			                          . print_r( 'Order Id: ', true ) . PHP_EOL
 			                          . print_r( $order->get_id(), true )
 			);
-			wc_add_notice( __( 'Fatal error, please try again or contact support.', 'woocommerce-youcan-pay' ),
+			wc_add_notice( __( 'Fatal error, please try again or contact support.', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
@@ -182,7 +182,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
 		} else {
-			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'woocommerce-youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			$order->set_status( 'failed' );
 			$order->save();

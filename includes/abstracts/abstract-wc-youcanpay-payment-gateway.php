@@ -26,7 +26,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$form_fields = $this->get_form_fields();
 
 		echo '<h2>' . esc_html( $this->get_method_title() );
-		wc_back_link( __( 'Return to payments', 'woocommerce-youcan-pay' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		wc_back_link( __( 'Return to payments', 'youcan-pay-for-woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 
 		echo '<table class="form-table">' . $this->generate_settings_html( $form_fields, false ) . '</table>';
@@ -89,7 +89,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			throw new WC_YouCanPay_Exception(
 				'Did not meet minimum amount',
 				sprintf(
-					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-youcan-pay' ),
+					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay-for-woocommerce' ),
 					$price
 				)
 			);
@@ -105,7 +105,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function validate_minimum_cart_amount() {
 		if ( WC()->cart->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
 			/* translators: 1) amount (including currency symbol) */
-			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-youcan-pay' ), wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
+			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay-for-woocommerce' ), wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
 		}
 	}
 

@@ -46,10 +46,10 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = self::ID;
-		$this->method_title = __( 'YouCan Pay Standalone', 'woocommerce-youcan-pay' );
+		$this->method_title = __( 'YouCan Pay Standalone', 'youcan-pay-for-woocommerce' );
 		/* translators: link */
 		$this->method_description = sprintf( __( 'All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.',
-			'woocommerce-youcan-pay' ),
+			'youcan-pay-for-woocommerce' ),
 			admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
 		$this->supports           = [
 			'products',

@@ -17,13 +17,13 @@ printf(
 	_x(
 		'The automatic recurring payment for order %1$s from %2$s has failed. The customer was sent an email requesting authentication of payment. If the customer does not authenticate the payment, they will be requested by email again %3$s.',
 		'In admin renewal failed email',
-		'woocommerce-youcan-pay'
+		'youcan-pay-for-woocommerce'
 	),
 	$order->get_order_number(),
 	$order->get_formatted_billing_full_name(),
 	wcs_get_human_time_diff( $retry->get_time() )
 ) . "\n\n";
-printf( __( 'The renewal order is as follows:', 'woocommerce-youcan-pay' ) ) . "\n\n";
+printf( __( 'The renewal order is as follows:', 'youcan-pay-for-woocommerce' ) ) . "\n\n";
 
 echo "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\n";
 

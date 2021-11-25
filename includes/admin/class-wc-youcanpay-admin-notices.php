@@ -104,8 +104,8 @@ class WC_YouCanPay_Admin_Notices {
 			if ( empty( $show_phpver_notice ) ) {
 				if ( version_compare( phpversion(), WC_YOUCAN_PAY_MIN_PHP_VER, '<' ) ) {
 					/* translators: 1) int version 2) int version */
-					$message = __( 'WooCommerce YouCan Pay - The minimum PHP version required for this plugin is %1$s. You are running %2$s.',
-						'woocommerce-youcan-pay' );
+					$message = __( 'YouCan Pay for Woocommerce - The minimum PHP version required for this plugin is %1$s. You are running %2$s.',
+						'youcan-pay-for-woocommerce' );
 
 					$this->add_admin_notice( 'phpver',
 						'error',
@@ -119,8 +119,8 @@ class WC_YouCanPay_Admin_Notices {
 			if ( empty( $show_wcver_notice ) ) {
 				if ( WC_YouCanPay_Helper::is_wc_lt( WC_YOUCAN_PAY_FUTURE_MIN_WC_VER ) ) {
 					/* translators: 1) int version 2) int version */
-					$message = __( 'WooCommerce YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All future versions of the plugin will require WooCommerce %2$s or greater.',
-						'woocommerce-youcan-pay' );
+					$message = __( 'YouCan Pay for Woocommerce - This is the last version of the plugin compatible with WooCommerce %1$s. All future versions of the plugin will require WooCommerce %2$s or greater.',
+						'youcan-pay-for-woocommerce' );
 					$this->add_admin_notice( 'wcver',
 						'notice notice-warning',
 						sprintf( $message, WC_VERSION, WC_YOUCAN_PAY_FUTURE_MIN_WC_VER ),
@@ -132,7 +132,7 @@ class WC_YouCanPay_Admin_Notices {
 				if ( ! function_exists( 'curl_init' ) ) {
 					$this->add_admin_notice( 'curl',
 						'notice notice-warning',
-						__( 'WooCommerce YouCan Pay - cURL is not installed.', 'woocommerce-youcan-pay' ),
+						__( 'YouCan Pay for Woocommerce - cURL is not installed.', 'youcan-pay-for-woocommerce' ),
 						true );
 				}
 			}
@@ -149,7 +149,7 @@ class WC_YouCanPay_Admin_Notices {
 					$this->add_admin_notice( 'keys',
 						'notice notice-warning',
 						sprintf( __( 'YouCan Pay is almost ready. To get started, <a href="%s">set your YouCan Pay account keys</a>.',
-							'woocommerce-youcan-pay' ),
+							'youcan-pay-for-woocommerce' ),
 							$setting_link ),
 						true );
 				}
@@ -165,7 +165,7 @@ class WC_YouCanPay_Admin_Notices {
 						$this->add_admin_notice( 'keys',
 							'notice notice-error',
 							sprintf( __( 'YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.',
-								'woocommerce-youcan-pay' ),
+								'youcan-pay-for-woocommerce' ),
 								$setting_link ),
 							true );
 					}
@@ -178,7 +178,7 @@ class WC_YouCanPay_Admin_Notices {
 						$this->add_admin_notice( 'keys',
 							'notice notice-error',
 							sprintf( __( 'YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href="%s">set your YouCan Pay account keys</a>.',
-								'woocommerce-youcan-pay' ),
+								'youcan-pay-for-woocommerce' ),
 								$setting_link ),
 							true );
 					}
@@ -192,7 +192,7 @@ class WC_YouCanPay_Admin_Notices {
 					$this->add_admin_notice( 'ssl',
 						'notice notice-warning',
 						sprintf( __( 'YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href="%1$s" target="_blank">SSL certificate</a>',
-							'woocommerce-youcan-pay' ),
+							'youcan-pay-for-woocommerce' ),
 							'https://woocommerce.com/document/ssl-and-https/' ),
 						true );
 				}
@@ -207,11 +207,11 @@ class WC_YouCanPay_Admin_Notices {
 		if ( isset( $_GET['wc-youcanpay-hide-notice'] ) && isset( $_GET['_wc_youcanpay_notice_nonce'] ) ) {
 			if ( ! wp_verify_nonce( wc_clean( wp_unslash( $_GET['_wc_youcanpay_notice_nonce'] ) ),
 				'wc_youcanpay_hide_notices_nonce' ) ) {
-				wp_die( __( 'Action failed. Please refresh the page and retry.', 'woocommerce-youcan-pay' ) );
+				wp_die( __( 'Action failed. Please refresh the page and retry.', 'youcan-pay-for-woocommerce' ) );
 			}
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				wp_die( __( 'Cheatin&#8217; huh?', 'woocommerce-youcan-pay' ) );
+				wp_die( __( 'Cheatin&#8217; huh?', 'youcan-pay-for-woocommerce' ) );
 			}
 
 			$notice = wc_clean( wp_unslash( $_GET['wc-youcanpay-hide-notice'] ) );

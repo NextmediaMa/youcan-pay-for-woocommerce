@@ -1,5 +1,5 @@
-=== WooCommerce YouCan Pay Gateway ===
-Plugin Name:       WooCommerce YouCan Pay
+=== YouCan Pay for Woocommerce ===
+Plugin Name:       YouCan Pay for Woocommerce
 Plugin URI:        https://pay.youcan.shop
 Contributors:      mohamed oussama el abbassi
 Tags:              credit card, youcanpay, payment request, standalone, woocommerce
@@ -31,7 +31,7 @@ YouCan Pay has no setup fees, no monthly fees, no hidden costs: you only get cha
 
 = Web Payments API Support =
 
-WooCommerce YouCan Pay includes [Web Payments API](https://www.w3.org/TR/payment-request/) support, which means customers can pay using payment details associated to their mobile devices, in browsers supporting the Web Payments API (Chrome for Android, amongst others). Checkout is now just a few taps away on mobile. Only supports simple, variable, and Subscription products for now. More support to come.
+YouCan Pay for Woocommerce includes [Web Payments API](https://www.w3.org/TR/payment-request/) support, which means customers can pay using payment details associated to their mobile devices, in browsers supporting the Web Payments API (Chrome for Android, amongst others). Checkout is now just a few taps away on mobile. Only supports simple, variable, and Subscription products for now. More support to come.
 
 == Installation ==
 You can download an [older version of this gateway for older versions of WooCommerce from here](https://wordpress.org/plugins/woocommerce-youcanpay/developers/).
@@ -40,9 +40,9 @@ Please note, v1 of this gateway requires WooCommerce 3.0 and above.
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself, and you don’t need to leave your web browser. To do an automatic installation of the WooCommerce YouCan Pay plugin, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
+Automatic installation is the easiest option as WordPress handles the file transfers itself, and you don’t need to leave your web browser. To do an automatic installation of the YouCan Pay for Woocommerce plugin, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
 
-In the search field type “WooCommerce YouCan Pay” and click Search Plugins. Once you’ve found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now", then "Activate".
+In the search field type “YouCan Pay for Woocommerce” and click Search Plugins. Once you’ve found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now", then "Activate".
 
 = Manual installation =
 
