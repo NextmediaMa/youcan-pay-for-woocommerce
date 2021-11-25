@@ -91,7 +91,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 		];
 
 		if ( $user instanceof WP_User ) {
-			$order_query['customer_id'] = (int) $user->ID;
+			$order_query['customer_id'] = $user->ID;
 		} else {
 			$order_query['billing_email'] = $email_address;
 		}
@@ -118,7 +118,6 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 	 * @return array
 	 */
 	public function order_data_exporter( $email_address, $page = 1 ) {
-		$done           = false;
 		$data_to_export = [];
 
 		$orders = $this->get_youcanpay_orders( $email_address, (int) $page );
@@ -195,9 +194,8 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 	 * @return array An array of personal data in name value pairs
 	 */
 	public function customer_data_eraser( $email_address, $page ) {
-		$page                  = (int) $page;
-		$user                  = get_user_by( 'email',
-			$email_address ); // Check if user has an ID in the DB to load stored personal data.
+		// Check if user has an ID in the DB to load stored personal data.
+		$user                  = get_user_by( 'email', $email_address );
 		$youcanpay_customer_id = '';
 		$youcanpay_source_id   = '';
 
@@ -239,7 +237,7 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy {
 		$items_retained = false;
 		$messages       = [];
 
-		foreach ( (array) $orders as $order ) {
+		foreach ( $orders as $order ) {
 			$order = wc_get_order( $order->get_id() );
 
 			list( $removed, $retained, $msgs ) = $this->maybe_handle_order( $order );

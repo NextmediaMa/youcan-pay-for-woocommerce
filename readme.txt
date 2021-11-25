@@ -1,5 +1,5 @@
 === WooCommerce YouCan Pay Gateway ===
-Tags: credit card, youcanpay, payment request, standalone, woocommerce, automattic
+Tags: credit card, youcanpay, payment request, standalone, woocommerce
 Requires at least: 4.6
 Tested up to: 5.8
 Requires PHP: 5.6
@@ -11,13 +11,13 @@ Take credit card payments on your store using YouCan Pay.
 
 == Description ==
 
-Accept Visa, MasterCard, American Express, Discover, and more directly on your store with the YouCan Pay gateway for WooCommerce.
+Accept Visa, MasterCard, American Express, and more directly on your store with the YouCan Pay for WooCommerce.
 
 = Take Credit card payments easily and directly on your store =
 
 The YouCan Pay plugin extends WooCommerce allowing you to take payments directly on your store via YouCan Pay’s API.
 
-YouCan Pay is a simple way to accept payments online. With YouCan Pay you can accept Visa, MasterCard, American Express, Discover directly on your store.
+YouCan Pay is a simple way to accept payments online. With YouCan Pay you can accept Visa, MasterCard, American Express directly on your store.
 
 = Why choose YouCan Pay? =
 
@@ -30,11 +30,11 @@ WooCommerce YouCan Pay includes [Web Payments API](https://www.w3.org/TR/payment
 == Installation ==
 You can download an [older version of this gateway for older versions of WooCommerce from here](https://wordpress.org/plugins/woocommerce-youcanpay/developers/).
 
-Please note, v4 of this gateway requires WooCommerce 3.0 and above.
+Please note, v1 of this gateway requires WooCommerce 3.0 and above.
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of the WooCommerce YouCan Pay plugin, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
+Automatic installation is the easiest option as WordPress handles the file transfers itself, and you don’t need to leave your web browser. To do an automatic installation of the WooCommerce YouCan Pay plugin, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
 
 In the search field type “WooCommerce YouCan Pay” and click Search Plugins. Once you’ve found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now", then "Activate".
 
@@ -44,7 +44,7 @@ The manual installation method involves downloading our plugin and uploading it 
 
 = Updating =
 
-Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
+Automatic updates should work like a charm; as always though, ensure you back up your site just in case.
 
 == Frequently Asked Questions ==
 
@@ -54,7 +54,7 @@ Yes!
 
 = Does this require an SSL certificate? =
 
-Yes! In Live Mode, an SSL certificate must be installed on your site to use YouCan Pay. In addition to SSL encryption, YouCan Pay provides an extra JavaScript method to secure card data using [YouCan Pay Elements](https://pay.youcan.shop/docs).
+Yes! In Production Mode, an SSL certificate must be installed on your site to use YouCan Pay. In addition to SSL encryption, YouCan Pay provides an extra JavaScript method to secure card data using [YouCan Pay Elements](https://pay.youcan.shop/docs).
 
 = Does this support both production mode and sandbox mode for testing? =
 
@@ -62,7 +62,7 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 
 = Where can I find documentation? =
 
-For help setting up and configuring, please refer to our [documentation](https://pay.youcan.shop/docs).
+For help with installation and configuration, please refer to our [documentation](https://pay.youcan.shop/docs).
 
 = Where can I get support or talk to other users? =
 

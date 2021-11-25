@@ -13,9 +13,19 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	/**
 	 * Is sandbox mode active?
 	 *
-	 * @var bool
+	 * @var bool $sandbox_mode
 	 */
 	public $sandbox_mode;
+
+	/**
+	 * @var string $public_key
+	 */
+	public $public_key;
+
+	/**
+	 * @var string $private_key
+	 */
+	public $private_key;
 
 	/**
 	 * Constructor.
@@ -23,7 +33,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	public function __construct() {
 		$this->retry_interval = 2;
 		$youcanpay_settings   = get_option( 'woocommerce_youcanpay_settings', [] );
-		$this->sandbox_mode   = ( ! empty( $youcanpay_settings['sandbox_mode'] ) && 'yes' === $youcanpay_settings['sandbox_mode'] ) ? true : false;
+		$this->sandbox_mode   = ! empty( $youcanpay_settings['sandbox_mode'] ) && 'yes' === $youcanpay_settings['sandbox_mode'];
 
 		add_action( 'woocommerce_api_wc_youcanpay', [ $this, 'check_for_webhook' ] );
 	}

@@ -77,14 +77,22 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * Validates that the order meets the minimum order amount
 	 * set by YouCan Pay.
 	 *
-	 * @param object $order
+	 * @param WC_Order $order
 	 *
 	 * @throws WC_YouCanPay_Exception
 	 */
 	public function validate_minimum_order_amount( $order ) {
 		if ( $order->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
 			/* translators: 1) amount (including currency symbol) */
-			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-youcan-pay' ), wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
+			$price = wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 );
+
+			throw new WC_YouCanPay_Exception(
+				'Did not meet minimum amount',
+				sprintf(
+					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'woocommerce-youcan-pay' ),
+					$price
+				)
+			);
 		}
 	}
 
@@ -141,7 +149,10 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function send_failed_order_email( $order_id ) {
 		$emails = WC()->mailer()->get_emails();
 		if ( ! empty( $emails ) && ! empty( $order_id ) ) {
-			$emails['WC_Email_Failed_Order']->trigger( $order_id );
+			/** @var WC_Email_Failed_Order $wcFailedOrder */
+			$wcFailedOrder = $emails['WC_Email_Failed_Order'];
+
+			$wcFailedOrder->trigger( $order_id );
 		}
 	}
 

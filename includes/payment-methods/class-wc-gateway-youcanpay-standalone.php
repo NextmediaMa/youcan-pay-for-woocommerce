@@ -66,7 +66,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
 		$this->enabled      = $this->get_option( 'enabled' );
-		$this->sandbox_mode = ( ! empty( $main_settings['sandbox_mode'] ) && 'yes' === $main_settings['sandbox_mode'] ) ? true : false;
+		$this->sandbox_mode = ! empty( $main_settings['sandbox_mode'] ) && 'yes' === $main_settings['sandbox_mode'];
 		$this->public_key   = ! empty( $main_settings['public_key'] ) ? $main_settings['public_key'] : '';
 		$this->private_key  = ! empty( $main_settings['private_key'] ) ? $main_settings['private_key'] : '';
 
@@ -98,7 +98,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
 		$icons_str = '';
 
-		$icons_str .= isset( $icons['standalone'] ) ? $icons['standalone'] : '';
+		$icons_str .= $icons['standalone'] ?? '';
 
 		return apply_filters( 'woocommerce_gateway_icon', $icons_str, $this->id );
 	}
@@ -127,7 +127,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function payment_fields() {
 		global $wp;
-		$total       = WC()->cart->total;
+		$total       = WC()->cart->get_total();
 		$description = $this->get_description();
 
 		// If paying from order, we need to get total from order not cart.

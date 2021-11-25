@@ -46,7 +46,7 @@ class WC_YouCanPay_Admin_Notices {
 		// Main YouCan Pay payment method.
 		$this->youcanpay_check_environment();
 
-		foreach ( (array) $this->notices as $notice_key => $notice ) {
+		foreach ( $this->notices as $notice_key => $notice ) {
 			echo '<div class="' . esc_attr( $notice['class'] ) . '" style="position:relative;">';
 
 			if ( $notice['dismissible'] ) {
@@ -94,7 +94,7 @@ class WC_YouCanPay_Admin_Notices {
 		$show_wcver_notice      = get_option( 'wc_youcanpay_show_wcver_notice' );
 		$show_curl_notice       = get_option( 'wc_youcanpay_show_curl_notice' );
 		$options                = get_option( 'woocommerce_youcanpay_settings' );
-		$sandbox_mode           = ( isset( $options['sandbox_mode'] ) && 'yes' === $options['sandbox_mode'] ) ? true : false;
+		$sandbox_mode           = isset( $options['sandbox_mode'] ) && 'yes' === $options['sandbox_mode'];
 		$sandbox_public_key     = $options['sandbox_public_key'] ?? '';
 		$sandbox_private_key    = $options['sandbox_private_key'] ?? '';
 		$production_public_key  = $options['public_key'] ?? '';
