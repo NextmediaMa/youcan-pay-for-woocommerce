@@ -69,11 +69,7 @@ abstract class WC_YouCanPay_Email_Failed_Authentication extends WC_Email {
 	 * @return string
 	 */
 	public function get_authorization_url( $order ) {
-		if ($order instanceof (WC_Order::class)) {
-			return add_query_arg( 'wc-youcanpay-confirmation', 1, $order->get_checkout_payment_url() );
-		}
-
-		return null;
+		return add_query_arg( 'wc-youcanpay-confirmation', 1, $order->get_checkout_payment_url() );
 	}
 
 	/**
