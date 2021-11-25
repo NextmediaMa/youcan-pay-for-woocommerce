@@ -87,7 +87,7 @@ class WC_YouCanPay_Payment_Request_Button_States {
 			'WA'  => [ 'WA', 'Western Australia', NULL ],
 			// [ 'JBT', 'Jervis Bay Territory', NULL ],
 		],
-		// Aland Islands.
+		// Åland Islands
 		'AX' => [],
 		// Bangladesh.
 		'BD' => [],

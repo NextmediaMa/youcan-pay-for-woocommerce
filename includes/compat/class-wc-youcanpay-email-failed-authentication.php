@@ -65,11 +65,15 @@ abstract class WC_YouCanPay_Email_Failed_Authentication extends WC_Email {
 	/**
 	 * Generates the URL, which will be used to authenticate the payment.
 	 *
-	 * @param WC_Order $order The order whose payment needs authentication.
+	 * @param WC_Order|bool $order The order whose payment needs authentication.
 	 * @return string
 	 */
 	public function get_authorization_url( $order ) {
-		return add_query_arg( 'wc-youcanpay-confirmation', 1, $order->get_checkout_payment_url( false ) );
+		if ($order instanceof (WC_Order::class)) {
+			return add_query_arg( 'wc-youcanpay-confirmation', 1, $order->get_checkout_payment_url() );
+		}
+
+		return null;
 	}
 
 	/**

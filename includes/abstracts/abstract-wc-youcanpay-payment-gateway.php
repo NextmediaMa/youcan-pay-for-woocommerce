@@ -136,7 +136,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * Sends the failed order email to admin.
 	 *
 	 * @param int $order_id
-	 * @return null
+	 * @return void
 	 */
 	public function send_failed_order_email( $order_id ) {
 		$emails = WC()->mailer()->get_emails();

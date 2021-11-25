@@ -87,7 +87,6 @@ class WC_YouCanPay_Helper {
 				'card_declined'            => __( 'The card was declined.', 'woocommerce-youcan-pay' ),
 				'missing'                  => __( 'There is no card on a customer that is being charged.', 'woocommerce-youcan-pay' ),
 				'processing_error'         => __( 'An error occurred while processing the card.', 'woocommerce-youcan-pay' ),
-				'invalid_sofort_country'   => __( 'The billing country is not accepted by SOFORT. Please try another country.', 'woocommerce-youcan-pay' ),
 				'email_invalid'            => __( 'Invalid email address, please correct and try again.', 'woocommerce-youcan-pay' ),
 				'invalid_request_error'    => is_add_payment_method_page()
 					? __( 'Unable to save this payment method, please try again or use alternative method.', 'woocommerce-youcan-pay' )
@@ -178,7 +177,7 @@ class WC_YouCanPay_Helper {
 			return $all_settings;
 		}
 
-		return isset( $all_settings[ $setting ] ) ? $all_settings[ $setting ] : '';
+		return $all_settings[ $setting ] ?? '';
 	}
 
 	/**
@@ -221,9 +220,7 @@ class WC_YouCanPay_Helper {
 		$statement_descriptor = str_replace( $disallowed_characters, '', $statement_descriptor );
 
 		// Trim any whitespace at the ends and limit to 22 characters.
-		$statement_descriptor = substr( trim( $statement_descriptor ), 0, 22 );
-
-		return $statement_descriptor;
+		return substr( trim( $statement_descriptor ), 0, 22 );
 	}
 
 	/**

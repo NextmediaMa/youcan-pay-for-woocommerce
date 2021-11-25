@@ -51,7 +51,7 @@ class WC_YouCanPay_Email_Failed_Preorder_Authentication extends WC_YouCanPay_Ema
 	public function trigger( $order ) {
 		if ( class_exists( 'WC_Pre_Orders_Order' ) && WC_Pre_Orders_Order::order_contains_pre_order( $order->get_id() ) ) {
 			if ( isset( $this->original_email ) ) {
-				remove_action( 'wc_pre_order_status_completed_notification', [ $this->original_email, 'trigger' ], 10, 2 );
+				remove_action( 'wc_pre_order_status_completed_notification', [ $this->original_email, 'trigger' ] );
 			}
 
 			add_action( 'wc_pre_orders_pre_order_completed', [ $this, 'send_email' ], 10, 2 );

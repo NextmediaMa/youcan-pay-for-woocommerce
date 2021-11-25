@@ -37,21 +37,21 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		     || ! isset( $_GET['gateway'] )
 		     || ( 'wc_youcanpay' !== $_GET['wc-api'] )
 		) {
-			return;
+			return false;
 		}
 
 		switch ( $_GET['gateway'] ) {
 			case WC_Gateway_YouCanPay::ID:
-				$this->youcanpay_credit_card();
-				break;
+				return $this->youcanpay_credit_card();
 			case WC_Gateway_YouCanPay_Standalone::ID:
-				$this->youcanpay_standalone();
-				break;
+				return $this->youcanpay_standalone();
 		}
+
+		return false;
 	}
 
 	/**
-	 * @throws WC_YouCanPay_Exception
+	 * @return bool
 	 */
 	private function youcanpay_credit_card() {
 		$transaction_id = $_GET['transaction_id'] ?? '';
@@ -104,6 +104,9 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
 	private function youcanpay_standalone() {
 		if ( ! isset( $_GET['key'] ) ) {
 			wc_add_notice( __( '#0020: Fatal error, please try again', 'woocommerce-youcan-pay' ), 'error' );

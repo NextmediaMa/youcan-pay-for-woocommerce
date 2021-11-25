@@ -55,7 +55,7 @@ class WC_YouCanPay_Admin_Notices {
 				echo esc_url( wp_nonce_url( add_query_arg( 'wc-youcanpay-hide-notice', $notice_key ),
 					'wc_youcanpay_hide_notices_nonce',
 					'_wc_youcanpay_notice_nonce' ) ); ?>" class="woocommerce-message-close notice-dismiss"
-                   style="position:relative;float:right;padding:9px 0px 9px 9px 9px;text-decoration:none;"></a>
+                   style="position:relative;float:right;padding:9px 0 9px 9px;text-decoration:none;"></a>
 				<?php
 			}
 
@@ -95,10 +95,10 @@ class WC_YouCanPay_Admin_Notices {
 		$show_curl_notice       = get_option( 'wc_youcanpay_show_curl_notice' );
 		$options                = get_option( 'woocommerce_youcanpay_settings' );
 		$sandbox_mode           = ( isset( $options['sandbox_mode'] ) && 'yes' === $options['sandbox_mode'] ) ? true : false;
-		$sandbox_public_key     = isset( $options['sandbox_public_key'] ) ? $options['sandbox_public_key'] : '';
-		$sandbox_private_key    = isset( $options['sandbox_private_key'] ) ? $options['sandbox_private_key'] : '';
-		$production_public_key  = isset( $options['public_key'] ) ? $options['public_key'] : '';
-		$production_private_key = isset( $options['private_key'] ) ? $options['private_key'] : '';
+		$sandbox_public_key     = $options['sandbox_public_key'] ?? '';
+		$sandbox_private_key    = $options['sandbox_private_key'] ?? '';
+		$production_public_key  = $options['public_key'] ?? '';
+		$production_private_key = $options['private_key'] ?? '';
 
 		if ( isset( $options['enabled'] ) && 'yes' === $options['enabled'] ) {
 			if ( empty( $show_phpver_notice ) ) {

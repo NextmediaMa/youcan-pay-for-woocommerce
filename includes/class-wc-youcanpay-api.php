@@ -38,7 +38,7 @@ class WC_YouCanPay_API {
 	/**
 	 * Set secret API Key.
 	 *
-	 * @param string $key
+	 * @param string $private_key
 	 */
 	public static function set_private_key( $private_key ) {
 		self::$private_key = $private_key;
@@ -47,7 +47,7 @@ class WC_YouCanPay_API {
 	/**
 	 * Set secret API Key.
 	 *
-	 * @param string $key
+	 * @param string $public_key
 	 */
 	public static function set_public_key( $public_key ) {
 		self::$public_key = $public_key;
@@ -159,7 +159,7 @@ class WC_YouCanPay_API {
 			]
 		];
 
-		return json_decode( json_encode( $response ), false );
+		return json_decode( json_encode( $response ) );
 	}
 
 	/**

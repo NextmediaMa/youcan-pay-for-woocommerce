@@ -151,9 +151,9 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	/**
 	 * Creates the source for charge.
 	 *
-	 * @param object $order
+	 * @param WC_Order|WC_Order_Refund $order
 	 *
-	 * @return mixed
+	 * @return array|stdClass
 	 * @throws WC_YouCanPay_Exception
 	 */
 	public function create_source( $order ) {
@@ -175,12 +175,10 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 * Process the payment
 	 *
 	 * @param int $order_id Reference.
-	 * @param bool $retry Should we retry on fail.
-	 * @param bool $force_save_save
 	 *
-	 * @return array|void
+	 * @return array
 	 */
-	public function process_payment( $order_id, $retry = true, $force_save_save = false ) {
+	public function process_payment( $order_id ) {
 		try {
 			$order = wc_get_order( $order_id );
 

@@ -37,16 +37,6 @@ msgid ""
 "your store."
 msgstr ""
 
-#: client/payment-methods-map.js:26
-msgid "giropay"
-msgstr ""
-
-#: client/payment-methods-map.js:27
-msgid ""
-"Expand your business with giropay — Germany’s second most popular payment "
-"system."
-msgstr ""
-
 #: client/payment-methods-map.js:37
 msgid "Direct debit payment"
 msgstr ""
@@ -67,36 +57,6 @@ msgid ""
 "Netherlands, and Spain."
 msgstr ""
 
-#: client/payment-methods-map.js:59
-msgid "EPS"
-msgstr ""
-
-#: client/payment-methods-map.js:60
-msgid ""
-"EPS is an Austria-based payment method that allows customers to complete "
-"transactions online using their bank credentials."
-msgstr ""
-
-#: client/payment-methods-map.js:70
-msgid "Bancontact"
-msgstr ""
-
-#: client/payment-methods-map.js:71
-msgid ""
-"Bancontact is the most popular online payment method in Belgium, with over "
-"15 million cards in circulation."
-msgstr ""
-
-#: client/payment-methods-map.js:81
-msgid "iDEAL"
-msgstr ""
-
-#: client/payment-methods-map.js:82
-msgid ""
-"iDEAL is a Netherlands-based payment method that allows customers to "
-"complete transactions online using their bank credentials."
-msgstr ""
-
 #: client/payment-methods-map.js:92
 msgid "Przelewy24"
 msgstr ""
@@ -109,7 +69,7 @@ msgid ""
 msgstr ""
 
 #: client/settings/general-settings-section/remove-method-confirmation-modal.js:16
-#. %s: payment method name (e.g.: giropay, EPS, Sofort, etc).
+#. %s: payment method name.
 msgid "Remove %s from checkout"
 msgstr ""
 
@@ -123,7 +83,7 @@ msgid "Remove"
 msgstr ""
 
 #: client/settings/general-settings-section/remove-method-confirmation-modal.js:39
-#. %1: payment method name (e.g.: giropay, EPS, Sofort, etc).
+#. %1: payment method name.
 msgid ""
 "Are you sure you want to remove %1$s? Your customers will no longer be able "
 "to pay using %1$s."

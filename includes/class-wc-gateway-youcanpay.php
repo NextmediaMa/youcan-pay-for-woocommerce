@@ -131,7 +131,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		} else {
 			if ( $user->ID ) {
 				$user_email = get_user_meta( $user->ID, 'billing_email', true );
-				$user_email = $user_email ? $user_email : $user->user_email;
+                if (! $user_email) {
+	                $user_email = $user->user_email;
+                }
 			}
 		}
 
@@ -187,7 +189,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
             <div class="form-row form-row-wide" id="payment-card"></div>
             <script>
-                jQuery(function ($) {
+                jQuery(function () {
                     if (typeof (window.setupYouCanPayForm) !== "undefined") {
                         window.setupYouCanPayForm();
                     }
@@ -233,7 +235,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	/**
 	 * Payment_scripts function.
 	 *
-	 * Outputs scripts used for youcanpay payment
+	 * Output scripts used for youcanpay payment
 	 */
 	public function payment_scripts() {
 		if (
@@ -277,7 +279,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		wp_enqueue_script( 'py-script', 'https://pay.youcan.shop/js/ycpay.js' );
-		wp_enqueue_script( 'youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . "/assets/js/youcan-pay{$extension}" );
+		wp_enqueue_script( 'youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . '/assets/js/youcan-pay' . $extension );
 		wp_localize_script( 'py-script', 'youcan_pay_script_vars', $this->javascript_params() );
 	}
 
@@ -285,21 +287,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * Process the payment
 	 *
 	 * @param int $order_id Reference.
-	 * @param bool $retry Should we retry on fail.
-	 * @param bool $force_save_source Force save the payment source.
-	 * @param mix $previous_error Any error message from previous request.
-	 * @param bool $use_order_source Whether to use the source, which should already be attached to the order.
 	 *
-	 * @return array|void
+	 * @return array
 	 * @throws Exception If payment will not be accepted.
 	 */
-	public function process_payment(
-		$order_id,
-		$retry = true,
-		$force_save_source = false,
-		$previous_error = false,
-		$use_order_source = false
-	) {
+	public function process_payment($order_id) {
 		try {
 			$order = wc_get_order( $order_id );
 			if ( ! isset( $order ) ) {
@@ -375,6 +367,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		parent::process_admin_options();
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function validate_public_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_/', $value ) ) {
@@ -385,6 +380,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function validate_private_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_/', $value ) ) {
@@ -395,6 +393,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function validate_sandbox_public_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_sandbox_/', $value ) ) {
@@ -405,6 +406,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		return $value;
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function validate_sandbox_private_key_field( $key, $value ) {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_sandbox_/', $value ) ) {
