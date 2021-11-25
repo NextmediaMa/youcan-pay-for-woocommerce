@@ -1,11 +1,17 @@
 === WooCommerce YouCan Pay Gateway ===
-Tags: credit card, youcanpay, payment request, standalone, woocommerce
+Plugin Name:       WooCommerce YouCan Pay
+Plugin URI:        https://pay.youcan.shop
+Contributors:      mohamed oussama el abbassi
+Tags:              credit card, youcanpay, payment request, standalone, woocommerce
+Author URI:        https://pay.youcan.shop/
+Author:            YouCan Pay
 Requires at least: 4.6
-Tested up to: 5.8
-Requires PHP: 5.6
-Stable tag: 1.0.0
-License: GPLv3
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Tested up to:      5.8
+Requires PHP:      5.6
+Stable tag:        v1.0.0
+Version:           v1.0.0
+License:           GPLv3
+License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
 Take credit card payments on your store using YouCan Pay.
 
@@ -73,3 +79,6 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The YouCan Pay settings screen used to configure the main YouCan Pay.
 
 == Changelog ==
+
+= 1.0.0 - 2021-11-25 =
+* First Release
