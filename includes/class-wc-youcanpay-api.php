@@ -177,22 +177,33 @@ class WC_YouCanPay_API {
 		return $py->transaction->get( $transaction_id );
 	}
 
-	public static function create_token( $order_id, $total, $currency ) {
+	/**
+	 * @param $order WC_Order
+	 * @param $total
+	 * @param $currency
+	 * @param $return_url
+	 *
+	 * @return \YouCan\Pay\Models\Token
+	 */
+	public static function create_token( $order, $total, $currency, $return_url ) {
 		$amount = WC_YouCanPay_Helper::get_youcanpay_amount( $total, $currency );
 
 		if ( self::is_test_mode() ) {
 			YouCanPay::setIsSandboxMode( true );
 		}
+
 		$py = YouCanPay::instance()->useKeys(
 			self::get_private_key(),
 			self::get_public_key()
 		);
 
 		return $py->token->create(
-			$order_id,
+			$order->get_id(),
 			$amount,
 			strtoupper( $currency ),
-			self::get_the_user_ip()
+			self::get_the_user_ip(),
+			$return_url,
+			$return_url
 		);
 	}
 

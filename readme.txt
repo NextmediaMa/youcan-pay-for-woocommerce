@@ -7,7 +7,7 @@ Author URI:        https://pay.youcan.shop/
 Author:            YouCan Pay
 Requires at least: 4.6
 Tested up to:      5.8
-Requires PHP:      5.6
+Requires PHP:      7.1
 Stable tag:        v1.0.0
 Version:           v1.0.0
 License:           GPLv3

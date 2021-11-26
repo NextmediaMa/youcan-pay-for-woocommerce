@@ -40,7 +40,7 @@ jQuery(function ($) {
                 url: youcan_pay_script_vars.checkout_url,
                 data: $form.serialize(),
                 dataType: "json",
-                beforeSend: function( xhr ) {
+                beforeSend: function() {
                     try {
                         $form.addClass('processing');
                         $form.block({
@@ -67,9 +67,15 @@ jQuery(function ($) {
                     try {
                         window.ycPay.pay(data.token_transaction)
                             .then(function (transactionId) {
-                                var url = new URL(data.redirect);
-                                url.searchParams.set('transaction_id', transactionId);
-                                window.location.href = url.href;
+                                if (typeof (data.redirect_url) !== 'undefined') {
+                                    window.location.href = data.redirect_url;
+                                    return;
+                                }
+                                if (typeof (data.redirect) !== 'undefined') {
+                                    let url = new URL(data.redirect);
+                                    url.searchParams.set('transaction_id', transactionId);
+                                    window.location.href = url.href;
+                                }
                             })
                             .catch(function (errorMessage) {
                                 detachLoader($form);

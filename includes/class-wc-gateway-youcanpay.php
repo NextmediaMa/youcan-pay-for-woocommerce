@@ -307,10 +307,13 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 			$order->set_status( 'on-hold' );
 
+			$return_url = $this->get_youcanpay_return_url( $order, self::ID );
+
 			$token = WC_YouCanPay_API::create_token(
-				$order->get_id(),
+				$order,
 				$order->get_total(),
-				$order->get_currency()
+				$order->get_currency(),
+                $return_url
 			);
 
 			return [
