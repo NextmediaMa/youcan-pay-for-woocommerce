@@ -6,10 +6,10 @@
  * Author:  YouCan Pay.
  * Author URI: https://pay.youcan.shop
  * Version: 1.0
- * Requires at least: 5.6
+ * Requires at least: 4.6
  * Tested up to: 5.8
- * WC requires at least: 5.6
- * WC tested up to: 5.8
+ * WC requires at least: 4.6
+ * WC tested up to: 5.9
  * Text Domain: youcan-pay-for-woocommerce
  * Domain Path: /languages
  */
@@ -22,9 +22,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Required minimums and constants
  */
 define( 'WC_YOUCAN_PAY_VERSION', '1.0.0' ); // WRCS: DEFINED_VERSION.
-define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '5.6.0' );
-define( 'WC_YOUCAN_PAY_MIN_WC_VER', '3.0' );
-define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '3.3' );
+define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.2.0' );
+define( 'WC_YOUCAN_PAY_MIN_WC_VER', '4.6' );
+define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '5.9' );
 define( 'WC_YOUCAN_PAY_MAIN_FILE', __FILE__ );
 define( 'WC_YOUCAN_PAY_ABSPATH', __DIR__ . '/' );
 define( 'WC_YOUCAN_PAY_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
