@@ -1,5 +1,7 @@
 <?php
 
+use YouCan\Pay\Models\Token;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -216,6 +218,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * Returns the JavaScript configuration object used on the product, cart, and checkout pages.
 	 *
 	 * @return array  The configuration object to be loaded to JS.
+	 * @throws WC_YouCanPay_Exception
 	 */
 	public function javascript_params() {
 		$youcanpay_params = [
@@ -224,8 +227,22 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			'youcanpay'        => self::ID,
 			'is_test_mode'     => $this->is_in_test_mode(),
 			'youcanpay_locale' => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
-			'checkout_url'     => get_site_url() . '?wc-ajax=checkout'
+			'checkout_url'     => get_site_url() . '?wc-ajax=checkout',
+			'is_pre_order'     => '0',
 		];
+
+		if ( isset( $_GET['order-pay'] ) ) {
+			$response = $this->validated_order_and_process_payment( $_GET['order-pay'] );
+			/** @var Token $token */
+			$token = $response['token'];
+			$order = $response['order'];
+
+			$return_url = $this->get_youcanpay_return_url( $order, self::ID );
+
+			$youcanpay_params['token_transaction'] = ( isset( $token ) ) ? $token->getId() : 0;
+			$youcanpay_params['is_pre_order']      = '1';
+			$youcanpay_params['redirect']          = $return_url;
+		}
 
 		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
 	}
@@ -291,30 +308,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function process_payment( $order_id ) {
 		try {
-			$order = wc_get_order( $order_id );
-			if ( ! isset( $order ) ) {
-				WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
-					'method'   => 'YouCan Pay (Credit Card)',
-					'code'     => '#0021',
-					'order_id' => $order_id,
-				) );
-
-				throw new WC_YouCanPay_Exception( 'Order not found',
-					__( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ) );
-			}
-
-			$this->validate_minimum_order_amount( $order );
-
-			$order->set_status( 'on-hold' );
-
-			$return_url = $this->get_youcanpay_return_url( $order, self::ID );
-
-			$token = WC_YouCanPay_API::create_token(
-				$order,
-				$order->get_total(),
-				$order->get_currency(),
-				$return_url
-			);
+			$response = $this->validated_order_and_process_payment( $order_id );
+			$token    = $response['token'];
+			$order    = $response['order'];
 
 			return [
 				'result'            => 'success',
@@ -337,6 +333,41 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				'redirect' => '',
 			];
 		}
+	}
+
+	/**
+	 * @throws WC_YouCanPay_Exception
+	 */
+	public function validated_order_and_process_payment( $order_id ) {
+		$order = wc_get_order( $order_id );
+		if ( ! isset( $order ) ) {
+			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+				'method'   => 'YouCan Pay (Credit Card)',
+				'code'     => '#0021',
+				'order_id' => $order_id,
+			) );
+
+			throw new WC_YouCanPay_Exception( 'Order not found',
+				__( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ) );
+		}
+
+		$this->validate_minimum_order_amount( $order );
+
+		$order->set_status( 'on-hold' );
+
+		$return_url = $this->get_youcanpay_return_url( $order, self::ID );
+
+		$token = WC_YouCanPay_API::create_token(
+			$order,
+			$order->get_total(),
+			$order->get_currency(),
+			$return_url
+		);
+
+		return array(
+			'token' => $token,
+			'order' => $order,
+		);
 	}
 
 	/**
