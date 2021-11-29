@@ -6,7 +6,7 @@
  * Author:  YouCan Pay.
  * Author URI: https://pay.youcan.shop
  * Version: 1.0
- * Requires at least: 4.6
+ * Requires at least: 4.8
  * Tested up to: 5.8
  * WC requires at least: 4.6
  * WC tested up to: 5.9
