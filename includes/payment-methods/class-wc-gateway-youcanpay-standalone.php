@@ -168,7 +168,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 
 		WC_YouCanPay_Logger::log( 'Info: Begin creating YouCan Pay Standalone source' );
 
-		return WC_YouCanPay_API::request( $order, $post_data, 'sources' );
+		return WC_YouCanPay_API::request( $order, $post_data );
 	}
 
 	/**
@@ -204,7 +204,9 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 			];
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
-			WC_YouCanPay_Logger::log( 'Error: ' . $e->getMessage() );
+			WC_YouCanPay_Logger::log( 'wc youcan pay exception', array(
+				'exception.message' => $e->getMessage()
+			) );
 
 			$statuses = apply_filters(
 				'wc_youcanpay_allowed_payment_processing_statuses',

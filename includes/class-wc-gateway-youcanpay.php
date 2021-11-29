@@ -129,9 +129,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		} else {
 			if ( $user->ID ) {
 				$user_email = get_user_meta( $user->ID, 'billing_email', true );
-                if (! $user_email) {
-	                $user_email = $user->user_email;
-                }
+				if ( ! $user_email ) {
+					$user_email = $user->user_email;
+				}
 			}
 		}
 
@@ -289,22 +289,16 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * @return array
 	 * @throws Exception If payment will not be accepted.
 	 */
-	public function process_payment($order_id) {
+	public function process_payment( $order_id ) {
 		try {
 			$order = wc_get_order( $order_id );
 			if ( ! isset( $order ) ) {
-				WC_YouCanPay_Logger::log('arrived on process payment: order not exists', array(
-                        'method' => 'YouCan Pay (Credit Card)',
-                        'code' => '#0021',
-                        'order_id' => $order_id,
-                ));
+				WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+					'method'   => 'YouCan Pay (Credit Card)',
+					'code'     => '#0021',
+					'order_id' => $order_id,
+				) );
 
-				WC_YouCanPay_Logger::log( "arrived on process payment: order not exists" . PHP_EOL
-				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
-				                          . print_r( 'Code: #0021', true ) . PHP_EOL
-				                          . print_r( 'Order Id: ', true ) . PHP_EOL
-				                          . print_r( $order_id, true )
-				);
 				throw new WC_YouCanPay_Exception( 'Order not found',
 					__( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ) );
 			}
@@ -319,7 +313,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 				$order,
 				$order->get_total(),
 				$order->get_currency(),
-                $return_url
+				$return_url
 			);
 
 			return [
@@ -330,8 +324,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
 			WC_YouCanPay_Logger::log( 'wc youcan pay exception', array(
-                    'exception.message' => $e->getMessage()
-            ) );
+				'exception.message' => $e->getMessage()
+			) );
 
 			if ( isset( $order ) ) {
 				$order->update_status( 'failed' );

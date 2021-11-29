@@ -119,12 +119,11 @@ class WC_YouCanPay_API {
 	 *
 	 * @param WC_Order|WC_Order_Refund $order
 	 * @param array $post_data
-	 * @param string $api
 	 *
 	 * @return stdClass|array
 	 * @throws WC_YouCanPay_Exception
 	 */
-	public static function request( $order, $post_data, $api = '' ) {
+	public static function request( $order, $post_data ) {
 		if ( self::is_test_mode() ) {
 			YouCanPay::setIsSandboxMode( true );
 		}
@@ -143,11 +142,9 @@ class WC_YouCanPay_API {
 		);
 
 		if ( is_wp_error( $token ) || empty( $token ) ) {
-			WC_YouCanPay_Logger::log( 'Error Response: '
-			                          . print_r( $token, true ) . PHP_EOL
-			                          . 'Failed request API: ' . PHP_EOL
-			                          . print_r( $api, true )
-			);
+			WC_YouCanPay_Logger::log( 'there was a problem connecting to the YouCan Pay API endpoint', array(
+				'order_id' => $order->get_id(),
+			) );
 
 			throw new WC_YouCanPay_Exception( print_r( $token, true ),
 				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay-for-woocommerce' ) );

@@ -72,7 +72,7 @@ class WC_YouCanPay_Email_Failed_Authentication_Retry extends WC_Email_Failed_Ord
 			$this->retry                 = WCS_Retry_Manager::store()->get_last_retry_for_order( wcs_get_objects_property( $order, 'id' ) );
 			$this->replace['retry-time'] = wcs_get_human_time_diff( $this->retry->get_time() );
 		} else {
-			WC_YouCanPay_Logger::log( 'WCS_Retry_Manager class or does not exist. Not able to send admnin email about customer notification for authentication required for renewal payment.' );
+			WC_YouCanPay_Logger::log( 'WCS_Retry_Manager class or does not exist. Not able to send admin email about customer notification for authentication required for renewal payment.' );
 			return;
 		}
 
