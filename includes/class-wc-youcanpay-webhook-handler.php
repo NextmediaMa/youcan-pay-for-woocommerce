@@ -68,12 +68,11 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$transaction    = WC_YouCanPay_API::get_transaction( $transaction_id );
 
 		if ( ! isset( $transaction ) ) {
-			WC_YouCanPay_Logger::log( "arrived on process payment: transaction not exists" . PHP_EOL
-			                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
-			                          . print_r( 'Code: #0023', true ) . PHP_EOL
-			                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-			                          . print_r( $transaction_id, true ) . PHP_EOL
-			);
+			WC_YouCanPay_Logger::log( 'arrived on process payment: transaction not exists', array(
+				'payment_method' => 'YouCan Pay (Credit Card)',
+				'code'           => '#0023',
+				'transaction_id' => $transaction_id,
+			) );
 
 			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay-for-woocommerce' ),
 				'error' );
@@ -83,19 +82,25 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 		$order = wc_get_order( $transaction->getOrderId() );
 		if ( ! isset( $order ) ) {
-			WC_YouCanPay_Logger::log( "arrived on process payment: order not exists" . PHP_EOL
-			                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
-			                          . print_r( 'Code: #0024', true ) . PHP_EOL
-			                          . print_r( 'Order Id: ', true ) . PHP_EOL
-			                          . print_r( $order->get_id(), true )
-			);
+			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+				'payment_method' => 'YouCan Pay (Credit Card)',
+				'code'           => '#0024',
+				'transaction_id' => $transaction_id,
+				'order_id'       => $order->get_id(),
+			) );
+
 			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
 
 		if ( $transaction->getStatus() === 1 ) {
-			WC_YouCanPay_Logger::log( "info: payment complete for order {$order->get_id()} for the amount of {$order->get_total()}" );
+			WC_YouCanPay_Logger::log( 'payment successfully processed', array(
+				'payment_method' => 'YouCan Pay (Credit Card)',
+				'transaction_id' => $transaction->getId(),
+				'order_id'       => $order->get_id(),
+				'order_total'    => $order->get_total(),
+			) );
 
 			$order->payment_complete( $transaction->getId() );
 
@@ -105,7 +110,15 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
 		} else {
-			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ), 'error' );
+			WC_YouCanPay_Logger::log( 'payment not processed', array(
+				'payment_method'     => 'YouCan Pay (Credit Card)',
+				'transaction_id'     => $transaction->getId(),
+				'transaction_status' => $transaction->getStatus(),
+				'order_id'           => $order->get_id(),
+			) );
+
+			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ),
+				'error' );
 
 			$order->set_status( 'failed' );
 			$order->save();
@@ -125,16 +138,18 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		/** @var WC_Order|WC_Order_Refund $order $order */
-		$order_id = wc_get_order_id_by_order_key( $_GET['key'] );
-		$order    = wc_get_order( $order_id );
+		$order_key = $_GET['key'];
+		$order_id  = wc_get_order_id_by_order_key( $order_key );
+		$order     = wc_get_order( $order_id );
 
 		if ( ! isset( $order ) ) {
-			WC_YouCanPay_Logger::log( "arrived on process payment: order not exists" . PHP_EOL
-			                          . print_r( 'Payment method: YouCan Pay (Standalone)', true ) . PHP_EOL
-			                          . print_r( 'Code: #0021', true ) . PHP_EOL
-			                          . print_r( 'Order Id: ', true ) . PHP_EOL
-			                          . print_r( $order_id, true )
-			);
+			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+				'payment_method' => 'YouCan Pay (Standalone)',
+				'code'           => '#0021',
+				'order_key'      => $order_key,
+				'order_id'       => $order_id,
+			) );
+
 			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
@@ -144,14 +159,13 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$transaction    = WC_YouCanPay_API::get_transaction( $transaction_id );
 
 		if ( ! isset( $transaction ) ) {
-			WC_YouCanPay_Logger::log( "arrived on process payment: transaction not exists" . PHP_EOL
-			                          . print_r( 'Payment method: YouCan Pay (Standalone)', true ) . PHP_EOL
-			                          . print_r( 'Code: #0022', true ) . PHP_EOL
-			                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-			                          . print_r( $transaction_id, true ) . PHP_EOL
-			                          . print_r( 'Order Id: ', true ) . PHP_EOL
-			                          . print_r( $order->get_id(), true )
-			);
+			WC_YouCanPay_Logger::log( 'arrived on process payment: transaction not exists', array(
+				'payment_method' => 'YouCan Pay (Standalone)',
+				'code'           => '#0022',
+				'transaction_id' => $transaction_id,
+				'order_id'       => $order->get_id(),
+			) );
+
 			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
@@ -159,16 +173,14 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( $transaction->getOrderId() != $order->get_id() ) {
-			WC_YouCanPay_Logger::log( "arrived on process payment: order not identical with transaction" . PHP_EOL
-			                          . print_r( 'Payment method: YouCan Pay (Standalone)', true ) . PHP_EOL
-			                          . print_r( 'Code: #0023', true ) . PHP_EOL
-			                          . print_r( 'Transaction Id: ', true ) . PHP_EOL
-			                          . print_r( $transaction->getId(), true ) . PHP_EOL
-			                          . print_r( 'Transaction Order Id: ', true ) . PHP_EOL
-			                          . print_r( $transaction->getOrderId(), true ) . PHP_EOL
-			                          . print_r( 'Order Id: ', true ) . PHP_EOL
-			                          . print_r( $order->get_id(), true )
-			);
+			WC_YouCanPay_Logger::log( 'arrived on process payment: order not identical with transaction', array(
+				'payment_method'       => 'YouCan Pay (Standalone)',
+				'code'                 => '#0023',
+				'transaction_id'       => $transaction->getId(),
+				'transaction_order_id' => $transaction->getOrderId(),
+				'order_id'             => $order->get_id(),
+			) );
+
 			wc_add_notice( __( 'Fatal error, please try again or contact support.', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
@@ -176,13 +188,26 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( $transaction->getStatus() === 1 ) {
-			WC_YouCanPay_Logger::log( "info: payment complete for order {$order->get_id()} for the amount of {$order->get_total()}" );
+			WC_YouCanPay_Logger::log( 'payment successfully processed', array(
+				'payment_method' => 'YouCan Pay (Standalone)',
+				'transaction_id' => $transaction->getId(),
+				'order_id'       => $order->get_id(),
+				'order_total'    => $order->get_total(),
+			) );
 
 			$order->payment_complete( $transaction->getId() );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
 		} else {
-			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ), 'error' );
+			WC_YouCanPay_Logger::log( 'payment not processed', array(
+				'payment_method'     => 'YouCan Pay (Standalone)',
+				'transaction_id'     => $transaction->getId(),
+				'transaction_status' => $transaction->getStatus(),
+				'order_id'           => $order->get_id(),
+			) );
+
+			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ),
+				'error' );
 
 			$order->set_status( 'failed' );
 			$order->save();

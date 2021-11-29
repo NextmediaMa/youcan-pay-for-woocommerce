@@ -293,6 +293,12 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		try {
 			$order = wc_get_order( $order_id );
 			if ( ! isset( $order ) ) {
+				WC_YouCanPay_Logger::log('arrived on process payment: order not exists', array(
+                        'method' => 'YouCan Pay (Credit Card)',
+                        'code' => '#0021',
+                        'order_id' => $order_id,
+                ));
+
 				WC_YouCanPay_Logger::log( "arrived on process payment: order not exists" . PHP_EOL
 				                          . print_r( 'Payment method: YouCan Pay (Credit Card)', true ) . PHP_EOL
 				                          . print_r( 'Code: #0021', true ) . PHP_EOL
@@ -323,7 +329,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			];
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
-			WC_YouCanPay_Logger::log( 'Error: ' . $e->getMessage() );
+			WC_YouCanPay_Logger::log( 'wc youcan pay exception', array(
+                    'exception.message' => $e->getMessage()
+            ) );
 
 			if ( isset( $order ) ) {
 				$order->update_status( 'failed' );

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Required minimums and constants
  */
 define( 'WC_YOUCAN_PAY_VERSION', '1.0.0' ); // WRCS: DEFINED_VERSION.
-define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.2.0' );
+define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.0.0' );
 define( 'WC_YOUCAN_PAY_MIN_WC_VER', '4.6' );
 define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '5.9' );
 define( 'WC_YOUCAN_PAY_MAIN_FILE', __FILE__ );

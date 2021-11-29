@@ -1,5 +1,6 @@
 <?php
 
+use YouCan\Pay\Models\Token;
 use YouCan\Pay\Models\Transaction;
 use YouCan\Pay\YouCanPay;
 
@@ -183,7 +184,7 @@ class WC_YouCanPay_API {
 	 * @param $currency
 	 * @param $return_url
 	 *
-	 * @return \YouCan\Pay\Models\Token
+	 * @return Token
 	 */
 	public static function create_token( $order, $total, $currency, $return_url ) {
 		$amount = WC_YouCanPay_Helper::get_youcanpay_amount( $total, $currency );
