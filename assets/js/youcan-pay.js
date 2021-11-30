@@ -4,7 +4,7 @@ window.setupYouCanPayForm = () => {
         if (window.ycPay == null) {
             window.ycPay = new YCPay(youcan_pay_script_vars.key, {locale: youcan_pay_script_vars.youcanpay_locale});
             if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
-                window.ycPay.isSandboxMode = true;
+                window.ycPay.setSandboxMode(true);
             }
         }
         window.ycPay.renderForm('#payment-card');
@@ -30,6 +30,8 @@ jQuery(function ($) {
             try {
                 window.ycPay.pay(data.token_transaction)
                     .then(function (transactionId) {
+                        console.log(transactionId);
+
                         if (typeof (data.redirect_url) !== 'undefined') {
                             window.location.href = data.redirect_url;
                             return;
