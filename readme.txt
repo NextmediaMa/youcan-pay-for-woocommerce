@@ -36,7 +36,7 @@ YouCan Pay for Woocommerce includes [Web Payments API](https://www.w3.org/TR/pay
 == Installation ==
 You can download an [older version of this gateway for older versions of WooCommerce from here](https://wordpress.org/plugins/woocommerce-youcanpay/developers/).
 
-Please note, v1 of this gateway requires WooCommerce 3.0 and above.
+Please note, v1 of this gateway requires WooCommerce 4.6 and above.
 
 = Automatic installation =
 
