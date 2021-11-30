@@ -121,41 +121,53 @@ class WC_YouCanPay_API {
 	 * @param array $post_data
 	 *
 	 * @return stdClass|array
-	 * @throws WC_YouCanPay_Exception
 	 */
 	public static function request( $order, $post_data ) {
-		if ( self::is_test_mode() ) {
-			YouCanPay::setIsSandboxMode( true );
-		}
-		$py = YouCanPay::instance()->useKeys(
-			self::get_private_key(),
-			self::get_public_key()
-		);
-
-		$token = $py->token->create(
-			$order->get_id(),
-			(int) $post_data['amount'],
-			$post_data['currency'],
-			self::get_the_user_ip(),
-			$post_data['redirect']['return_url'],
-			$post_data['redirect']['return_url']
-		);
-
-		if ( is_wp_error( $token ) || empty( $token ) ) {
-			WC_YouCanPay_Logger::log( 'there was a problem connecting to the YouCan Pay API endpoint', array(
-				'order_id' => $order->get_id(),
-			) );
-
-			throw new WC_YouCanPay_Exception( print_r( $token, true ),
-				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay-for-woocommerce' ) );
-		}
-
 		$response = [
-			'id'       => $token->getId(),
+			'id'       => 0,
 			'redirect' => [
-				'url' => $token->getPaymentURL()
+				'url' => get_home_url()
 			]
 		];
+
+		try {
+			if ( self::is_test_mode() ) {
+				YouCanPay::setIsSandboxMode( true );
+			}
+			$py = YouCanPay::instance()->useKeys(
+				self::get_private_key(),
+				self::get_public_key()
+			);
+
+			$token = $py->token->create(
+				$order->get_id(),
+				(int) $post_data['amount'],
+				$post_data['currency'],
+				self::get_the_user_ip(),
+				$post_data['redirect']['return_url'],
+				$post_data['redirect']['return_url']
+			);
+
+			if ( is_wp_error( $token ) || empty( $token ) ) {
+				WC_YouCanPay_Logger::log( 'there was a problem connecting to the YouCan Pay API endpoint', array(
+					'order_id' => $order->get_id(),
+				) );
+
+				throw new WC_YouCanPay_Exception( print_r( $token, true ),
+					__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay-for-woocommerce' ) );
+			}
+
+			$response = [
+				'id'       => $token->getId(),
+				'redirect' => [
+					'url' => $token->getPaymentURL()
+				]
+			];
+		} catch (Throwable $e) {
+			WC_YouCanPay_Logger::log( 'throwable at request exists into wc youcan pay api', array(
+				'exception.message' => $e->getMessage()
+			) );
+		}
 
 		return json_decode( json_encode( $response ) );
 	}
@@ -164,15 +176,23 @@ class WC_YouCanPay_API {
 	 * @return Transaction|null
 	 */
 	public static function get_transaction( $transaction_id ) {
-		if ( self::is_test_mode() ) {
-			YouCanPay::setIsSandboxMode( true );
-		}
-		$py = YouCanPay::instance()->useKeys(
-			self::get_private_key(),
-			self::get_public_key()
-		);
+		try {
+			if ( self::is_test_mode() ) {
+				YouCanPay::setIsSandboxMode( true );
+			}
+			$py = YouCanPay::instance()->useKeys(
+				self::get_private_key(),
+				self::get_public_key()
+			);
 
-		return $py->transaction->get( $transaction_id );
+			return $py->transaction->get( $transaction_id );
+		} catch (Throwable $e) {
+			WC_YouCanPay_Logger::log( 'throwable at get transaction exists into wc youcan pay api', array(
+				'exception.message' => $e->getMessage()
+			) );
+		}
+
+		return null;
 	}
 
 	/**
@@ -181,28 +201,36 @@ class WC_YouCanPay_API {
 	 * @param $currency
 	 * @param $return_url
 	 *
-	 * @return Token
+	 * @return Token|null
 	 */
 	public static function create_token( $order, $total, $currency, $return_url ) {
-		$amount = WC_YouCanPay_Helper::get_youcanpay_amount( $total, $currency );
+		try {
+			$amount = WC_YouCanPay_Helper::get_youcanpay_amount( $total, $currency );
 
-		if ( self::is_test_mode() ) {
-			YouCanPay::setIsSandboxMode( true );
+			if ( self::is_test_mode() ) {
+				YouCanPay::setIsSandboxMode( true );
+			}
+
+			$py = YouCanPay::instance()->useKeys(
+				self::get_private_key(),
+				self::get_public_key()
+			);
+
+			return $py->token->create(
+				$order->get_id(),
+				$amount,
+				strtoupper( $currency ),
+				self::get_the_user_ip(),
+				$return_url,
+				$return_url
+			);
+		} catch ( Throwable $e ) {
+			WC_YouCanPay_Logger::log( 'throwable at create token exists into wc youcan pay api', array(
+				'exception.message' => $e->getMessage()
+			) );
 		}
 
-		$py = YouCanPay::instance()->useKeys(
-			self::get_private_key(),
-			self::get_public_key()
-		);
-
-		return $py->token->create(
-			$order->get_id(),
-			$amount,
-			strtoupper( $currency ),
-			self::get_the_user_ip(),
-			$return_url,
-			$return_url
-		);
+		return null;
 	}
 
 	public static function get_the_user_ip() {

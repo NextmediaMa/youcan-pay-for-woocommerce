@@ -134,9 +134,9 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function get_youcanpay_return_url( $order = null, $gateway = null ) {
 		if ( is_object( $order ) ) {
-			$action = WC_YouCanPay_Order_Action_Enum::$incomplete;
+			$action = WC_YouCanPay_Order_Action_Enum::get_incomplete();
 			if (isset( $_GET['order-pay'] )) {
-				$action = WC_YouCanPay_Order_Action_Enum::$pre_order;
+				$action = WC_YouCanPay_Order_Action_Enum::get_pre_order();
 			}
 
 			$args = [

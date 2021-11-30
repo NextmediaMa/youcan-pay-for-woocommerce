@@ -65,7 +65,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	 */
 	private function youcanpay_credit_card() {
 		$transaction_id = $_GET['transaction_id'] ?? '';
-		$action         = $_GET['action'] ?? WC_YouCanPay_Order_Action_Enum::$incomplete;
+		$action         = $_GET['action'] ?? WC_YouCanPay_Order_Action_Enum::get_incomplete();
 		$transaction    = WC_YouCanPay_API::get_transaction( $transaction_id );
 		$checkout_url   = $this->get_checkout_url_by_action( $action );
 
@@ -131,7 +131,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 	private function get_checkout_url_by_action( $action ) {
 		$checkout_url = wc_get_checkout_url();
-		if ( $action === WC_YouCanPay_Order_Action_Enum::$pre_order ) {
+		if ( $action === WC_YouCanPay_Order_Action_Enum::get_pre_order() ) {
 			$order_id  = $_GET['order_id'] ?? null;
 			$order_key = $_GET['key'] ?? null;
 
@@ -159,7 +159,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 		/** @var WC_Order|WC_Order_Refund $order $order */
 		$order_key    = $_GET['key'];
-		$action       = $_GET['action'] ?? WC_YouCanPay_Order_Action_Enum::$incomplete;
+		$action       = $_GET['action'] ?? WC_YouCanPay_Order_Action_Enum::get_incomplete();
 		$order_id     = wc_get_order_id_by_order_key( $order_key );
 		$order        = wc_get_order( $order_id );
 		$checkout_url = $this->get_checkout_url_by_action( $action );

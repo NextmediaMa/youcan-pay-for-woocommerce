@@ -228,10 +228,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			'is_test_mode'     => $this->is_in_test_mode(),
 			'youcanpay_locale' => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
 			'checkout_url'     => get_site_url() . '?wc-ajax=checkout',
-			'is_pre_order'     => WC_YouCanPay_Order_Action_Enum::$incomplete,
+			'is_pre_order'     => WC_YouCanPay_Order_Action_Enum::get_incomplete(),
 			'order_status'     => array(
-				'incomplete' => WC_YouCanPay_Order_Action_Enum::$incomplete,
-				'pre_order'  => WC_YouCanPay_Order_Action_Enum::$pre_order,
+				'incomplete' => WC_YouCanPay_Order_Action_Enum::get_incomplete(),
+				'pre_order'  => WC_YouCanPay_Order_Action_Enum::get_pre_order(),
 			),
 		];
 
@@ -242,7 +242,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			$redirect = $response['redirect'];
 
 			$youcanpay_params['token_transaction'] = ( isset( $token ) ) ? $token->getId() : 0;
-			$youcanpay_params['is_pre_order']      = WC_YouCanPay_Order_Action_Enum::$pre_order;
+			$youcanpay_params['is_pre_order']      = WC_YouCanPay_Order_Action_Enum::get_pre_order();
 			$youcanpay_params['redirect']          = $redirect;
 		}
 
@@ -295,7 +295,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			$extension = '.min.js';
 		}
 
-		wp_enqueue_script( 'py-script', 'https://pay.youcan.shop/js/ycpay.js' );
+		wp_enqueue_script( 'py-script', WC_YouCanPay_Api_Enum::get_javascript_url() );
 		wp_enqueue_script( 'youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . '/assets/js/youcan-pay' . $extension );
 		wp_localize_script( 'py-script', 'youcan_pay_script_vars', $this->javascript_params() );
 	}
