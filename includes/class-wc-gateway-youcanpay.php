@@ -228,20 +228,22 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			'is_test_mode'     => $this->is_in_test_mode(),
 			'youcanpay_locale' => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
 			'checkout_url'     => get_site_url() . '?wc-ajax=checkout',
-			'is_pre_order'     => '0',
+			'is_pre_order'     => WC_YouCanPay_Order_Action_Enum::$incomplete,
+			'order_status'     => array(
+				'incomplete' => WC_YouCanPay_Order_Action_Enum::$incomplete,
+				'pre_order'  => WC_YouCanPay_Order_Action_Enum::$pre_order,
+			),
 		];
 
 		if ( isset( $_GET['order-pay'] ) ) {
 			$response = $this->validated_order_and_process_payment( $_GET['order-pay'] );
 			/** @var Token $token */
-			$token = $response['token'];
-			$order = $response['order'];
-
-			$return_url = $this->get_youcanpay_return_url( $order, self::ID );
+			$token    = $response['token'];
+			$redirect = $response['redirect'];
 
 			$youcanpay_params['token_transaction'] = ( isset( $token ) ) ? $token->getId() : 0;
-			$youcanpay_params['is_pre_order']      = '1';
-			$youcanpay_params['redirect']          = $return_url;
+			$youcanpay_params['is_pre_order']      = WC_YouCanPay_Order_Action_Enum::$pre_order;
+			$youcanpay_params['redirect']          = $redirect;
 		}
 
 		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
@@ -311,10 +313,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			$response = $this->validated_order_and_process_payment( $order_id );
 			$token    = $response['token'];
 			$order    = $response['order'];
+			$redirect = $response['redirect'];
 
 			return [
 				'result'            => 'success',
-				'redirect'          => $this->get_youcanpay_return_url( $order, self::ID ),
+				'redirect'          => $redirect,
 				'token_transaction' => ( isset( $token ) ) ? $token->getId() : 0
 			];
 		} catch ( WC_YouCanPay_Exception $e ) {
@@ -355,18 +358,19 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 		$order->set_status( 'on-hold' );
 
-		$return_url = $this->get_youcanpay_return_url( $order, self::ID );
+		$redirect = $this->get_youcanpay_return_url( $order, self::ID );
 
 		$token = WC_YouCanPay_API::create_token(
 			$order,
 			$order->get_total(),
 			$order->get_currency(),
-			$return_url
+			$redirect
 		);
 
 		return array(
-			'token' => $token,
-			'order' => $order,
+			'token'    => $token,
+			'order'    => $order,
+			'redirect' => $redirect,
 		);
 	}
 

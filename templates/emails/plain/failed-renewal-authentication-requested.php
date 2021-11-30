@@ -3,7 +3,7 @@
  * Admin email about payment retry failed due to authentication
  *
  * @package WooCommerce_YouCanPay/Templates/Emails
- * @version 4.3.0
+ * @version 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

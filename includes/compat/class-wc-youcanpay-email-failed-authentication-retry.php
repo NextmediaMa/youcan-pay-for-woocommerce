@@ -5,7 +5,7 @@
  * Email sent to admins when an attempt to automatically process a subscription renewal payment has failed
  * with the `authentication_needed` error, and a retry rule has been applied to retry the payment in the future.
  *
- * @version     4.3.0
+ * @version     1.0.0
  * @package     WooCommerce_YouCanPay/Classes/WC_YouCanPay_Email_Failed_Authentication_Retry
  * @extends     WC_Email_Failed_Order
  */

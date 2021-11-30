@@ -65,7 +65,9 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	 */
 	private function youcanpay_credit_card() {
 		$transaction_id = $_GET['transaction_id'] ?? '';
+		$action         = $_GET['action'] ?? WC_YouCanPay_Order_Action_Enum::$incomplete;
 		$transaction    = WC_YouCanPay_API::get_transaction( $transaction_id );
+		$checkout_url   = $this->get_checkout_url_by_action( $action );
 
 		if ( ! isset( $transaction ) ) {
 			WC_YouCanPay_Logger::log( 'arrived on process payment: transaction not exists', array(
@@ -77,7 +79,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
-			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
+			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $checkout_url ) ) );
 		}
 
 		$order = wc_get_order( $transaction->getOrderId() );
@@ -123,8 +125,26 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			$order->set_status( 'failed' );
 			$order->save();
 
-			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
+			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $checkout_url ) ) );
 		}
+	}
+
+	private function get_checkout_url_by_action( $action ) {
+		$checkout_url = wc_get_checkout_url();
+		if ( $action === WC_YouCanPay_Order_Action_Enum::$pre_order ) {
+			$order_id  = $_GET['order_id'] ?? null;
+			$order_key = $_GET['key'] ?? null;
+
+			$checkout_url = add_query_arg(
+				array(
+					'pay_for_order' => 'true',
+					'key'           => $order_key,
+				),
+				wc_get_endpoint_url( 'order-pay', $order_id, wc_get_checkout_url() )
+			);
+		}
+
+		return $checkout_url;
 	}
 
 	/**
@@ -138,9 +158,11 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		/** @var WC_Order|WC_Order_Refund $order $order */
-		$order_key = $_GET['key'];
-		$order_id  = wc_get_order_id_by_order_key( $order_key );
-		$order     = wc_get_order( $order_id );
+		$order_key    = $_GET['key'];
+		$action       = $_GET['action'] ?? WC_YouCanPay_Order_Action_Enum::$incomplete;
+		$order_id     = wc_get_order_id_by_order_key( $order_key );
+		$order        = wc_get_order( $order_id );
+		$checkout_url = $this->get_checkout_url_by_action( $action );
 
 		if ( ! isset( $order ) ) {
 			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
@@ -148,6 +170,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'code'           => '#0021',
 				'order_key'      => $order_key,
 				'order_id'       => $order_id,
+				'action'         => $action,
 			) );
 
 			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ), 'error' );
@@ -164,12 +187,13 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'code'           => '#0022',
 				'transaction_id' => $transaction_id,
 				'order_id'       => $order->get_id(),
+				'action'         => $action,
 			) );
 
 			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay-for-woocommerce' ),
 				'error' );
 
-			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
+			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $checkout_url ) ) );
 		}
 
 		if ( $transaction->getOrderId() != $order->get_id() ) {
@@ -179,6 +203,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'transaction_id'       => $transaction->getId(),
 				'transaction_order_id' => $transaction->getOrderId(),
 				'order_id'             => $order->get_id(),
+				'action'               => $action,
 			) );
 
 			wc_add_notice( __( 'Fatal error, please try again or contact support.', 'youcan-pay-for-woocommerce' ),
@@ -193,6 +218,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'transaction_id' => $transaction->getId(),
 				'order_id'       => $order->get_id(),
 				'order_total'    => $order->get_total(),
+				'action'         => $action,
 			) );
 
 			$order->payment_complete( $transaction->getId() );
@@ -204,6 +230,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'transaction_id'     => $transaction->getId(),
 				'transaction_status' => $transaction->getStatus(),
 				'order_id'           => $order->get_id(),
+				'action'             => $action,
 			) );
 
 			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay-for-woocommerce' ),
@@ -212,7 +239,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			$order->set_status( 'failed' );
 			$order->save();
 
-			return wp_redirect( wp_sanitize_redirect( esc_url_raw( wc_get_checkout_url() ) ) );
+			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $checkout_url ) ) );
 		}
 	}
 }

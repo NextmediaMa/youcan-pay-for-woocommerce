@@ -1,4 +1,5 @@
 <?php
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -26,7 +27,8 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		$form_fields = $this->get_form_fields();
 
 		echo '<h2>' . esc_html( $this->get_method_title() );
-		wc_back_link( __( 'Return to payments', 'youcan-pay-for-woocommerce' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
+		wc_back_link( __( 'Return to payments', 'youcan-pay-for-woocommerce' ),
+			admin_url( 'admin.php?page=wc-settings&tab=checkout' ) );
 		echo '</h2>';
 
 		echo '<table class="form-table">' . $this->generate_settings_html( $form_fields, false ) . '</table>';
@@ -40,10 +42,10 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function are_keys_set() {
 		if ( $this->sandbox_mode ) {
 			return preg_match( '/^pub_sandbox_/', $this->public_key )
-				&& preg_match( '/^pri_sandbox_/', $this->private_key );
+			       && preg_match( '/^pri_sandbox_/', $this->private_key );
 		} else {
 			return preg_match( '/^pub_/', $this->public_key )
-				&& preg_match( '/^pri_/', $this->private_key );
+			       && preg_match( '/^pri_/', $this->private_key );
 		}
 	}
 
@@ -89,7 +91,8 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			throw new WC_YouCanPay_Exception(
 				'Did not meet minimum amount',
 				sprintf(
-					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay-for-woocommerce' ),
+					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.',
+						'youcan-pay-for-woocommerce' ),
 					$price
 				)
 			);
@@ -105,7 +108,10 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function validate_minimum_cart_amount() {
 		if ( WC()->cart->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
 			/* translators: 1) amount (including currency symbol) */
-			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount', sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay-for-woocommerce' ), wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
+			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount',
+				sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.',
+					'youcan-pay-for-woocommerce' ),
+					wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
 		}
 	}
 
@@ -128,22 +134,33 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function get_youcanpay_return_url( $order = null, $gateway = null ) {
 		if ( is_object( $order ) ) {
+			$action = WC_YouCanPay_Order_Action_Enum::$incomplete;
+			if (isset( $_GET['order-pay'] )) {
+				$action = WC_YouCanPay_Order_Action_Enum::$pre_order;
+			}
+
 			$args = [
 				'gateway' => $gateway,
-				'wc-api' => 'wc_youcanpay',
-				'key' => $order->get_order_key(),
+				'action'  => $action,
+				'wc-api'  => 'wc_youcanpay',
+				'key'     => $order->get_order_key(),
 			];
 
-            return wp_sanitize_redirect( esc_url_raw( add_query_arg( $args, get_site_url()) ) );
+			$response = wp_sanitize_redirect( esc_url_raw( add_query_arg( $args, get_site_url() ) ) );
+
+		} else {
+			$response = wp_sanitize_redirect( esc_url_raw( add_query_arg( [ 'utm_nooverride' => '1' ],
+				$this->get_return_url() ) ) );
 		}
 
-		return wp_sanitize_redirect( esc_url_raw( add_query_arg( [ 'utm_nooverride' => '1' ], $this->get_return_url() ) ) );
+		return $response;
 	}
 
 	/**
 	 * Sends the failed order email to admin.
 	 *
 	 * @param int $order_id
+	 *
 	 * @return void
 	 */
 	public function send_failed_order_email( $order_id ) {
@@ -160,6 +177,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * Get owner details.
 	 *
 	 * @param object $order
+	 *
 	 * @return object $details
 	 */
 	public function get_owner_details( $order ) {
