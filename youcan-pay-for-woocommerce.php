@@ -3,8 +3,7 @@
  * Plugin Name: YouCan Pay for Woocommerce
  * Plugin URI: https://pay.youcan.shop
  * Description: YouCan Pay for Woocommerce: allows you to receive fast and secure online card payments.
- * Author:  YouCan Pay.
- * Author URI: https://pay.youcan.shop
+ * Author: Mohamed Oussama EL ABBASSI
  * Version: 1.0
  * Requires at least: 4.8
  * Tested up to: 5.8
