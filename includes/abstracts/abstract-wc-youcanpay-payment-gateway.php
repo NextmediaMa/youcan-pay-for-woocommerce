@@ -119,7 +119,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * Gets the transaction URL linked to YouCan Pay dashboard.
 	 */
 	public function get_transaction_url( $order ) {
-		$this->view_transaction_url = 'https://pay.youcan.shop/business/transactions/%s';
+		$this->view_transaction_url = 'https://pay.youcan.shop/transactions/%s';
 
 		return parent::get_transaction_url( $order );
 	}

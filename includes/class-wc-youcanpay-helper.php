@@ -337,4 +337,21 @@ class WC_YouCanPay_Helper {
 
 		return true;
 	}
+
+	public static function set_payment_method_to_order($order, $method) {
+		try {
+			$available_payment_gateways = WC()->payment_gateways()->get_available_payment_gateways();
+			if (isset($available_payment_gateways[$method])) {
+				$order->set_payment_method($available_payment_gateways[$method]);
+			}
+
+			return true;
+		} catch (Throwable $e) {
+			WC_YouCanPay_Logger::log( 'throwable at set payment method to order exists into wc youcan pay helper', array(
+				'exception.message' => $e->getMessage()
+			) );
+		}
+
+		return false;
+	}
 }

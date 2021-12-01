@@ -25,7 +25,7 @@ define( 'WC_YOUCAN_PAY_VERSION', '1.0.0' ); // WRCS: DEFINED_VERSION.
 define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.1.0' );
 define( 'WC_YOUCAN_PAY_MIN_WC_VER', '4.6' );
 define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '5.9' );
-define( 'WC_YOUCAN_PAY_MODE_DEV', '1' );
+define( 'WC_YOUCAN_PAY_MODE_DEV', '0' );
 define( 'WC_YOUCAN_PAY_MAIN_FILE', __FILE__ );
 define( 'WC_YOUCAN_PAY_ABSPATH', __DIR__ . '/' );
 define( 'WC_YOUCAN_PAY_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
@@ -115,6 +115,7 @@ function woocommerce_gateway_youcanpay() {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-privacy.php';
 				}
 
+				require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-order-action-action-enum.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-api-enum.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-exception.php';
@@ -124,7 +125,6 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/abstracts/abstract-wc-youcanpay-payment-gateway.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
-				require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
 
 				if ( is_admin() ) {

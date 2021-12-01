@@ -7,7 +7,7 @@ window.setupYouCanPayForm = () => {
                 window.ycPay.setSandboxMode(true);
             }
         }
-        window.ycPay.renderForm('#payment-card');
+        window.ycPay.renderForm('#payment-card', 'default');
     } catch (error) {
         console.error(error);
     }

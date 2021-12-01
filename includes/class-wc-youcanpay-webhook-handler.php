@@ -104,6 +104,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'order_total'    => $order->get_total(),
 			) );
 
+			WC_YouCanPay_Helper::set_payment_method_to_order($order, WC_Gateway_YouCanPay::ID);
 			$order->payment_complete( $transaction->getId() );
 
 			if ( isset( WC()->cart ) ) {
@@ -221,6 +222,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'action'         => $action,
 			) );
 
+			WC_YouCanPay_Helper::set_payment_method_to_order($order, WC_Gateway_YouCanPay_Standalone::ID);
 			$order->payment_complete( $transaction->getId() );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
