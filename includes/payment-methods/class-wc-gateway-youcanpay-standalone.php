@@ -97,7 +97,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		$icons = $this->payment_icons();
 
 		$icons_str = '';
-
 		$icons_str .= $icons['standalone'] ?? '';
 
 		return apply_filters( 'woocommerce_gateway_icon', $icons_str, $this->id );

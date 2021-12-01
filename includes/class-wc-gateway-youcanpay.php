@@ -367,6 +367,18 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			$redirect
 		);
 
+		if ( is_wp_error( $token ) || empty( $token ) ) {
+			WC_YouCanPay_Logger::log( 'there was a problem connecting to the YouCan Pay API endpoint', array(
+				'order_id' => $order->get_id(),
+			) );
+
+			throw new WC_YouCanPay_Exception( print_r( $token, true ),
+				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay-for-woocommerce' ) );
+		}
+
+		$order->update_meta_data( '_youcanpay_source_id', $token->getId());
+		$order->save();
+
 		return array(
 			'token'    => $token,
 			'order'    => $order,
