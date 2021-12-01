@@ -28,9 +28,16 @@ jQuery(function ($) {
     function process_payment($form, data) {
         if (typeof(data.token_transaction) !== 'undefined') {
             try {
+                var detach_loader = setInterval(function () {
+                    if ($('.blockOverlay').length > 0) {
+                        clearInterval(detach_loader);
+                        detachLoader($form);
+                    }
+                }, 500);
+
                 window.ycPay.pay(data.token_transaction)
                     .then(function (transactionId) {
-                        console.log(transactionId);
+                        detachLoader($form);
 
                         if (typeof (data.redirect_url) !== 'undefined') {
                             window.location.href = data.redirect_url;
