@@ -1,266 +1,102 @@
-msgid ""
-msgstr ""
-"Content-Type: text/plain; charset=utf-8\n"
-"X-Generator: babel-plugin-makepot\n"
-
-#: client/data/settings/resolvers.js:18
 msgid "Error retrieving settings."
 msgstr ""
 
-#: client/entrypoints/payment-request-settings/payment-request-page.js:14
-msgid "Google Pay / Apple Pay"
-msgstr ""
-
-#: client/entrypoints/payment-request-settings/payment-request-page.js:17
-msgid ""
-"Decide how buttons for digital wallets Apple Pay and Google Pay are "
-"displayed in your store. Depending on their web browser and their wallet "
-"configurations, your customers will see either Apple Pay or Google Pay, but "
-"not both."
-msgstr ""
-
-#: client/entrypoints/payment-request-settings/payment-request-page.js:28
-msgid "View Apple Pay Guidelines"
-msgstr ""
-
-#: client/entrypoints/payment-request-settings/payment-request-page.js:36
-msgid "View Google Pay Guidelines"
-msgstr ""
-
-#: client/payment-methods-map.js:14
 msgid "Credit card / debit card"
 msgstr ""
 
-#: client/payment-methods-map.js:15
-msgid ""
-"Let your customers pay with major credit and debit cards without leaving "
-"your store."
-msgstr ""
-
-#: client/payment-methods-map.js:37
 msgid "Direct debit payment"
 msgstr ""
 
-#: client/payment-methods-map.js:38
-msgid ""
-"Reach 500 million customers and over 20 million businesses across the "
-"European Union."
-msgstr ""
-
-#: client/payment-methods-map.js:48
-msgid "Sofort"
-msgstr ""
-
-#: client/payment-methods-map.js:49
-msgid ""
-"Accept secure bank transfers from Austria, Belgium, Germany, Italy, "
-"Netherlands, and Spain."
-msgstr ""
-
-#: client/payment-methods-map.js:92
-msgid "Przelewy24"
-msgstr ""
-
-#: client/payment-methods-map.js:93
-msgid ""
-"Przelewy24 is a Poland-based payment method aggregator that allows "
-"customers to complete transactions online using bank transfers and other "
-"methods."
-msgstr ""
-
-#: client/settings/general-settings-section/remove-method-confirmation-modal.js:16
 #. %s: payment method name.
 msgid "Remove %s from checkout"
 msgstr ""
 
-#: client/settings/general-settings-section/remove-method-confirmation-modal.js:28
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:90
 msgid "Cancel"
 msgstr ""
 
-#: client/settings/general-settings-section/remove-method-confirmation-modal.js:31
 msgid "Remove"
 msgstr ""
 
-#: client/settings/general-settings-section/remove-method-confirmation-modal.js:39
-#. %1: payment method name.
-msgid ""
-"Are you sure you want to remove %1$s? Your customers will no longer be able "
-"to pay using %1$s."
-msgstr ""
-
-#: client/settings/general-settings-section/remove-method-confirmation-modal.js:47
 msgid "You can add it again at any time in YouCan Pay settings."
 msgstr ""
 
-#: client/settings/general-settings-section/upe-opt-in-banner.js:24
 msgid "Enable the new YouCan Pay checkout experience"
 msgstr ""
 
-#: client/settings/general-settings-section/upe-opt-in-banner.js:28
-msgid ""
-"Get early access to additional payment methods and an improved checkout "
-"experience, now available to some merchants."
-msgstr ""
-
-#: client/settings/payment-request-section/index.js:109
 msgid "Show express checkouts on"
 msgstr ""
 
-#: client/settings/payment-request-section/index.js:127
 msgid "Checkout"
 msgstr ""
 
-#: client/settings/payment-request-section/index.js:145
 msgid "Product page"
 msgstr ""
 
-#: client/settings/payment-request-section/index.js:159
 msgid "Cart"
 msgstr ""
 
-#: client/settings/payment-request-section/index.js:171
 msgid "Customize appearance"
 msgstr ""
 
-#: client/settings/payment-request-section/index.js:68
 msgid "Enable express checkouts"
 msgstr ""
 
-#: client/settings/payment-request-section/index.js:74
-msgid ""
-"By enabling this feature, you agree to {{youcanpayLink}}YouCan Pay{{/youcanpayLink}}, "
-"{{appleLink}}Apple{{/appleLink}}, and {{googleLink}}Google{{/googleLink}}'s "
-"terms of use."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/index.js:103
-msgid ""
-"Enter the name your customers will see on their transactions. Use a "
-"recognizable name – e.g. the legal entity name or website address–to avoid "
-"potential disputes and chargebacks."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/index.js:107
 msgid "Full bank statement"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:119
 msgid "Add customer order number to the bank statement"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:123
-msgid ""
-"When enabled, we'll include the order number for card and express checkout "
-"transactions."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/index.js:149
 msgid "We'll use the short version in combination with the customer order number."
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:153
 msgid "Shortened customer bank statement"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:168
 msgid "Cards & Express Checkouts"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:43
 msgid "All Other Payment Methods"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:44
 msgid "All Payment Methods"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:50
 msgid "Payments settings"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:55
 msgid "Enable payments via saved cards"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:59
-msgid ""
-"If enabled, users will be able to pay with a saved card during checkout. "
-"Card details are saved on YouCan Pay servers, not on your store."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/index.js:67
 msgid "Enable separate credit card form"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:71
-msgid ""
-"If enabled, the credit card form will display separate credit card number "
-"field, expiry date field and CVC field."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/index.js:77
 msgid "Transaction preferences"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/index.js:84
 msgid "Customer bank statement"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:102
 msgid "Are you sure you want to enable manual capture of payments?"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:109
-msgid ""
-"Only cards support manual capture. When enabled, all other payment methods "
-"will be hidden from checkout."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:115
-msgid ""
-"You must capture the payment on the order details screen within 7 days of "
-"authorization, otherwise the money will return to the shopper."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:71
 msgid "Issue an authorization on checkout, and capture later"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:75
-msgid ""
-"Charge must be captured on the order details screen within 7 days of "
-"authorization, otherwise the authorization and order will be canceled."
-msgstr ""
-
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:83
 msgid "Enable manual capture"
 msgstr ""
 
-#: client/settings/payments-and-transactions-section/manual-capture-control.js:96
 msgid "Enable"
 msgstr ""
 
-#: client/upe-onboarding-wizard/upe-preview-methods-selector/add-payment-methods-task.js:135
 msgid "Add payment methods"
 msgstr ""
 
-#: client/upe-onboarding-wizard/upe-preview-methods-selector/add-payment-methods-task.js:161
 msgid "Review accepted payment methods"
 msgstr ""
 
-#: client/upe-onboarding-wizard/upe-preview-methods-selector/add-payment-methods-task.js:170
-msgid ""
-"We've added methods that you'd already enabled. For best results, we "
-"recommand adding all available payment methods. We'll only show your "
-"customers the most relevant payment methods based on their location and "
-"purchasing history. {{learnMoreLink}}Learn more{{/learnMoreLink}}"
-msgstr ""
-
-#: client/upe-onboarding-wizard/upe-preview-methods-selector/add-payment-methods-task.js:187
 msgid "Payments accepted at checkout"
 msgstr ""
 
-#: client/upe-onboarding-wizard/upe-preview-methods-selector/add-payment-methods-task.js:197
 msgid "Select all"
 msgstr ""

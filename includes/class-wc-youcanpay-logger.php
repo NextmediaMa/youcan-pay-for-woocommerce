@@ -34,15 +34,15 @@ class WC_YouCanPay_Logger {
 			if ( is_array( $context ) ) {
 				$context = array_merge(['message' => $message], $context);
 
-				$msg = '';
+				$array = array();
 				foreach ($context as $key => $item) {
-					$msg .= "{$key}: {$item}" . PHP_EOL;
+					$array[] = "{$key}: {$item}";
 				}
-				$message = $msg;
+				$message = implode(PHP_EOL, $array);
 			}
 
 			$log_entry  = PHP_EOL . '====YouCan Pay Version: ' . WC_YOUCAN_PAY_VERSION . '====' . PHP_EOL;
-			$log_entry .= '====Start Log====' . PHP_EOL . $message . '====End Log====' . PHP_EOL . PHP_EOL;
+			$log_entry .= '====Start Log====' . PHP_EOL . $message . PHP_EOL . '====End Log====' . PHP_EOL . PHP_EOL;
 
 
 			self::$logger->debug( $log_entry, [ 'source' => self::WC_LOG_FILENAME ] );
