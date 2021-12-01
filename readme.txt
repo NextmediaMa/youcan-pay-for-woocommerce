@@ -1,10 +1,9 @@
 === YouCan Pay for Woocommerce ===
 Plugin Name:       YouCan Pay for Woocommerce
 Plugin URI:        https://pay.youcan.shop
-Contributors:      mohamed oussama el abbassi
+Contributors:      medoussama
 Tags:              credit card, youcanpay, payment request, standalone, woocommerce
-Author URI:        https://pay.youcan.shop/
-Author:            YouCan Pay
+Author:            Mohamed Oussama EL ABBASSI
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
