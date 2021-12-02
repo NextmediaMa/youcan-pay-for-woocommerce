@@ -32,8 +32,7 @@ jQuery(function ($) {
         if (typeof(data.token_transaction) !== 'undefined') {
             try {
                 var detach_loader = setInterval(function () {
-                    //ycp-3ds-modal on shown
-                    if (jQuery('.blockOverlay').length > 0) {
+                    if (jQuery('#ycp-3ds-modal').length > 0) {
                         clearInterval(detach_loader);
                         detachLoader($form, true);
                     }
