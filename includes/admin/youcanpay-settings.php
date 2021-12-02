@@ -8,7 +8,7 @@ $youcanpay_settings = apply_filters(
 	'wc_youcanpay_settings',
 	[
 		'enabled'                      => [
-			'title'       => __( 'Enable/Disable', 'youcan-pay-for-woocommerce-en' ),
+			'title'       => __( 'Enable/Disable', 'youcan-pay-for-woocommerce' ),
 			'label'       => __( 'Enable YouCan Pay', 'youcan-pay-for-woocommerce' ),
 			'type'        => 'checkbox',
 			'description' => '',
