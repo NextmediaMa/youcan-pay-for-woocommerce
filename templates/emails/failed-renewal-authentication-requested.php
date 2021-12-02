@@ -23,7 +23,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 			_x(
 				'The automatic recurring payment for order %1$s from %2$s has failed. The customer was sent an email requesting authentication of payment. If the customer does not authenticate the payment, they will be requested by email again %3$s.',
 				'In admin renewal failed email',
-				'youcan-pay-for-woocommerce'
+				'youcan-pay'
 			),
 			$order->get_order_number(),
 			$order->get_formatted_billing_full_name(),
@@ -32,7 +32,7 @@ do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
 	);
 	?>
 </p>
-<p><?php esc_html_e( 'The renewal order is as follows:', 'youcan-pay-for-woocommerce' ); ?></p>
+<p><?php esc_html_e( 'The renewal order is as follows:', 'youcan-pay' ); ?></p>
 
 <?php
 

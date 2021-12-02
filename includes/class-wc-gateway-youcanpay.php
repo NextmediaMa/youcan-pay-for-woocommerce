@@ -48,10 +48,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function __construct() {
 		$this->id           = self::ID;
-		$this->method_title = __( 'YouCan Pay', 'youcan-pay-for-woocommerce' );
+		$this->method_title = __( 'YouCan Pay', 'youcan-pay' );
 		/* translators: 1) link to YouCan Pay register page 2) link to YouCan Pay api keys page */
 		$this->method_description = __( 'YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification.',
-			'youcan-pay-for-woocommerce' );
+			'youcan-pay' );
 		$this->has_fields         = true;
 		$this->supports           = [
 			'products',
@@ -154,7 +154,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		if ( $this->sandbox_mode ) {
 			/* translators: link to YouCan Pay testing page */
 			$description .= ' ' . sprintf( __( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
-					'youcan-pay-for-woocommerce' ),
+					'youcan-pay' ),
 					'https://pay.youcan.shop/docs#testing-and-test-cards' );
 		}
 
@@ -351,7 +351,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			) );
 
 			throw new WC_YouCanPay_Exception( 'Order not found',
-				__( 'Fatal error! Please contact support.', 'youcan-pay-for-woocommerce' ) );
+				__( 'Fatal error! Please contact support.', 'youcan-pay' ) );
 		}
 
 		$this->validate_minimum_order_amount( $order );
@@ -373,11 +373,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			) );
 
 			throw new WC_YouCanPay_Exception( print_r( $token, true ),
-				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay-for-woocommerce' ) );
+				__( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay' ) );
 		}
-
-		$order->update_meta_data( '_youcanpay_source_id', $token->getId());
-		$order->save();
 
 		return array(
 			'token'    => $token,
@@ -424,7 +421,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_/', $value ) ) {
 			throw new Exception( __( 'The "Production Public key" should start with "pub", enter the correct key.',
-				'youcan-pay-for-woocommerce' ) );
+				'youcan-pay' ) );
 		}
 
 		return $value;
@@ -437,7 +434,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_/', $value ) ) {
 			throw new Exception( __( 'The "Production Private key" should start with "pri", enter the correct key.',
-				'youcan-pay-for-woocommerce' ) );
+				'youcan-pay' ) );
 		}
 
 		return $value;
@@ -450,7 +447,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pub_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Sandbox Public key" should start with "pub_sandbox", enter the correct key.',
-				'youcan-pay-for-woocommerce' ) );
+				'youcan-pay' ) );
 		}
 
 		return $value;
@@ -463,7 +460,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$value = $this->validate_text_field( $key, $value );
 		if ( ! empty( $value ) && ! preg_match( '/^pri_sandbox_/', $value ) ) {
 			throw new Exception( __( 'The "Sandbox Private key" should start with "pri_sandbox", enter the correct key.',
-				'youcan-pay-for-woocommerce' ) );
+				'youcan-pay' ) );
 		}
 
 		return $value;

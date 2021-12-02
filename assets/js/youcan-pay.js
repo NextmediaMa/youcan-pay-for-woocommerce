@@ -15,29 +15,33 @@ window.setupYouCanPayForm = () => {
 
 jQuery(function ($) {
 
-    function detachLoader($form) {
+    function detachLoader($form, removeNoticeGroup) {
         $('html, body').animate({
             scrollTop: $('.woocommerce').offset().top
         }, 400);
         $('.blockOverlay').remove();
-        $('.woocommerce-NoticeGroup-checkout').remove();
         $('.woocommerce-notices-wrapper').remove();
         $form.removeClass('processing');
+
+        if (removeNoticeGroup === true) {
+            $('.woocommerce-NoticeGroup-checkout').remove();
+        }
     }
 
     function process_payment($form, data) {
         if (typeof(data.token_transaction) !== 'undefined') {
             try {
                 var detach_loader = setInterval(function () {
-                    if ($('.blockOverlay').length > 0) {
+                    //ycp-3ds-modal on shown
+                    if (jQuery('.blockOverlay').length > 0) {
                         clearInterval(detach_loader);
-                        detachLoader($form);
+                        detachLoader($form, true);
                     }
                 }, 500);
 
                 window.ycPay.pay(data.token_transaction)
                     .then(function (transactionId) {
-                        detachLoader($form);
+                        detachLoader($form, true);
 
                         if (typeof (data.redirect_url) !== 'undefined') {
                             window.location.href = data.redirect_url;
@@ -50,7 +54,7 @@ jQuery(function ($) {
                         }
                     })
                     .catch(function (errorMessage) {
-                        detachLoader($form);
+                        detachLoader($form, true);
 
                         let notice = $noticeGroup.clone();
 
@@ -69,8 +73,10 @@ jQuery(function ($) {
         if (typeof(data.messages) !== 'undefined') {
             let notice = $noticeGroup.clone();
 
-            notice.append(messages);
+            notice.append(data.messages);
             $form.prepend(notice);
+
+            console.log($form.attr('name'));
 
             return true;
         }
@@ -106,6 +112,7 @@ jQuery(function ($) {
                     dataType: "json",
                     beforeSend: function() {
                         try {
+                            $('.woocommerce-NoticeGroup-checkout').remove();
                             $form.addClass('processing');
                             $form.block({
                                 message: null,
@@ -128,7 +135,7 @@ jQuery(function ($) {
                     if (typeof(data.token_transaction) !== 'undefined') {
                         return;
                     }
-                    detachLoader($form);
+                    detachLoader($form, false);
                 });
             }
         } else {
