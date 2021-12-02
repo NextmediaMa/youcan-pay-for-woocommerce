@@ -72,25 +72,25 @@ class WC_YouCanPay_Helper {
 		return apply_filters(
 			'wc_youcanpay_localized_messages',
 			[
-				'invalid_number'           => __( 'The card number is not a valid credit card number.', 'youcan-pay-for-woocommerce' ),
-				'invalid_expiry_month'     => __( 'The card\'s expiration month is invalid.', 'youcan-pay-for-woocommerce' ),
-				'invalid_expiry_year'      => __( 'The card\'s expiration year is invalid.', 'youcan-pay-for-woocommerce' ),
-				'invalid_cvc'              => __( 'The card\'s security code is invalid.', 'youcan-pay-for-woocommerce' ),
-				'incorrect_number'         => __( 'The card number is incorrect.', 'youcan-pay-for-woocommerce' ),
-				'incomplete_number'        => __( 'The card number is incomplete.', 'youcan-pay-for-woocommerce' ),
-				'incomplete_cvc'           => __( 'The card\'s security code is incomplete.', 'youcan-pay-for-woocommerce' ),
-				'incomplete_expiry'        => __( 'The card\'s expiration date is incomplete.', 'youcan-pay-for-woocommerce' ),
-				'expired_card'             => __( 'The card has expired.', 'youcan-pay-for-woocommerce' ),
-				'incorrect_cvc'            => __( 'The card\'s security code is incorrect.', 'youcan-pay-for-woocommerce' ),
-				'incorrect_zip'            => __( 'The card\'s zip code failed validation.', 'youcan-pay-for-woocommerce' ),
-				'invalid_expiry_year_past' => __( 'The card\'s expiration year is in the past', 'youcan-pay-for-woocommerce' ),
-				'card_declined'            => __( 'The card was declined.', 'youcan-pay-for-woocommerce' ),
-				'missing'                  => __( 'There is no card on a customer that is being charged.', 'youcan-pay-for-woocommerce' ),
-				'processing_error'         => __( 'An error occurred while processing the card.', 'youcan-pay-for-woocommerce' ),
-				'email_invalid'            => __( 'Invalid email address, please correct and try again.', 'youcan-pay-for-woocommerce' ),
+				'invalid_number'           => __( 'The card number is not a valid credit card number.', 'youcan-pay' ),
+				'invalid_expiry_month'     => __( 'The card\'s expiration month is invalid.', 'youcan-pay' ),
+				'invalid_expiry_year'      => __( 'The card\'s expiration year is invalid.', 'youcan-pay' ),
+				'invalid_cvc'              => __( 'The card\'s security code is invalid.', 'youcan-pay' ),
+				'incorrect_number'         => __( 'The card number is incorrect.', 'youcan-pay' ),
+				'incomplete_number'        => __( 'The card number is incomplete.', 'youcan-pay' ),
+				'incomplete_cvc'           => __( 'The card\'s security code is incomplete.', 'youcan-pay' ),
+				'incomplete_expiry'        => __( 'The card\'s expiration date is incomplete.', 'youcan-pay' ),
+				'expired_card'             => __( 'The card has expired.', 'youcan-pay' ),
+				'incorrect_cvc'            => __( 'The card\'s security code is incorrect.', 'youcan-pay' ),
+				'incorrect_zip'            => __( 'The card\'s zip code failed validation.', 'youcan-pay' ),
+				'invalid_expiry_year_past' => __( 'The card\'s expiration year is in the past', 'youcan-pay' ),
+				'card_declined'            => __( 'The card was declined.', 'youcan-pay' ),
+				'missing'                  => __( 'There is no card on a customer that is being charged.', 'youcan-pay' ),
+				'processing_error'         => __( 'An error occurred while processing the card.', 'youcan-pay' ),
+				'email_invalid'            => __( 'Invalid email address, please correct and try again.', 'youcan-pay' ),
 				'invalid_request_error'    => is_add_payment_method_page()
-					? __( 'Unable to save this payment method, please try again or use alternative method.', 'youcan-pay-for-woocommerce' )
-					: __( 'Unable to process this payment, please try again or use alternative method.', 'youcan-pay-for-woocommerce' ),
+					? __( 'Unable to save this payment method, please try again or use alternative method.', 'youcan-pay' )
+					: __( 'Unable to process this payment, please try again or use alternative method.', 'youcan-pay' ),
 			]
 		);
 	}

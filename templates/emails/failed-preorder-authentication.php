@@ -16,8 +16,8 @@ $billing_phone = $order->get_billing_phone();
 	echo wp_kses(
 		sprintf(
 			// translators: %s is a link to the payment re-authentication URL.
-			_x( 'Your pre-order is now available, but payment cannot be completed automatically. %s', 'In failed SCA authentication for a pre-order.', 'youcan-pay-for-woocommerce' ),
-			'<a href="' . esc_url( $authorization_url ) . '">' . esc_html__( 'Authorize the payment now &raquo;', 'youcan-pay-for-woocommerce' ) . '</a>'
+			_x( 'Your pre-order is now available, but payment cannot be completed automatically. %s', 'In failed SCA authentication for a pre-order.', 'youcan-pay' ),
+			'<a href="' . esc_url( $authorization_url ) . '">' . esc_html__( 'Authorize the payment now &raquo;', 'youcan-pay' ) . '</a>'
 		),
 		[ 'a' => [ 'href' => true ] ]
 	);
@@ -53,7 +53,7 @@ do_action( 'woocommerce_email_customer_details', $order, $sent_to_admin, $plain_
 
 ?>
 <p>
-<?php esc_html_e( 'Thanks for shopping with us.', 'youcan-pay-for-woocommerce' ); ?>
+<?php esc_html_e( 'Thanks for shopping with us.', 'youcan-pay' ); ?>
 </p>
 <?php
 

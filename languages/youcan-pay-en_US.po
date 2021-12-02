@@ -1,0 +1,119 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en\n"
+
+msgid "Error retrieving settings."
+msgstr ""
+
+#. %s: payment method name.
+msgid "Remove %s from checkout"
+msgstr ""
+
+msgid "Enable/Disable"
+msgstr ""
+
+msgid "Enable YouCan Pay"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+msgid "Pay with your credit card via YouCan Pay."
+msgstr ""
+
+msgid "Sandbox mode"
+msgstr ""
+
+msgid "Enable Sandbox mode"
+msgstr ""
+
+msgid "Place the payment gateway in Sandbox mode using test API keys."
+msgstr ""
+
+msgid "Sandbox Public key"
+msgstr ""
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pub_sandbox_\" will be saved."
+msgstr ""
+
+msgid "Sandbox Private key"
+msgstr ""
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pri_sandbox_\" will be saved."
+msgstr ""
+
+msgid "Production Public key"
+msgstr ""
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pub_\" will be saved."
+msgstr ""
+
+msgid "Production Private key"
+msgstr ""
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pri_\" will be saved."
+msgstr ""
+
+msgid "Payment Request Button Type"
+msgstr ""
+
+msgid "Button Type"
+msgstr ""
+
+msgid "Select the button type you would like to show."
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Buy"
+msgstr ""
+
+msgid "Donate"
+msgstr ""
+
+msgid "Branded"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+msgid "Payment Request Button Label"
+msgstr ""
+
+msgid "Button Label"
+msgstr ""
+
+msgid "Enter the custom text you would like the button to have."
+msgstr ""
+
+msgid "Buy now"
+msgstr ""
+
+msgid "Logging"
+msgstr ""
+
+msgid "Log debug messages"
+msgstr ""
+
+msgid "Save debug messages to the WooCommerce System Status log."
+msgstr ""
