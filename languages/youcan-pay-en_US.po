@@ -19,6 +19,12 @@ msgstr ""
 msgid "Remove %s from checkout"
 msgstr ""
 
+msgid "YouCan Pay"
+msgstr ""
+
+msgid "YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification."
+msgstr ""
+
 msgid "Enable/Disable"
 msgstr ""
 
@@ -116,4 +122,142 @@ msgid "Log debug messages"
 msgstr ""
 
 msgid "Save debug messages to the WooCommerce System Status log."
+msgstr ""
+
+msgid "Return to payments"
+msgstr ""
+
+msgid "YouCan Pay Standalone"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "View Documentation"
+msgstr ""
+
+msgid "Docs"
+msgstr ""
+
+msgid "Open a support request"
+msgstr ""
+
+msgid "Support"
+msgstr ""
+
+msgid "Sorry, the minimum allowed order total is %1$s to use this payment method."
+msgstr ""
+
+msgid "YouCan Pay - The minimum PHP version required for this plugin is %1$s. You are running %2$s."
+msgstr ""
+
+msgid "YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All future versions of the plugin will require WooCommerce %2$s or greater."
+msgstr ""
+
+msgid "YouCan Pay is almost ready. To get started, <a href=\"%s\">set your YouCan Pay account keys</a>."
+msgstr ""
+
+msgid "YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
+msgstr ""
+
+msgid "YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
+msgstr ""
+
+msgid "YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href=\"%1$s\" target=\"_blank\">SSL certificate</a>"
+msgstr ""
+
+msgid "Action failed. Please refresh the page and retry."
+msgstr ""
+
+msgid "YouCan Pay Order Data"
+msgstr ""
+
+msgid "YouCan Pay Customer Data"
+msgstr ""
+
+msgid "YouCan Pay Data"
+msgstr ""
+
+msgid "Retain YouCan Pay Data"
+msgstr ""
+
+msgid "Retains any YouCan Pay data such as YouCan Pay customer ID, source ID."
+msgstr ""
+
+msgid "N/A"
+msgstr ""
+
+msgid "By using this extension, you may be storing personal data or sharing data with an external service. <a href=\"%s\" target=\"_blank\">Learn more about how this works, including what you may want to include in your privacy policy.</a>"
+msgstr ""
+
+msgid "Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)"
+msgstr ""
+
+msgid "Credit Card (YouCan Pay)"
+msgstr ""
+
+msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
+msgstr ""
+
+msgid "Must be activated from your YouCan Pay Settings <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">here</a>"
+msgstr ""
+
+msgid "Enable YouCan Pay Standalone"
+msgstr ""
+
+msgid "You will be redirected to YouCan Pay."
+msgstr ""
+
+msgid "All other general YouCan Pay settings can be adjusted <a href=\"%s\">here</a>."
+msgstr ""
+
+msgid "SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href=\"%s\" target=\"_blank\">Testing YouCan Pay documentation</a> for more card numbers."
+msgstr ""
+
+msgid "There was a problem connecting to the YouCan Pay API endpoint."
+msgstr ""
+
+msgid "The \"Production Public key\" should start with \"pub\", enter the correct key."
+msgstr ""
+
+msgid "The \"Production Private key\" should start with \"pri\", enter the correct key."
+msgstr ""
+
+msgid "The \"Sandbox Public key\" should start with \"pub_sandbox\", enter the correct key."
+msgstr ""
+
+msgid "The \"Sandbox Private key\" should start with \"pri_sandbox\", enter the correct key."
+msgstr ""
+
+msgid "An error occurred while processing the card."
+msgstr ""
+
+msgid "Invalid email address, please correct and try again."
+msgstr ""
+
+msgid "Unable to save this payment method, please try again or use alternative method."
+msgstr ""
+
+msgid "Unable to process this payment, please try again or use alternative method."
+msgstr ""
+
+msgid "Please try again, This payment has been canceled!"
+msgstr ""
+
+msgid "Sorry, payment not completed please try again."
+msgstr ""
+
+msgid "Fatal error, please try again."
+msgstr ""
+
+msgid "Fatal error! Please contact support."
+msgstr ""
+
+msgid "Fatal error, please try again or contact support."
+msgstr ""
+
+msgid "YouCan Pay requires WooCommerce to be installed and active. You can download %s here."
+msgstr ""
+
+msgid "YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
 msgstr ""

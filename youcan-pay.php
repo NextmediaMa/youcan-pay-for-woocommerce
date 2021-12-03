@@ -209,12 +209,10 @@ function woocommerce_gateway_youcanpay() {
 					$row_meta = [
 						'docs'    => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_docs_url',
 								'https://youcan.shop/help/' ) ) . '" title="' . esc_attr( __( 'View Documentation',
-								'youcan-pay' ) ) . '">' . __( 'Docs',
-								'youcan-pay' ) . '</a>',
+								'youcan-pay' ) ) . '">' . __( 'Docs', 'youcan-pay' ) . '</a>',
 						'support' => '<a href="' . esc_url( apply_filters( 'woocommerce_gateway_youcanpay_support_url',
-								'https://woocommerce.com/my-account/create-a-ticket?select=19612' ) ) . '" title="' . esc_attr( __( 'Open a support request at WooCommerce.com',
-								'youcan-pay' ) ) . '">' . __( 'Support',
-								'youcan-pay' ) . '</a>',
+								'https://youcan.shop/contact-us' ) ) . '" title="' . esc_attr( __( 'Open a support request',
+								'youcan-pay' ) ) . '">' . __( 'Support', 'youcan-pay' ) . '</a>',
 					];
 
 					return array_merge( $links, $row_meta );
@@ -242,7 +240,7 @@ function woocommerce_gateway_youcanpay() {
 				unset( $sections['youcanpay'] );
 				unset( $sections['youcanpay_standalone'] );
 
-				$sections['youcanpay']            = 'YouCanPay';
+				$sections['youcanpay']            = __( 'YouCan Pay', 'youcan-pay' );
 				$sections['youcanpay_standalone'] = __( 'YouCan Pay Standalone', 'youcan-pay' );
 
 				return $sections;

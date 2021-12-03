@@ -76,8 +76,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'transaction_id' => $transaction_id,
 			) );
 
-			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay' ),
-				'error' );
+			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $checkout_url ) ) );
 		}
@@ -123,8 +122,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'order_id'           => $order->get_id(),
 			) );
 
-			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay' ),
-				'error' );
+			wc_add_notice( __( 'Sorry, payment not completed please try again.', 'youcan-pay' ), 'error' );
 
 			$order->set_status( 'failed' );
 			$order->save();
@@ -156,7 +154,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	 */
 	private function youcanpay_standalone() {
 		if ( ! isset( $_GET['key'] ) ) {
-			wc_add_notice( __( '#0020: Fatal error, please try again', 'youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Fatal error, please try again.', 'youcan-pay' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
@@ -194,8 +192,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'action'         => $action,
 			) );
 
-			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay' ),
-				'error' );
+			wc_add_notice( __( 'Please try again, This payment has been canceled!', 'youcan-pay' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $checkout_url ) ) );
 		}

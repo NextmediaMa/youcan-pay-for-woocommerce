@@ -67,10 +67,13 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @return array
 	 */
 	public function payment_icons() {
+		$title = __( 'YouCan Pay Standalone', 'youcan-pay' );
+		$url   = WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/youcan-pay.svg';
+
 		return apply_filters(
 			'wc_youcanpay_payment_icons',
 			[
-				'standalone' => '<img src="' . WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/youcan-pay.svg" class="youcanpay-standalone-icon youcanpay-icon" alt="YouCan Pay Standalone" />',
+				'standalone' => '<img src="' . $url . '" alt="' . $title . '" class="youcanpay-standalone-icon youcanpay-icon" />',
 			]
 		);
 	}
@@ -91,8 +94,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			throw new WC_YouCanPay_Exception(
 				'Did not meet minimum amount',
 				sprintf(
-					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.',
-						'youcan-pay' ),
+					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay' ),
 					$price
 				)
 			);
@@ -109,8 +111,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		if ( WC()->cart->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
 			/* translators: 1) amount (including currency symbol) */
 			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount',
-				sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.',
-					'youcan-pay' ),
+				sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay' ),
 					wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
 		}
 	}
@@ -135,7 +136,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function get_youcanpay_return_url( $order = null, $gateway = null ) {
 		if ( is_object( $order ) ) {
 			$action = WC_YouCanPay_Order_Action_Enum::get_incomplete();
-			if (isset( $_GET['order-pay'] )) {
+			if ( isset( $_GET['order-pay'] ) ) {
 				$action = WC_YouCanPay_Order_Action_Enum::get_pre_order();
 			}
 
@@ -147,7 +148,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 			];
 
 			$response = wp_sanitize_redirect( esc_url_raw( add_query_arg( $args, get_site_url() ) ) );
-
 		} else {
 			$response = wp_sanitize_redirect( esc_url_raw( add_query_arg( [ 'utm_nooverride' => '1' ],
 				$this->get_return_url() ) ) );
