@@ -1,0 +1,263 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fr\n"
+
+msgid "Error retrieving settings."
+msgstr "Erreur lors de la récupération des paramètres."
+
+#. %s: payment method name.
+msgid "Remove %s from checkout"
+msgstr "Supprimer %s de la caisse"
+
+msgid "YouCan Pay"
+msgstr "YouCan Pay"
+
+msgid "YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification."
+msgstr "YouCan Pay fonctionne en ajoutant des champs de paiement à la caisse, puis en envoyant les détails à YouCan Pay pour vérification."
+
+msgid "Enable/Disable"
+msgstr "Activer/Désactiver"
+
+msgid "Enable YouCan Pay"
+msgstr "Activer YouCan Pay"
+
+msgid "Title"
+msgstr "Titre"
+
+msgid "This controls the title which the user sees during checkout."
+msgstr "Cela détermine le titre que les utilisateurs verront durant la commande."
+
+msgid "Description"
+msgstr "Description"
+
+msgid "This controls the description which the user sees during checkout."
+msgstr "Ceci détermine la description que les utilisateurs verront durant le réglement."
+
+msgid "Pay with your credit card via YouCan Pay."
+msgstr "Payez avec votre carte de crédit via YouCan Pay."
+
+msgid "Sandbox mode"
+msgstr "Sandbox mode"
+
+msgid "Enable Sandbox mode"
+msgstr "Activer Sandbox mode"
+
+msgid "Place the payment gateway in Sandbox mode using test API keys."
+msgstr "Placez la passerelle de paiement en mode Sandbox à l’aide de clés API de test."
+
+msgid "Sandbox Public key"
+msgstr "Clé publique Sandbox"
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pub_sandbox_\" will be saved."
+msgstr "Obtenez vos clés API à partir de votre compte YouCan Pay. Les valeurs non valides seront rejetées. Seules les valeurs commençant par \"pub_sandbox_\" seront enregistrées."
+
+msgid "Sandbox Private key"
+msgstr "Clé privée Sandbox"
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pri_sandbox_\" will be saved."
+msgstr "Obtenez vos clés API à partir de votre compte YouCan Pay. Les valeurs non valides seront rejetées. Seules les valeurs commençant par \"pri_sandbox_\" seront enregistrées."
+
+msgid "Production Public key"
+msgstr "Clé publique de production"
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pub_\" will be saved."
+msgstr "Obtenez vos clés API à partir de votre compte YouCan Pay. Les valeurs non valides seront rejetées. Seules les valeurs commençant par \"pub_\" seront enregistrées."
+
+msgid "Production Private key"
+msgstr "Clé privée de production"
+
+msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pri_\" will be saved."
+msgstr "Obtenez vos clés API à partir de votre compte YouCan Pay. Les valeurs non valides seront rejetées. Seules les valeurs commençant par \"pri_\" seront enregistrées."
+
+msgid "Payment Request Button Type"
+msgstr "Type de bouton de demande de paiement"
+
+msgid "Button Type"
+msgstr "Type de bouton"
+
+msgid "Select the button type you would like to show."
+msgstr "Sélectionnez le type de bouton que vous souhaitez afficher."
+
+msgid "Default"
+msgstr "Défaut"
+
+msgid "Buy"
+msgstr "Acheter"
+
+msgid "Donate"
+msgstr "Faire un don"
+
+msgid "Branded"
+msgstr "Marque"
+
+msgid "Custom"
+msgstr "Personnalisé"
+
+msgid "Payment Request Button Label"
+msgstr "Étiquette du bouton de demande de paiement"
+
+msgid "Button Label"
+msgstr "Étiquette de bouton"
+
+msgid "Enter the custom text you would like the button to have."
+msgstr "Entrez le texte personnalisé que vous souhaitez que le bouton ait."
+
+msgid "Buy now"
+msgstr "Acheter maintenant"
+
+msgid "Logging"
+msgstr "Enregistrement"
+
+msgid "Log debug messages"
+msgstr "Conserver les messages de débogage"
+
+msgid "Save debug messages to the WooCommerce System Status log."
+msgstr "Enregistrez les messages de débogage dans le journal d’état du système WooCommerce."
+
+msgid "Return to payments"
+msgstr "Retour aux paiements"
+
+msgid "YouCan Pay Standalone"
+msgstr "YouCan Pay autonome"
+
+msgid "Settings"
+msgstr "Paramètres"
+
+msgid "View Documentation"
+msgstr "Voir la documentation"
+
+msgid "Docs"
+msgstr ""
+
+msgid "Open a support request"
+msgstr "Ouvrir une demande d’assistance"
+
+msgid "Support"
+msgstr "Support"
+
+msgid "Sorry, the minimum allowed order total is %1$s to use this payment method."
+msgstr "Désolé, le total de commande minimum autorisé est de %1$s pour utiliser ce mode de paiement."
+
+msgid "YouCan Pay - The minimum PHP version required for this plugin is %1$s. You are running %2$s."
+msgstr "YouCan Pay - La version PHP minimale requise pour ce plugin est %1$s. Vous exécutez %2$s."
+
+msgid "YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All future versions of the plugin will require WooCommerce %2$s or greater."
+msgstr "YouCan Pay - Ceci est la dernière version du plugin compatible avec WooCommerce %1$s. Toutes les futures versions du plugin nécessiteront WooCommerce %2$s ou plus."
+
+msgid "YouCan Pay is almost ready. To get started, <a href=\"%s\">set your YouCan Pay account keys</a>."
+msgstr "YouCan Pay est presque prêt. Pour commencer, <a href=\"%s\">définissez vos clés de compte YouCan Pay</a>."
+
+msgid "YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
+msgstr "YouCan Pay est en mode Sandbox, mais vos clés de test peuvent ne pas être valides. Les clés sandbox commencent par pub_sandbox et pri_sandbox. Veuillez accéder à vos paramètres et, <a href=\"%s\">définir vos clés de compte YouCan Pay</a>."
+
+msgid "YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
+msgstr "YouCan Pay est en mode production, mais vos clés peuvent ne pas être valides. Les clés de production commencent par pub et pri. Veuillez accéder à vos paramètres et, <a href=\"%s\">définir vos clés de compte YouCan Pay</a>."
+
+msgid "YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href=\"%1$s\" target=\"_blank\">SSL certificate</a>"
+msgstr "YouCan Pay est activé, mais aucun certificat SSL n’est détecté. Votre paiement n’est peut-être pas sécurisé! Assurez-vous que votre serveur dispose d’un certificat <a href=\"%1$s\" target=\"_blank\">SSL valide</a>"
+
+msgid "Action failed. Please refresh the page and retry."
+msgstr "Échec de l’action. Actualisez la page et réessayez."
+
+msgid "YouCan Pay Order Data"
+msgstr "YouCan Pay données de commande"
+
+msgid "YouCan Pay Customer Data"
+msgstr "YouCan Pay données client"
+
+msgid "YouCan Pay Data"
+msgstr "YouCan Pay données"
+
+msgid "Retain YouCan Pay Data"
+msgstr "Conserver les données YouCan Pay"
+
+msgid "Retains any YouCan Pay data such as YouCan Pay customer ID, source ID."
+msgstr "Conserve toutes les données YouCan Pay telles que l’ID client YouCan Pay, l’ID source."
+
+msgid "N/A"
+msgstr "N/A"
+
+msgid "By using this extension, you may be storing personal data or sharing data with an external service. <a href=\"%s\" target=\"_blank\">Learn more about how this works, including what you may want to include in your privacy policy.</a>"
+msgstr "En utilisant cette extension, vous pouvez stocker des données personnelles ou partager des données avec un service externe. <a href=\"%s\" target=\"_blank\">En savoir plus sur la façon dont cela fonctionne, y compris ce que vous voudrez peut-être inclure dans votre politique de confidentialité.</a>"
+
+msgid "Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)"
+msgstr "L’ID de commande %d est inférieur aux jours de rétention définis. Données personnelles conservées. (Vous pouvez payer)"
+
+msgid "Credit Card (YouCan Pay)"
+msgstr "Carte de crédit (YouCan Pay)"
+
+msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
+msgstr "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Guide de méthode de paiement </a>"
+
+msgid "Must be activated from your YouCan Pay Settings <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">here</a>"
+msgstr "Doit être activé à partir de vos paramètres YouCan Pay <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">ici</a>"
+
+msgid "Enable YouCan Pay Standalone"
+msgstr "Activer YouCan Pay autonome"
+
+msgid "You will be redirected to YouCan Pay."
+msgstr "Vous serez redirigé vers YouCan Pay."
+
+msgid "All other general YouCan Pay settings can be adjusted <a href=\"%s\">here</a>."
+msgstr "Tous les autres paramètres généraux de YouCan Pay peuvent être ajustés <a href=\"%s\">ici</a>."
+
+msgid "SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href=\"%s\" target=\"_blank\">Testing YouCan Pay documentation</a> for more card numbers."
+msgstr "SANDBOX MODE ACTIVÉ. En mode sandbox, vous pouvez utiliser le numéro de carte 4242424242424242 avec 112 CVC et la date 10/24 ou vérifier la <a href=\"%s\" target=\"_blank\">YouCan Pay documentation</a> pour plus de numéros de carte."
+
+msgid "There was a problem connecting to the YouCan Pay API endpoint."
+msgstr "Un problème est survenu lors de la connexion à l’API YouCan Pay."
+
+msgid "The \"Production Public key\" should start with \"pub\", enter the correct key."
+msgstr "La \"Clé publique de production\" doit commencer par \"pub\", entrez la clé correcte."
+
+msgid "The \"Production Private key\" should start with \"pri\", enter the correct key."
+msgstr "La \"Clé privée de production\" doit commencer par \"pri\", entrez la clé correcte."
+
+msgid "The \"Sandbox Public key\" should start with \"pub_sandbox\", enter the correct key."
+msgstr "La \"Clé publique du Sandbox\" doit commencer par \"pub_sandbox\", entrez la clé correcte."
+
+msgid "The \"Sandbox Private key\" should start with \"pri_sandbox\", enter the correct key."
+msgstr "La \"Clé privée Sandbox\" doit commencer par \"pri_sandbox\", entrez la clé correcte."
+
+msgid "An error occurred while processing the card."
+msgstr "Une erreur s’est produite lors du traitement de la carte."
+
+msgid "Invalid email address, please correct and try again."
+msgstr "Adresse e-mail invalide, veuillez corriger et réessayer."
+
+msgid "Unable to save this payment method, please try again or use alternative method."
+msgstr "Impossible d’enregistrer ce mode de paiement, veuillez réessayer ou utiliser un autre mode de paiement."
+
+msgid "Unable to process this payment, please try again or use alternative method."
+msgstr "Impossible de traiter ce paiement, veuillez réessayer ou utiliser une autre méthode."
+
+msgid "Please try again, This payment has been canceled!"
+msgstr "Veuillez réessayer, ce paiement a été annulé !"
+
+msgid "Sorry, payment not completed please try again."
+msgstr "Désolé, le paiement n’est pas terminé, veuillez réessayer."
+
+msgid "Fatal error, please try again."
+msgstr "Erreur fatale, veuillez réessayer."
+
+msgid "Fatal error! Please contact support."
+msgstr "Erreur fatale, Veuillez contacter le support."
+
+msgid "Fatal error, please try again or contact support."
+msgstr "Erreur fatale, veuillez réessayer ou contacter le support."
+
+msgid "YouCan Pay requires WooCommerce to be installed and active. You can download %s here."
+msgstr "YouCan Pay nécessite que WooCommerce soit installé et actif. Vous pouvez télécharger %s ici."
+
+msgid "YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
+msgstr "YouCan Pay nécessite l’installation de WooCommerce %1$s ou version ultérieure. WooCommerce %2$s n’est plus pris en charge."
