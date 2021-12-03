@@ -333,7 +333,7 @@ class WC_YouCanPay_Helper {
 
 			return true;
 		} catch (Throwable $e) {
-			WC_YouCanPay_Logger::log( 'throwable at set payment method to order exists into wc youcan pay helper', array(
+			WC_YouCanPay_Logger::alert( 'throwable at set payment method to order exists into wc youcan pay helper', array(
 				'exception.message' => $e->getMessage()
 			) );
 		}

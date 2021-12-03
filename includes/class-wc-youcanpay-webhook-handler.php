@@ -70,7 +70,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$checkout_url   = $this->get_checkout_url_by_action( $action );
 
 		if ( ! isset( $transaction ) ) {
-			WC_YouCanPay_Logger::log( 'arrived on process payment: transaction not exists', array(
+			WC_YouCanPay_Logger::info( 'arrived on process payment: transaction not exists', array(
 				'payment_method' => 'YouCan Pay (Credit Card)',
 				'code'           => '#0023',
 				'transaction_id' => $transaction_id,
@@ -83,7 +83,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 		$order = wc_get_order( $transaction->getOrderId() );
 		if ( ! isset( $order ) ) {
-			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+			WC_YouCanPay_Logger::info( 'arrived on process payment: order not exists', array(
 				'payment_method' => 'YouCan Pay (Credit Card)',
 				'code'           => '#0024',
 				'transaction_id' => $transaction_id,
@@ -96,7 +96,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( $transaction->getStatus() === 1 ) {
-			WC_YouCanPay_Logger::log( 'payment successfully processed', array(
+			WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 				'payment_method' => 'YouCan Pay (Credit Card)',
 				'transaction_id' => $transaction->getId(),
 				'order_id'       => $order->get_id(),
@@ -115,7 +115,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
 		} else {
-			WC_YouCanPay_Logger::log( 'payment not processed', array(
+			WC_YouCanPay_Logger::info( 'payment not processed', array(
 				'payment_method'     => 'YouCan Pay (Credit Card)',
 				'transaction_id'     => $transaction->getId(),
 				'transaction_status' => $transaction->getStatus(),
@@ -167,7 +167,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$checkout_url = $this->get_checkout_url_by_action( $action );
 
 		if ( ! isset( $order ) ) {
-			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+			WC_YouCanPay_Logger::info( 'arrived on process payment: order not exists', array(
 				'payment_method' => 'YouCan Pay (Standalone)',
 				'code'           => '#0021',
 				'order_key'      => $order_key,
@@ -184,7 +184,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$transaction    = WC_YouCanPay_API::get_transaction( $transaction_id );
 
 		if ( ! isset( $transaction ) ) {
-			WC_YouCanPay_Logger::log( 'arrived on process payment: transaction not exists', array(
+			WC_YouCanPay_Logger::info( 'arrived on process payment: transaction not exists', array(
 				'payment_method' => 'YouCan Pay (Standalone)',
 				'code'           => '#0022',
 				'transaction_id' => $transaction_id,
@@ -198,7 +198,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( $transaction->getOrderId() != $order->get_id() ) {
-			WC_YouCanPay_Logger::log( 'arrived on process payment: order not identical with transaction', array(
+			WC_YouCanPay_Logger::info( 'arrived on process payment: order not identical with transaction', array(
 				'payment_method'       => 'YouCan Pay (Standalone)',
 				'code'                 => '#0023',
 				'transaction_id'       => $transaction->getId(),
@@ -214,7 +214,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		}
 
 		if ( $transaction->getStatus() === 1 ) {
-			WC_YouCanPay_Logger::log( 'payment successfully processed', array(
+			WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 				'payment_method' => 'YouCan Pay (Standalone)',
 				'transaction_id' => $transaction->getId(),
 				'order_id'       => $order->get_id(),
@@ -227,7 +227,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( $this->get_return_url( $order ) ) ) );
 		} else {
-			WC_YouCanPay_Logger::log( 'payment not processed', array(
+			WC_YouCanPay_Logger::info( 'payment not processed', array(
 				'payment_method'     => 'YouCan Pay (Standalone)',
 				'transaction_id'     => $transaction->getId(),
 				'transaction_status' => $transaction->getStatus(),

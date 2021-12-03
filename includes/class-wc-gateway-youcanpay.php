@@ -274,14 +274,14 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 		// If keys are not set bail.
 		if ( ! $this->are_keys_set() ) {
-			WC_YouCanPay_Logger::log( 'Keys are not set correctly.' );
+			WC_YouCanPay_Logger::info( 'Keys are not set correctly.' );
 
 			return;
 		}
 
 		// If no SSL bail.
 		if ( ! $this->sandbox_mode && ! is_ssl() ) {
-			WC_YouCanPay_Logger::log( 'YouCan Pay live mode requires SSL.' );
+			WC_YouCanPay_Logger::info( 'YouCan Pay live mode requires SSL.' );
 
 			return;
 		}
@@ -322,7 +322,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			];
 		} catch ( WC_YouCanPay_Exception $e ) {
 			wc_add_notice( $e->getLocalizedMessage(), 'error' );
-			WC_YouCanPay_Logger::log( 'wc youcan pay exception', array(
+			WC_YouCanPay_Logger::alert( 'wc youcan pay exception', array(
 				'exception.message' => $e->getMessage()
 			) );
 
@@ -344,7 +344,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	public function validated_order_and_process_payment( $order_id ) {
 		$order = wc_get_order( $order_id );
 		if ( ! isset( $order ) ) {
-			WC_YouCanPay_Logger::log( 'arrived on process payment: order not exists', array(
+			WC_YouCanPay_Logger::info( 'arrived on process payment: order not exists', array(
 				'method'   => 'YouCan Pay (Credit Card)',
 				'code'     => '#0021',
 				'order_id' => $order_id,
@@ -368,7 +368,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		);
 
 		if ( is_wp_error( $token ) || empty( $token ) ) {
-			WC_YouCanPay_Logger::log( 'there was a problem connecting to the YouCan Pay API endpoint', array(
+			WC_YouCanPay_Logger::info( 'there was a problem connecting to the YouCan Pay API endpoint', array(
 				'order_id' => $order->get_id(),
 			) );
 

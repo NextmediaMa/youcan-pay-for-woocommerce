@@ -149,7 +149,7 @@ class WC_YouCanPay_API {
 			);
 
 			if ( is_wp_error( $token ) || empty( $token ) ) {
-				WC_YouCanPay_Logger::log( 'there was a problem connecting to the YouCan Pay API endpoint', array(
+				WC_YouCanPay_Logger::info( 'there was a problem connecting to the YouCan Pay API endpoint', array(
 					'order_id' => $order->get_id(),
 				) );
 
@@ -164,7 +164,7 @@ class WC_YouCanPay_API {
 				]
 			];
 		} catch (Throwable $e) {
-			WC_YouCanPay_Logger::log( 'throwable at request exists into wc youcan pay api', array(
+			WC_YouCanPay_Logger::alert( 'throwable at request exists into wc youcan pay api', array(
 				'exception.message' => $e->getMessage()
 			) );
 		}
@@ -187,7 +187,7 @@ class WC_YouCanPay_API {
 
 			return $py->transaction->get( $transaction_id );
 		} catch (Throwable $e) {
-			WC_YouCanPay_Logger::log( 'throwable at get transaction exists into wc youcan pay api', array(
+			WC_YouCanPay_Logger::alert( 'throwable at get transaction exists into wc youcan pay api', array(
 				'exception.message' => $e->getMessage()
 			) );
 		}
@@ -225,7 +225,7 @@ class WC_YouCanPay_API {
 				$return_url
 			);
 		} catch ( Throwable $e ) {
-			WC_YouCanPay_Logger::log( 'throwable at create token exists into wc youcan pay api', array(
+			WC_YouCanPay_Logger::alert( 'throwable at create token exists into wc youcan pay api', array(
 				'exception.message' => $e->getMessage()
 			) );
 		}

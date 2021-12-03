@@ -1,4 +1,5 @@
 <?php
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
@@ -15,7 +16,40 @@ class WC_YouCanPay_Logger {
 	 * @param string $message
 	 * @param array $context
 	 */
-	public static function log($message, $context = null) {
+	public static function log( $message, $context = null ) {
+		self::construct( 'log', $message, $context );
+	}
+
+	/**
+	 * @param string $message
+	 * @param array $context
+	 */
+	public static function debug( $message, $context = null ) {
+		self::construct( 'debug', $message, $context );
+	}
+
+	/**
+	 * @param string $message
+	 * @param array $context
+	 */
+	public static function alert( $message, $context = null ) {
+		self::construct( 'alert', $message, $context );
+	}
+
+	/**
+	 * @param string $message
+	 * @param array $context
+	 */
+	public static function info( $message, $context = null ) {
+		self::construct( 'info', $message, $context );
+	}
+
+	/**
+	 * @param $type
+	 * @param $message
+	 * @param null $context
+	 */
+	private static function construct( $type, $message, $context = null ) {
 		if ( ! class_exists( 'WC_Logger' ) ) {
 			return;
 		}
@@ -32,20 +66,19 @@ class WC_YouCanPay_Logger {
 			}
 
 			if ( is_array( $context ) ) {
-				$context = array_merge(['message' => $message], $context);
+				$context = array_merge( [ 'message' => $message ], $context );
 
 				$array = array();
-				foreach ($context as $key => $item) {
+				foreach ( $context as $key => $item ) {
 					$array[] = "{$key}: {$item}";
 				}
-				$message = implode(PHP_EOL, $array);
+				$message = implode( PHP_EOL, $array );
 			}
 
-			$log_entry  = PHP_EOL . '====YouCan Pay Version: ' . WC_YOUCAN_PAY_VERSION . '====' . PHP_EOL;
+			$log_entry = PHP_EOL . '====YouCan Pay Version: ' . WC_YOUCAN_PAY_VERSION . '====' . PHP_EOL;
 			$log_entry .= '====Start Log====' . PHP_EOL . $message . PHP_EOL . '====End Log====' . PHP_EOL . PHP_EOL;
 
-
-			self::$logger->debug( $log_entry, [ 'source' => self::WC_LOG_FILENAME ] );
+			self::$logger->{$type}( $log_entry, [ 'source' => self::WC_LOG_FILENAME ] );
 		}
 	}
 }
