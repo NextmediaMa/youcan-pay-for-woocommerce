@@ -250,9 +250,6 @@ msgstr ""
 msgid "Fatal error, please try again."
 msgstr ""
 
-msgid "Fatal error! Please contact support."
-msgstr ""
-
 msgid "Fatal error, please try again or contact support."
 msgstr ""
 

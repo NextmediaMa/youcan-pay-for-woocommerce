@@ -250,9 +250,6 @@ msgstr "Désolé, le paiement n’est pas terminé, veuillez réessayer."
 msgid "Fatal error, please try again."
 msgstr "Erreur fatale, veuillez réessayer."
 
-msgid "Fatal error! Please contact support."
-msgstr "Erreur fatale, Veuillez contacter le support."
-
 msgid "Fatal error, please try again or contact support."
 msgstr "Erreur fatale, veuillez réessayer ou contacter le support."
 

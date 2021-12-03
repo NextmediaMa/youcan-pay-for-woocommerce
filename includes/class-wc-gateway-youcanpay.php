@@ -351,7 +351,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			) );
 
 			throw new WC_YouCanPay_Exception( 'Order not found',
-				__( 'Fatal error! Please contact support.', 'youcan-pay' ) );
+				__( 'Fatal error, please try again or contact support.', 'youcan-pay' ) );
 		}
 
 		$this->validate_minimum_order_amount( $order );

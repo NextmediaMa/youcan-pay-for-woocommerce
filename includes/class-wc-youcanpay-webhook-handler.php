@@ -90,7 +90,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'order_id'       => $order->get_id(),
 			) );
 
-			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Fatal error, please try again or contact support.', 'youcan-pay' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
@@ -175,7 +175,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				'action'         => $action,
 			) );
 
-			wc_add_notice( __( 'Fatal error! Please contact support.', 'youcan-pay' ), 'error' );
+			wc_add_notice( __( 'Fatal error, please try again or contact support.', 'youcan-pay' ), 'error' );
 
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
