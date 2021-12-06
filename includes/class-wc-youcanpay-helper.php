@@ -304,6 +304,15 @@ class WC_YouCanPay_Helper {
 	}
 
 	/**
+	 * Checks if paying from order.
+	 *
+	 * @return boolean
+	 */
+	public static function is_paying_from_order() {
+		return ( array_key_exists( 'pay_for_order', $_GET ) &&  array_key_exists( 'key', $_GET ));
+	}
+
+	/**
 	 * Return true if the current_tab and current_section match the ones we want to check against.
 	 *
 	 * @param string $tab

@@ -125,7 +125,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$lastname             = '';
 
 		// If paying from order, we need to get total from order not cart.
-		if ( isset( $_GET['pay_for_order'] ) && ! empty( $_GET['key'] ) ) { // wpcs: csrf ok.
+		if ( WC_YouCanPay_Helper::is_paying_from_order() ) { // wpcs: csrf ok.
 			$order      = wc_get_order( wc_clean( $wp->query_vars['order-pay'] ) ); // wpcs: csrf ok, sanitization ok.
 			$user_email = $order->get_billing_email();
 		} else {
@@ -235,8 +235,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			),
 		];
 
-		if ( isset( $_GET['order-pay'] ) ) {
-			$response = $this->validated_order_and_process_payment( $_GET['order-pay'] );
+		if ( array_key_exists( 'order-pay', $_GET ) ) {
+			$response = $this->validated_order_and_process_payment( wc_sanitize_order_id( $_GET['order-pay'] ) );
 			/** @var Token $token */
 			$token    = $response['token'];
 			$redirect = $response['redirect'];
@@ -258,10 +258,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		if (
 			! is_product()
 			&& ! WC_YouCanPay_Helper::has_cart_or_checkout_on_current_page()
-			&& ! isset( $_GET['pay_for_order'] ) // wpcs: csrf ok.
+			&& ! array_key_exists( 'pay_for_order', $_GET )
 			&& ! is_add_payment_method_page()
-			&& ! isset( $_GET['change_payment_method'] ) // wpcs: csrf ok.
-			&& ! ( ! empty( get_query_var( 'view-subscription' ) ) && is_callable( 'WCS_Early_Renewal_Manager::is_early_renewal_via_modal_enabled' ) )
+			&& ! array_key_exists( 'change_payment_method', $_GET ) // wpcs: csrf ok.
 			|| ( is_order_received_page() )
 		) {
 			return;
@@ -400,7 +399,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function get_checkout_payment_url( $pay_url, $order ) {
 		global $wp;
-		if ( isset( $_GET['wc-youcanpay-confirmation'] ) && isset( $wp->query_vars['order-pay'] ) && $wp->query_vars['order-pay'] == $order->get_id() ) {
+		if ( array_key_exists( 'wc-youcanpay-confirmation', $_GET )
+		     && isset( $wp->query_vars['order-pay'] )
+		     && $wp->query_vars['order-pay'] == $order->get_id()
+		) {
 			$pay_url = add_query_arg( 'wc-youcanpay-confirmation', 1, $pay_url );
 		}
 

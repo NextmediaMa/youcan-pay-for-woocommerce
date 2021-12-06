@@ -140,8 +140,11 @@ class WC_YouCanPay_Admin_Notices {
 			if ( empty( $show_keys_notice ) ) {
 				$secret = WC_YouCanPay_API::get_private_key();
 				// phpcs:ignore
-				$should_show_notice_on_page = ! ( isset( $_GET['page'], $_GET['section'] ) && 'wc-settings' === $_GET['page'] && 0 === strpos( $_GET['section'],
-						'youcanpay' ) );
+				$should_show_notice_on_page = ! (
+                        isset( $_GET['page'], $_GET['section'] )
+                        && 'wc-settings' === $_GET['page']
+                        && 0 === strpos( $_GET['section'], 'youcanpay' )
+                );
 
 				if ( empty( $secret ) && $should_show_notice_on_page ) {
 					$setting_link = $this->get_setting_link();

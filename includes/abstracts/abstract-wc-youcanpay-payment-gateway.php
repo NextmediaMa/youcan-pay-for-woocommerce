@@ -111,7 +111,8 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		if ( WC()->cart->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
 			/* translators: 1) amount (including currency symbol) */
 			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount',
-				sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay' ),
+				sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.',
+					'youcan-pay' ),
 					wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
 		}
 	}
@@ -136,7 +137,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	public function get_youcanpay_return_url( $order = null, $gateway = null ) {
 		if ( is_object( $order ) ) {
 			$action = WC_YouCanPay_Order_Action_Enum::get_incomplete();
-			if ( isset( $_GET['order-pay'] ) ) {
+			if ( array_key_exists( 'order-pay', $_GET ) ) {
 				$action = WC_YouCanPay_Order_Action_Enum::get_pre_order();
 			}
 

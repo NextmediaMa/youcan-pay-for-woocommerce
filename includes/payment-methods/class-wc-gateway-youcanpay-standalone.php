@@ -48,9 +48,10 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		$this->id           = self::ID;
 		$this->method_title = __( 'YouCan Pay Standalone', 'youcan-pay' );
 		/* translators: link */
-		$this->method_description = sprintf( __( 'All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.',
-			'youcan-pay' ),
-			admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' ) );
+		$this->method_description = sprintf(
+			__( 'All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.', 'youcan-pay' ),
+			admin_url( 'admin.php?page=wc-settings&tab=checkout&section=youcanpay' )
+		);
 		$this->supports           = [
 			'products',
 			'refunds',
@@ -106,7 +107,10 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 * Payment_scripts function.
 	 */
 	public function payment_scripts() {
-		if ( ! is_cart() && ! is_checkout() && ! isset( $_GET['pay_for_order'] ) && ! is_add_payment_method_page() ) {
+		if ( ! WC_YouCanPay_Helper::has_cart_or_checkout_on_current_page()
+		     && ! array_key_exists( 'pay_for_order', $_GET )
+		     && ! is_add_payment_method_page()
+		) {
 			return;
 		}
 
@@ -130,7 +134,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 		$description = $this->get_description();
 
 		// If paying from order, we need to get total from order not cart.
-		if ( isset( $_GET['pay_for_order'] ) && ! empty( $_GET['key'] ) ) {
+		if (WC_YouCanPay_Helper::is_paying_from_order()) {
 			$order = wc_get_order( wc_clean( $wp->query_vars['order-pay'] ) );
 			$total = $order->get_total();
 		}
