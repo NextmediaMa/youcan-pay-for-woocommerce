@@ -7,8 +7,8 @@ Author:            Mohamed Oussama EL ABBASSI
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
-Stable tag:        v1.1.1
-Version:           v1.1.1
+Stable tag:        2.0.0
+Version:           2.0.0
 License:           GPLv3
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -78,6 +78,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The YouCan Pay settings screen used to configure the main YouCan Pay.
 
 == Changelog ==
+
+= 2.0.0 - 2021-12-06 =
+* Manage multiple languages
 
 = 1.1.1 - 2021-12-02 =
 * Second Release
