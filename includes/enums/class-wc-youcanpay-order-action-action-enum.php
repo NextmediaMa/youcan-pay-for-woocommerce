@@ -23,4 +23,11 @@ class WC_YouCanPay_Order_Action_Enum {
 		return self::$pre_order;
 	}
 
+	public static function get_all() {
+		return array(
+			self::$incomplete,
+			self::$pre_order,
+		);
+	}
+
 }

@@ -67,9 +67,10 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		$transaction_id = null;
 		$transaction    = null;
 		$action         = WC_YouCanPay_Order_Action_Enum::get_incomplete();
+		$all_actions    = WC_YouCanPay_Order_Action_Enum::get_all();
 
-		if ( array_key_exists( 'action', $_GET ) ) {
-			$action = wc_clean( wp_unslash( $_GET['action'] ) );
+		if ( array_key_exists( 'action', $_GET ) && ( in_array( $_GET['action'], $all_actions ) ) ) {
+			$action = $_GET['action'];
 		}
 
 		if ( array_key_exists( 'transaction_id', $_GET ) ) {
