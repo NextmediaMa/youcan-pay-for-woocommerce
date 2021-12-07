@@ -14,8 +14,7 @@ window.setupYouCanPayForm = () => {
 };
 
 jQuery(function ($) {
-
-    function detachLoader($form, removeNoticeGroup) {
+    function detach_loader($form, loader) {
         $('html, body').animate({
             scrollTop: $('.woocommerce').offset().top
         }, 400);
@@ -23,24 +22,25 @@ jQuery(function ($) {
         $('.woocommerce-notices-wrapper').remove();
         $form.removeClass('processing');
 
-        if (removeNoticeGroup === true) {
+        if (loader != null) {
+            clearInterval(loader);
             $('.woocommerce-NoticeGroup-checkout').remove();
         }
     }
 
     function process_payment($form, data) {
-        if (typeof(data.token_transaction) !== 'undefined') {
+        if (typeof (data.token_transaction) !== 'undefined') {
+            var loader = null;
             try {
-                var detach_loader = setInterval(function () {
+                loader = setInterval(function () {
                     if (jQuery('#ycp-3ds-modal').length > 0) {
-                        clearInterval(detach_loader);
-                        detachLoader($form, true);
+                        detach_loader($form, loader);
                     }
                 }, 500);
 
                 window.ycPay.pay(data.token_transaction)
                     .then(function (transactionId) {
-                        detachLoader($form, true);
+                        detach_loader($form, loader);
 
                         if (typeof (data.redirect_url) !== 'undefined') {
                             window.location.href = data.redirect_url;
@@ -53,29 +53,26 @@ jQuery(function ($) {
                         }
                     })
                     .catch(function (errorMessage) {
-                        detachLoader($form, true);
+                        detach_loader($form, loader);
 
                         let notice = $noticeGroup.clone();
-
                         notice.append('<ul class="woocommerce-error" role="alert"></ul>');
                         notice.find('ul').append('<li>' + errorMessage + '</li>');
-
                         $form.prepend(notice);
                     });
             } catch (error) {
+                detach_loader($form, loader);
                 console.error(error);
             }
         }
     }
 
     function display_notices($form, data) {
-        if (typeof(data.messages) !== 'undefined') {
+        if (typeof (data.messages) !== 'undefined') {
             let notice = $noticeGroup.clone();
 
             notice.append(data.messages);
             $form.prepend(notice);
-
-            console.log($form.attr('name'));
 
             return true;
         }
@@ -93,12 +90,12 @@ jQuery(function ($) {
             $form = $('#order_review');
         }
 
-        if ( $form.is( '.processing' ) ) {
+        if ($form.is('.processing')) {
             return false;
         }
 
         if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.youcanpay) {
-            if ( youcan_pay_script_vars.is_pre_order === youcan_pay_script_vars.order_status.pre_order) {
+            if (youcan_pay_script_vars.is_pre_order === youcan_pay_script_vars.order_status.pre_order) {
                 process_payment($form, {
                     token_transaction: youcan_pay_script_vars.token_transaction,
                     redirect: youcan_pay_script_vars.redirect,
@@ -109,7 +106,7 @@ jQuery(function ($) {
                     url: youcan_pay_script_vars.checkout_url,
                     data: $form.serialize(),
                     dataType: "json",
-                    beforeSend: function() {
+                    beforeSend: function () {
                         try {
                             $('.woocommerce-NoticeGroup-checkout').remove();
                             $form.addClass('processing');
@@ -124,17 +121,17 @@ jQuery(function ($) {
                             console.error(error);
                         }
                     }
-                }).done(function(data) {
-                    if (! display_notices($form, data)) {
+                }).done(function (data) {
+                    if (!display_notices($form, data)) {
                         process_payment($form, data);
                     }
-                }).fail(function(data) {
+                }).fail(function (data) {
 
-                }).always(function(data) {
-                    if (typeof(data.token_transaction) !== 'undefined') {
+                }).always(function (data) {
+                    if (typeof (data.token_transaction) !== 'undefined') {
                         return;
                     }
-                    detachLoader($form, false);
+                    detach_loader($form);
                 });
             }
         } else {
