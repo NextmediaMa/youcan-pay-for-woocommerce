@@ -155,16 +155,16 @@ msgid "YouCan Pay - This is the last version of the plugin compatible with WooCo
 msgstr "YouCan Pay - هذا هو الإصدار الأخير من البرنامج الإضافي المتوافق مع WooCommerce %1$s. ستتطلب جميع الإصدارات المستقبلية من البرنامج الإضافي WooCommerce %2$s أو أكبر."
 
 msgid "YouCan Pay is almost ready. To get started, <a href=\"%s\">set your YouCan Pay account keys</a>."
-msgstr "YouCan Pay جاهز تقريبًا. للبدء ، <a href=\"٪s\"> اضبط مفاتيح حساب YouCan Pay </a>."
+msgstr "YouCan Pay جاهز تقريبًا. للبدء ، <a href=\"%s\"> اضبط مفاتيح حساب YouCan Pay </a>."
 
 msgid "YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
-msgstr "YouCan Pay في وضع Sandbox ولكن مفاتيح الاختبار الخاصة بك قد لا تكون صالحة. تبدأ مفاتيح Sandbox بـ pub_sandbox و pri_sandbox. يرجى الانتقال إلى الإعدادات الخاصة بك و <a href=\"٪s\"> تعيين مفاتيح حساب YouCan Pay </a>."
+msgstr "YouCan Pay في وضع Sandbox ولكن مفاتيح الاختبار الخاصة بك قد لا تكون صالحة. تبدأ مفاتيح Sandbox بـ pub_sandbox و pri_sandbox. يرجى الانتقال إلى الإعدادات الخاصة بك و <a href=\"%s\"> تعيين مفاتيح حساب YouCan Pay </a>."
 
 msgid "YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
-msgstr "يمكنك الدفع في الوضع الحي ولكن مفاتيحك قد لا تكون صالحة. تبدأ مفاتيح الإنتاج بـ pub و pri. الرجاء الانتقال إلى الإعدادات و <a href=\"٪s\"> تعيين مفاتيح حساب You Can Pay </a>."
+msgstr "يمكنك الدفع في الوضع الحي ولكن مفاتيحك قد لا تكون صالحة. تبدأ مفاتيح الإنتاج بـ pub و pri. الرجاء الانتقال إلى الإعدادات و <a href=\"%s\"> تعيين مفاتيح حساب You Can Pay </a>."
 
 msgid "YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href=\"%1$s\" target=\"_blank\">SSL certificate</a>"
-msgstr "YouCan Pay مفعل ، لكن لم يتم الكشف عن شهادة SSL. قد لا تكون عملية الدفع الخاصة بك آمنة! الرجاء التأكد من أن الخادم الخاص بك لديه <a href=\"٪1$s\" target=\"_blank\"> شهادة SSL صالحة </a>"
+msgstr "YouCan Pay مفعل ، لكن لم يتم الكشف عن شهادة SSL. قد لا تكون عملية الدفع الخاصة بك آمنة! الرجاء التأكد من أن الخادم الخاص بك لديه <a href=\"%1$s\" target=\"_blank\"> شهادة SSL صالحة </a>"
 
 msgid "Action failed. Please refresh the page and retry."
 msgstr "فشل العملية ، يرجى تحديث الصفحة والمحاولة مرة أخرى."
@@ -212,7 +212,7 @@ msgid "All other general YouCan Pay settings can be adjusted <a href=\"%s\">here
 msgstr "يعمل على تحويل المشتري الى منصة YouCan Pay لإتمام عملية الشراء, لتعديل جميع الإعدادات العامة <a href=\"%s\">من هنا</a>."
 
 msgid "SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href=\"%s\" target=\"_blank\">Testing YouCan Pay documentation</a> for more card numbers."
-msgstr "تم تشغيل وضع SANDBOX. في وضع sandbox ، يمكنك استخدام رقم البطاقة 4242424242424242 مع 112 CVC وتاريخ 10/24 أو زيارة <a href=\"٪s\" target=\"_blank\"> دليل YouCan Pay </a> للحصول على مزيد من أرقام البطاقات."
+msgstr "تم تشغيل وضع SANDBOX. في وضع sandbox ، يمكنك استخدام رقم البطاقة 4242424242424242 مع 112 CVC وتاريخ 10/24 أو زيارة <a href=\"%s\" target=\"_blank\"> دليل YouCan Pay </a> للحصول على مزيد من أرقام البطاقات."
 
 msgid "There was a problem connecting to the YouCan Pay API endpoint."
 msgstr "حدثت مشكلة في الاتصال بـ YouCan Pay API."
