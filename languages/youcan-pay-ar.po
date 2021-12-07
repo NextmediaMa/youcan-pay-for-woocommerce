@@ -20,7 +20,7 @@ msgid "Remove %s from checkout"
 msgstr "إزالة %s من السلة"
 
 msgid "YouCan Pay"
-msgstr "‫YouCan Pay"
+msgstr "YouCan Pay"
 
 msgid "YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification."
 msgstr "يعمل عن طريق إضافة حقول للدفع, ثم يتم إرسال التفاصيل إلى YouCan Pay للتحقق من عملية الشراء."
@@ -50,13 +50,13 @@ msgid "Sandbox mode"
 msgstr "وضع Sandbox"
 
 msgid "Enable Sandbox mode"
-msgstr "تشغيل وضع ‫Sandbox"
+msgstr "تشغيل وضع Sandbox"
 
 msgid "Place the payment gateway in Sandbox mode using test API keys."
 msgstr "ضع عملية الدفع في وضع Sandbox باستخدام مفاتيح اختبار API."
 
 msgid "Sandbox Public key"
-msgstr "المفتاح العمومي في وضع ‫Sandbox"
+msgstr "المفتاح العمومي في وضع Sandbox"
 
 msgid "Get your API keys from your YouCan Pay account. Invalid values will be rejected. Only values starting with \"pub_sandbox_\" will be saved."
 msgstr "احصل على مفاتيح API الخاصة بك من حساب YouCan Pay الخاص بك. سيتم رفض القيم غير الصالحة. سيتم فقط حفظ القيم التي تبدأ بـ \"pub_sandbox_\"."
@@ -116,10 +116,10 @@ msgid "Buy now"
 msgstr "اشتري الآن"
 
 msgid "Logging"
-msgstr "سجل البيانات‬‬"
+msgstr "سجل البيانات"
 
 msgid "Log debug messages"
-msgstr "تشغيل سجل البيانات‬‬ التوضيحية"
+msgstr "تشغيل سجل البيانات التوضيحية"
 
 msgid "Save debug messages to the WooCommerce System Status log."
 msgstr "احفظ سجلات التوضيح في سجل حالة نظام WooCommerce."
@@ -128,13 +128,13 @@ msgid "Return to payments"
 msgstr "العودة إلى طرق الدفع"
 
 msgid "YouCan Pay Standalone"
-msgstr "‫YouCan Pay مستقل"
+msgstr "YouCan Pay مستقل"
 
 msgid "Settings"
 msgstr "الإعدادات"
 
 msgid "View Documentation"
-msgstr "عرض‬ دليل الاستخدام"
+msgstr "عرض دليل الاستخدام"
 
 msgid "Docs"
 msgstr "المستندات"
@@ -149,34 +149,34 @@ msgid "Sorry, the minimum allowed order total is %1$s to use this payment method
 msgstr "عذرًا ، إجمالي الحد الأدنى المسموح به للطلب هو %1$s لاستخدام طريقة الدفع هذه."
 
 msgid "YouCan Pay - The minimum PHP version required for this plugin is %1$s. You are running %2$s."
-msgstr "‫YouCan Pay - الحد الأدنى لإصدار PHP المطلوب لهذا البرنامج الإضافي هو %1$s. أنت تقوم بتشغيل %2$s."
+msgstr "YouCan Pay - الحد الأدنى لإصدار PHP المطلوب لهذا البرنامج الإضافي هو %1$s. أنت تقوم بتشغيل %2$s."
 
 msgid "YouCan Pay - This is the last version of the plugin compatible with WooCommerce %1$s. All future versions of the plugin will require WooCommerce %2$s or greater."
-msgstr "‫YouCan Pay - هذا هو الإصدار الأخير من البرنامج الإضافي المتوافق مع WooCommerce %1$s. ستتطلب جميع الإصدارات المستقبلية من البرنامج الإضافي WooCommerce %2$s أو أكبر."
+msgstr "YouCan Pay - هذا هو الإصدار الأخير من البرنامج الإضافي المتوافق مع WooCommerce %1$s. ستتطلب جميع الإصدارات المستقبلية من البرنامج الإضافي WooCommerce %2$s أو أكبر."
 
 msgid "YouCan Pay is almost ready. To get started, <a href=\"%s\">set your YouCan Pay account keys</a>."
-msgstr "‫YouCan Pay جاهز تقريبًا. للبدء ، <a href=\"٪s\"> اضبط مفاتيح حساب YouCan Pay </a>."
+msgstr "YouCan Pay جاهز تقريبًا. للبدء ، <a href=\"٪s\"> اضبط مفاتيح حساب YouCan Pay </a>."
 
 msgid "YouCan Pay is in Sandbox mode however your test keys may not be valid. Sandbox keys start with pub_sandbox and pri_sandbox. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
-msgstr "‫YouCan Pay في وضع Sandbox ولكن مفاتيح الاختبار الخاصة بك قد لا تكون صالحة. تبدأ مفاتيح Sandbox بـ pub_sandbox و pri_sandbox. يرجى الانتقال إلى الإعدادات الخاصة بك و <a href=\"٪s\"> تعيين مفاتيح حساب YouCan Pay </a>."
+msgstr "YouCan Pay في وضع Sandbox ولكن مفاتيح الاختبار الخاصة بك قد لا تكون صالحة. تبدأ مفاتيح Sandbox بـ pub_sandbox و pri_sandbox. يرجى الانتقال إلى الإعدادات الخاصة بك و <a href=\"٪s\"> تعيين مفاتيح حساب YouCan Pay </a>."
 
 msgid "YouCan Pay is in production mode however your keys may not be valid. Production keys start with pub and pri. Please go to your settings and, <a href=\"%s\">set your YouCan Pay account keys</a>."
 msgstr "يمكنك الدفع في الوضع الحي ولكن مفاتيحك قد لا تكون صالحة. تبدأ مفاتيح الإنتاج بـ pub و pri. الرجاء الانتقال إلى الإعدادات و <a href=\"٪s\"> تعيين مفاتيح حساب You Can Pay </a>."
 
 msgid "YouCan Pay is enabled, but a SSL certificate is not detected. Your checkout may not be secure! Please ensure your server has a valid <a href=\"%1$s\" target=\"_blank\">SSL certificate</a>"
-msgstr "‫YouCan Pay‬ مفعل ، لكن لم يتم الكشف عن شهادة SSL. قد لا تكون عملية الدفع الخاصة بك آمنة! الرجاء التأكد من أن الخادم الخاص بك لديه <a href=\"٪1$s\" target=\" _blank \"> شهادة SSL صالحة </a>"
+msgstr "YouCan Pay مفعل ، لكن لم يتم الكشف عن شهادة SSL. قد لا تكون عملية الدفع الخاصة بك آمنة! الرجاء التأكد من أن الخادم الخاص بك لديه <a href=\"٪1$s\" target=\"_blank\"> شهادة SSL صالحة </a>"
 
 msgid "Action failed. Please refresh the page and retry."
 msgstr "فشل العملية ، يرجى تحديث الصفحة والمحاولة مرة أخرى."
 
 msgid "YouCan Pay Order Data"
-msgstr "‫YouCan Pay بيانات الطلبيات"
+msgstr "بيانات الطلبات YouCan Pay"
 
 msgid "YouCan Pay Customer Data"
-msgstr "‫YouCan Pay بيانات العميل"
+msgstr "بيانات العميل YouCan Pay"
 
 msgid "YouCan Pay Data"
-msgstr "‫YouCan Pay البيانات"
+msgstr "بيانات YouCan Pay"
 
 msgid "Retain YouCan Pay Data"
 msgstr "احتفظ ببيانات YouCan Pay"
@@ -185,7 +185,7 @@ msgid "Retains any YouCan Pay data such as YouCan Pay customer ID, source ID."
 msgstr "يحتفظ بكل بيانات YouCan Pay مثل معرف العميل ومعرف المصدر."
 
 msgid "N/A"
-msgstr "‫N/A"
+msgstr "N/A"
 
 msgid "By using this extension, you may be storing personal data or sharing data with an external service. <a href=\"%s\" target=\"_blank\">Learn more about how this works, including what you may want to include in your privacy policy.</a>"
 msgstr "باستخدام هذا البرنامج الإضافي ، قد تقوم بتخزين البيانات الشخصية أو مشاركة البيانات مع خدمة خارجية. <a href=\"%s\" target=\"_blank\"> تعرف على المزيد حول كيفية عمل ذلك ، بما في ذلك ما قد ترغب في تضمينه في سياسة الخصوصية لديك. </a>"
@@ -197,7 +197,7 @@ msgid "Credit Card (YouCan Pay)"
 msgstr "بطاقة الائتمان (YouCan Pay)"
 
 msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
-msgstr "‫<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">دليل طريقة الدفع</a>"
+msgstr "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">دليل طريقة الدفع</a>"
 
 msgid "Must be activated from your YouCan Pay Settings <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">here</a>"
 msgstr "يجب تشغيله من إعدادات YouCan Pay الخاصة بك <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">هنا</a>"
@@ -209,7 +209,7 @@ msgid "You will be redirected to YouCan Pay."
 msgstr "ستتم إعادة توجيهك إلى YouCan Pay."
 
 msgid "All other general YouCan Pay settings can be adjusted <a href=\"%s\">here</a>."
-msgstr "يعمل على تحويل المشتري الى منصة YouCan Pay لإتمام عملية الشراء, لتعديل جميع الإعدادات العامة <a href=\"%s\">‫من هنا</a>."
+msgstr "يعمل على تحويل المشتري الى منصة YouCan Pay لإتمام عملية الشراء, لتعديل جميع الإعدادات العامة <a href=\"%s\">من هنا</a>."
 
 msgid "SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href=\"%s\" target=\"_blank\">Testing YouCan Pay documentation</a> for more card numbers."
 msgstr "تم تشغيل وضع SANDBOX. في وضع sandbox ، يمكنك استخدام رقم البطاقة 4242424242424242 مع 112 CVC وتاريخ 10/24 أو زيارة <a href=\"٪s\" target=\"_blank\"> دليل YouCan Pay </a> للحصول على مزيد من أرقام البطاقات."
@@ -248,7 +248,7 @@ msgid "Sorry, payment not completed please try again."
 msgstr "عذرا ، الدفع لم يكتمل يرجى المحاولة مرة أخرى."
 
 msgid "Fatal error, please try again."
-msgstr "خطأ غير متوقع‬ ، يرجى المحاولة مرة أخرى."
+msgstr "خطأ غير متوقع ، يرجى المحاولة مرة أخرى."
 
 msgid "Fatal error, please try again or contact support."
 msgstr "خطأ غير متوقع ، يرجى المحاولة مرة أخرى أو الاتصال بالدعم."
