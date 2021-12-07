@@ -79,7 +79,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
-= 2.0.0 - 2021-12-06 =
+= 2.0.0 - 2021-12-07 =
+
+* Security improvements
 * Manage multiple languages
 
 = 1.1.1 - 2021-12-02 =
