@@ -24,7 +24,6 @@ define( 'WC_YOUCAN_PAY_VERSION', '2.0.0' ); // WRCS: DEFINED_VERSION.
 define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.1.0' );
 define( 'WC_YOUCAN_PAY_MIN_WC_VER', '4.6' );
 define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '5.9' );
-define( 'WC_YOUCAN_PAY_MODE_DEV', '0' );
 define( 'WC_YOUCAN_PAY_MAIN_FILE', __FILE__ );
 define( 'WC_YOUCAN_PAY_ABSPATH', __DIR__ . '/' );
 define( 'WC_YOUCAN_PAY_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
