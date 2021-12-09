@@ -111,8 +111,8 @@ class WC_YouCanPay_Helper
     public static function get_settings($method = null, $setting = null)
     {
         $all_settings = (null === $method) ?
-            get_option('woocommerce_youcanpay_settings', array()) :
-            get_option('woocommerce_youcanpay_' . $method . '_settings', array());
+            get_option('woocommerce_youcanpay_settings', []) :
+            get_option('woocommerce_youcanpay_' . $method . '_settings', []);
 
         if (null === $setting) {
             return $all_settings;
@@ -220,10 +220,9 @@ class WC_YouCanPay_Helper
 
             return true;
         } catch (Throwable $e) {
-            WC_YouCanPay_Logger::alert('throwable at set payment method to order exists into wc youcan pay helper',
-                                       [
-                                           'exception.message' => $e->getMessage(),
-                                       ]);
+            WC_YouCanPay_Logger::alert('throwable at set payment method to order exists into wc youcan pay helper', [
+                'exception.message' => $e->getMessage(),
+            ]);
         }
 
         return false;
