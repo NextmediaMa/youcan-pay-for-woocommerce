@@ -115,59 +115,21 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 * Payment form on checkout page
 	 */
 	public function payment_fields() {
-		global $wp;
-		$user                 = wp_get_current_user();
-		$display_tokenization = $this->supports( 'tokenization' ) && is_checkout();
-		$user_email           = '';
-		$description          = $this->get_description();
-		$description          = ! empty( $description ) ? $description : '';
-		$firstname            = '';
-		$lastname             = '';
-
-		// If paying from order, we need to get total from order not cart.
-		if ( WC_YouCanPay_Helper::is_paying_from_order() ) { // wpcs: csrf ok.
-			$order      = wc_get_order( wc_clean( $wp->query_vars['order-pay'] ) ); // wpcs: csrf ok, sanitization ok.
-			$user_email = $order->get_billing_email();
-		} else {
-			if ( $user->ID ) {
-				$user_email = get_user_meta( $user->ID, 'billing_email', true );
-				if ( ! $user_email ) {
-					$user_email = $user->user_email;
-				}
-			}
-		}
-
-		if ( is_add_payment_method_page() ) {
-			$firstname = $user->user_firstname;
-			$lastname  = $user->user_lastname;
-		}
+		$description = $this->get_description();
+		$description = ! empty( $description ) ? $description : '';
 
 		ob_start();
 
-		echo '<div
-			id="youcanpay-payment-data"
-			data-email="' . esc_attr( $user_email ) . '"
-			data-full-name="' . esc_attr( $firstname . ' ' . $lastname ) . '"
-			data-currency="' . esc_attr( strtolower( get_woocommerce_currency() ) ) . '"
-		>';
+		echo '<div id="youcanpay-payment-data">';
 
 		if ( $this->sandbox_mode ) {
-			/* translators: link to YouCan Pay testing page */
-			$description .= ' ' . sprintf( __( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
-					'youcan-pay' ),
-					'https://pay.youcan.shop/docs#testing-and-test-cards' );
+			$text        = __( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
+				'youcan-pay' );
+			$description .= ' ' . sprintf( $text, 'https://pay.youcan.shop/docs#testing-and-test-cards' );
 		}
 
 		$description = trim( $description );
-
-		echo apply_filters( 'wc_youcanpay_description',
-			wpautop( wp_kses_post( $description ) ),
-			$this->id ); // wpcs: xss ok.
-
-		if ( $display_tokenization ) {
-			$this->tokenization_script();
-			$this->saved_payment_methods();
-		}
+		echo wpautop( wp_kses_post( $description ) );
 
 		$this->elements_form();
 
@@ -181,8 +143,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 	 */
 	public function elements_form() {
 		?>
-        <fieldset id="wc-<?php
-		echo esc_attr( $this->id ); ?>-cc-form" class="wc-credit-card-form wc-payment-form"
+        <fieldset id="wc-<?php echo esc_attr( $this->id ); ?>-cc-form" class="wc-credit-card-form wc-payment-form"
                   style="background:transparent;">
 			<?php
 			do_action( 'woocommerce_credit_card_form_start', $this->id ); ?>
@@ -200,8 +161,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
             <!-- Used to display form errors -->
             <div class="youcanpay-source-errors" role="alert"></div>
-			<?php
-			do_action( 'woocommerce_credit_card_form_end', $this->id ); ?>
+			<?php do_action( 'woocommerce_credit_card_form_end', $this->id ); ?>
             <div class="clear"></div>
         </fieldset>
 		<?php
@@ -226,7 +186,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			'key'              => $this->public_key,
 			'youcanpay'        => self::ID,
 			'is_test_mode'     => $this->is_in_test_mode(),
-			'youcanpay_locale' => WC_YouCanPay_Helper::convert_wc_locale_to_youcanpay_locale( get_locale() ),
+			'youcanpay_locale' => WC_YouCanPay_Helper::get_supported_local( get_locale() ),
 			'checkout_url'     => get_site_url() . '?wc-ajax=checkout',
 			'is_pre_order'     => WC_YouCanPay_Order_Action_Enum::get_incomplete(),
 			'order_status'     => array(
@@ -246,7 +206,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 			$youcanpay_params['redirect']          = $redirect;
 		}
 
-		return array_merge( $youcanpay_params, WC_YouCanPay_Helper::get_localized_messages() );
+		return $youcanpay_params;
 	}
 
 	/**

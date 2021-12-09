@@ -7,21 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Provides static methods as helpers.
  */
 class WC_YouCanPay_Helper {
-	const META_NAME_YOUCAN_PAY_CURRENCY = '_youcanpay_currency';
-
-	/**
-	 * Gets the YouCan Pay currency for order.
-	 *
-	 * @param object $order
-	 * @return string $currency
-	 */
-	public static function get_youcanpay_currency( $order = null ) {
-		if ( is_null( $order ) ) {
-			return false;
-		}
-
-		return $order->get_meta( self::META_NAME_YOUCAN_PAY_CURRENCY, true );
-	}
 
 	/**
 	 * Get YouCan Pay amount to pay
@@ -41,44 +26,6 @@ class WC_YouCanPay_Helper {
 		} else {
 			return absint( wc_format_decimal( ( (float) $total * 100 ), wc_get_price_decimals() ) ); // In cents.
 		}
-	}
-
-	/**
-	 * Get Total Payed to YouCan Pay
-	 *
-	 * @param float  $amount Amount.
-	 * @param string $currency Accepted currency.
-	 *
-	 * @return float|int
-	 */
-	public static function get_youcanpay_order_total( $amount, $currency = '' ) {
-		if ( ! $currency ) {
-			$currency = get_woocommerce_currency();
-		}
-
-		if ( in_array( strtolower( $currency ), self::no_decimal_currencies() ) ) {
-			return absint( $amount );
-		} else {
-			return abs($amount / 100);
-		}
-	}
-
-	/**
-	 * Localize YouCan Pay messages based on code
-	 *
-	 * @return array
-	 */
-	public static function get_localized_messages() {
-		return apply_filters(
-			'wc_youcanpay_localized_messages',
-			[
-				'processing_error'         => __( 'An error occurred while processing the card.', 'youcan-pay' ),
-				'email_invalid'            => __( 'Invalid email address, please correct and try again.', 'youcan-pay' ),
-				'invalid_request_error'    => is_add_payment_method_page()
-					? __( 'Unable to save this payment method, please try again or use alternative method.', 'youcan-pay' )
-					: __( 'Unable to process this payment, please try again or use alternative method.', 'youcan-pay' ),
-			]
-		);
 	}
 
 	/**
@@ -157,7 +104,11 @@ class WC_YouCanPay_Helper {
 	 * @param string $setting The name of the setting to get.
 	 */
 	public static function get_settings( $method = null, $setting = null ) {
-		$all_settings = null === $method ? get_option( 'woocommerce_youcanpay_settings', [] ) : get_option( 'woocommerce_youcanpay_' . $method . '_settings', [] );
+		if (null === $method) {
+			$all_settings = get_option( 'woocommerce_youcanpay_settings', [] );
+		} else {
+			$all_settings = get_option( 'woocommerce_youcanpay_' . $method . '_settings', [] );
+		}
 
 		if ( null === $setting ) {
 			return $all_settings;
@@ -188,110 +139,24 @@ class WC_YouCanPay_Helper {
 	}
 
 	/**
-	 * Sanitize statement descriptor text.
-	 * YouCan Pay requires max of 22 characters and no special characters.
-	 *
-	 * @param string $statement_descriptor
-	 * @return string $statement_descriptor Sanitized statement descriptor
-	 */
-	public static function clean_statement_descriptor( $statement_descriptor = '' ) {
-		$disallowed_characters = [ '<', '>', '\\', '*', '"', "'", '/', '(', ')', '{', '}' ];
-		
-		$statement_descriptor = strip_tags( $statement_descriptor );
-		
-		// Props https://stackoverflow.com/questions/657643/how-to-remove-html-special-chars .
-		$statement_descriptor = preg_replace( '/&#?[a-z0-9]{2,8};/i', '', $statement_descriptor );
-
-		// Next, remove any remaining disallowed characters.
-		$statement_descriptor = str_replace( $disallowed_characters, '', $statement_descriptor );
-
-		// Trim any whitespace at the ends and limit to 22 characters.
-		return substr( trim( $statement_descriptor ), 0, 22 );
-	}
-
-	/**
-	 * Converts a WooCommerce locale to the closest supported by YouCan Pay.js.
-	 *
-	 * YouCan Pay.js supports only a subset of IETF language tags, if a country specific locale is not supported we use
-	 * the default for that language (https://youcanpay.com/docs/js/appendix/supported_locales).
-	 * If no match is found we return 'auto' so YouCan Pay.js uses the browser locale.
+	 * Check WooCommerce locale if is supported by ycpay.js.
 	 *
 	 * @param string $wc_locale The locale to convert.
 	 *
-	 * @return string Closest locale supported by YouCan Pay ('auto' if NONE).
+	 * @return string Closest locale supported by YouCan Pay ('en' if NONE).
 	 */
-	public static function convert_wc_locale_to_youcanpay_locale( $wc_locale ) {
+	public static function get_supported_local( $wc_locale ) {
 		$supported = [
 			'ar',     // Arabic.
-			'bg',     // Bulgarian (Bulgaria).
-			'cs',     // Czech (Czech Republic).
-			'da',     // Danish.
-			'de',     // German (Germany).
-			'el',     // Greek (Greece).
 			'en',     // English.
-			'en-GB',  // English (United Kingdom).
-			'es',     // Spanish (Spain).
-			'es-419', // Spanish (Latin America).
-			'et',     // Estonian (Estonia).
-			'fi',     // Finnish (Finland).
 			'fr',     // French (France).
-			'fr-CA',  // French (Canada).
-			'he',     // Hebrew (Israel).
-			'hu',     // Hungarian (Hungary).
-			'id',     // Indonesian (Indonesia).
-			'it',     // Italian (Italy).
-			'ja',     // Japanese.
-			'lt',     // Lithuanian (Lithuania).
-			'lv',     // Latvian (Latvia).
-			'ms',     // Malay (Malaysia).
-			'mt',     // Maltese (Malta).
-			'nb',     // Norwegian Bokmål.
-			'nl',     // Dutch (Netherlands).
-			'pl',     // Polish (Poland).
-			'pt-BR',  // Portuguese (Brazil).
-			'pt',     // Portuguese (Brazil).
-			'ro',     // Romanian (Romania).
-			'ru',     // Russian (Russia).
-			'sk',     // Slovak (Slovakia).
-			'sl',     // Slovenian (Slovenia).
-			'sv',     // Swedish (Sweden).
-			'th',     // Thai.
-			'tr',     // Turkish (Turkey).
-			'zh',     // Chinese Simplified (China).
-			'zh-HK',  // Chinese Traditional (Hong Kong).
-			'zh-TW',  // Chinese Traditional (Taiwan).
 		];
 
-		// YouCan Pay uses '-' instead of '_' (used in WordPress).
-		$locale = str_replace( '_', '-', $wc_locale );
-
-		if ( in_array( $locale, $supported, true ) ) {
-			return $locale;
+		if ( in_array( $wc_locale, $supported, true ) ) {
+			return $wc_locale;
 		}
 
-		// The plugin has been fully translated for Spanish (Ecuador), Spanish (Mexico), and
-		// Spanish(Venezuela), and partially (88% at 2021-05-14) for Spanish (Colombia).
-		// We need to map these locales to YouCan Pay's Spanish (Latin America) 'es-419' locale.
-		// This list should be updated if more localized versions of Latin American Spanish are
-		// made available.
-		$lowercase_locale                  = strtolower( $wc_locale );
-		$translated_latin_american_locales = [
-			'es_co', // Spanish (Colombia).
-			'es_ec', // Spanish (Ecuador).
-			'es_mx', // Spanish (Mexico).
-			'es_ve', // Spanish (Venezuela).
-		];
-		if ( in_array( $lowercase_locale, $translated_latin_american_locales, true ) ) {
-			return 'es-419';
-		}
-
-		// Finally, we check if the "base locale" is available.
-		$base_locale = substr( $wc_locale, 0, 2 );
-		if ( in_array( $base_locale, $supported, true ) ) {
-			return $base_locale;
-		}
-
-		return 'auto';
+		return 'en';
 	}
 
 	/**
