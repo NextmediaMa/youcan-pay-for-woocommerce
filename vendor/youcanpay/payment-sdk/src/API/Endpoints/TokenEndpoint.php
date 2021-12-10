@@ -53,7 +53,6 @@ class TokenEndpoint extends Endpoint
      */
     private function assertResponse(Response $response): void
     {
-		//var_dump($response);die();
         if ($response->getStatusCode() === 200) {
             if (!is_array($response->get('token')) || !is_string($response->get('token')['id'])) {
                 throw new InvalidResponseException(
