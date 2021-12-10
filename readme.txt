@@ -3,7 +3,7 @@ Plugin Name:       YouCan Pay
 Plugin URI:        https://pay.youcan.shop
 Contributors:      medoussama
 Tags:              credit card, youcanpay, payment request, standalone, woocommerce
-Author:            Mohamed Oussama EL ABBASSI
+Author:            YouCan Pay
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
