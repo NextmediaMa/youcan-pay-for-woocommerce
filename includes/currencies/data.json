@@ -1,0 +1,1120 @@
+{
+    "AED": {
+        "label": "United Arab Emirates dirham",
+        "divider": {
+            "name": "FILS",
+            "value": 100
+        }
+    },
+    "AFN": {
+        "label": "Afghan afghani",
+        "divider": {
+            "name": "PUL",
+            "value": 100
+        }
+    },
+    "ALL": {
+        "label": "Albanian lek",
+        "divider": {
+            "name": "QINTAR",
+            "value": 100
+        }
+    },
+    "AMD": {
+        "label": "Armenian dram",
+        "divider": {
+            "name": "LUMA",
+            "value": 50
+        }
+    },
+    "ANG": {
+        "label": "Netherlands Antillean guilder",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "AOA": {
+        "label": "Angolan kwanza",
+        "divider": {
+            "name": "LWEI",
+            "value": 100
+        }
+    },
+    "ARS": {
+        "label": "Argentine peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "AUD": {
+        "label": "Australian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "AWG": {
+        "label": "Aruban florin",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "AZN": {
+        "label": "Azerbaijani manat",
+        "divider": {
+            "name": "QAPIK",
+            "value": 100
+        }
+    },
+    "BAM": {
+        "label": "Bosnia and Herzegovina convertible mark",
+        "divider": {
+            "name": "PFENINGA",
+            "value": 100
+        }
+    },
+    "BBD": {
+        "label": "Barbadian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "BDT": {
+        "label": "Bangladeshi taka",
+        "divider": {
+            "name": "POISHA",
+            "value": 100
+        }
+    },
+    "BGN": {
+        "label": "Bulgarian lev",
+        "divider": {
+            "name": "STOTINKI",
+            "value": 100
+        }
+    },
+    "BHD": {
+        "label": "Bahraini dinar",
+        "divider": {
+            "name": "FILS",
+            "value": 1000
+        }
+    },
+    "BIF": {
+        "label": "Burundian franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "BMD": {
+        "label": "Bermudian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "BND": {
+        "label": "Brunei dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "BOB": {
+        "label": "Bolivian boliviano",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "BRL": {
+        "label": "Brazilian real",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "BSD": {
+        "label": "Bahamian dollar",
+        "divider": {
+            "name": "CE",
+            "value": 100
+        }
+    },
+    "BTC": {
+        "label": "Bitcoin",
+        "divider": {
+            "name": "SATOSHI",
+            "value": 100000000
+        }
+    },
+    "BTN": {
+        "label": "Bhutanese ngultrum",
+        "divider": {
+            "name": "CHETRUMS (PAISA)",
+            "value": 100
+        }
+    },
+    "BWP": {
+        "label": "Botswana pula",
+        "divider": {
+            "name": "THEBE",
+            "value": 100
+        }
+    },
+    "BYR": {
+        "label": "Belarusian ruble (old)",
+        "divider": {
+            "name": "KAPEEK",
+            "value": 100
+        }
+    },
+    "BYN": {
+        "label": "Belarusian ruble",
+        "divider": {
+            "name": "KAPEEK",
+            "value": 100
+        }
+    },
+    "BZD": {
+        "label": "Belize dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "CAD": {
+        "label": "Canadian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "CDF": {
+        "label": "Congolese franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "CHF": {
+        "label": "Swiss franc",
+        "divider": {
+            "name": "RAPPEN",
+            "value": 100
+        }
+    },
+    "CLP": {
+        "label": "Chilean peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "CNY": {
+        "label": "Chinese yuan",
+        "divider": [{
+            "name": "JIAO",
+            "value": 10
+        },
+            {
+                "name": "FEN",
+                "value": 100
+            }
+        ]
+    },
+    "COP": {
+        "label": "Colombian peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "CRC": {
+        "label": "Costa Rican colón",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "CUC": {
+        "label": "Cuban convertible peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "CUP": {
+        "label": "Cuban peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "CVE": {
+        "label": "Cape Verdean escudo",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "CZK": {
+        "label": "Czech koruna",
+        "divider": {
+            "name": "HALERU",
+            "value": 100
+        }
+    },
+    "DJF": {
+        "label": "Djiboutian franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "DKK": {
+        "label": "Danish krone",
+        "divider": {
+            "name": "?RE",
+            "value": 100
+        }
+    },
+    "DOP": {
+        "label": "Dominican peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "DZD": {
+        "label": "Algerian dinar",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "EGP": {
+        "label": "Egyptian pound",
+        "divider": {
+            "name": "PIASTRES",
+            "value": 100
+        }
+    },
+    "ERN": {
+        "label": "Eritrean nakfa",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "ETB": {
+        "label": "Ethiopian birr",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "EUR": {
+        "label": "Euro",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "FJD": {
+        "label": "Fijian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "FKP": {
+        "label": "Falkland Islands pound",
+        "divider": {
+            "name": "PENCE",
+            "value": 100
+        }
+    },
+    "GBP": {
+        "label": "Pound sterling",
+        "divider": {
+            "name": "PENCE",
+            "value": 100
+        }
+    },
+    "GEL": {
+        "label": "Georgian lari",
+        "divider": {
+            "name": "THETRI",
+            "value": 100
+        }
+    },
+    "GGP": {
+        "label": "Guernsey pound",
+        "divider": {
+            "name": "NEW PENCE",
+            "value": 100
+        }
+    },
+    "GHS": {
+        "label": "Ghana cedi",
+        "divider": {
+            "name": "PESEWAS",
+            "value": 100
+        }
+    },
+    "GIP": {
+        "label": "Gibraltar pound",
+        "divider": {
+            "name": "NEW PENCE",
+            "value": 100
+        }
+    },
+    "GMD": {
+        "label": "Gambian dalasi",
+        "divider": {
+            "name": "BUTUTS",
+            "value": 100
+        }
+    },
+    "GNF": {
+        "label": "Guinean franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "GTQ": {
+        "label": "Guatemalan quetzal",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "GYD": {
+        "label": "Guyanese dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "HNL": {
+        "label": "Honduran lempira",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "HRK": {
+        "label": "Croatian kuna",
+        "divider": {
+            "name": "LIPA",
+            "value": 100
+        }
+    },
+    "HTG": {
+        "label": "Haitian gourde",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "HUF": {
+        "label": "Hungarian forint",
+        "divider": {
+            "name": "FILLER",
+            "value": 100
+        }
+    },
+    "IDR": {
+        "label": "Indonesian rupiah",
+        "divider": {
+            "name": "SEN",
+            "value": 100
+        }
+    },
+    "ILS": {
+        "label": "Israeli new shekel",
+        "divider": {
+            "name": "AGORAH",
+            "value": 100
+        }
+    },
+    "IMP": {
+        "label": "Manx pound",
+        "divider": {
+            "name": "PENCE",
+            "value": 100
+        }
+    },
+    "INR": {
+        "label": "Indian rupee",
+        "divider": {
+            "name": "PAISA",
+            "value": 100
+        }
+    },
+    "IQD": {
+        "label": "Iraqi dinar",
+        "divider": {
+            "name": "FILS",
+            "value": 1000
+        }
+    },
+    "IRR": {
+        "label": "Iranian rial",
+        "divider": {
+            "name": "DINARS",
+            "value": 100
+        }
+    },
+    "ISK": {
+        "label": "Icelandic króna",
+        "divider": {
+            "name": "AURAR",
+            "value": 100
+        }
+    },
+    "JMD": {
+        "label": "Jamaican dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "JOD": {
+        "label": "Jordanian dinar",
+        "divider": {
+            "name": "PIASTRES (QIRSH)",
+            "value": 100
+        }
+    },
+    "JPY": {
+        "label": "Japanese yen",
+        "divider": {
+            "name": "SEN",
+            "value": 100
+        }
+    },
+    "KES": {
+        "label": "Kenyan shilling",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "KGS": {
+        "label": "Kyrgyzstani som",
+        "divider": {
+            "name": "TYJYN",
+            "value": 100
+        }
+    },
+    "KHR": {
+        "label": "Cambodian riel",
+        "divider": {
+            "name": "SEN",
+            "value": 100
+        }
+    },
+    "KMF": {
+        "label": "Comorian franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "KPW": {
+        "label": "North Korean won",
+        "divider": {
+            "name": "CHON",
+            "value": 100
+        }
+    },
+    "KRW": {
+        "label": "South Korean won",
+        "divider": {
+            "name": "JEON",
+            "value": 100
+        }
+    },
+    "KWD": {
+        "label": "Kuwaiti dinar",
+        "divider": {
+            "name": "FILS",
+            "value": 1000
+        }
+    },
+    "KYD": {
+        "label": "Cayman Islands dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "KZT": {
+        "label": "Kazakhstani tenge",
+        "divider": {
+            "name": "TYIN",
+            "value": 100
+        }
+    },
+    "LAK": {
+        "label": "Lao kip",
+        "divider": {
+            "name": "ATT",
+            "value": 100
+        }
+    },
+    "LBP": {
+        "label": "Lebanese pound",
+        "divider": {
+            "name": "PIASTRES",
+            "value": 100
+        }
+    },
+    "LKR": {
+        "label": "Sri Lankan rupee",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "LRD": {
+        "label": "Liberian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "LSL": {
+        "label": "Lesotho loti",
+        "divider": {
+            "name": "LISENTE",
+            "value": 100
+        }
+    },
+    "LYD": {
+        "label": "Libyan dinar",
+        "divider": {
+            "name": "DIRHAMS",
+            "value": 1000
+        }
+    },
+    "MAD": {
+        "label": "Moroccan dirham",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "MDL": {
+        "label": "Moldovan leu",
+        "divider": {
+            "name": "BANI",
+            "value": 100
+        }
+    },
+    "MKD": {
+        "label": "Macedonian denar",
+        "divider": {
+            "name": "DENI",
+            "value": 100
+        }
+    },
+    "MMK": {
+        "label": "Burmese kyat",
+        "divider": {
+            "name": "PYAS",
+            "value": 100
+        }
+    },
+    "MNT": {
+        "label": "Mongolian tögrög",
+        "divider": {
+            "name": "MONGOS",
+            "value": 100
+        }
+    },
+    "MOP": {
+        "label": "Macanese pataca",
+        "divider": {
+            "name": "AVOS",
+            "value": 100
+        }
+    },
+    "MRU": {
+        "label": "Mauritanian ouguiya",
+        "divider": {
+            "name": "KHOUMS",
+            "value": 5
+        }
+    },
+    "MUR": {
+        "label": "Mauritian rupee",
+        "divider": {
+            "name": "CENTS (SOUS)",
+            "value": 100
+        }
+    },
+    "MVR": {
+        "label": "Maldivian rufiyaa",
+        "divider": {
+            "name": "LAARI",
+            "value": 100
+        }
+    },
+    "MWK": {
+        "label": "Malawian kwacha",
+        "divider": {
+            "name": "TAMBALA",
+            "value": 100
+        }
+    },
+    "MXN": {
+        "label": "Mexican peso",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "MYR": {
+        "label": "Malaysian ringgit",
+        "divider": {
+            "name": "SEN",
+            "value": 100
+        }
+    },
+    "MZN": {
+        "label": "Mozambican metical",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "NAD": {
+        "label": "Namibian dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "NGN": {
+        "label": "Nigerian naira",
+        "divider": {
+            "name": "KOBO",
+            "value": 100
+        }
+    },
+    "NIO": {
+        "label": "Nicaraguan córdoba",
+        "divider": {
+            "name": "CENTAVOS",
+            "value": 100
+        }
+    },
+    "NOK": {
+        "label": "Norwegian krone",
+        "divider": {
+            "name": "?RE",
+            "value": 100
+        }
+    },
+    "NPR": {
+        "label": "Nepalese rupee",
+        "divider": {
+            "name": "PAISA",
+            "value": 100
+        }
+    },
+    "NZD": {
+        "label": "New Zealand dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "OMR": {
+        "label": "Omani rial",
+        "divider": {
+            "name": "BAIZA",
+            "value": 1000
+        }
+    },
+    "PAB": {
+        "label": "Panamanian balboa",
+        "divider": {
+            "name": "CENTESIMOS",
+            "value": 100
+        }
+    },
+    "PEN": {
+        "label": "Sol",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "PGK": {
+        "label": "Papua New Guinean kina",
+        "divider": {
+            "name": "TOEA",
+            "value": 100
+        }
+    },
+    "PHP": {
+        "label": "Philippine peso",
+        "divider": {
+            "name": "SENTIMOS",
+            "value": 100
+        }
+    },
+    "PKR": {
+        "label": "Pakistani rupee",
+        "divider": {
+            "name": "PAISA",
+            "value": 100
+        }
+    },
+    "PLN": {
+        "label": "Polish złoty",
+        "divider": {
+            "name": "GROSZY",
+            "value": 100
+        }
+    },
+    "PRB": {
+        "label": "Transnistrian ruble",
+        "divider": {
+            "name": "KOPECKS",
+            "value": 100
+        }
+    },
+    "PYG": {
+        "label": "Paraguayan guaraní",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "QAR": {
+        "label": "Qatari riyal",
+        "divider": {
+            "name": "DIRHAMS",
+            "value": 100
+        }
+    },
+    "RON": {
+        "label": "Romanian leu",
+        "divider": {
+            "name": "BANI",
+            "value": 100
+        }
+    },
+    "RSD": {
+        "label": "Serbian dinar",
+        "divider": {
+            "name": "PARAS",
+            "value": 100
+        }
+    },
+    "RUB": {
+        "label": "Russian ruble",
+        "divider": {
+            "name": "KOPEKS",
+            "value": 100
+        }
+    },
+    "RWF": {
+        "label": "Rwandan franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "SAR": {
+        "label": "Saudi riyal",
+        "divider": {
+            "name": "HALALA",
+            "value": 100
+        }
+    },
+    "SBD": {
+        "label": "Solomon Islands dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "SCR": {
+        "label": "Seychellois rupee",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "SDG": {
+        "label": "Sudanese pound",
+        "divider": {
+            "name": "GHIRSH",
+            "value": 100
+        }
+    },
+    "SEK": {
+        "label": "Swedish krona",
+        "divider": {
+            "name": "?RE",
+            "value": 100
+        }
+    },
+    "SGD": {
+        "label": "Singapore dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "SHP": {
+        "label": "Saint Helena pound",
+        "divider": {
+            "name": "NEW PENCE",
+            "value": 100
+        }
+    },
+    "SLL": {
+        "label": "Sierra Leonean leone",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "SOS": {
+        "label": "Somali shilling",
+        "divider": {
+            "name": "CENTESIMI",
+            "value": 100
+        }
+    },
+    "SRD": {
+        "label": "Surinamese dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 1000
+        }
+    },
+    "SSP": {
+        "label": "South Sudanese pound",
+        "divider": {
+            "name": "PIASTRES",
+            "value": 100
+        }
+    },
+    "STN": {
+        "label": "São Tomé and Príncipe dobra",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "SYP": {
+        "label": "Syrian pound",
+        "divider": {
+            "name": "PIASTRES",
+            "value": 100
+        }
+    },
+    "SZL": {
+        "label": "Swazi lilangeni",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "THB": {
+        "label": "Thai baht",
+        "divider": {
+            "name": "SATANG",
+            "value": 100
+        }
+    },
+    "TJS": {
+        "label": "Tajikistani somoni",
+        "divider": {
+            "name": "DIRAM",
+            "value": 100
+        }
+    },
+    "TMT": {
+        "label": "Turkmenistan manat",
+        "divider": {
+            "name": "TENNESI",
+            "value": 100
+        }
+    },
+    "TND": {
+        "label": "Tunisian dinar",
+        "divider": {
+            "name": "MILLIM",
+            "value": 1000
+        }
+    },
+    "TOP": {
+        "label": "Tongan paʻanga",
+        "divider": {
+            "name": "SENITI",
+            "value": 100
+        }
+    },
+    "TRY": {
+        "label": "Turkish lira",
+        "divider": {
+            "name": "KURUS",
+            "value": 100
+        }
+    },
+    "TTD": {
+        "label": "Trinidad and Tobago dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "TWD": {
+        "label": "New Taiwan dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "TZS": {
+        "label": "Tanzanian shilling",
+        "divider": {
+            "name": "SENTI",
+            "value": 100
+        }
+    },
+    "UAH": {
+        "label": "Ukrainian hryvnia",
+        "divider": {
+            "name": "KOPIYOK",
+            "value": 100
+        }
+    },
+    "UGX": {
+        "label": "Ugandan shilling",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "USD": {
+        "label": "United States (US) dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "UYU": {
+        "label": "Uruguayan peso",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "UZS": {
+        "label": "Uzbekistani som",
+        "divider": {
+            "name": "TIYIN",
+            "value": 100
+        }
+    },
+    "VEF": {
+        "label": "Venezuelan bolívar",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "VES": {
+        "label": "Bolívar soberano",
+        "divider": {
+            "name": "CENTIMOS",
+            "value": 100
+        }
+    },
+    "VND": {
+        "label": "Vietnamese đồng",
+        "divider": {
+            "name": "HAO",
+            "value": 10
+        }
+    },
+    "VUV": {
+        "label": "Vanuatu vatu",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "WST": {
+        "label": "Samoan tālā",
+        "divider": {
+            "name": "SENE",
+            "value": 100
+        }
+    },
+    "XAF": {
+        "label": "Central African CFA franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "XCD": {
+        "label": "East Caribbean dollar",
+        "divider": {
+            "name": "CENTS",
+            "value": 100
+        }
+    },
+    "XOF": {
+        "label": "West African CFA franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "XPF": {
+        "label": "CFP franc",
+        "divider": {
+            "name": "CENTIMES",
+            "value": 100
+        }
+    },
+    "YER": {
+        "label": "Yemeni rial",
+        "divider": {
+            "name": "FILS",
+            "value": 100
+        }
+    },
+    "ZAR": {
+        "label": "South African rand",
+        "divider": {
+            "name": "CE",
+            "value": 100
+        }
+    },
+    "ZMW": {
+        "label": "Zambian kwacha",
+        "divider": {
+            "name": "NGWEE",
+            "value": 100
+        }
+    }
+}

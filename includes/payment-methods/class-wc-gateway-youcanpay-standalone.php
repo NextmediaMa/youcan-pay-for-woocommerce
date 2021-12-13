@@ -129,26 +129,19 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 * Payment form on checkout page
 	 */
 	public function payment_fields() {
-		global $wp;
-		$total       = WC()->cart->get_total();
 		$description = $this->get_description();
+        $description = ! empty( $description ) ? $description : '';
 
-		// If paying from order, we need to get total from order not cart.
-		if (WC_YouCanPay_Helper::is_paying_from_order()) {
-			$order = wc_get_order( wc_clean( $wp->query_vars['order-pay'] ) );
-			$total = $order->get_total();
-		}
+        ob_start();
 
-		echo '<div
-			id="youcanpay-standalone-payment-data"
-			data-amount="' . esc_attr( WC_YouCanPay_Helper::get_youcanpay_amount( $total ) ) . '"
-			data-currency="' . esc_attr( strtolower( get_woocommerce_currency() ) ) . '">';
+        echo '<div id="youcanpay-payment-data-standalone">';
 
-		if ( $description ) {
-			echo apply_filters( 'wc_youcanpay_description', wpautop( wp_kses_post( $description ) ), $this->id );
-		}
+        $description = trim( $description );
+        echo wpautop( wp_kses_post( $description ) );
 
 		echo '</div>';
+
+        ob_end_flush();
 	}
 
 	/**

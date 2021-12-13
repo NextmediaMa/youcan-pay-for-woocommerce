@@ -27,13 +27,14 @@ class WC_YouCanPay_Helper
         if (in_array(strtolower($currency), self::no_decimal_currencies())) {
             return absint($total);
         } else {
-            return absint(wc_format_decimal(((float)$total * 100), wc_get_price_decimals())); // In cents.
+            $divider_value = WC_YouCanPay_Currencies::get_divider_value($currency);
+
+            return absint(wc_format_decimal(((float)$total * $divider_value), wc_get_price_decimals())); // In cents.
         }
     }
 
     /**
-     * List of currencies supported by YouCan Pay that has no decimals
-     * https://youcanpay.com/docs/currencies#zero-decimal from https://youcanpay.com/docs/currencies#presentment-currencies
+     * List of currencies that has no decimals
      *
      * @return array $currencies
      */
