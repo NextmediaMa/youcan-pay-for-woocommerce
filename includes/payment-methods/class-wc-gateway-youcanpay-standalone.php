@@ -86,6 +86,10 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 	 * @return bool
 	 */
 	public function is_available() {
+        if (! in_array(get_woocommerce_currency(), $this->get_supported_currency())) {
+            return false;
+        }
+
 		return parent::is_available();
 	}
 
@@ -222,4 +226,13 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway {
 			];
 		}
 	}
+
+    /**
+     * Returns all supported currencies for this payment method.
+     *
+     * @return array
+     */
+    public function get_supported_currency() {
+        return WC_YouCanPay_Currencies::get_all_index();
+    }
 }
