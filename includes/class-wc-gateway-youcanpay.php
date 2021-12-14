@@ -120,7 +120,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 
 		ob_start();
 
-		echo '<div id="youcanpay-payment-data">';
+		echo '<div id="youcanpay-payment-data-credit-card">';
 
 		if ( $this->sandbox_mode ) {
 			$text        = __( 'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
