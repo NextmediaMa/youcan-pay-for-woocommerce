@@ -258,3 +258,6 @@ msgstr "يتطلب YouCan Pay تثبيت WooCommerce وتنشيطه. يمكنك 
 
 msgid "YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
 msgstr "يتطلب YouCan Pay تثبيت وتنشيط WooCommerce %1$s أو أكبر. WooCommerce %2$s لم يعد مدعومًا."
+
+msgid "%1$s is enabled - it requires store currency to be set to %2$s"
+msgstr "%1$s - يتطلب أن تكون عملة المتجر مدعمة %2$s"
