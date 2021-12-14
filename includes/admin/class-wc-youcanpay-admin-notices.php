@@ -274,7 +274,7 @@ class WC_YouCanPay_Admin_Notices
                     $method,
                     implode(', ', $gateway->get_supported_currency())
                 );
-                $this->add_admin_notice($method, 'notice notice-error', $message, true);
+                $this->add_admin_notice($method_converted, 'notice notice-error', $message, true);
             }
         }
     }
