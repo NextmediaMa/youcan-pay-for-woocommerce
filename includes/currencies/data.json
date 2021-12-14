@@ -218,15 +218,10 @@
     },
     "CNY": {
         "label": "Chinese yuan",
-        "divider": [{
+        "divider": {
             "name": "JIAO",
             "value": 10
-        },
-            {
-                "name": "FEN",
-                "value": 100
-            }
-        ]
+        }
     },
     "COP": {
         "label": "Colombian peso",
@@ -464,13 +459,6 @@
         "divider": {
             "name": "FILS",
             "value": 1000
-        }
-    },
-    "IRR": {
-        "label": "Iranian rial",
-        "divider": {
-            "name": "DINARS",
-            "value": 100
         }
     },
     "ISK": {
