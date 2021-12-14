@@ -33,9 +33,9 @@ YouCan Pay has no setup fees, no monthly fees, no hidden costs: you only get cha
 YouCan Pay includes [Web Payments API](https://www.w3.org/TR/payment-request/) support, which means customers can pay using payment details associated to their mobile devices, in browsers supporting the Web Payments API (Chrome for Android, amongst others). Checkout is now just a few taps away on mobile. Only supports simple, variable, and Subscription products for now. More support to come.
 
 == Installation ==
-You can download an [older version of this gateway for older versions of WooCommerce from here](https://wordpress.org/plugins/woocommerce-youcanpay/developers/).
+You can download an [older version of this gateway for older versions of WooCommerce from here](https://wordpress.org/plugins/youcan-pay-for-woocommerce/#developers).
 
-Please note, v1 of this gateway requires WooCommerce 4.6 and above.
+Please note, version 2.0.0 of this gateway requires WooCommerce 4.6 and above.
 
 = Automatic installation =
 
