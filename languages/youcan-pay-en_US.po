@@ -258,3 +258,6 @@ msgstr ""
 
 msgid "YouCan Pay requires WooCommerce %1$s or greater to be installed and active. WooCommerce %2$s is no longer supported."
 msgstr ""
+
+msgid "%1$s is enabled - it requires store currency to be set to %2$s"
+msgstr ""

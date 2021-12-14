@@ -27,6 +27,18 @@ class WC_YouCanPay_Currencies
     }
 
     /**
+     * @return array
+     */
+    public static function get_all_index() {
+        $currencies = self::get_all();
+        if ($currencies == null) {
+            return [];
+        }
+
+        return array_keys($currencies);
+    }
+
+    /**
      * @return array|null
      */
     public static function find($code)
