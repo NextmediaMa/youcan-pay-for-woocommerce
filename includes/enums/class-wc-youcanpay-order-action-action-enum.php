@@ -4,10 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Order_Action (Order Page): This is the page from which the user clicked on the Pay action
+ * We are free to modify these values
+ */
 class WC_YouCanPay_Order_Action_Enum {
 
-	private static $incomplete = '1';
-	private static $pre_order = '2';
+	private static $incomplete = 1;
+	private static $pre_order = 2;
 
 	/**
 	 * @return string
@@ -23,7 +27,11 @@ class WC_YouCanPay_Order_Action_Enum {
 		return self::$pre_order;
 	}
 
-	public static function get_all() {
+    /**
+     * @return array
+     */
+	public static function get_all(): array
+    {
 		return array(
 			self::$incomplete,
 			self::$pre_order,

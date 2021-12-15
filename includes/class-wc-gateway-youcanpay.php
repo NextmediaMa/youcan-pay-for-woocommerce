@@ -188,15 +188,12 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway {
 		$youcanpay_params = [
 			'title'            => $this->title,
 			'key'              => $this->public_key,
-			'youcanpay'        => self::ID,
-			'is_test_mode'     => $this->is_in_test_mode(),
-			'youcanpay_locale' => WC_YouCanPay_Helper::get_supported_local( get_locale() ),
-			'checkout_url'     => get_site_url() . '?wc-ajax=checkout',
-			'is_pre_order'     => WC_YouCanPay_Order_Action_Enum::get_incomplete(),
-			'order_status'     => array(
-				'incomplete' => WC_YouCanPay_Order_Action_Enum::get_incomplete(),
-				'pre_order'  => WC_YouCanPay_Order_Action_Enum::get_pre_order(),
-			),
+			'gateway'          => self::ID,
+			'locale'           => WC_YouCanPay_Helper::get_supported_local( get_locale() ),
+			'checkout_url'     => WC_YouCanPay_Helper::get_ajax_checkout_url(),
+            'is_test_mode'     => $this->is_in_test_mode(),
+			'is_pre_order'     => 0,
+			'order_actions'    => WC_YouCanPay_Order_Action_Enum::get_all(),
 		];
 
 		if ( array_key_exists( 'order-pay', $_GET ) ) {
