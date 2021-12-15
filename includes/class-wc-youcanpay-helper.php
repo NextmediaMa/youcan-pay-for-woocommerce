@@ -169,6 +169,14 @@ class WC_YouCanPay_Helper
     }
 
     /**
+     * @return string
+     */
+    public static function get_ajax_checkout_url()
+    {
+        return get_site_url() . '?wc-ajax=checkout';
+    }
+
+    /**
      * Checks if this page is a cart or checkout page.
      *
      * @return boolean

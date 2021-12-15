@@ -2,7 +2,7 @@ window.ycPay = null;
 window.setupYouCanPayForm = () => {
     try {
         if (window.ycPay == null) {
-            window.ycPay = new YCPay(youcan_pay_script_vars.key, {locale: youcan_pay_script_vars.youcanpay_locale});
+            window.ycPay = new YCPay(youcan_pay_script_vars.key, {locale: youcan_pay_script_vars.locale});
             if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
                 window.ycPay.setSandboxMode(true);
             }
@@ -94,8 +94,8 @@ jQuery(function ($) {
             return false;
         }
 
-        if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.youcanpay) {
-            if (youcan_pay_script_vars.is_pre_order === youcan_pay_script_vars.order_status.pre_order) {
+        if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.gateway) {
+            if (youcan_pay_script_vars.is_pre_order === youcan_pay_script_vars.order_actions.pre_order) {
                 process_payment($form, {
                     token_transaction: youcan_pay_script_vars.token_transaction,
                     redirect: youcan_pay_script_vars.redirect,
