@@ -261,3 +261,6 @@ msgstr "يتطلب YouCan Pay تثبيت وتنشيط WooCommerce %1$s أو أك
 
 msgid "%1$s is enabled - it requires store currency to be set to %2$s"
 msgstr "%1$s - يتطلب أن تكون عملة المتجر مدعمة %2$s"
+
+msgid "YouCan Pay Transaction ID"
+msgstr "معرف معاملة YouCan Pay"
