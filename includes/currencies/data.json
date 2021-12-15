@@ -24,7 +24,7 @@
         "label": "Armenian dram",
         "divider": {
             "name": "LUMA",
-            "value": 50
+            "value": 100
         }
     },
     "ANG": {
@@ -220,7 +220,7 @@
         "label": "Chinese yuan",
         "divider": {
             "name": "JIAO",
-            "value": 10
+            "value": 100
         }
     },
     "COP": {

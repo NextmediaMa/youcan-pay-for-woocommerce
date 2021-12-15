@@ -116,7 +116,7 @@ msgid "Buy now"
 msgstr "Acheter maintenant"
 
 msgid "Logging"
-msgstr "Enregistrement"
+msgstr "Débogage"
 
 msgid "Log debug messages"
 msgstr "Conserver les messages de débogage"
