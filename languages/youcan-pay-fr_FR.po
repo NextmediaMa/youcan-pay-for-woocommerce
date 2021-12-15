@@ -261,3 +261,6 @@ msgstr "YouCan Pay nécessite l’installation de WooCommerce %1$s ou version ul
 
 msgid "%1$s is enabled - it requires store currency to be set to %2$s"
 msgstr "%1$s est activé - il faut que la devise du magasin soit définie sur %2$s"
+
+msgid "YouCan Pay Transaction ID"
+msgstr "Identifiant de transaction YouCan Pay"

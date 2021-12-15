@@ -261,3 +261,6 @@ msgstr ""
 
 msgid "%1$s is enabled - it requires store currency to be set to %2$s"
 msgstr ""
+
+msgid "YouCan Pay Transaction ID"
+msgstr ""
