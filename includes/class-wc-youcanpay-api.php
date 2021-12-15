@@ -15,7 +15,6 @@ if (!defined('ABSPATH')) {
  */
 class WC_YouCanPay_API
 {
-
     /**
      * Secret API Key.
      *
@@ -187,6 +186,8 @@ class WC_YouCanPay_API
     }
 
     /**
+     * @param $transaction_id
+     *
      * @return Transaction|null
      */
     public static function get_transaction($transaction_id)
@@ -249,19 +250,22 @@ class WC_YouCanPay_API
         return null;
     }
 
+    /**
+     * @return string
+     */
     public static function get_the_user_ip()
     {
+        //check ip from share internet
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            //check ip from share internet
-            $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            //to check ip is pass from proxy
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
+            return $_SERVER['HTTP_CLIENT_IP'];
         }
 
-        return $ip;
+        //to check ip is pass from proxy
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+
+        return $_SERVER['REMOTE_ADDR'];
     }
 
 }
