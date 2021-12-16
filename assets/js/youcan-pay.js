@@ -95,7 +95,7 @@ jQuery(function ($) {
         }
 
         if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.gateway) {
-            if (youcan_pay_script_vars.is_pre_order === youcan_pay_script_vars.order_actions.pre_order) {
+            if (parseInt(youcan_pay_script_vars.is_pre_order) === parseInt(youcan_pay_script_vars.order_actions.pre_order)) {
                 process_payment($form, {
                     token_transaction: youcan_pay_script_vars.token_transaction,
                     redirect: youcan_pay_script_vars.redirect,
