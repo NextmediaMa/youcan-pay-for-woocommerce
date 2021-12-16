@@ -161,17 +161,18 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
      * @param WC_Order|WC_Order_Refund $order
      *
      * @return array|stdClass
+     * @throws WC_YouCanPay_Exception
      */
     public function create_source($order)
     {
         $currency = $order->get_currency();
         $return_url = $this->get_youcanpay_return_url($order, self::ID);
         $post_data = [
-            'amount' => WC_YouCanPay_Helper::get_youcanpay_amount($order->get_total(), $currency),
-            'locale' => WC_YouCanPay_Helper::get_supported_local(get_locale()),
+            'amount'   => WC_YouCanPay_Helper::get_youcanpay_amount($order->get_total(), $currency),
+            'locale'   => WC_YouCanPay_Helper::get_supported_local(get_locale()),
             'currency' => strtoupper($currency),
-            'type' => 'standalone',
-            'owner' => $this->get_owner_details($order),
+            'type'     => 'standalone',
+            'owner'    => $this->get_owner_details($order),
             'redirect' => ['return_url' => $return_url],
         ];
 
@@ -195,10 +196,11 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
 
             $response = $this->create_source($order);
 
-            if (!empty($response->error)) {
-                $order->add_order_note($response->error->message);
-
-                throw new WC_YouCanPay_Exception(print_r($response, true), $response->error->message);
+            if ((!isset($response->id)) || ($response->id == 0)) {
+                throw new WC_YouCanPay_Exception(
+                    print_r($response, true),
+                    __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
+                );
             }
 
             $order->update_meta_data('_youcanpay_source_id', $response->id);
@@ -212,20 +214,9 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');
-            WC_YouCanPay_Logger::alert('wc youcan pay exception', [
-                'exception.message' => $e->getMessage(),
-            ]);
-
-            $statuses = apply_filters(
-                'wc_youcanpay_allowed_payment_processing_statuses',
-                ['pending', 'failed']
-            );
 
             if (isset($order)) {
                 $order->update_status('failed');
-                if ($order->has_status($statuses)) {
-                    $this->send_failed_order_email($order_id);
-                }
             }
 
             return [
