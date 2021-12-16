@@ -15,17 +15,17 @@ class WC_YouCanPay_Order_Action_Enum
     private static $pre_order = 2;
 
     /**
-     * @return string
+     * @return int
      */
-    public static function get_incomplete(): string
+    public static function get_incomplete(): int
     {
         return self::$incomplete;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public static function get_pre_order(): string
+    public static function get_pre_order(): int
     {
         return self::$pre_order;
     }
@@ -34,6 +34,17 @@ class WC_YouCanPay_Order_Action_Enum
      * @return array
      */
     public static function get_all(): array
+    {
+        return [
+            'incomplete' => self::$incomplete,
+            'pre_order'  => self::$pre_order,
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function get_values(): array
     {
         return [
             self::$incomplete,

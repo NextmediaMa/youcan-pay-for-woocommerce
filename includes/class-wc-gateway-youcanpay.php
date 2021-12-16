@@ -200,33 +200,45 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      * Returns the JavaScript configuration object used on the product, cart, and checkout pages.
      *
      * @return array  The configuration object to be loaded to JS.
-     * @throws WC_YouCanPay_Exception|Exception
      */
     public function javascript_params()
     {
-        $youcanpay_params = [
-            'title'         => $this->title,
-            'key'           => $this->public_key,
-            'gateway'       => self::ID,
-            'locale'        => WC_YouCanPay_Helper::get_supported_local(get_locale()),
-            'checkout_url'  => WC_YouCanPay_Helper::get_ajax_checkout_url(),
-            'is_test_mode'  => $this->is_in_test_mode(),
-            'is_pre_order'  => 0,
-            'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
-        ];
+        try {
+            $youcanpay_params = [
+                'title'         => $this->title,
+                'key'           => $this->public_key,
+                'gateway'       => self::ID,
+                'locale'        => WC_YouCanPay_Helper::get_supported_local(get_locale()),
+                'checkout_url'  => WC_YouCanPay_Helper::get_ajax_checkout_url(),
+                'is_test_mode'  => $this->is_in_test_mode(),
+                'is_pre_order'  => 0,
+                'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
+            ];
 
-        if (array_key_exists('order-pay', $_GET)) {
-            $response = $this->validated_order_and_process_payment(wc_sanitize_order_id($_GET['order-pay']));
-            /** @var Token $token */
-            $token = $response['token'] ?? null;
-            $redirect = $response['redirect'] ?? null;
+            if (array_key_exists('order-pay', $_GET)) {
+                $response = $this->validated_order_and_process_payment(wc_sanitize_order_id($_GET['order-pay']));
+                /** @var Token $token */
+                $token = $response['token'] ?? null;
+                $order = $response['order'] ?? null;
+                $redirect = $response['redirect'] ?? null;
 
-            $youcanpay_params['token_transaction'] = (isset($token)) ? $token->getId() : 0;
-            $youcanpay_params['is_pre_order'] = WC_YouCanPay_Order_Action_Enum::get_pre_order();
-            $youcanpay_params['redirect'] = $redirect;
+                $youcanpay_params['token_transaction'] = (isset($token)) ? $token->getId() : 0;
+                $youcanpay_params['is_pre_order'] = WC_YouCanPay_Order_Action_Enum::get_pre_order();
+                $youcanpay_params['redirect'] = $redirect;
+            }
+
+            return $youcanpay_params;
+        } catch (WC_YouCanPay_Exception $e) {
+            wc_add_notice($e->getLocalizedMessage(), 'error');
+        } catch (Throwable $e) {
+            wc_add_notice(__('Fatal error, please try again.', 'youcan-pay'), 'error');
         }
 
-        return $youcanpay_params;
+        if (isset($order)) {
+            $order->update_status('failed');
+        }
+
+        return [];
     }
 
     /**
@@ -290,7 +302,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      * @param int $order_id Reference.
      *
      * @return array
-     * @throws Exception If payment will not be accepted.
+     * @throws Throwable If payment will not be accepted.
      */
     public function process_payment($order_id)
     {
@@ -325,7 +337,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      * @param $order_id
      *
      * @return array
-     * @throws WC_YouCanPay_Exception|Exception
+     * @throws WC_YouCanPay_Exception|Throwable
      */
     public function validated_order_and_process_payment($order_id)
     {
