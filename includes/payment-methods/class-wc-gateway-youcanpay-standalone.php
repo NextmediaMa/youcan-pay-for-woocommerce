@@ -190,10 +190,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
     {
         try {
             $order = wc_get_order($order_id);
-
-            // This will throw exception if not valid.
-            $this->validate_minimum_order_amount($order);
-
             $response = $this->create_source($order);
 
             $order->update_meta_data('_youcanpay_source_id', $response->id);

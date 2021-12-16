@@ -79,45 +79,6 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
-	 * Validates that the order meets the minimum order amount
-	 * set by YouCan Pay.
-	 *
-	 * @param WC_Order $order
-	 *
-	 * @throws WC_YouCanPay_Exception
-	 */
-	public function validate_minimum_order_amount( $order ) {
-		if ( $order->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
-			/* translators: 1) amount (including currency symbol) */
-			$price = wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 );
-
-			throw new WC_YouCanPay_Exception(
-				'Did not meet minimum amount',
-				sprintf(
-					__( 'Sorry, the minimum allowed order total is %1$s to use this payment method.', 'youcan-pay' ),
-					$price
-				)
-			);
-		}
-	}
-
-	/**
-	 * Validates that the cart meets the minimum order amount
-	 * set by YouCan Pay.
-	 *
-	 * @throws WC_YouCanPay_Exception
-	 */
-	public function validate_minimum_cart_amount() {
-		if ( WC()->cart->get_total() * 100 < WC_YouCanPay_Helper::get_minimum_amount() ) {
-			/* translators: 1) amount (including currency symbol) */
-			throw new WC_YouCanPay_Exception( 'Did not meet minimum amount',
-				sprintf( __( 'Sorry, the minimum allowed order total is %1$s to use this payment method.',
-					'youcan-pay' ),
-					wc_price( WC_YouCanPay_Helper::get_minimum_amount() / 100 ) ) );
-		}
-	}
-
-	/**
 	 * Gets the transaction URL linked to YouCan Pay dashboard.
 	 */
 	public function get_transaction_url( $order ) {
