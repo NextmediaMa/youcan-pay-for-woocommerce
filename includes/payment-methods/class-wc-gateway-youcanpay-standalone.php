@@ -196,13 +196,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
 
             $response = $this->create_source($order);
 
-            if ((!isset($response->id)) || ($response->id == 0)) {
-                throw new WC_YouCanPay_Exception(
-                    print_r($response, true),
-                    __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
-                );
-            }
-
             $order->update_meta_data('_youcanpay_source_id', $response->id);
             $order->save();
 
@@ -214,16 +207,18 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');
-
-            if (isset($order)) {
-                $order->update_status('failed');
-            }
-
-            return [
-                'result'   => 'fail',
-                'redirect' => '',
-            ];
+        } catch (Throwable $e) {
+            wc_add_notice(__('Fatal error, please try again.', 'youcan-pay'), 'error');
         }
+
+        if (isset($order)) {
+            $order->update_status('failed');
+        }
+
+        return [
+            'result'   => 'fail',
+            'redirect' => '',
+        ];
     }
 
     /**
