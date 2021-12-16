@@ -7,8 +7,8 @@ Author:            YouCan Pay
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
-Stable tag:        2.0.1
-Version:           2.0.1
+Stable tag:        2.0.2
+Version:           2.0.2
 License:           GPLv3
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -35,7 +35,7 @@ YouCan Pay includes [Web Payments API](https://www.w3.org/TR/payment-request/) s
 == Installation ==
 You can download an [older version of this gateway for older versions of WooCommerce from here](https://wordpress.org/plugins/youcan-pay-for-woocommerce/#developers).
 
-Please note, version 2.0.1 of this gateway requires WooCommerce 4.6 and above.
+Please note, version 2.0 of this gateway requires WooCommerce 4.6 and above.
 
 = Automatic installation =
 
@@ -78,6 +78,11 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The YouCan Pay settings screen used to configure the main YouCan Pay.
 
 == Changelog ==
+
+= 2.0.2 - 2021-12-16 =
+* Code improvements
+* Fixed a bug on the subunit on some currencies
+* Display a message when the store uses an unsupported currency
 
 = 2.0.1 - 2021-12-14 =
 * Now the plugin supports almost all currencies exists in woocommerce
