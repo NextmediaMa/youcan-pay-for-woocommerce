@@ -199,7 +199,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     /**
      * Returns the JavaScript configuration object used on the product, cart, and checkout pages.
      *
-     * @return array  The configuration object to be loaded to JS.
+     * @return array The configuration object to be loaded to JS.
      */
     public function javascript_params()
     {
