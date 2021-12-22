@@ -67,13 +67,15 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	 * @return array
 	 */
 	public function payment_icons() {
-		$title = __( 'YouCan Pay Standalone', 'youcan-pay' );
+		$title_standalone = __( 'YouCan Pay Standalone', 'youcan-pay' );
+		$title_cash_plus = __( 'Cash Plus', 'youcan-pay' );
 		$url   = WC_YOUCAN_PAY_PLUGIN_URL . '/assets/images/youcan-pay.svg';
 
 		return apply_filters(
 			'wc_youcanpay_payment_icons',
 			[
-				'standalone' => '<img src="' . $url . '" alt="' . $title . '" class="youcanpay-standalone-icon youcanpay-icon" />',
+				'standalone' => '<img src="' . $url . '" alt="' . $title_standalone . '" class="youcanpay-standalone-icon youcanpay-icon" style="width: 55px" />',
+				'cash_plus' => '<img src="' . $url . '" alt="' . $title_cash_plus . '" class="youcanpay-standalone-icon youcanpay-icon" style="width: 55px" />',
 			]
 		);
 	}

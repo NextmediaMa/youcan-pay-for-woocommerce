@@ -132,6 +132,7 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
+				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-cash-plus.php';
 
 				if ( is_admin() ) {
 					require_once dirname( __FILE__ ) . '/includes/admin/class-wc-youcanpay-admin-notices.php';
@@ -229,6 +230,7 @@ function woocommerce_gateway_youcanpay() {
 
 				// These payment gateways will always be visible, regardless if UPE is enabled or disabled:
 				$methods[] = WC_Gateway_YouCanPay_Standalone::class;
+				$methods[] = WC_Gateway_YouCanPay_Cash_Plus::class;
 
 				return $methods;
 			}
@@ -242,6 +244,7 @@ function woocommerce_gateway_youcanpay() {
 
 				$sections['youcanpay']            = __( 'YouCan Pay', 'youcan-pay' );
 				$sections['youcanpay_standalone'] = __( 'YouCan Pay Standalone', 'youcan-pay' );
+				$sections['youcanpay_cash_plus']  = __( 'YouCan Pay Cash Plus', 'youcan-pay' );
 
 				return $sections;
 			}

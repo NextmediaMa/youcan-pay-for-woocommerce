@@ -264,3 +264,18 @@ msgstr ""
 
 msgid "YouCan Pay Transaction ID"
 msgstr ""
+
+msgid "Cash Plus"
+msgstr ""
+
+msgid "YouCan Pay Cash Plus"
+msgstr ""
+
+msgid "Enable Cash Plus"
+msgstr ""
+
+msgid "Get your Cash Plus code"
+msgstr ""
+
+msgid "Your Cash Plus Code"
+msgstr ""

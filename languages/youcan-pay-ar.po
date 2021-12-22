@@ -264,3 +264,18 @@ msgstr "%1$s - يتطلب أن تكون عملة المتجر مدعمة %2$s"
 
 msgid "YouCan Pay Transaction ID"
 msgstr "معرف معاملة YouCan Pay"
+
+msgid "Cash Plus"
+msgstr "كاش بلوس"
+
+msgid "YouCan Pay Cash Plus"
+msgstr "YouCan Pay كاش بلوس"
+
+msgid "Enable Cash Plus"
+msgstr "تشغيل كاش بلوس"
+
+msgid "Get your Cash Plus code"
+msgstr "احصل على كود كاش بلوس الخاص بك"
+
+msgid "Your Cash Plus Code"
+msgstr "كود كاش بلوس الخاص بك"
