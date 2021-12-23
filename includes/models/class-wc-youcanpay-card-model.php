@@ -86,7 +86,7 @@ class WC_YouCanPay_Card_Model {
 	/**
 	 * @return bool
 	 */
-	public function is_is_3_d_secure(): bool {
+	public function is_3_d_secure(): bool {
 		return $this->is_3d_secure;
 	}
 
