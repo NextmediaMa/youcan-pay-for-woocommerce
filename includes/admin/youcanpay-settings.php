@@ -62,6 +62,11 @@ $youcanpay_settings = apply_filters(
 			'default'     => '',
 			'desc_tip'    => true,
 		],
+		'webhook'                      => [
+			'title'       => __( 'Webhook Endpoints', 'youcan-pay' ),
+			'type'        => 'title',
+			'description' => $this->display_admin_settings_webhook_description(),
+		],
 		'private_key'                  => [
 			'title'       => __( 'Production Private key', 'youcan-pay' ),
 			'type'        => 'password',

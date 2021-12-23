@@ -242,7 +242,7 @@ msgid "Unable to process this payment, please try again or use alternative metho
 msgstr "Impossible de traiter ce paiement, veuillez réessayer ou utiliser une autre méthode."
 
 msgid "Please try again, This payment has been canceled!"
-msgstr "Veuillez réessayer, ce paiement a été annulé !"
+msgstr "Veuillez réessayer, ce paiement a été annulé !"
 
 msgid "Sorry, payment not completed please try again."
 msgstr "Désolé, le paiement n’est pas terminé, veuillez réessayer."

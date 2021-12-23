@@ -88,6 +88,19 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 	}
 
 	/**
+	 * Displays the admin settings webhook description.
+	 *
+	 * @return string
+	 */
+	public function display_admin_settings_webhook_description() {
+		$description = sprintf( __( 'You must add the following webhook endpoint <strong style="background-color:#ddd;">&nbsp;%s&nbsp;</strong> to your <a href="https://pay.youcan.shop/settings/webhooks" target="_blank">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will enable you to receive notifications on the charge statuses.', 'youcan-pay' ), WC_YouCanPay_Helper::get_webhook_url() );
+
+		$webhook_status = WC_YouCanPay_Webhook_State::get_webhook_status_message();
+
+		return $description . '<br><br>' . $webhook_status;
+	}
+
+	/**
 	 * Builds the return URL from redirects.
 	 *
 	 * @param null $order
