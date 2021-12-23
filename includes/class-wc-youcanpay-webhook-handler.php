@@ -44,17 +44,64 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 	public function check_for_webhook() {
 		if ( ! array_key_exists( 'REQUEST_METHOD', $_SERVER )
 		     || ! array_key_exists( 'wc-api', $_GET )
-		     || ! array_key_exists( 'gateway', $_GET )
 		     || ( 'wc_youcanpay' !== $_GET['wc-api'] )
 		) {
 			return false;
 		}
 
-		switch ( wc_clean( wp_unslash( $_GET['gateway'] ) ) ) {
+		if (isset($_SERVER['REQUEST_METHOD']) && (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST') ) {
+			return $this->post_request();
+		} else {
+			return $this->get_request($_GET);
+		}
+	}
+
+	/**
+	 * @param array $data
+	 *
+	 * @return bool
+	 */
+	private function get_request($data) {
+		if (! array_key_exists('gateway', $data)) {
+			return false;
+		}
+
+		switch ( wc_clean( wp_unslash( $data['gateway'] ) ) ) {
 			case WC_Gateway_YouCanPay::ID:
 				return $this->youcanpay_credit_card();
 			case WC_Gateway_YouCanPay_Standalone::ID:
 				return $this->youcanpay_standalone();
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function post_request() {
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if (json_last_error() == JSON_ERROR_NONE) {
+
+			if (! array_key_exists( 'payload', $data )) {
+				return false;
+			}
+
+			if (! array_key_exists( 'transaction', $data['payload'] )) {
+				return false;
+			}
+
+			if (! array_key_exists( 'payment_method', $data['payload'] )) {
+				return false;
+			}
+
+			$transaction = new WC_YouCanPay_Transaction_Model($data['payload']['transaction']);
+			$payment_method = new WC_YouCanPay_Payment_Method_Model($data['payload']['payment_method']);
+
+			//TODO: Need to get the order by ID and check whether the order on woocommerce has the same transaction id or not
+
+			return true;
 		}
 
 		return false;

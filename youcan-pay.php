@@ -121,6 +121,9 @@ function woocommerce_gateway_youcanpay() {
 				}
 
 				require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-card-model.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-transaction-model.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-payment-method-model.php';
 				require_once dirname( __FILE__ ) . '/includes/currencies/class-wc-youcanpay-currencies.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-order-action-action-enum.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-api-enum.php';
@@ -129,6 +132,7 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-helper.php';
 				include_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-api.php';
 				require_once dirname( __FILE__ ) . '/includes/abstracts/abstract-wc-youcanpay-payment-gateway.php';
+				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-state.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';
