@@ -80,8 +80,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
      * @return bool
      * @throws WC_Data_Exception
      */
-    private function post_request()
-    {
+    private function post_request() {
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (json_last_error() == JSON_ERROR_NONE) {
