@@ -1,93 +1,99 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 
-class WC_YouCanPay_Card_Model {
+class WC_YouCanPay_Card_Model
+{
+    /**
+     * @var string $id
+     */
+    protected $id;
 
-	/**
-	 * @var string $id
-	 */
-	protected $id;
+    /**
+     * @var string|null $country_code
+     */
+    protected $country_code;
 
-	/**
-	 * @var string|null $country_code
-	 */
-	protected $country_code;
+    /**
+     * @var string|null $brand
+     */
+    protected $brand;
 
-	/**
-	 * @var string|null $brand
-	 */
-	protected $brand;
+    /**
+     * @var int $last_digits
+     */
+    protected $last_digits;
 
-	/**
-	 * @var int $last_digits
-	 */
-	protected $last_digits;
+    /**
+     * @var string $fingerprint
+     */
+    protected $fingerprint;
 
-	/**
-	 * @var string $fingerprint
-	 */
-	protected $fingerprint;
-
-	/**
-	 * @var bool $is_3d_secure
-	 */
-	protected $is_3d_secure;
+    /**
+     * @var bool $is_3d_secure
+     */
+    protected $is_3d_secure;
 
 
-	/**
-	 * Constructor.
-	 *
-	 * @param array $properties
-	 */
-	public function __construct(array $properties) {
-		foreach($properties as $key => $value){
-			$this->{$key} = $value;
-		}
-	}
+    /**
+     * Constructor.
+     *
+     * @param array $properties
+     */
+    public function __construct(array $properties)
+    {
+        foreach ($properties as $key => $value) {
+            $this->{$key} = $value;
+        }
+    }
 
-	/**
-	 * @return string
-	 */
-	public function get_id(): string {
-		return $this->id;
-	}
+    /**
+     * @return string
+     */
+    public function get_id(): string
+    {
+        return $this->id;
+    }
 
-	/**
-	 * @return string|null
-	 */
-	public function get_country_code(): ?string {
-		return $this->country_code;
-	}
+    /**
+     * @return string|null
+     */
+    public function get_country_code(): ?string
+    {
+        return $this->country_code;
+    }
 
-	/**
-	 * @return string|null
-	 */
-	public function get_brand(): ?string {
-		return $this->brand;
-	}
+    /**
+     * @return string|null
+     */
+    public function get_brand(): ?string
+    {
+        return $this->brand;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function get_last_digits(): int {
-		return $this->last_digits;
-	}
+    /**
+     * @return int
+     */
+    public function get_last_digits(): int
+    {
+        return $this->last_digits;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function get_fingerprint(): string {
-		return $this->fingerprint;
-	}
+    /**
+     * @return string
+     */
+    public function get_fingerprint(): string
+    {
+        return $this->fingerprint;
+    }
 
-	/**
-	 * @return bool
-	 */
-	public function is_3_d_secure(): bool {
-		return $this->is_3d_secure;
-	}
-
+    /**
+     * @return bool
+     */
+    public function is_3_d_secure(): bool
+    {
+        return $this->is_3d_secure;
+    }
 }
