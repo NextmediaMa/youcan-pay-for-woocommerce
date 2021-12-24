@@ -78,12 +78,12 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 
 	/**
 	 * @return bool
+	 * @throws WC_Data_Exception
 	 */
 	private function post_request() {
-		$data = json_decode(file_get_contents('php://input'), true);
+		$data = json_decode( file_get_contents( 'php://input' ), true );
 
 		if (json_last_error() == JSON_ERROR_NONE) {
-
 			if (! array_key_exists( 'payload', $data )) {
 				return false;
 			}
@@ -96,12 +96,76 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				return false;
 			}
 
-			$transaction = new WC_YouCanPay_Transaction_Model($data['payload']['transaction']);
-			$payment_method = new WC_YouCanPay_Payment_Method_Model($data['payload']['payment_method']);
+			$transaction_id      = null;
+			$transaction         = new WC_YouCanPay_Transaction_Model( $data['payload']['transaction'] );
+			$payment_method      = new WC_YouCanPay_Payment_Method_Model( $data['payload']['payment_method'] );
+			$payment_method_name = "YouCan Pay ({$payment_method->get_name()})";
 
-			//TODO: Need to get the order by ID and check whether the order on woocommerce has the same transaction id or not
+			if ( WC_YouCanPay_Payment_Method_Model::PAYMENT_METHOD_CASH_PLUS != $payment_method->get_name() ) {
+				return false;
+			}
 
-			return true;
+			if ( ! isset( $transaction ) ) {
+				WC_YouCanPay_Logger::info( 'arrived on process payment: transaction not exists', array(
+					'payment_method' => $payment_method_name,
+					'code'           => '#0023',
+					'transaction_id' => $transaction_id,
+				) );
+
+				//TODO: Need to save action on webhook, __( 'Please try again, This payment has been canceled!', 'youcan-pay' )
+
+				return false;
+			}
+
+			$transaction_id = $transaction->get_id();
+			$order          = wc_get_order( $transaction->get_order_id() );
+
+			if ( ! isset( $order ) ) {
+				WC_YouCanPay_Logger::info( 'arrived on process payment: order not exists', array(
+					'payment_method' => $payment_method_name,
+					'code'           => '#0024',
+					'transaction_id' => $transaction_id,
+					'order_id'       => $order->get_id(),
+				) );
+
+				//TODO: Need to save action on webhook, __( 'Fatal error, please try again or contact support.', 'youcan-pay' )
+
+				return false;
+			}
+
+			if ( $transaction->get_status() === 1 ) {
+				WC_YouCanPay_Logger::info( 'payment successfully processed', array(
+					'payment_method' => $payment_method_name,
+					'transaction_id' => $transaction->get_id(),
+					'order_id'       => $order->get_id(),
+					'order_total'    => $order->get_total(),
+				) );
+
+				//TODO: Need to using WC_YouCanPay_Helper::set_payment_method_to_order() instead of $order->set_payment_method()
+
+				$order->set_payment_method( $payment_method_name );
+				//WC_YouCanPay_Helper::set_payment_method_to_order( $order, WC_Gateway_YouCanPay::ID );
+				$order->payment_complete( $transaction->get_id() );
+
+				$order->update_meta_data( '_youcanpay_source_id', $transaction->get_id() );
+				$order->save();
+
+				return true;
+			} else {
+				WC_YouCanPay_Logger::info( 'payment not processed', array(
+					'payment_method'     => $payment_method_name,
+					'transaction_id'     => $transaction->get_id(),
+					'transaction_status' => $transaction->get_status(),
+					'order_id'           => $order->get_id(),
+				) );
+
+				//TODO: Need to save action on webhook, __( 'Sorry, payment not completed please try again.', 'youcan-pay' )
+
+				$order->set_status( 'failed' );
+				$order->save();
+
+				return false;
+			}
 		}
 
 		return false;

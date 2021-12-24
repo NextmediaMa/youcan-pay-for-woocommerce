@@ -21,6 +21,9 @@ class WC_YouCanPay_Payment_Method_Model {
 	 */
 	protected $card;
 
+	public const PAYMENT_METHOD_CREDIT_CART = 'credit_card';
+	public const PAYMENT_METHOD_CASH_PLUS = 'cashplus';
+
 	/**
 	 * Constructor.
 	 *
