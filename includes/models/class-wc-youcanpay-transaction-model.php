@@ -46,6 +46,12 @@ class WC_YouCanPay_Transaction_Model {
 	 */
 	protected $created_at;
 
+	public const FAILED_STATUS = -3;
+	public const REFUNDED_STATUS = -2;
+	public const CANCELED_STATUS = -1;
+	public const PENDING_STATUS = 0;
+	public const PAID_STATUS = 1;
+
 	/**
 	 * Constructor.
 	 *

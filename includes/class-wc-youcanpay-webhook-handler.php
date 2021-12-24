@@ -133,7 +133,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				return false;
 			}
 
-			if ( $transaction->get_status() === 1 ) {
+			if ( $transaction->get_status() === WC_YouCanPay_Transaction_Model::PAID_STATUS ) {
 				WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 					'payment_method' => $payment_method_name,
 					'transaction_id' => $transaction->get_id(),
@@ -217,7 +217,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
 
-		if ( $transaction->getStatus() === 1 ) {
+		if ( $transaction->getStatus() === WC_YouCanPay_Transaction_Model::PAID_STATUS ) {
 			WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 				'payment_method' => 'YouCan Pay (Credit Card)',
 				'transaction_id' => $transaction->getId(),
@@ -352,7 +352,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
 
-		if ( $transaction->getStatus() === 1 ) {
+		if ( $transaction->getStatus() === WC_YouCanPay_Transaction_Model::PAID_STATUS ) {
 			WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 				'payment_method' => 'YouCan Pay (Standalone)',
 				'transaction_id' => $transaction->getId(),
