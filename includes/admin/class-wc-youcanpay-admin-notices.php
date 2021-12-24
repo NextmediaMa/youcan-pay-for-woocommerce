@@ -186,7 +186,7 @@ class WC_YouCanPay_Admin_Notices
                     );
                 }
 
-                // Check if keys are entered properly per live/Sandbox mode.
+                // Check if keys are entered properly per Production/Sandbox mode.
                 if ($sandbox_mode) {
                     if (
                         !empty($sandbox_public_key) && !preg_match('/^pub_sandbox_/', $sandbox_public_key)

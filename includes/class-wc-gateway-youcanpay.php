@@ -273,7 +273,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
 
         // If no SSL bail.
         if (!$this->sandbox_mode && !is_ssl()) {
-            WC_YouCanPay_Logger::info('YouCan Pay live mode requires SSL.');
+            WC_YouCanPay_Logger::info('YouCan Pay production mode requires SSL.');
 
             return;
         }

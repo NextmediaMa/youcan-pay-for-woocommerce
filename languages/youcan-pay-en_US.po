@@ -22,6 +22,9 @@ msgstr ""
 msgid "YouCan Pay"
 msgstr ""
 
+msgid "YouCan Pay (%s)"
+msgstr ""
+
 msgid "YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification."
 msgstr ""
 
@@ -264,3 +267,43 @@ msgstr ""
 
 msgid "YouCan Pay Transaction ID"
 msgstr ""
+
+msgid "The transaction does not exist"
+msgstr ""
+
+msgid "The order received from the webhook does not exist"
+msgstr ""
+
+msgid "Payment not made"
+msgstr ""
+
+msgid "You must add the following webhook endpoint <strong style=\"background-color:#ddd;\">%s</strong> to your <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
+msgstr ""
+
+msgid "Webhook Endpoints"
+msgstr ""
+
+msgid "The most recent sandbox webhook, timestamped %s, was processed successfully."
+msgstr ""
+
+msgid "The most recent production webhook, timestamped %s, was processed successfully."
+msgstr ""
+
+msgid "No sandbox webhooks have been received since monitoring began at %s."
+msgstr ""
+
+msgid "No production webhooks have been received since monitoring began at %s."
+msgstr ""
+
+msgid "Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (The last sandbox webhook to process successfully was timestamped %3$s.)"
+msgstr ""
+
+msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (The last production webhook to process successfully was timestamped %3$s.)"
+msgstr ""
+
+msgid "Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (No sandbox webhooks have been processed successfully since monitoring began at %3$s.)"
+msgstr ""
+
+msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (No production webhooks have been processed successfully since monitoring began at %3$s.)"
+msgstr ""
+

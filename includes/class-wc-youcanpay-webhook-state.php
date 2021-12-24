@@ -6,13 +6,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class WC_YouCanPay_Webhook_State.
  *
- * Tracks the most recent successful and unsuccessful webhooks in sandbox and live modes.
+ * Tracks the most recent successful and unsuccessful webhooks in sandbox and production modes.
  */
 class WC_YouCanPay_Webhook_State {
-	const OPTION_LIVE_MONITORING_BEGAN_AT = 'wc_youcan_pay_wh_monitor_began_at';
-	const OPTION_LIVE_LAST_SUCCESS_AT     = 'wc_youcan_pay_wh_last_success_at';
-	const OPTION_LIVE_LAST_FAILURE_AT     = 'wc_youcan_pay_wh_last_failure_at';
-	const OPTION_LIVE_LAST_ERROR          = 'wc_youcan_pay_wh_last_error';
+	const OPTION_PRODUCTION_MONITORING_BEGAN_AT = 'wc_youcan_pay_wh_monitor_began_at';
+	const OPTION_PRODUCTION_LAST_SUCCESS_AT     = 'wc_youcan_pay_wh_last_success_at';
+	const OPTION_PRODUCTION_LAST_FAILURE_AT     = 'wc_youcan_pay_wh_last_failure_at';
+	const OPTION_PRODUCTION_LAST_ERROR          = 'wc_youcan_pay_wh_last_error';
 
 	const OPTION_SANDBOX_MONITORING_BEGAN_AT = 'wc_youcan_pay_wh_sandbox_monitor_began_at';
 	const OPTION_SANDBOX_LAST_SUCCESS_AT     = 'wc_youcan_pay_wh_sandbox_last_success_at';
@@ -38,7 +38,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @return integer UTC seconds since 1970.
 	 */
 	public static function get_monitoring_began_at() {
-		$option              = self::get_sandbox_mode() ? self::OPTION_SANDBOX_MONITORING_BEGAN_AT : self::OPTION_LIVE_MONITORING_BEGAN_AT;
+		$option              = self::get_sandbox_mode() ? self::OPTION_SANDBOX_MONITORING_BEGAN_AT : self::OPTION_PRODUCTION_MONITORING_BEGAN_AT;
 		$monitoring_began_at = get_option( $option, 0 );
 		if ( 0 == $monitoring_began_at ) {
 			$monitoring_began_at = time();
@@ -60,7 +60,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @param integer UTC seconds since 1970.
 	 */
 	public static function set_last_webhook_success_at( $timestamp ) {
-		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_SUCCESS_AT : self::OPTION_LIVE_LAST_SUCCESS_AT;
+		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_SUCCESS_AT : self::OPTION_PRODUCTION_LAST_SUCCESS_AT;
 		update_option( $option, $timestamp );
 	}
 
@@ -71,7 +71,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @return integer UTC seconds since 1970 | 0.
 	 */
 	public static function get_last_webhook_success_at() {
-		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_SUCCESS_AT : self::OPTION_LIVE_LAST_SUCCESS_AT;
+		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_SUCCESS_AT : self::OPTION_PRODUCTION_LAST_SUCCESS_AT;
 		return get_option( $option, 0 );
 	}
 
@@ -81,7 +81,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @param integer UTC seconds since 1970.
 	 */
 	public static function set_last_webhook_failure_at( $timestamp ) {
-		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_FAILURE_AT : self::OPTION_LIVE_LAST_FAILURE_AT;
+		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_FAILURE_AT : self::OPTION_PRODUCTION_LAST_FAILURE_AT;
 		update_option( $option, $timestamp );
 	}
 
@@ -92,7 +92,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @return integer UTC seconds since 1970 | 0.
 	 */
 	public static function get_last_webhook_failure_at() {
-		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_FAILURE_AT : self::OPTION_LIVE_LAST_FAILURE_AT;
+		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_FAILURE_AT : self::OPTION_PRODUCTION_LAST_FAILURE_AT;
 		return get_option( $option, 0 );
 	}
 
@@ -102,7 +102,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @param string Reason code.
 	 */
 	public static function set_last_error_reason( $reason ) {
-		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_ERROR : self::OPTION_LIVE_LAST_ERROR;
+		$option = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_ERROR : self::OPTION_PRODUCTION_LAST_ERROR;
 		update_option( $option, $reason );
 	}
 
@@ -112,7 +112,7 @@ class WC_YouCanPay_Webhook_State {
 	 * @return string Reason the last webhook failed.
 	 */
 	public static function get_last_error_reason() {
-		$option     = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_ERROR : self::OPTION_LIVE_LAST_ERROR;
+		$option     = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_ERROR : self::OPTION_PRODUCTION_LAST_ERROR;
 
 		return get_option( $option, false );
 	}
@@ -136,7 +136,7 @@ class WC_YouCanPay_Webhook_State {
 			$message = sprintf(
 				$sandbox_mode ?
 					__( 'The most recent sandbox webhook, timestamped %s, was processed successfully.', 'youcan-pay' ) :
-					__( 'The most recent live webhook, timestamped %s, was processed successfully.', 'youcan-pay' ),
+					__( 'The most recent production webhook, timestamped %s, was processed successfully.', 'youcan-pay' ),
 				gmdate( $date_format, $last_success_at )
 			);
 			return $message;
@@ -147,7 +147,7 @@ class WC_YouCanPay_Webhook_State {
 			$message = sprintf(
 				$sandbox_mode ?
 					__( 'No sandbox webhooks have been received since monitoring began at %s.', 'youcan-pay' ) :
-					__( 'No live webhooks have been received since monitoring began at %s.', 'youcan-pay' ),
+					__( 'No production webhooks have been received since monitoring began at %s.', 'youcan-pay' ),
 				gmdate( $date_format, $monitoring_began_at )
 			);
 			return $message;
@@ -158,7 +158,7 @@ class WC_YouCanPay_Webhook_State {
 			$message = sprintf(
 				$sandbox_mode ?
 					__( 'Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (The last sandbox webhook to process successfully was timestamped %3$s.)', 'youcan-pay' ) :
-					__( 'Warning: The most recent live webhook, received at %1$s, could not be processed. Reason: %2$s. (The last live webhook to process successfully was timestamped %3$s.)', 'youcan-pay' ),
+					__( 'Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (The last production webhook to process successfully was timestamped %3$s.)', 'youcan-pay' ),
 				gmdate( $date_format, $last_failure_at ),
 				$last_error,
 				gmdate( $date_format, $last_success_at )
@@ -170,7 +170,7 @@ class WC_YouCanPay_Webhook_State {
 		$message = sprintf(
 			$sandbox_mode ?
 				__( 'Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (No sandbox webhooks have been processed successfully since monitoring began at %3$s.)', 'youcan-pay' ) :
-				__( 'Warning: The most recent live webhook, received at %1$s, could not be processed. Reason: %2$s. (No live webhooks have been processed successfully since monitoring began at %3$s.)', 'youcan-pay' ),
+				__( 'Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (No production webhooks have been processed successfully since monitoring began at %3$s.)', 'youcan-pay' ),
 			gmdate( $date_format, $last_failure_at ),
 			$last_error,
 			gmdate( $date_format, $monitoring_began_at )

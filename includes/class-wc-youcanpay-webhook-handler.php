@@ -99,7 +99,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			$transaction_id      = null;
 			$transaction         = new WC_YouCanPay_Transaction_Model( $data['payload']['transaction'] );
 			$payment_method      = new WC_YouCanPay_Payment_Method_Model( $data['payload']['payment_method'] );
-			$payment_method_name = "YouCan Pay ({$payment_method->get_name()})";
+			$payment_method_name = sprintf(__( 'YouCan Pay (%s)', 'youcan-pay' ), $payment_method->get_name());
 
 			if ( WC_YouCanPay_Payment_Method_Model::PAYMENT_METHOD_CASH_PLUS != $payment_method->get_name() ) {
 				return false;
