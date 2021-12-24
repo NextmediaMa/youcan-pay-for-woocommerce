@@ -112,7 +112,8 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 					'transaction_id' => $transaction_id,
 				) );
 
-				//TODO: Need to save action on webhook, __( 'Please try again, This payment has been canceled!', 'youcan-pay' )
+				WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
+				WC_YouCanPay_Webhook_State::set_last_error_reason(__( 'The transaction does not exist', 'youcan-pay' ));
 
 				return false;
 			}
@@ -128,7 +129,8 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 					'order_id'       => $order->get_id(),
 				) );
 
-				//TODO: Need to save action on webhook, __( 'Fatal error, please try again or contact support.', 'youcan-pay' )
+				WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
+				WC_YouCanPay_Webhook_State::set_last_error_reason(__( 'The order received from the webhook does not exist', 'youcan-pay' ));
 
 				return false;
 			}
@@ -150,22 +152,25 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 				$order->update_meta_data( '_youcanpay_source_id', $transaction->get_id() );
 				$order->save();
 
+				WC_YouCanPay_Webhook_State::set_last_webhook_success_at(time());
+
 				return true;
-			} else {
-				WC_YouCanPay_Logger::info( 'payment not processed', array(
-					'payment_method'     => $payment_method_name,
-					'transaction_id'     => $transaction->get_id(),
-					'transaction_status' => $transaction->get_status(),
-					'order_id'           => $order->get_id(),
-				) );
-
-				//TODO: Need to save action on webhook, __( 'Sorry, payment not completed please try again.', 'youcan-pay' )
-
-				$order->set_status( 'failed' );
-				$order->save();
-
-				return false;
 			}
+
+			WC_YouCanPay_Logger::info( 'payment not processed', array(
+				'payment_method'     => $payment_method_name,
+				'transaction_id'     => $transaction->get_id(),
+				'transaction_status' => $transaction->get_status(),
+				'order_id'           => $order->get_id(),
+			) );
+
+			$order->set_status($transaction->get_status_string());
+			$order->save();
+
+			WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
+			WC_YouCanPay_Webhook_State::set_last_error_reason(__( 'Payment not made', 'youcan-pay' ));
+
+			return false;
 		}
 
 		return false;

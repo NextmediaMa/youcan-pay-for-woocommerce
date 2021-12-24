@@ -52,6 +52,14 @@ class WC_YouCanPay_Transaction_Model {
 	public const PENDING_STATUS = 0;
 	public const PAID_STATUS = 1;
 
+	public const LIST_STATUS = [
+		WC_YouCanPay_Transaction_Model::REFUNDED_STATUS => 'refunded',
+		WC_YouCanPay_Transaction_Model::FAILED_STATUS => 'failed',
+		WC_YouCanPay_Transaction_Model::CANCELED_STATUS => 'cancelled',
+		WC_YouCanPay_Transaction_Model::PENDING_STATUS => 'pending',
+		WC_YouCanPay_Transaction_Model::PAID_STATUS => 'processing',
+	];
+
 	/**
 	 * Constructor.
 	 *
@@ -75,6 +83,13 @@ class WC_YouCanPay_Transaction_Model {
 	 */
 	public function get_status(): int {
 		return $this->status;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function get_status_string(): ?string {
+		return self::LIST_STATUS[$this->status] ?? null;
 	}
 
 	/**

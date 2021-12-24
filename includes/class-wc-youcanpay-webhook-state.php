@@ -20,12 +20,6 @@ class WC_YouCanPay_Webhook_State {
 	const OPTION_SANDBOX_LAST_ERROR          = 'wc_youcan_pay_wh_sandbox_last_error';
 
 	const VALIDATION_SUCCEEDED                 = 'validation_succeeded';
-	const VALIDATION_FAILED_EMPTY_HEADERS      = 'empty_headers';
-	const VALIDATION_FAILED_EMPTY_BODY         = 'empty_body';
-	const VALIDATION_FAILED_USER_AGENT_INVALID = 'user_agent_invalid';
-	const VALIDATION_FAILED_SIGNATURE_INVALID  = 'signature_invalid';
-	const VALIDATION_FAILED_TIMESTAMP_MISMATCH = 'timestamp_out_of_range';
-	const VALIDATION_FAILED_SIGNATURE_MISMATCH = 'signature_mismatch';
 
 	/**
 	 * Gets whether YouCan Pay is in sandbox mode or not
@@ -119,41 +113,12 @@ class WC_YouCanPay_Webhook_State {
 	 */
 	public static function get_last_error_reason() {
 		$option     = self::get_sandbox_mode() ? self::OPTION_SANDBOX_LAST_ERROR : self::OPTION_LIVE_LAST_ERROR;
-		$last_error = get_option( $option, false );
 
-		if ( self::VALIDATION_SUCCEEDED == $last_error ) {
-			return( __( 'No error', 'youcan-pay' ) );
-		}
-
-		if ( self::VALIDATION_FAILED_EMPTY_HEADERS == $last_error ) {
-			return( __( 'The webhook was missing expected headers', 'youcan-pay' ) );
-		}
-
-		if ( self::VALIDATION_FAILED_EMPTY_BODY == $last_error ) {
-			return( __( 'The webhook was missing expected body', 'youcan-pay' ) );
-		}
-
-		if ( self::VALIDATION_FAILED_USER_AGENT_INVALID == $last_error ) {
-			return( __( 'The webhook received did not come from YouCan Pay', 'youcan-pay' ) );
-		}
-
-		if ( self::VALIDATION_FAILED_SIGNATURE_INVALID == $last_error ) {
-			return( __( 'The webhook signature was missing or was incorrectly formatted', 'youcan-pay' ) );
-		}
-
-		if ( self::VALIDATION_FAILED_TIMESTAMP_MISMATCH == $last_error ) {
-			return( __( 'The timestamp in the webhook differed more than five minutes from the site time', 'youcan-pay' ) );
-		}
-
-		if ( self::VALIDATION_FAILED_SIGNATURE_MISMATCH == $last_error ) {
-			return( __( 'The webhook was not signed with the expected signing secret', 'youcan-pay' ) );
-		}
-
-		return( __( 'Unknown error.', 'youcan-pay' ) );
+		return get_option( $option, false );
 	}
 
 	/**
-	 * Gets the state of webhook processing in a human readable format.
+	 * Gets the state of webhook processing in a human-readable format.
 	 *
 	 * @return string Details on recent webhook successes and failures.
 	 */
@@ -170,9 +135,7 @@ class WC_YouCanPay_Webhook_State {
 		if ( $last_success_at > $last_failure_at ) {
 			$message = sprintf(
 				$sandbox_mode ?
-					/* translators: 1) date and time of last webhook received, e.g. 2020-06-28 10:30:50 UTC */
 					__( 'The most recent sandbox webhook, timestamped %s, was processed successfully.', 'youcan-pay' ) :
-					/* translators: 1) date and time of last webhook received, e.g. 2020-06-28 10:30:50 UTC */
 					__( 'The most recent live webhook, timestamped %s, was processed successfully.', 'youcan-pay' ),
 				gmdate( $date_format, $last_success_at )
 			);
@@ -183,9 +146,7 @@ class WC_YouCanPay_Webhook_State {
 		if ( ( 0 == $last_success_at ) && ( 0 == $last_failure_at ) ) {
 			$message = sprintf(
 				$sandbox_mode ?
-					/* translators: 1) date and time webhook monitoring began, e.g. 2020-06-28 10:30:50 UTC */
 					__( 'No sandbox webhooks have been received since monitoring began at %s.', 'youcan-pay' ) :
-					/* translators: 1) date and time webhook monitoring began, e.g. 2020-06-28 10:30:50 UTC */
 					__( 'No live webhooks have been received since monitoring began at %s.', 'youcan-pay' ),
 				gmdate( $date_format, $monitoring_began_at )
 			);
@@ -196,17 +157,7 @@ class WC_YouCanPay_Webhook_State {
 		if ( $last_success_at > 0 ) {
 			$message = sprintf(
 				$sandbox_mode ?
-					/*
-					 * translators: 1) date and time of last failed webhook e.g. 2020-06-28 10:30:50 UTC
-					 * translators: 2) reason webhook failed
-					 * translators: 3) date and time of last successful webhook e.g. 2020-05-28 10:30:50 UTC
-					 */
 					__( 'Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (The last sandbox webhook to process successfully was timestamped %3$s.)', 'youcan-pay' ) :
-					/*
-					 * translators: 1) date and time of last failed webhook e.g. 2020-06-28 10:30:50 UTC
-					 * translators: 2) reason webhook failed
-					 * translators: 3) date and time of last successful webhook e.g. 2020-05-28 10:30:50 UTC
-					 */
 					__( 'Warning: The most recent live webhook, received at %1$s, could not be processed. Reason: %2$s. (The last live webhook to process successfully was timestamped %3$s.)', 'youcan-pay' ),
 				gmdate( $date_format, $last_failure_at ),
 				$last_error,
@@ -218,15 +169,7 @@ class WC_YouCanPay_Webhook_State {
 		// Case 4: Failure with no prior success
 		$message = sprintf(
 			$sandbox_mode ?
-				/* translators: 1) date and time of last failed webhook e.g. 2020-06-28 10:30:50 UTC
-				 * translators: 2) reason webhook failed
-				 * translators: 3) date and time webhook monitoring began e.g. 2020-05-28 10:30:50 UTC
-				 */
 				__( 'Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (No sandbox webhooks have been processed successfully since monitoring began at %3$s.)', 'youcan-pay' ) :
-				/* translators: 1) date and time of last failed webhook e.g. 2020-06-28 10:30:50 UTC
-				 * translators: 2) reason webhook failed
-				 * translators: 3) date and time webhook monitoring began e.g. 2020-05-28 10:30:50 UTC
-				 */
 				__( 'Warning: The most recent live webhook, received at %1$s, could not be processed. Reason: %2$s. (No live webhooks have been processed successfully since monitoring began at %3$s.)', 'youcan-pay' ),
 			gmdate( $date_format, $last_failure_at ),
 			$last_error,
