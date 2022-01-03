@@ -4,7 +4,7 @@
  * Plugin URI: https://pay.youcan.shop
  * Description: YouCan Pay for Woocommerce: allows you to receive fast and secure online card payments.
  * Author: YouCan Pay
- * Version: 2.0.2
+ * Version: 2.0.3
  * Requires at least: 4.8
  * Tested up to: 5.8
  * WC requires at least: 4.6
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Required minimums and constants
  */
-define( 'WC_YOUCAN_PAY_VERSION', '2.0.2' ); // WRCS: DEFINED_VERSION.
+define( 'WC_YOUCAN_PAY_VERSION', '2.0.3' ); // WRCS: DEFINED_VERSION.
 define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.1.0' );
 define( 'WC_YOUCAN_PAY_MIN_WC_VER', '4.6' );
 define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '5.9' );

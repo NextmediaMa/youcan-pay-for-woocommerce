@@ -277,7 +277,7 @@ msgstr ""
 msgid "Payment not made"
 msgstr ""
 
-msgid "You must add the following webhook endpoint <strong style=\"background-color:#ddd;\">%s</strong> to your <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
+msgid "You must add the following webhook endpoint <strong style='background-color:#ddd;'>%s</strong> to your <a href='https://pay.youcan.shop/settings/webhooks' target='_blank'>YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
 msgstr ""
 
 msgid "Webhook Endpoints"
@@ -307,3 +307,5 @@ msgstr ""
 msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (No production webhooks have been processed successfully since monitoring began at %3$s.)"
 msgstr ""
 
+msgid "The received webhook token is not equal to the order token"
+msgstr ""

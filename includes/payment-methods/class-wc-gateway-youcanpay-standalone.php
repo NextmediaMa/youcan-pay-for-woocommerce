@@ -1,5 +1,7 @@
 <?php
 
+use YouCan\Pay\Models\Token;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -160,14 +162,15 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
      *
      * @param WC_Order|WC_Order_Refund $order
      *
-     * @return array|stdClass
+     * @return object
      * @throws WC_YouCanPay_Exception
+     * @throws Exception
      */
     public function create_source($order)
     {
-        $currency = $order->get_currency();
+        $currency   = $order->get_currency();
         $return_url = $this->get_youcanpay_return_url($order, self::ID);
-        $post_data = [
+        $post_data  = [
             'amount'   => WC_YouCanPay_Helper::get_youcanpay_amount($order->get_total(), $currency),
             'locale'   => WC_YouCanPay_Helper::get_supported_local(get_locale()),
             'currency' => strtoupper($currency),
@@ -192,14 +195,15 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
             $order = wc_get_order($order_id);
             $response = $this->create_source($order);
 
-            $order->update_meta_data('_youcanpay_source_id', $response->id);
-            $order->save();
+            /** @var Token $token */
+            $token = $response->token;
 
-            WC_YouCanPay_Logger::info('Info: Redirecting to YouCan Pay Standalone...');
+            $order->update_meta_data('_youcanpay_source_id', $token->getId());
+            $order->save();
 
             return [
                 'result'   => 'success',
-                'redirect' => esc_url_raw($response->redirect->url),
+                'redirect' => esc_url_raw($response->redirect['url']),
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');

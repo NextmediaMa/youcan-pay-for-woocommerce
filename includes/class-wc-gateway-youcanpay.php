@@ -218,11 +218,12 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
             if (array_key_exists('order-pay', $_GET)) {
                 $response = $this->validated_order_and_process_payment(wc_sanitize_order_id($_GET['order-pay']));
                 /** @var Token $token */
-                $token = $response['token'] ?? null;
-                $order = $response['order'] ?? null;
+                $token = $response['token'];
+                /** @var WC_Order $order */
+                $order = $response['order'];
                 $redirect = $response['redirect'] ?? null;
 
-                $youcanpay_params['token_transaction'] = (isset($token)) ? $token->getId() : 0;
+                $youcanpay_params['token_transaction'] = $token->getId();
                 $youcanpay_params['is_pre_order'] = WC_YouCanPay_Order_Action_Enum::get_pre_order();
                 $youcanpay_params['redirect'] = $redirect;
             }
@@ -308,14 +309,16 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     {
         try {
             $response = $this->validated_order_and_process_payment($order_id);
-            $token = $response['token'] ?? null;
-            $order = $response['order'] ?? null;
+            /** @var Token $token */
+            $token = $response['token'];
+            /** @var WC_Order $order */
+            $order = $response['order'];
             $redirect = $response['redirect'] ?? null;
 
             return [
                 'result'            => 'success',
                 'redirect'          => $redirect,
-                'token_transaction' => (isset($token)) ? $token->getId() : 0,
+                'token_transaction' => $token->getId(),
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');
@@ -367,7 +370,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 $redirect
             );
 
-            if (is_wp_error($token) || empty($token)) {
+            if (is_wp_error($token) || (!isset($token))) {
                 WC_YouCanPay_Logger::info('there was a problem connecting to the YouCan Pay API endpoint', [
                     'order_id' => $order->get_id(),
                 ]);
@@ -377,6 +380,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                     __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
                 );
             }
+
+            $order->update_meta_data('_youcanpay_source_id', $token->getId());
+            $order->save();
 
             return [
                 'token'    => $token,

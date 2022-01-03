@@ -125,18 +125,17 @@ class WC_YouCanPay_API
     }
 
     /**
-     * Send the request to YouCan Pay's API
+     * @param $order
+     * @param $post_data
      *
-     * @param WC_Order|WC_Order_Refund $order
-     * @param array $post_data
-     *
-     * @return stdClass|array
+     * @return object
      * @throws WC_YouCanPay_Exception
+     * @throws Exception
      */
     public static function request($order, $post_data)
     {
         $response = [
-            'id'       => 0,
+            'token'    => null,
             'redirect' => [
                 'url' => get_home_url(),
             ],
@@ -160,7 +159,7 @@ class WC_YouCanPay_API
                 $post_data['redirect']['return_url']
             );
 
-            if (is_wp_error($token) || empty($token)) {
+            if (is_wp_error($token) || (!isset($token))) {
                 throw new WC_YouCanPay_Exception(
                     print_r($token, true),
                     __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
@@ -168,9 +167,10 @@ class WC_YouCanPay_API
             }
 
             $response = [
-                'id'       => $token->getId(),
-                'redirect' => [
-                    'url' => $token->getPaymentURL($post_data['locale']),
+                'token'          => $token,
+                'transaction_id' => $token->getTransactionId(),
+                'redirect'       => [
+                    'url'        => $token->getPaymentURL($post_data['locale']),
                 ],
             ];
         } catch (WC_YouCanPay_Exception $e) {
@@ -182,9 +182,10 @@ class WC_YouCanPay_API
             WC_YouCanPay_Logger::alert('throwable at request exists into wc youcan pay api', [
                 'exception.message' => $e->getMessage(),
             ]);
+            throw new Exception($e->getMessage());
         }
 
-        return json_decode(json_encode($response));
+        return (object) $response;
     }
 
     /**
