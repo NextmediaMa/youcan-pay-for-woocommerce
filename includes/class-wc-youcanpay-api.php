@@ -130,13 +130,13 @@ class WC_YouCanPay_API
      * @param WC_Order|WC_Order_Refund $order
      * @param array $post_data
      *
-     * @return stdClass|array
+     * @return object
      * @throws WC_YouCanPay_Exception
      */
     public static function request($order, $post_data)
     {
         $response = [
-            'id'       => 0,
+            'token'    => null,
             'redirect' => [
                 'url' => get_home_url(),
             ],
@@ -168,9 +168,10 @@ class WC_YouCanPay_API
             }
 
             $response = [
-                'id'       => $token->getId(),
-                'redirect' => [
-                    'url' => $token->getPaymentURL($post_data['locale']),
+                'token'          => $token,
+                'transaction_id' => $token->getTransactionId(),
+                'redirect'       => [
+                    'url'        => $token->getPaymentURL($post_data['locale']),
                 ],
             ];
         } catch (WC_YouCanPay_Exception $e) {
@@ -184,7 +185,7 @@ class WC_YouCanPay_API
             ]);
         }
 
-        return json_decode(json_encode($response));
+        return (object) $response;
     }
 
     /**

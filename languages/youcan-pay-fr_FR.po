@@ -306,3 +306,6 @@ msgstr "Avertissement : Le webhook sandbox le plus récent, reçu à %1$s, n'a p
 
 msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (No production webhooks have been processed successfully since monitoring began at %3$s.)"
 msgstr "Avertissement : Le webhook en production le plus récent, reçu à %1$s, n'a pas pu être traité. Raison : %2$s. (Aucun webhook en production n'a été traité avec succès depuis le début de la surveillance à %3$s.)"
+
+msgid "The received webhook token is not equal to the order token"
+msgstr "Le jeton webhook reçu n'est pas égal au jeton de commande"

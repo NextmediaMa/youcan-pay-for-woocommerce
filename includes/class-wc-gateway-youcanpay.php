@@ -378,6 +378,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 );
             }
 
+            $order->update_meta_data('_youcanpay_source_id', $token->getId());
+            $order->save();
+
             return [
                 'token'    => $token,
                 'order'    => $order,
