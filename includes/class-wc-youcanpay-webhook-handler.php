@@ -38,30 +38,148 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 		add_action( 'woocommerce_api_wc_youcanpay', [ $this, 'check_for_webhook' ] );
 	}
 
-	/**
-	 * Check incoming requests for YouCan Pay Webhook data and process them.
-	 */
-	public function check_for_webhook() {
-		if ( ! array_key_exists( 'REQUEST_METHOD', $_SERVER )
-		     || ! array_key_exists( 'wc-api', $_GET )
-		     || ! array_key_exists( 'gateway', $_GET )
-		     || ( 'wc_youcanpay' !== $_GET['wc-api'] )
-		) {
-			return false;
-		}
+    /**
+     * Check incoming requests for YouCan Pay Webhook data and process them.
+     */
+    public function check_for_webhook() {
+        if (!array_key_exists('REQUEST_METHOD', $_SERVER)
+            || !array_key_exists('wc-api', $_GET)
+            || ('wc_youcanpay' !== $_GET['wc-api'])
+        ) {
+            return false;
+        }
 
-		switch ( wc_clean( wp_unslash( $_GET['gateway'] ) ) ) {
-			case WC_Gateway_YouCanPay::ID:
-				return $this->youcanpay_credit_card();
-			case WC_Gateway_YouCanPay_Standalone::ID:
-				return $this->youcanpay_standalone();
-		}
+        if (isset($_SERVER['REQUEST_METHOD']) && (strtoupper($_SERVER['REQUEST_METHOD']) === 'POST')) {
+            return $this->post_request();
+        } else {
+            return $this->get_request($_GET);
+        }
+    }
 
-		return false;
-	}
+    /**
+     * @param array $data
+     *
+     * @return bool
+     */
+    private function get_request($data) {
+        if (!array_key_exists('gateway', $data)) {
+            return false;
+        }
 
-	/**
-	 * @return bool
+        switch (wc_clean(wp_unslash($data['gateway']))) {
+            case WC_Gateway_YouCanPay::ID:
+                return $this->youcanpay_credit_card();
+            case WC_Gateway_YouCanPay_Standalone::ID:
+                return $this->youcanpay_standalone();
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     * @throws WC_Data_Exception
+     */
+    private function post_request() {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (json_last_error() == JSON_ERROR_NONE) {
+            if (!array_key_exists('payload', $data)) {
+                return false;
+            }
+
+            if (!array_key_exists('transaction', $data['payload'])) {
+                return false;
+            }
+
+            if (!array_key_exists('payment_method', $data['payload'])) {
+                return false;
+            }
+
+            $transaction_id = null;
+            $transaction = new WC_YouCanPay_Transaction_Model($data['payload']['transaction']);
+            $payment_method = new WC_YouCanPay_Payment_Method_Model($data['payload']['payment_method']);
+            $payment_method_name = sprintf(__('YouCan Pay (%s)', 'youcan-pay'), $payment_method->get_name());
+
+            if (WC_YouCanPay_Payment_Method_Model::PAYMENT_METHOD_CASH_PLUS != $payment_method->get_name()) {
+                return false;
+            }
+
+            if (!isset($transaction)) {
+                WC_YouCanPay_Logger::info('arrived on process payment: transaction not exists', [
+                    'payment_method' => $payment_method_name,
+                    'code'           => '#0023',
+                    'transaction_id' => $transaction_id,
+                ]);
+
+                WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
+                WC_YouCanPay_Webhook_State::set_last_error_reason(__('The transaction does not exist', 'youcan-pay'));
+
+                return false;
+            }
+
+            $transaction_id = $transaction->get_id();
+            $order = wc_get_order($transaction->get_order_id());
+
+            if (!isset($order)) {
+                WC_YouCanPay_Logger::info('arrived on process payment: order not exists', [
+                    'payment_method' => $payment_method_name,
+                    'code'           => '#0024',
+                    'transaction_id' => $transaction_id,
+                    'order_id'       => $order->get_id(),
+                ]);
+
+                WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
+                WC_YouCanPay_Webhook_State::set_last_error_reason(
+                    __('The order received from the webhook does not exist', 'youcan-pay')
+                );
+
+                return false;
+            }
+
+            if ($transaction->get_status() === WC_YouCanPay_Transaction_Model::PAID_STATUS) {
+                WC_YouCanPay_Logger::info('payment successfully processed', [
+                    'payment_method' => $payment_method_name,
+                    'transaction_id' => $transaction->get_id(),
+                    'order_id'       => $order->get_id(),
+                    'order_total'    => $order->get_total(),
+                ]);
+
+                //TODO: Need to using WC_YouCanPay_Helper::set_payment_method_to_order() instead of $order->set_payment_method()
+
+                $order->set_payment_method($payment_method_name);
+                //WC_YouCanPay_Helper::set_payment_method_to_order( $order, WC_Gateway_YouCanPay::ID );
+                $order->payment_complete($transaction->get_id());
+
+                $order->update_meta_data('_youcanpay_source_id', $transaction->get_id());
+                $order->save();
+
+                WC_YouCanPay_Webhook_State::set_last_webhook_success_at(time());
+
+                return true;
+            }
+
+            WC_YouCanPay_Logger::info('payment not processed', [
+                'payment_method' => $payment_method_name,
+                'transaction_id' => $transaction->get_id(),
+                'transaction_status' => $transaction->get_status(),
+                'order_id' => $order->get_id(),
+            ]);
+
+            $order->set_status($transaction->get_status_string());
+            $order->save();
+
+            WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
+            WC_YouCanPay_Webhook_State::set_last_error_reason(__('Payment not made', 'youcan-pay'));
+
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
 	 */
 	private function youcanpay_credit_card() {
 		$transaction_id = null;
@@ -106,7 +224,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
 
-		if ( $transaction->getStatus() === 1 ) {
+		if ( $transaction->getStatus() === WC_YouCanPay_Transaction_Model::PAID_STATUS ) {
 			WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 				'payment_method' => 'YouCan Pay (Credit Card)',
 				'transaction_id' => $transaction->getId(),
@@ -241,7 +359,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway {
 			return wp_redirect( wp_sanitize_redirect( esc_url_raw( get_home_url() ) ) );
 		}
 
-		if ( $transaction->getStatus() === 1 ) {
+		if ( $transaction->getStatus() === WC_YouCanPay_Transaction_Model::PAID_STATUS ) {
 			WC_YouCanPay_Logger::info( 'payment successfully processed', array(
 				'payment_method' => 'YouCan Pay (Standalone)',
 				'transaction_id' => $transaction->getId(),
