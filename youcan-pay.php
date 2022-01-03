@@ -124,6 +124,7 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-card-model.php';
 				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-transaction-model.php';
 				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-payment-method-model.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-token-model.php';
 				require_once dirname( __FILE__ ) . '/includes/currencies/class-wc-youcanpay-currencies.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-order-action-action-enum.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-api-enum.php';
