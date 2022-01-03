@@ -1,5 +1,7 @@
 <?php
 
+use YouCan\Pay\Models\Token;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -162,6 +164,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
      *
      * @return object
      * @throws WC_YouCanPay_Exception
+     * @throws Exception
      */
     public function create_source($order)
     {
@@ -192,19 +195,8 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
             $order = wc_get_order($order_id);
             $response = $this->create_source($order);
 
-            /** @var \YouCan\Pay\Models\Token|null $token */
+            /** @var Token $token */
             $token = $response->token;
-
-            if (is_wp_error($token) || empty($token)) {
-                WC_YouCanPay_Logger::info('there was a problem connecting to the YouCan Pay API endpoint', [
-                    'order_id' => $order->get_id(),
-                ]);
-
-                throw new WC_YouCanPay_Exception(
-                    print_r($token, true),
-                    __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
-                );
-            }
 
             $order->update_meta_data('_youcanpay_source_id', $token->getId());
             $order->save();
