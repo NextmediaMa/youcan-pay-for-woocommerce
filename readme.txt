@@ -79,9 +79,10 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 
-= 2.0.3 - 2022-01-03 =
+= 2.0.3 - 2022-01-04 =
 * Code improvements
 * Webhook to check the status of orders processed by Cash Plus
+* Verification of data received from the webhook by signature before data processing
 
 = 2.0.2 - 2021-12-16 =
 * Code improvements

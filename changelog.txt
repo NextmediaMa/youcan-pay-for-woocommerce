@@ -1,4 +1,24 @@
 *** Changelog ***
 
-= 1.0 - 2021-11-25 =
+= 2.0.3 - 2022-01-03 =
+* Code improvements
+* Webhook to check the status of orders processed by Cash Plus
+* Verification of data received from the webhook by signature before data processing
+
+= 2.0.2 - 2021-12-16 =
+* Code improvements
+* Fixed a bug on the subunit on some currencies
+* Display a message when the store uses an unsupported currency
+
+= 2.0.1 - 2021-12-14 =
+* Now the plugin supports almost all currencies exists in woocommerce
+
+= 2.0.0 - 2021-12-07 =
+* Security improvements
+* Manage multiple languages
+
+= 1.1.1 - 2021-12-02 =
+* Second Release
+
+= 1.0.0 - 2021-11-25 =
 * First Release
