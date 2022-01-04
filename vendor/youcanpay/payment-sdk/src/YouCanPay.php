@@ -78,8 +78,6 @@ class YouCanPay
             false
         );
 
-        var_dump($signature, $expectedSignature, json_encode($payload));die();
-
         return hash_equals($expectedSignature, $signature);
     }
 
