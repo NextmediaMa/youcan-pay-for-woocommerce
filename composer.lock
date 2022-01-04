@@ -242,16 +242,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v5.4.1",
+            "version": "v5.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "8c82cd35ed861236138d5ae1c78c0c7ebcd62107"
+                "reference": "ff8bb2107b6a549dc3c5dd9c498dcc82c9c098ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/8c82cd35ed861236138d5ae1c78c0c7ebcd62107",
-                "reference": "8c82cd35ed861236138d5ae1c78c0c7ebcd62107",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/ff8bb2107b6a549dc3c5dd9c498dcc82c9c098ca",
+                "reference": "ff8bb2107b6a549dc3c5dd9c498dcc82c9c098ca",
                 "shasum": ""
             },
             "require": {
@@ -331,7 +331,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-05T20:33:52+00:00"
+            "time": "2021-12-25T19:45:36+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -410,16 +410,16 @@
         },
         {
             "name": "youcanpay/payment-sdk",
-            "version": "v0.1.11",
+            "version": "v0.1.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NextmediaMa/youcan-payment-php-sdk.git",
-                "reference": "87f7b18f3ea632d6587688541deb0ef8a570c465"
+                "reference": "7f2a1457b9b5396563d823afe54c2899e3b439f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NextmediaMa/youcan-payment-php-sdk/zipball/87f7b18f3ea632d6587688541deb0ef8a570c465",
-                "reference": "87f7b18f3ea632d6587688541deb0ef8a570c465",
+                "url": "https://api.github.com/repos/NextmediaMa/youcan-payment-php-sdk/zipball/7f2a1457b9b5396563d823afe54c2899e3b439f1",
+                "reference": "7f2a1457b9b5396563d823afe54c2899e3b439f1",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +449,7 @@
                 }
             ],
             "description": "YouCan Pay SDK",
-            "time": "2021-11-08T14:21:13+00:00"
+            "time": "2021-12-30T19:09:29+00:00"
         }
     ],
     "packages-dev": [],

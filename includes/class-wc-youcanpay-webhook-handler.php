@@ -101,6 +101,19 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                 return false;
             }
 
+            if (!array_key_exists('HTTP_X_YOUCANPAY_SIGNATURE', $_SERVER)) {
+                return false;
+            }
+
+            $verified_webhook = WC_YouCanPay_API::verify_webhook_signature(
+                $_SERVER['HTTP_X_YOUCANPAY_SIGNATURE'],
+                $data['payload']
+            );
+
+            if (true !== $verified_webhook) {
+                return false;
+            }
+
             $transaction_id = null;
             $token = new WC_YouCanPay_Token_Model($data['payload']['token']);
             $transaction = new WC_YouCanPay_Transaction_Model($data['payload']['transaction']);
@@ -150,24 +163,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                 WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
                 WC_YouCanPay_Webhook_State::set_last_error_reason(
                     __('The order received from the webhook does not exist', 'youcan-pay')
-                );
-
-                return false;
-            }
-
-            if ($token->get_id() !== $order->get_meta('_youcanpay_source_id')) {
-                WC_YouCanPay_Logger::info('arrived on process payment: webhook token is not equal to order token', [
-                    'payment_method'   => $payment_method_name,
-                    'code'             => '#0025',
-                    'transaction_id'   => $transaction_id,
-                    'order_id'         => $order->get_id(),
-                    'webhook_token_id' => $token->get_id(),
-                    'order_token_id'   => $order->get_meta('_youcanpay_source_id'),
-                ]);
-
-                WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
-                WC_YouCanPay_Webhook_State::set_last_error_reason(
-                    __('The received webhook token is not equal to the order token', 'youcan-pay')
                 );
 
                 return false;

@@ -151,6 +151,33 @@ class WC_YouCanPay_API
     }
 
     /**
+     * @param string $signature
+     * @param array $payload
+     *
+     * @return bool
+     */
+    public static function verify_webhook_signature($signature, $payload)
+    {
+        try {
+            if (self::is_test_mode()) {
+                YouCanPay::setIsSandboxMode(true);
+            }
+            $py = YouCanPay::instance()->useKeys(
+                self::get_private_key(),
+                self::get_public_key()
+            );
+
+            return $py->verifyWebhookSignature($signature, $payload);
+        } catch (Throwable $e) {
+            WC_YouCanPay_Logger::alert('throwable at verify webhook signature exists into wc youcan pay api', [
+                'exception.message' => $e->getMessage(),
+            ]);
+        }
+
+        return false;
+    }
+
+    /**
      * @param $order WC_Order
      * @param $total
      * @param $currency
