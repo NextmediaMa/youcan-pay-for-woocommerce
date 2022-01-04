@@ -252,14 +252,14 @@ class WC_YouCanPay_Helper
 	 */
     public static function verify_webhook_signature($private_key ,$signature, $payload)
     {
-        $expectedSignature = hash_hmac(
+        $expected_signature = hash_hmac(
             'sha256',
             json_encode($payload),
             $private_key,
             false
         );
 
-        return hash_equals($expectedSignature, $signature);
+        return hash_equals($expected_signature, $signature);
     }
 
 }
