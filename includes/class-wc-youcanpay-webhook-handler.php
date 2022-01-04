@@ -101,6 +101,20 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                 return false;
             }
 
+            if (!array_key_exists('HTTP_X_YOUCANPAY_SIGNATURE', $_SERVER)) {
+                return false;
+            }
+
+            $verified_webhook = WC_YouCanPay_Helper::verify_webhook_signature(
+                WC_YouCanPay_API::get_private_key(),
+                $_SERVER['HTTP_X_YOUCANPAY_SIGNATURE'],
+                $data['payload']
+            );
+
+            if (true !== $verified_webhook) {
+                return false;
+            }
+
             $transaction_id = null;
             $token = new WC_YouCanPay_Token_Model($data['payload']['token']);
             $transaction = new WC_YouCanPay_Transaction_Model($data['payload']['transaction']);
@@ -155,7 +169,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                 return false;
             }
 
-            if ($token->get_id() !== $order->get_meta('_youcanpay_source_id')) {
+            /*if ($token->get_id() !== $order->get_meta('_youcanpay_source_id')) {
                 WC_YouCanPay_Logger::info('arrived on process payment: webhook token is not equal to order token', [
                     'payment_method'   => $payment_method_name,
                     'code'             => '#0025',
@@ -171,7 +185,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                 );
 
                 return false;
-            }
+            }*/
 
             if ($transaction->get_status() === WC_YouCanPay_Transaction_Model::PAID_STATUS) {
                 WC_YouCanPay_Logger::info('payment successfully processed', [

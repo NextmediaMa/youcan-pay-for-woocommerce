@@ -242,4 +242,24 @@ class WC_YouCanPay_Helper
 
         return false;
     }
+
+	/**
+	 * @param string $private_key
+	 * @param string $signature
+	 * @param array $payload
+	 *
+	 * @return bool
+	 */
+    public static function verify_webhook_signature($private_key ,$signature, $payload)
+    {
+        $expectedSignature = hash_hmac(
+            'sha256',
+            json_encode($payload),
+            $private_key,
+            false
+        );
+
+        return hash_equals($expectedSignature, $signature);
+    }
+
 }
