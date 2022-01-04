@@ -3,7 +3,7 @@
 = 2.0.3 - 2022-01-03 =
 * Code improvements
 * Webhook to check the status of orders processed by Cash Plus
-* Verification of data received from the webhook by signature before data processing
+* Verification of data received from the webhook by signature before processing this data
 
 = 2.0.2 - 2021-12-16 =
 * Code improvements
