@@ -107,7 +107,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
 
             $verified_webhook = WC_YouCanPay_API::verify_webhook_signature(
                 $_SERVER['HTTP_X_YOUCANPAY_SIGNATURE'],
-                $data['payload']
+                $data
             );
 
             if (true !== $verified_webhook) {
