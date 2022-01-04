@@ -297,21 +297,31 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
         }
     }
 
+    /**
+     * @param int $action
+     *
+     * @return string
+     */
     private function get_checkout_url_by_action($action)
     {
         $checkout_url = wc_get_checkout_url();
-        if ($action === WC_YouCanPay_Order_Action_Enum::get_pre_order()) {
-            $order_id = null;
-            $order_key = null;
 
-            if (array_key_exists('order_id', $_GET)) {
-                $order_id = wc_sanitize_order_id($_GET['order_id']);
-            }
+        if (!in_array($action, WC_YouCanPay_Order_Action_Enum::get_values())) {
+            return $checkout_url;
+        }
 
-            if (array_key_exists('key', $_GET)) {
-                $order_key = wc_clean(wp_unslash($_GET['key']));
-            }
+        $order_id = null;
+        $order_key = null;
 
+        if (array_key_exists('order_id', $_GET)) {
+            $order_id = wc_sanitize_order_id($_GET['order_id']);
+        }
+
+        if (array_key_exists('key', $_GET)) {
+            $order_key = wc_clean(wp_unslash($_GET['key']));
+        }
+
+        if ($action == WC_YouCanPay_Order_Action_Enum::get_pre_order()) {
             $checkout_url = add_query_arg(
                 [
                     'pay_for_order' => 'true',
