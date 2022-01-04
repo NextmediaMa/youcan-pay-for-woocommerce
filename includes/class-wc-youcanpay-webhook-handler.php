@@ -169,24 +169,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                 return false;
             }
 
-            /*if ($token->get_id() !== $order->get_meta('_youcanpay_source_id')) {
-                WC_YouCanPay_Logger::info('arrived on process payment: webhook token is not equal to order token', [
-                    'payment_method'   => $payment_method_name,
-                    'code'             => '#0025',
-                    'transaction_id'   => $transaction_id,
-                    'order_id'         => $order->get_id(),
-                    'webhook_token_id' => $token->get_id(),
-                    'order_token_id'   => $order->get_meta('_youcanpay_source_id'),
-                ]);
-
-                WC_YouCanPay_Webhook_State::set_last_webhook_failure_at(time());
-                WC_YouCanPay_Webhook_State::set_last_error_reason(
-                    __('The received webhook token is not equal to the order token', 'youcan-pay')
-                );
-
-                return false;
-            }*/
-
             if ($transaction->get_status() === WC_YouCanPay_Transaction_Model::PAID_STATUS) {
                 WC_YouCanPay_Logger::info('payment successfully processed', [
                     'payment_method' => $payment_method_name,
