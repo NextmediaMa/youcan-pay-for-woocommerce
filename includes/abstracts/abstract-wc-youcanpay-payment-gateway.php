@@ -214,4 +214,37 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		return $locale;
 	}
 
+    /**
+     * @return void
+     */
+    public function init_order_button_text() {
+        $list_button_types = [
+            'default' => __('Default', 'youcan-pay'),
+            'buy'     => __('Buy', 'youcan-pay'),
+            'donate'  => __('Donate', 'youcan-pay'),
+            'branded' => __('Branded', 'youcan-pay'),
+            'custom'  => __('Custom', 'youcan-pay'),
+        ];
+
+        $payment_request_button_type = $this->get_option('payment_request_button_type');
+
+        if (!$list_button_types[$payment_request_button_type]) {
+            return;
+        }
+
+        $label = $list_button_types[$payment_request_button_type];
+
+        if ('default' == $payment_request_button_type) {
+            return;
+        }
+
+        if ('custom' == $payment_request_button_type) {
+            $label = $this->get_option('payment_request_button_label');
+        }
+
+        add_filter('woocommerce_order_button_text', function () use ($label) {
+            return $label;
+        });
+    }
+
 }
