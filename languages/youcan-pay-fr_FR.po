@@ -22,6 +22,9 @@ msgstr "Supprimer %s de la caisse"
 msgid "YouCan Pay"
 msgstr "YouCan Pay"
 
+msgid "YouCan Pay (%s)"
+msgstr ""
+
 msgid "YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification."
 msgstr "YouCan Pay fonctionne en ajoutant des champs de paiement à la caisse, puis en envoyant les détails à YouCan Pay pour vérification."
 
@@ -242,7 +245,7 @@ msgid "Unable to process this payment, please try again or use alternative metho
 msgstr "Impossible de traiter ce paiement, veuillez réessayer ou utiliser une autre méthode."
 
 msgid "Please try again, This payment has been canceled!"
-msgstr "Veuillez réessayer, ce paiement a été annulé !"
+msgstr "Veuillez réessayer, ce paiement a été annulé !"
 
 msgid "Sorry, payment not completed please try again."
 msgstr "Désolé, le paiement n’est pas terminé, veuillez réessayer."
@@ -264,6 +267,48 @@ msgstr "%1$s est activé - il faut que la devise du magasin soit définie sur %2
 
 msgid "YouCan Pay Transaction ID"
 msgstr "Identifiant de transaction YouCan Pay"
+
+msgid "The transaction does not exist"
+msgstr "La transaction n'existe pas"
+
+msgid "The order received from the webhook does not exist"
+msgstr "La commande reçue du webhook n'existe pas"
+
+msgid "Payment not made"
+msgstr "Paiement non effectué"
+
+msgid "You must add the following webhook endpoint <strong style=\"background-color:#ddd;\">%s</strong> to your <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
+msgstr "Vous devez ajouter le webhook suivant <strong style=\"background-color:#ddd;\">%s</strong> à vos <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">paramètres YouCan Pay</a> (s'il n'y en a pas un déjà activé). Cela vous permettra de recevoir des notifications sur l'état des transactions."
+
+msgid "Webhook Endpoints"
+msgstr "Le webhook"
+
+msgid "The most recent sandbox webhook, timestamped %s, was processed successfully."
+msgstr "Le webhook sandbox le plus récent, horodaté %s, a été traité avec succès."
+
+msgid "The most recent production webhook, timestamped %s, was processed successfully."
+msgstr "Le webhook en production le plus récent, horodaté %s, a été traité avec succès."
+
+msgid "No sandbox webhooks have been received since monitoring began at %s."
+msgstr "Aucun webhook sandbox n'a été reçu depuis le début de la surveillance à %s."
+
+msgid "No production webhooks have been received since monitoring began at %s."
+msgstr "Aucun webhook en production n'a été reçu depuis le début de la surveillance à %s."
+
+msgid "Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (The last sandbox webhook to process successfully was timestamped %3$s.)"
+msgstr "Avertissement : Le webhook sandbox le plus récent, reçu à %1$s, n'a pas pu être traité. Raison : %2$s. (Le dernier webhook sandbox à traiter avec succès était horodaté %3$s.)"
+
+msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (The last production webhook to process successfully was timestamped %3$s.)"
+msgstr "Avertissement : Le webhook en production le plus récent, reçu à %1$s, n'a pas pu être traité. Raison : %2$s. (Le dernier webhook en production à traiter avec succès était horodaté %3$s.)"
+
+msgid "Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (No sandbox webhooks have been processed successfully since monitoring began at %3$s.)"
+msgstr "Avertissement : Le webhook sandbox le plus récent, reçu à %1$s, n'a pas pu être traité. Raison : %2$s. (Aucun webhook sandbox n'a été traité avec succès depuis le début de la surveillance à %3$s.)"
+
+msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (No production webhooks have been processed successfully since monitoring began at %3$s.)"
+msgstr "Avertissement : Le webhook en production le plus récent, reçu à %1$s, n'a pas pu être traité. Raison : %2$s. (Aucun webhook en production n'a été traité avec succès depuis le début de la surveillance à %3$s.)"
+
+msgid "The received webhook token is not equal to the order token"
+msgstr "Le jeton webhook reçu n'est pas égal au jeton de commande"
 
 msgid "Cash Plus"
 msgstr "Cash Plus"

@@ -219,6 +219,12 @@ class WC_YouCanPay_Helper
         return true;
     }
 
+	/**
+	 * @param WC_Order $order
+	 * @param string $method
+	 *
+	 * @return bool
+	 */
     public static function set_payment_method_to_order($order, $method)
     {
         try {

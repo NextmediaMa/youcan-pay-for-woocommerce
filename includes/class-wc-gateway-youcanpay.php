@@ -68,6 +68,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
         // Load the settings.
         $this->init_settings();
 
+        // Load order button from settings.
+        $this->init_order_button_text();
+
         // Get setting values.
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');
@@ -218,11 +221,12 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
             if (array_key_exists('order-pay', $_GET)) {
                 $response = $this->validated_order_and_process_payment(wc_sanitize_order_id($_GET['order-pay']));
                 /** @var Token $token */
-                $token = $response['token'] ?? null;
-                $order = $response['order'] ?? null;
+                $token = $response['token'];
+                /** @var WC_Order $order */
+                $order = $response['order'];
                 $redirect = $response['redirect'] ?? null;
 
-                $youcanpay_params['token_transaction'] = (isset($token)) ? $token->getId() : 0;
+                $youcanpay_params['token_transaction'] = $token->getId();
                 $youcanpay_params['is_pre_order'] = WC_YouCanPay_Order_Action_Enum::get_pre_order();
                 $youcanpay_params['redirect'] = $redirect;
             }
@@ -273,7 +277,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
 
         // If no SSL bail.
         if (!$this->sandbox_mode && !is_ssl()) {
-            WC_YouCanPay_Logger::info('YouCan Pay live mode requires SSL.');
+            WC_YouCanPay_Logger::info('YouCan Pay production mode requires SSL.');
 
             return;
         }
@@ -308,14 +312,16 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     {
         try {
             $response = $this->validated_order_and_process_payment($order_id);
-            $token = $response['token'] ?? null;
-            $order = $response['order'] ?? null;
+            /** @var Token $token */
+            $token = $response['token'];
+            /** @var WC_Order $order */
+            $order = $response['order'];
             $redirect = $response['redirect'] ?? null;
 
             return [
                 'result'            => 'success',
                 'redirect'          => $redirect,
-                'token_transaction' => (isset($token)) ? $token->getId() : 0,
+                'token_transaction' => $token->getId(),
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');
@@ -356,8 +362,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 );
             }
 
-            $order->set_status('on-hold');
-
             $redirect = $this->get_youcanpay_return_url($order, self::ID);
 
             $token = WC_YouCanPay_API::create_token(
@@ -367,16 +371,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 $redirect
             );
 
-            if (is_wp_error($token) || empty($token)) {
-                WC_YouCanPay_Logger::info('there was a problem connecting to the YouCan Pay API endpoint', [
-                    'order_id' => $order->get_id(),
-                ]);
-
-                throw new WC_YouCanPay_Exception(
-                    print_r($token, true),
-                    __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
-                );
-            }
+            $order->update_meta_data('_youcanpay_source_id', $token->getId());
+            $order->save();
 
             return [
                 'token'    => $token,
@@ -384,9 +380,16 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 'redirect' => $redirect,
             ];
         } catch (WC_YouCanPay_Exception $e) {
+            WC_YouCanPay_Logger::alert('there was a problem connecting to the YouCan Pay API endpoint', [
+                'order_id' => $order_id,
+                'message'  => $e->getLocalizedMessage(),
+            ]);
             throw new WC_YouCanPay_Exception($e->getMessage(), $e->getLocalizedMessage());
         } catch (Throwable $e) {
-            throw new Exception(__('Fatal error, please try again.', 'youcan-pay'));
+            WC_YouCanPay_Logger::alert('throwable at request exists into wc youcan pay api', [
+                'exception.message' => $e->getMessage(),
+            ]);
+            throw new Exception($e->getMessage());
         }
     }
 

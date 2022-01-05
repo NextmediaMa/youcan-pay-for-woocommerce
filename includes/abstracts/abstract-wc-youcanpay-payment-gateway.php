@@ -89,6 +89,25 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		return parent::get_transaction_url( $order );
 	}
 
+    /**
+     * Displays the admin settings webhook description.
+     *
+     * @return string
+     */
+    public function display_admin_settings_webhook_description()
+    {
+        $description = sprintf(
+            __(
+                'You must add the following webhook endpoint <strong style="background-color:#ddd;">%s</strong> to your <a href="https://pay.youcan.shop/settings/webhooks" target="_blank">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions.',
+                'youcan-pay'
+            ),
+            WC_YouCanPay_Helper::get_webhook_url()
+        );
+        $webhook_status = WC_YouCanPay_Webhook_State::get_webhook_status_message();
+
+        return "{$description}<br><br>{$webhook_status}";
+    }
+
 	/**
 	 * Builds the return URL from redirects.
 	 *
@@ -196,5 +215,32 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 
 		return $locale;
 	}
+
+    /**
+     * @return void
+     */
+    public function init_order_button_text() {
+        $form_fields = $this->get_form_fields();
+        $options = $form_fields['payment_request_button_type']['options'];
+        $payment_request_button_type = $this->get_option('payment_request_button_type');
+
+        if (!$options[$payment_request_button_type]) {
+            return;
+        }
+
+        $label = $options[$payment_request_button_type];
+
+        if ('default' == $payment_request_button_type) {
+            return;
+        }
+
+        if ('custom' == $payment_request_button_type) {
+            $label = $this->get_option('payment_request_button_label');
+        }
+
+        add_filter('woocommerce_order_button_text', function () use ($label) {
+            return $label;
+        });
+    }
 
 }

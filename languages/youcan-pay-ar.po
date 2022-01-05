@@ -22,6 +22,9 @@ msgstr "إزالة %s من السلة"
 msgid "YouCan Pay"
 msgstr "YouCan Pay"
 
+msgid "YouCan Pay (%s)"
+msgstr ""
+
 msgid "YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification."
 msgstr "يعمل عن طريق إضافة حقول للدفع, ثم يتم إرسال التفاصيل إلى YouCan Pay للتحقق من عملية الشراء."
 
@@ -264,6 +267,48 @@ msgstr "%1$s - يتطلب أن تكون عملة المتجر مدعمة %2$s"
 
 msgid "YouCan Pay Transaction ID"
 msgstr "معرف معاملة YouCan Pay"
+
+msgid "The transaction does not exist"
+msgstr "المعاملة غير موجودة"
+
+msgid "The order received from the webhook does not exist"
+msgstr "الطلبية التي تم استلامها من الرد التلقائي على الويب (webhook) غير موجودة"
+
+msgid "Payment not made"
+msgstr "لم يتم الدفع"
+
+msgid "You must add the following webhook endpoint <strong style=\"background-color:#ddd;\">%s</strong> to your <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
+msgstr "يجب عليك إضافة webhook التالي <strong style=\"background-color:#ddd;\">%s</strong> في اعدادات <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay</a> (إذا لم يكن بالفعل من قبل). سيسمح لك ذلك بتلقي إشعارات بشأن حالة المعاملات."
+
+msgid "Webhook Endpoints"
+msgstr "نقاط نهاية Webhook"
+
+msgid "The most recent sandbox webhook, timestamped %s, was processed successfully."
+msgstr "تمت معالجة أحدث sandbox webhook ، مختوم زمنيًا %s ، بنجاح."
+
+msgid "The most recent production webhook, timestamped %s, was processed successfully."
+msgstr "تمت معالجة أحدث webhook للإنتاج ، مختوم زمنيًا %s ، بنجاح."
+
+msgid "No sandbox webhooks have been received since monitoring began at %s."
+msgstr "لم يتم تلقي أي sandbox webhooks منذ بدء المراقبة في %s."
+
+msgid "No production webhooks have been received since monitoring began at %s."
+msgstr "لم يتم تلقي أي webhooks للإنتاج منذ بدء المراقبة في %s."
+
+msgid "Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (The last sandbox webhook to process successfully was timestamped %3$s.)"
+msgstr "تحذير: تعذرت معالجة أحدث sandbox webhook ، تم استلامه في %1$s. السبب: %2$s. (تم ختم آخر sandbox webhook وتمت معالجته بنجاح بطابع زمني %3$s.)"
+
+msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (The last production webhook to process successfully was timestamped %3$s.)"
+msgstr "تحذير: تعذرت معالجة أحدث webhook للإنتاج ، تم استلامه في %1$s. السبب: %2$s. (تم ختم آخر webhook للإنتاج وتمت معالجته بنجاح بطابع زمني %3$s.)"
+
+msgid "Warning: The most recent sandbox webhook, received at %1$s, could not be processed. Reason: %2$s. (No sandbox webhooks have been processed successfully since monitoring began at %3$s.)"
+msgstr "تحذير: تعذرت معالجة أحدث sandbox webhooks ، تم استلامه في %1$s. السبب: %2$s. (لم تتم معالجة sandbox webhooks بنجاح منذ أن بدأت المراقبة في %3$s.)"
+
+msgid "Warning: The most recent production webhook, received at %1$s, could not be processed. Reason: %2$s. (No production webhooks have been processed successfully since monitoring began at %3$s.)"
+msgstr "تحذير: تعذرت معالجة أحدث webhooks للإنتاج ، تم استلامه في %1$s. السبب: %2$s. (لم تتم معالجة webhooks للإنتاج بنجاح منذ أن بدأت المراقبة في %3$s.)"
+
+msgid "The received webhook token is not equal to the order token"
+msgstr "الرمز الذي تم استلامه من webhook لا يساوي رمز الطلبية"
 
 msgid "Cash Plus"
 msgstr "كاش بلوس"

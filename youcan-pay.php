@@ -4,7 +4,7 @@
  * Plugin URI: https://pay.youcan.shop
  * Description: YouCan Pay for Woocommerce: allows you to receive fast and secure online card payments.
  * Author: YouCan Pay
- * Version: 2.0.2
+ * Version: 2.0.3
  * Requires at least: 4.8
  * Tested up to: 5.8
  * WC requires at least: 4.6
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Required minimums and constants
  */
-define( 'WC_YOUCAN_PAY_VERSION', '2.0.2' ); // WRCS: DEFINED_VERSION.
+define( 'WC_YOUCAN_PAY_VERSION', '2.0.3' ); // WRCS: DEFINED_VERSION.
 define( 'WC_YOUCAN_PAY_MIN_PHP_VER', '7.1.0' );
 define( 'WC_YOUCAN_PAY_MIN_WC_VER', '4.6' );
 define( 'WC_YOUCAN_PAY_FUTURE_MIN_WC_VER', '5.9' );
@@ -121,6 +121,10 @@ function woocommerce_gateway_youcanpay() {
 				}
 
 				require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-card-model.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-transaction-model.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-payment-method-model.php';
+				require_once dirname( __FILE__ ) . '/includes/models/class-wc-youcanpay-token-model.php';
 				require_once dirname( __FILE__ ) . '/includes/currencies/class-wc-youcanpay-currencies.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-order-action-action-enum.php';
 				require_once dirname( __FILE__ ) . '/includes/enums/class-wc-youcanpay-api-enum.php';
@@ -129,6 +133,7 @@ function woocommerce_gateway_youcanpay() {
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-helper.php';
 				include_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-api.php';
 				require_once dirname( __FILE__ ) . '/includes/abstracts/abstract-wc-youcanpay-payment-gateway.php';
+				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-state.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-youcanpay-webhook-handler.php';
 				require_once dirname( __FILE__ ) . '/includes/class-wc-gateway-youcanpay.php';
 				require_once dirname( __FILE__ ) . '/includes/payment-methods/class-wc-gateway-youcanpay-standalone.php';

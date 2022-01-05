@@ -125,69 +125,6 @@ class WC_YouCanPay_API
     }
 
     /**
-     * Send the request to YouCan Pay's API
-     *
-     * @param WC_Order|WC_Order_Refund $order
-     * @param array $post_data
-     *
-     * @return stdClass|array
-     * @throws WC_YouCanPay_Exception
-     */
-    public static function request($order, $post_data)
-    {
-        $response = [
-            'id'       => 0,
-            'redirect' => [
-                'url' => get_home_url(),
-            ],
-        ];
-
-        try {
-            if (self::is_test_mode()) {
-                YouCanPay::setIsSandboxMode(true);
-            }
-            $py = YouCanPay::instance()->useKeys(
-                self::get_private_key(),
-                self::get_public_key()
-            );
-
-            $token = $py->token->create(
-                $order->get_id(),
-                (int)$post_data['amount'],
-                $post_data['currency'],
-                self::get_the_user_ip(),
-                $post_data['redirect']['return_url'],
-                $post_data['redirect']['return_url']
-            );
-
-            if (is_wp_error($token) || empty($token)) {
-                throw new WC_YouCanPay_Exception(
-                    print_r($token, true),
-                    __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
-                );
-            }
-
-            $response = [
-                'id'       => $token->getId(),
-                'redirect' => [
-                    'url' => $token->getPaymentURL($post_data['locale']),
-                ],
-            ];
-        } catch (WC_YouCanPay_Exception $e) {
-            WC_YouCanPay_Logger::alert('there was a problem connecting to the YouCan Pay API endpoint', [
-                'order_id' => $order->get_id(),
-            ]);
-            throw new WC_YouCanPay_Exception($e->getMessage(), $e->getLocalizedMessage());
-        } catch (Throwable $e) {
-            WC_YouCanPay_Logger::alert('throwable at request exists into wc youcan pay api', [
-                'exception.message' => $e->getMessage(),
-            ]);
-        }
-
-        return json_decode(json_encode($response));
-    }
-
-    /**
      * @param $transaction_id
      *
      * @return Transaction|null
@@ -214,12 +151,40 @@ class WC_YouCanPay_API
     }
 
     /**
+     * @param string $signature
+     * @param array $payload
+     *
+     * @return bool
+     */
+    public static function verify_webhook_signature($signature, $payload)
+    {
+        try {
+            if (self::is_test_mode()) {
+                YouCanPay::setIsSandboxMode(true);
+            }
+            $py = YouCanPay::instance()->useKeys(
+                self::get_private_key(),
+                self::get_public_key()
+            );
+
+            return $py->verifyWebhookSignature($signature, $payload);
+        } catch (Throwable $e) {
+            WC_YouCanPay_Logger::alert('throwable at verify webhook signature exists into wc youcan pay api', [
+                'exception.message' => $e->getMessage(),
+            ]);
+        }
+
+        return false;
+    }
+
+    /**
      * @param $order WC_Order
      * @param $total
      * @param $currency
      * @param $return_url
      *
      * @return Token|null
+     * @throws WC_YouCanPay_Exception|Throwable
      */
     public static function create_token($order, $total, $currency, $return_url)
     {
@@ -235,7 +200,7 @@ class WC_YouCanPay_API
                 self::get_public_key()
             );
 
-            return $py->token->create(
+            $token = $py->token->create(
                 $order->get_id(),
                 $amount,
                 strtoupper($currency),
@@ -243,13 +208,20 @@ class WC_YouCanPay_API
                 $return_url,
                 $return_url
             );
-        } catch (Throwable $e) {
-            WC_YouCanPay_Logger::alert('throwable at create token exists into wc youcan pay api', [
-                'exception.message' => $e->getMessage(),
-            ]);
-        }
 
-        return null;
+            if (is_wp_error($token) || (!isset($token))) {
+                throw new WC_YouCanPay_Exception(
+                    print_r($token, true),
+                    __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
+                );
+            }
+
+            return $token;
+        } catch (WC_YouCanPay_Exception $e) {
+            throw new WC_YouCanPay_Exception($e->getMessage(), $e->getLocalizedMessage());
+        } catch (Throwable $e) {
+            throw new Exception(__('Fatal error, please try again.', 'youcan-pay'));
+        }
     }
 
     /**
