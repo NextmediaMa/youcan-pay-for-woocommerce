@@ -50,7 +50,7 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
         $this->id = self::ID;
         $this->method_title = __('Cash Plus', 'youcan-pay');
         $this->method_description = sprintf(
-            __('All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.', 'youcan-pay'),
+            __('All other general Cash Plus settings can be adjusted <a href="%s">here</a>.', 'youcan-pay'),
             admin_url('admin.php?page=wc-settings&tab=checkout&section=youcanpay')
         );
         $this->supports = [
@@ -82,7 +82,7 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
     }
 
     /**
-     * Renders the YouCan Pay elements form.
+     * Renders the Cash Plus elements form.
      */
     public function elements_form()
     {

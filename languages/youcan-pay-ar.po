@@ -214,6 +214,9 @@ msgstr "ستتم إعادة توجيهك إلى YouCan Pay."
 msgid "All other general YouCan Pay settings can be adjusted <a href=\"%s\">here</a>."
 msgstr "يعمل على تحويل المشتري الى منصة YouCan Pay لإتمام عملية الشراء, لتعديل جميع الإعدادات العامة <a href=\"%s\">من هنا</a>."
 
+msgid "All other general Cash Plus settings can be adjusted <a href=\"%s\">here</a>."
+msgstr "يعمل على تحويل المشتري الى منصة Cash Plus لإتمام عملية الشراء, لتعديل جميع الإعدادات العامة <a href=\"%s\">من هنا</a>."
+
 msgid "SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href=\"%s\" target=\"_blank\">Testing YouCan Pay documentation</a> for more card numbers."
 msgstr "تم تشغيل وضع SANDBOX. في وضع sandbox ، يمكنك استخدام رقم البطاقة 4242424242424242 مع 112 CVC وتاريخ 10/24 أو زيارة <a href=\"%s\" target=\"_blank\"> دليل YouCan Pay </a> للحصول على مزيد من أرقام البطاقات."
 
