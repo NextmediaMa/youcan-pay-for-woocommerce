@@ -68,6 +68,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
         // Load the settings.
         $this->init_settings();
 
+        // Load order button from settings.
+        $this->init_order_button_text();
+
         // Get setting values.
         $this->title = $this->get_option('title');
         $this->description = $this->get_option('description');

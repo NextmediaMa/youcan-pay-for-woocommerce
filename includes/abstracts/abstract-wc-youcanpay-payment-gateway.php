@@ -214,4 +214,31 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
 		return $locale;
 	}
 
+    /**
+     * @return void
+     */
+    public function init_order_button_text() {
+        $form_fields = $this->get_form_fields();
+        $options = $form_fields['payment_request_button_type']['options'];
+        $payment_request_button_type = $this->get_option('payment_request_button_type');
+
+        if (!$options[$payment_request_button_type]) {
+            return;
+        }
+
+        $label = $options[$payment_request_button_type];
+
+        if ('default' == $payment_request_button_type) {
+            return;
+        }
+
+        if ('custom' == $payment_request_button_type) {
+            $label = $this->get_option('payment_request_button_label');
+        }
+
+        add_filter('woocommerce_order_button_text', function () use ($label) {
+            return $label;
+        });
+    }
+
 }
