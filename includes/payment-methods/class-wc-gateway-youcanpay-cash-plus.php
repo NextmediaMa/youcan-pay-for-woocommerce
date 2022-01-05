@@ -81,44 +81,48 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
         add_action('wp_enqueue_scripts', [$this, 'payment_scripts']);
     }
 
-	/**
-	 * Renders the YouCan Pay elements form.
-	 */
-	public function elements_form()
-	{
-		?>
-		<fieldset id="wc-<?php echo esc_attr($this->id); ?>-cc-form" class="wc-credit-card-form wc-payment-form"
-		          style="background:transparent;">
-			<?php
-			do_action('woocommerce_cash_plus_form_start', $this->id); ?>
+    /**
+     * Renders the YouCan Pay elements form.
+     */
+    public function elements_form()
+    {
+        ?>
+        <fieldset id="wc-<?php
+        echo esc_attr($this->id); ?>-cc-form" class="wc-credit-card-form wc-payment-form"
+                  style="background:transparent;">
+            <?php
+            do_action('woocommerce_cash_plus_form_start', $this->id); ?>
 
-			<div class="form-row form-row-wide">
-				<form class="flex justify-center">
-					<button type="submit">
-                        <?php echo __('Get your Cash Plus code', 'youcan-pay'); ?>
-					</button>
-				</form>
+            <div class="form-row form-row-wide">
+                <form class="flex justify-center">
+                    <button type="submit">
+                        <?php
+                        echo __('Get your Cash Plus code', 'youcan-pay'); ?>
+                    </button>
+                </form>
 
-				<p class="form-row cash-plus-code-field form-row-wide" id="cash_plus_code_container" style="display: none">
-					<label for="cash_plus_code" class=""><?php echo __('Your Cash Plus Code', 'youcan-pay'); ?></label>
-					<span class="woocommerce-input-wrapper">
+                <p class="form-row cash-plus-code-field form-row-wide" id="cash_plus_code_container"
+                   style="display: none">
+                    <label for="cash_plus_code" class=""><?php
+                        echo __('Your Cash Plus Code', 'youcan-pay'); ?></label>
+                    <span class="woocommerce-input-wrapper">
 						<input type="text" class="input-text" readonly="readonly" value="" name="cash_plus_code"
-						       id="cash_plus_code">
+                               id="cash_plus_code">
 					</span>
-				</p>
+                </p>
 
-			</div>
+            </div>
 
-			<div class="clear"></div>
+            <div class="clear"></div>
 
-			<!-- Used to display form errors -->
-			<div class="youcanpay-source-errors" role="alert"></div>
-			<?php
-			do_action('woocommerce_cash_plus_form_end', $this->id); ?>
-			<div class="clear"></div>
-		</fieldset>
-		<?php
-	}
+            <!-- Used to display form errors -->
+            <div class="youcanpay-source-errors" role="alert"></div>
+            <?php
+            do_action('woocommerce_cash_plus_form_end', $this->id); ?>
+            <div class="clear"></div>
+        </fieldset>
+        <?php
+    }
 
     /**
      * Checks to see if all criteria is met before showing payment method.
@@ -142,7 +146,6 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
     public function get_icon()
     {
         $icons = $this->payment_icons();
-
         $icons_str = $icons['cash_plus'] ?? '';
 
         return apply_filters('woocommerce_gateway_icon', $icons_str, $this->id);
@@ -177,8 +180,7 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
      */
     public function payment_fields()
     {
-        $description = $this->get_description();
-        $description = !empty($description) ? $description : '';
+        $description = $this->get_description() ?? '';
 
         ob_start();
 
@@ -187,35 +189,11 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
         $description = trim($description);
         echo wpautop(wp_kses_post($description));
 
-	    $this->elements_form();
+        $this->elements_form();
 
         echo '</div>';
 
         ob_end_flush();
-    }
-
-    /**
-     * Creates the source for charge.
-     *
-     * @param WC_Order|WC_Order_Refund $order
-     *
-     * @return array|stdClass
-     * @throws WC_YouCanPay_Exception
-     */
-    public function create_source($order)
-    {
-        $currency = $order->get_currency();
-        $return_url = $this->get_youcanpay_return_url($order, self::ID);
-        $post_data = [
-            'amount'   => WC_YouCanPay_Helper::get_youcanpay_amount($order->get_total(), $currency),
-            'locale'   => WC_YouCanPay_Helper::get_supported_local(get_locale()),
-            'currency' => strtoupper($currency),
-            'type'     => 'cash-plus',
-            'owner'    => $this->get_owner_details($order),
-            'redirect' => ['return_url' => $return_url],
-        ];
-
-        return WC_YouCanPay_API::request($order, $post_data);
     }
 
     /**
@@ -229,16 +207,28 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
     {
         try {
             $order = wc_get_order($order_id);
-            $response = $this->create_source($order);
 
-            $order->update_meta_data('_youcanpay_source_id', $response->id);
+            $return_url = $this->get_youcanpay_return_url($order, self::ID);
+            $locale = WC_YouCanPay_Helper::get_supported_local(get_locale());
+            //TODO: need to send customer information to YouCan Pay
+            //$customer = $this->get_owner_details($order);
+
+            $token = WC_YouCanPay_API::create_token(
+                $order,
+                $order->get_total(),
+                $order->get_currency(),
+                $return_url
+            );
+
+            $order->update_meta_data('_youcanpay_source_id', $token->getId());
             $order->save();
 
-            WC_YouCanPay_Logger::info('Info: Redirecting to YouCan Pay Cash Plus...');
+            $payment_url = $token->getPaymentURL($locale);
+            $payment_url = esc_url_raw($payment_url);
 
             return [
                 'result'   => 'success',
-                'redirect' => esc_url_raw($response->redirect->url),
+                'redirect' => $payment_url,
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');
