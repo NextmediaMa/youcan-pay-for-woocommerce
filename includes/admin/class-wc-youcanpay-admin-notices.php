@@ -92,7 +92,7 @@ class WC_YouCanPay_Admin_Notices
         return [
             'YouCan Pay' => 'WC_Gateway_YouCanPay',
             'YouCan Pay Standalone' => 'WC_Gateway_YouCanPay_Standalone',
-            'YouCan Pay Cash Plus' => 'WC_Gateway_YouCanPay_Standalone',
+            'YouCan Pay Cash Plus' => 'WC_Gateway_YouCanPay_Cash_Plus',
         ];
     }
 
