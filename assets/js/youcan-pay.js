@@ -7,7 +7,7 @@ window.setupYouCanPayForm = () => {
                 window.ycPay.setSandboxMode(true);
             }
         }
-        window.ycPay.renderForm('#payment-card', 'default');
+        window.ycPay.renderAvailableGateways('#payment-card', 'default');
     } catch (error) {
         console.error(error);
     }
@@ -38,6 +38,9 @@ jQuery(function ($) {
                     }
                 }, 500);
 
+                //TODO: need to manage this step by selected gateway
+                console.log('window.ycPay.selectedGateway: ' + window.ycPay.selectedGateway);
+
                 window.ycPay.pay(data.token_transaction)
                     .then(function (transactionId) {
                         detach_loader($form, loader);
@@ -65,6 +68,8 @@ jQuery(function ($) {
                 console.error(error);
             }
         }
+
+        detach_loader($form);
     }
 
     function display_notices($form, data) {

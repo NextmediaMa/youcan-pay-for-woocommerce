@@ -1,7 +1,5 @@
 <?php
 
-use YouCan\Pay\Models\Token;
-
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -51,7 +49,6 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
     {
         $this->id = self::ID;
         $this->method_title = __('YouCan Pay Standalone', 'youcan-pay');
-        /* translators: link */
         $this->method_description = sprintf(
             __('All other general YouCan Pay settings can be adjusted <a href="%s">here</a>.', 'youcan-pay'),
             admin_url('admin.php?page=wc-settings&tab=checkout&section=youcanpay')
@@ -106,9 +103,7 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
     public function get_icon()
     {
         $icons = $this->payment_icons();
-
-        $icons_str = '';
-        $icons_str .= $icons['standalone'] ?? '';
+        $icons_str = $icons['standalone'] ?? '';
 
         return apply_filters('woocommerce_gateway_icon', $icons_str, $this->id);
     }
@@ -142,13 +137,11 @@ class WC_Gateway_YouCanPay_Standalone extends WC_YouCanPay_Payment_Gateway
      */
     public function payment_fields()
     {
-        $description = $this->get_description();
-        $description = !empty($description) ? $description : '';
-
         ob_start();
 
         echo '<div id="youcanpay-payment-data-standalone">';
 
+        $description = $this->get_description() ?? '';
         $description = trim($description);
         echo wpautop(wp_kses_post($description));
 
