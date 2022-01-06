@@ -214,6 +214,9 @@ msgstr "Vous serez redirigé vers YouCan Pay."
 msgid "All other general YouCan Pay settings can be adjusted <a href=\"%s\">here</a>."
 msgstr "Tous les autres paramètres généraux de YouCan Pay peuvent être ajustés <a href=\"%s\">ici</a>."
 
+msgid "All other general Cash Plus settings can be adjusted <a href=\"%s\">here</a>."
+msgstr "Tous les autres paramètres généraux de Cash Plus peuvent être ajustés <a href=\"%s\">ici</a>."
+
 msgid "SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href=\"%s\" target=\"_blank\">Testing YouCan Pay documentation</a> for more card numbers."
 msgstr "SANDBOX MODE ACTIVÉ. En mode sandbox, vous pouvez utiliser le numéro de carte 4242424242424242 avec 112 CVC et la date 10/24 ou vérifier la <a href=\"%s\" target=\"_blank\">YouCan Pay documentation</a> pour plus de numéros de carte."
 
@@ -309,3 +312,18 @@ msgstr "Avertissement : Le webhook en production le plus récent, reçu à %1$s,
 
 msgid "The received webhook token is not equal to the order token"
 msgstr "Le jeton webhook reçu n'est pas égal au jeton de commande"
+
+msgid "Cash Plus"
+msgstr "Cash Plus"
+
+msgid "YouCan Pay Cash Plus"
+msgstr "YouCan Pay Cash Plus"
+
+msgid "Enable Cash Plus"
+msgstr "Activer Cash Plus"
+
+msgid "Get your Cash Plus code"
+msgstr "Obtenez votre code Cash Plus"
+
+msgid "Your Cash Plus Code"
+msgstr "Votre code Cash Plus"

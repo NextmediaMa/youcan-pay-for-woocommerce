@@ -92,6 +92,7 @@ class WC_YouCanPay_Admin_Notices
         return [
             'YouCan Pay' => 'WC_Gateway_YouCanPay',
             'YouCan Pay Standalone' => 'WC_Gateway_YouCanPay_Standalone',
+            'YouCan Pay Cash Plus' => 'WC_Gateway_YouCanPay_Cash_Plus',
         ];
     }
 
@@ -319,6 +320,9 @@ class WC_YouCanPay_Admin_Notices
                     break;
                 case 'YouCan Pay Standalone':
                     update_option('wc_youcanpay_show_youcan_pay_standalone_notice', 'no');
+                    break;
+                case 'YouCan Pay Cash Plus':
+                    update_option('wc_youcanpay_show_youcan_pay_cash_plus_notice', 'no');
                     break;
             }
         }

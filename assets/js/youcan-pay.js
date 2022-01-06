@@ -7,7 +7,15 @@ window.setupYouCanPayForm = () => {
                 window.ycPay.setSandboxMode(true);
             }
         }
-        window.ycPay.renderForm('#payment-card', 'default');
+
+        switch (jQuery('input[name=payment_method]:checked').val()) {
+            case youcan_pay_script_vars.gateways.youcanpay:
+                window.ycPay.renderForm('#payment-card', 'default');
+                break;
+            case youcan_pay_script_vars.gateways.cash_plus:
+                window.ycPay.renderCashPlusForm('#container-cash-plus', 'default');
+                break;
+        }
     } catch (error) {
         console.error(error);
     }
@@ -67,6 +75,41 @@ jQuery(function ($) {
         }
     }
 
+    function create_order_and_process_payment($form) {
+        $.ajax({
+            method: "POST",
+            url: youcan_pay_script_vars.checkout_url,
+            data: $form.serialize(),
+            dataType: "json",
+            beforeSend: function () {
+                try {
+                    $('.woocommerce-NoticeGroup-checkout').remove();
+                    $form.addClass('processing');
+                    $form.block({
+                        message: null,
+                        overlayCSS: {
+                            background: '#fff',
+                            opacity: 0.6
+                        }
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        }).done(function (data) {
+            if (!display_notices($form, data)) {
+                process_payment($form, data);
+            }
+        }).fail(function (data) {
+
+        }).always(function (data) {
+            if (typeof (data.token_transaction) !== 'undefined') {
+                return;
+            }
+            detach_loader($form);
+        });
+    }
+
     function display_notices($form, data) {
         if (typeof (data.messages) !== 'undefined') {
             let notice = $noticeGroup.clone();
@@ -78,6 +121,10 @@ jQuery(function ($) {
         }
 
         return false;
+    }
+
+    function is_pre_order() {
+        return parseInt(youcan_pay_script_vars.is_pre_order) === parseInt(youcan_pay_script_vars.order_actions.pre_order);
     }
 
     var $noticeGroup = $('<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"></div>');
@@ -94,49 +141,27 @@ jQuery(function ($) {
             return false;
         }
 
-        if ($('input[name=payment_method]:checked').val() === youcan_pay_script_vars.gateway) {
-            if (parseInt(youcan_pay_script_vars.is_pre_order) === parseInt(youcan_pay_script_vars.order_actions.pre_order)) {
-                process_payment($form, {
-                    token_transaction: youcan_pay_script_vars.token_transaction,
-                    redirect: youcan_pay_script_vars.redirect,
-                });
-            } else {
-                $.ajax({
-                    method: "POST",
-                    url: youcan_pay_script_vars.checkout_url,
-                    data: $form.serialize(),
-                    dataType: "json",
-                    beforeSend: function () {
-                        try {
-                            $('.woocommerce-NoticeGroup-checkout').remove();
-                            $form.addClass('processing');
-                            $form.block({
-                                message: null,
-                                overlayCSS: {
-                                    background: '#fff',
-                                    opacity: 0.6
-                                }
-                            });
-                        } catch (error) {
-                            console.error(error);
-                        }
-                    }
-                }).done(function (data) {
-                    if (!display_notices($form, data)) {
-                        process_payment($form, data);
-                    }
-                }).fail(function (data) {
+        switch ($('input[name=payment_method]:checked').val()) {
+            case youcan_pay_script_vars.gateways.youcanpay:
+            case youcan_pay_script_vars.gateways.cash_plus:
+                if (true === is_pre_order()) {
+                    process_payment($form, {
+                        token_transaction: youcan_pay_script_vars.token_transaction,
+                        redirect: youcan_pay_script_vars.redirect,
+                    });
 
-                }).always(function (data) {
-                    if (typeof (data.token_transaction) !== 'undefined') {
-                        return;
-                    }
-                    detach_loader($form);
-                });
-            }
-        } else {
-            $form.submit();
+                    return true;
+                }
+
+                create_order_and_process_payment($form);
+                break;
+            case youcan_pay_script_vars.gateways.standalone:
+                $form.submit();
+                break;
         }
     });
 
+    $(document).on('change', '[name=payment_method]', function (e) {
+        window.setupYouCanPayForm();
+    });
 });

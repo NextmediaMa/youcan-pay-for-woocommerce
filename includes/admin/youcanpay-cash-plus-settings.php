@@ -5,7 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 return apply_filters(
-    'wc_youcanpay_standalone_settings',
+    'wc_youcanpay_cash_plus_settings',
     [
         'guide'       => [
             'description' => __(
@@ -23,7 +23,7 @@ return apply_filters(
         ],
         'enabled'     => [
             'title'       => __('Enable/Disable', 'youcan-pay'),
-            'label'       => __('Enable YouCan Pay Standalone', 'youcan-pay'),
+            'label'       => __('Enable Cash Plus', 'youcan-pay'),
             'type'        => 'checkbox',
             'description' => '',
             'default'     => 'no',
@@ -32,14 +32,14 @@ return apply_filters(
             'title'       => __('Title', 'youcan-pay'),
             'type'        => 'text',
             'description' => __('This controls the title which the user sees during checkout.', 'youcan-pay'),
-            'default'     => __('YouCan Pay Standalone', 'youcan-pay'),
+            'default'     => __('Cash Plus', 'youcan-pay'),
             'desc_tip'    => true,
         ],
         'description' => [
             'title'       => __('Description', 'youcan-pay'),
             'type'        => 'text',
             'description' => __('This controls the description which the user sees during checkout.', 'youcan-pay'),
-            'default'     => __('You will be redirected to YouCan Pay.', 'youcan-pay'),
+            'default'     => __('Copy your code and go to nearest cache plus agency.', 'youcan-pay'),
             'desc_tip'    => true,
         ],
     ]
