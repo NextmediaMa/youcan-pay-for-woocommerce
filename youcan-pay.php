@@ -232,8 +232,6 @@ function woocommerce_gateway_youcanpay() {
 			 */
 			public function add_gateways( $methods ) {
 				$methods[] = $this->get_main_youcanpay_gateway();
-
-				// These payment gateways will always be visible, regardless if UPE is enabled or disabled:
 				$methods[] = WC_Gateway_YouCanPay_Standalone::class;
 				$methods[] = WC_Gateway_YouCanPay_Cash_Plus::class;
 
