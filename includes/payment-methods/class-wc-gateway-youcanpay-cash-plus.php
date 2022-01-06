@@ -1,5 +1,7 @@
 <?php
 
+use YouCan\Pay\Models\Token;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -93,25 +95,7 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
             <?php
             do_action('woocommerce_cash_plus_form_start', $this->id); ?>
 
-            <div class="form-row form-row-wide">
-                <form class="flex justify-center">
-                    <button type="submit">
-                        <?php
-                        echo __('Get your Cash Plus code', 'youcan-pay'); ?>
-                    </button>
-                </form>
-
-                <p class="form-row cash-plus-code-field form-row-wide" id="cash_plus_code_container"
-                   style="display: none">
-                    <label for="cash_plus_code" class=""><?php
-                        echo __('Your Cash Plus Code', 'youcan-pay'); ?></label>
-                    <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text" readonly="readonly" value="" name="cash_plus_code"
-                               id="cash_plus_code">
-					</span>
-                </p>
-
-            </div>
+            <div class="form-row form-row-wide" id="container-cash-plus"></div>
 
             <div class="clear"></div>
 
@@ -202,33 +186,22 @@ class WC_Gateway_YouCanPay_Cash_Plus extends WC_YouCanPay_Payment_Gateway
      * @param int $order_id Reference.
      *
      * @return array
+     * @throws Throwable If payment will not be accepted.
      */
     public function process_payment($order_id)
     {
         try {
-            $order = wc_get_order($order_id);
-
-            $return_url = $this->get_youcanpay_return_url($order, self::ID);
-            $locale = WC_YouCanPay_Helper::get_supported_local(get_locale());
-            //TODO: need to send customer information to YouCan Pay
-            //$customer = $this->get_owner_details($order);
-
-            $token = WC_YouCanPay_API::create_token(
-                $order,
-                $order->get_total(),
-                $order->get_currency(),
-                $return_url
-            );
-
-            $order->update_meta_data('_youcanpay_source_id', $token->getId());
-            $order->save();
-
-            $payment_url = $token->getPaymentURL($locale);
-            $payment_url = esc_url_raw($payment_url);
+            $response = $this->validated_order_and_process_payment($order_id, self::ID);
+            /** @var Token $token */
+            $token = $response['token'];
+            /** @var WC_Order $order */
+            $order = $response['order'];
+            $redirect = $response['redirect'] ?? null;
 
             return [
-                'result'   => 'success',
-                'redirect' => $payment_url,
+                'result'            => 'success',
+                'redirect'          => $redirect,
+                'token_transaction' => $token->getId(),
             ];
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');

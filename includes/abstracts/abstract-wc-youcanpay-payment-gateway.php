@@ -243,4 +243,59 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC {
         });
     }
 
+    /**
+     * @param int $order_id
+     * @param string $gateway
+     *
+     * @return array
+     * @throws WC_YouCanPay_Exception|Throwable
+     */
+    public function validated_order_and_process_payment($order_id, $gateway)
+    {
+        try {
+            $order = wc_get_order($order_id);
+            if (!isset($order)) {
+                WC_YouCanPay_Logger::info('arrived on process payment: order not exists', [
+                    'method'   => 'YouCan Pay (Credit Card)',
+                    'code'     => '#0021',
+                    'order_id' => $order_id,
+                ]);
+
+                throw new WC_YouCanPay_Exception(
+                    'Order not found',
+                    __('Fatal error, please try again or contact support.', 'youcan-pay')
+                );
+            }
+
+            $redirect = $this->get_youcanpay_return_url($order, $gateway);
+
+            $token = WC_YouCanPay_API::create_token(
+                $order,
+                $order->get_total(),
+                $order->get_currency(),
+                $redirect
+            );
+
+            $order->update_meta_data('_youcanpay_source_id', $token->getId());
+            $order->save();
+
+            return [
+                'token'    => $token,
+                'order'    => $order,
+                'redirect' => $redirect,
+            ];
+        } catch (WC_YouCanPay_Exception $e) {
+            WC_YouCanPay_Logger::alert('there was a problem connecting to the YouCan Pay API endpoint', [
+                'order_id' => $order_id,
+                'message'  => $e->getLocalizedMessage(),
+            ]);
+            throw new WC_YouCanPay_Exception($e->getMessage(), $e->getLocalizedMessage());
+        } catch (Throwable $e) {
+            WC_YouCanPay_Logger::alert('throwable at request exists into wc youcan pay api', [
+                'exception.message' => $e->getMessage(),
+            ]);
+            throw new Exception($e->getMessage());
+        }
+    }
+
 }
