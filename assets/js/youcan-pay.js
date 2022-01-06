@@ -164,5 +164,4 @@ jQuery(function ($) {
     $(document).on('change', '[name=payment_method]', function (e) {
         window.setupYouCanPayForm();
     });
-
 });
