@@ -207,20 +207,20 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
             ];
 
-            if (array_key_exists('order-pay', $_GET)) {
-                $order_id = wc_sanitize_order_id($_GET['order-pay']);
+            global $wp;
+
+            if (isset($wp->query_vars['order-pay']) && absint($wp->query_vars['order-pay']) > 0) {
+                $order_id = wc_sanitize_order_id($wp->query_vars['order-pay']);
                 $response = $this->validated_order_and_process_payment($order_id, self::ID);
                 /** @var Token $token */
                 $token = $response['token'];
                 /** @var WC_Order $order */
                 $order = $response['order'];
-                $redirect = $response['redirect'] ?? null;
 
                 $youcanpay_params['token_transaction'] = $token->getId();
                 $youcanpay_params['is_pre_order'] = WC_YouCanPay_Order_Action_Enum::get_pre_order();
-                $youcanpay_params['redirect'] = $redirect;
+                $youcanpay_params['redirect'] = $response['redirect'] ?? null;
             }
-
             return $youcanpay_params;
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');

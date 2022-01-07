@@ -71,9 +71,11 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
         }
 
         switch (wc_clean(wp_unslash($data['gateway']))) {
-            case WC_Gateway_YouCanPay::ID:
+            case WC_YouCanPay_Gateways_Enum::get_credit_cart():
                 return $this->youcanpay_credit_card();
-            case WC_Gateway_YouCanPay_Standalone::ID:
+            case WC_YouCanPay_Gateways_Enum::get_cash_plus():
+                return $this->youcanpay_cash_plus();
+            case WC_YouCanPay_Gateways_Enum::get_standalone():
                 return $this->youcanpay_standalone();
         }
 
@@ -290,6 +292,62 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
 
             return wp_redirect(wp_sanitize_redirect(esc_url_raw($checkout_url)));
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function youcanpay_cash_plus()
+    {
+        $transaction_id = null;
+        $transaction = null;
+        $action = WC_YouCanPay_Order_Action_Enum::get_incomplete();
+        $all_actions = WC_YouCanPay_Order_Action_Enum::get_values();
+
+        if (array_key_exists('action', $_GET) && (in_array($_GET['action'], $all_actions))) {
+            $action = $_GET['action'];
+        }
+
+        if (array_key_exists('transaction_id', $_GET)) {
+            $transaction_id = wc_clean(wp_unslash($_GET['transaction_id']));
+            $transaction = WC_YouCanPay_API::get_transaction($transaction_id);
+        }
+
+        $checkout_url = $this->get_checkout_url_by_action($action);
+
+        if (!isset($transaction)) {
+            WC_YouCanPay_Logger::info('arrived on process payment: transaction not exists', [
+                'payment_method' => 'YouCan Pay (Cash Plus)',
+                'code'           => '#0023',
+                'transaction_id' => $transaction_id,
+            ]);
+
+            wc_add_notice(__('Please try again, This payment has been canceled!', 'youcan-pay'), 'error');
+
+            return wp_redirect(wp_sanitize_redirect(esc_url_raw($checkout_url)));
+        }
+
+        $order = wc_get_order($transaction->getOrderId());
+        if (!isset($order)) {
+            WC_YouCanPay_Logger::info('arrived on process payment: order not exists', [
+                'payment_method' => 'YouCan Pay (Cash Plus)',
+                'code'           => '#0024',
+                'transaction_id' => $transaction_id,
+                'order_id'       => $order->get_id(),
+            ]);
+
+            wc_add_notice(__('Fatal error, please try again or contact support.', 'youcan-pay'), 'error');
+
+            return wp_redirect(wp_sanitize_redirect(esc_url_raw(get_home_url())));
+        }
+
+        if (isset(WC()->cart)) {
+            WC()->cart->empty_cart();
+        }
+
+        wc_add_notice(__('Please pay for your order at a Cash Plus agency.', 'youcan-pay'));
+
+        return wp_redirect(wp_sanitize_redirect(esc_url_raw($order->get_checkout_payment_url())));
     }
 
     /**
