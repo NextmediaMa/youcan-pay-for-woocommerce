@@ -51,7 +51,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     {
         $this->id = self::ID;
         $this->method_title = __('YouCan Pay', 'youcan-pay');
-        /* translators: 1) link to YouCan Pay register page 2) link to YouCan Pay api keys page */
         $this->method_description = __(
             'YouCan Pay works by adding payment fields on the checkout and then sending the details to YouCan Pay for verification.',
             'youcan-pay'
@@ -134,21 +133,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      */
     public function payment_fields()
     {
-        $description = $this->get_description();
-        $description = !empty($description) ? $description : '';
-
         ob_start();
 
         echo '<div id="youcanpay-payment-data-credit-card">';
 
-        if ($this->sandbox_mode) {
-            $text = __(
-                'SANDBOX MODE ENABLED. In sandbox mode, you can use the card number 4242424242424242 with 112 CVC and 10/24 date or check the <a href="%s" target="_blank">Testing YouCan Pay documentation</a> for more card numbers.',
-                'youcan-pay'
-            );
-            $description .= ' ' . sprintf($text, 'https://pay.youcan.shop/docs#testing-and-test-cards');
-        }
-
+        $description = $this->get_description() ?? '';
         $description = trim($description);
         echo wpautop(wp_kses_post($description));
 
@@ -218,19 +207,20 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
             ];
 
-            if (array_key_exists('order-pay', $_GET)) {
-                $response = $this->validated_order_and_process_payment(wc_sanitize_order_id($_GET['order-pay']));
+            global $wp;
+
+            if (isset($wp->query_vars['order-pay']) && absint($wp->query_vars['order-pay']) > 0) {
+                $order_id = wc_sanitize_order_id($wp->query_vars['order-pay']);
+                $response = $this->validated_order_and_process_payment($order_id, self::ID);
                 /** @var Token $token */
                 $token = $response['token'];
                 /** @var WC_Order $order */
                 $order = $response['order'];
-                $redirect = $response['redirect'] ?? null;
 
                 $youcanpay_params['token_transaction'] = $token->getId();
                 $youcanpay_params['is_pre_order'] = WC_YouCanPay_Order_Action_Enum::get_pre_order();
-                $youcanpay_params['redirect'] = $redirect;
+                $youcanpay_params['redirect'] = $response['redirect'] ?? null;
             }
-
             return $youcanpay_params;
         } catch (WC_YouCanPay_Exception $e) {
             wc_add_notice($e->getLocalizedMessage(), 'error');
@@ -295,8 +285,8 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
             $extension = '.min.js';
         }
 
-        wp_enqueue_script('py-script', WC_YouCanPay_Api_Enum::get_javascript_url());
-        wp_enqueue_script('youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . '/assets/js/youcan-pay' . $extension);
+        wp_enqueue_script('py-script', WC_YouCanPay_Api_Enum::get_javascript_url(), [], WC_YOUCAN_PAY_VERSION);
+        wp_enqueue_script('youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . '/assets/js/youcan-pay' . $extension, [], WC_YOUCAN_PAY_VERSION);
         wp_localize_script('py-script', 'youcan_pay_script_vars', $this->javascript_params());
     }
 
@@ -311,7 +301,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     public function process_payment($order_id)
     {
         try {
-            $response = $this->validated_order_and_process_payment($order_id);
+            $response = $this->validated_order_and_process_payment($order_id, self::ID);
             /** @var Token $token */
             $token = $response['token'];
             /** @var WC_Order $order */
@@ -337,60 +327,6 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
             'result'   => 'fail',
             'redirect' => '',
         ];
-    }
-
-    /**
-     * @param $order_id
-     *
-     * @return array
-     * @throws WC_YouCanPay_Exception|Throwable
-     */
-    public function validated_order_and_process_payment($order_id)
-    {
-        try {
-            $order = wc_get_order($order_id);
-            if (!isset($order)) {
-                WC_YouCanPay_Logger::info('arrived on process payment: order not exists', [
-                    'method'   => 'YouCan Pay (Credit Card)',
-                    'code'     => '#0021',
-                    'order_id' => $order_id,
-                ]);
-
-                throw new WC_YouCanPay_Exception(
-                    'Order not found',
-                    __('Fatal error, please try again or contact support.', 'youcan-pay')
-                );
-            }
-
-            $redirect = $this->get_youcanpay_return_url($order, self::ID);
-
-            $token = WC_YouCanPay_API::create_token(
-                $order,
-                $order->get_total(),
-                $order->get_currency(),
-                $redirect
-            );
-
-            $order->update_meta_data('_youcanpay_source_id', $token->getId());
-            $order->save();
-
-            return [
-                'token'    => $token,
-                'order'    => $order,
-                'redirect' => $redirect,
-            ];
-        } catch (WC_YouCanPay_Exception $e) {
-            WC_YouCanPay_Logger::alert('there was a problem connecting to the YouCan Pay API endpoint', [
-                'order_id' => $order_id,
-                'message'  => $e->getLocalizedMessage(),
-            ]);
-            throw new WC_YouCanPay_Exception($e->getMessage(), $e->getLocalizedMessage());
-        } catch (Throwable $e) {
-            WC_YouCanPay_Logger::alert('throwable at request exists into wc youcan pay api', [
-                'exception.message' => $e->getMessage(),
-            ]);
-            throw new Exception($e->getMessage());
-        }
     }
 
     /**

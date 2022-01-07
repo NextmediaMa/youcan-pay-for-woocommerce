@@ -7,13 +7,18 @@ window.setupYouCanPayForm = () => {
                 window.ycPay.setSandboxMode(true);
             }
         }
-        window.ycPay.renderForm('#payment-card', 'default');
+        window.ycPay.renderAvailableGateways('#payment-card', 'default');
     } catch (error) {
         console.error(error);
     }
 };
 
 jQuery(function ($) {
+    var gateways = {
+        'credit_card': 1,
+        'cash_plus': 2,
+    };
+
     function detach_loader($form, loader) {
         $('html, body').animate({
             scrollTop: $('.woocommerce').offset().top
@@ -42,13 +47,12 @@ jQuery(function ($) {
                     .then(function (transactionId) {
                         detach_loader($form, loader);
 
-                        if (typeof (data.redirect_url) !== 'undefined') {
-                            window.location.href = data.redirect_url;
-                            return;
-                        }
                         if (typeof (data.redirect) !== 'undefined') {
                             let url = new URL(data.redirect);
                             url.searchParams.set('transaction_id', transactionId);
+                            if (gateways.cash_plus === parseInt(window.ycPay.selectedGateway)) {
+                                url.searchParams.set('gateway', 'cash_plus');
+                            }
                             window.location.href = url.href;
                         }
                     })
@@ -65,6 +69,8 @@ jQuery(function ($) {
                 console.error(error);
             }
         }
+
+        detach_loader($form);
     }
 
     function display_notices($form, data) {

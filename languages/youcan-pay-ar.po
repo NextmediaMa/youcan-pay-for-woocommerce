@@ -46,8 +46,8 @@ msgstr "الوصف"
 msgid "This controls the description which the user sees during checkout."
 msgstr "يتحكم هذا في الوصف الذي يراه المستخدم أثناء عملية الدفع."
 
-msgid "Pay with your credit card via YouCan Pay."
-msgstr "ادفع ببطاقتك الائتمانية عبر YouCan Pay."
+msgid "Pay with your credit card or Cash Plus via YouCan Pay."
+msgstr "ادفع ببطاقتك الائتمانية او عبر Cash Plus."
 
 msgid "Sandbox mode"
 msgstr "وضع Sandbox"
@@ -196,8 +196,8 @@ msgstr "باستخدام هذا البرنامج الإضافي ، قد تقوم
 msgid "Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)"
 msgstr "معرف الطلب %d أقل من أيام الاحتفاظ المحددة. الاحتفاظ بالبيانات الشخصية. (YouCan Pay)"
 
-msgid "Credit Card (YouCan Pay)"
-msgstr "بطاقة الائتمان (YouCan Pay)"
+msgid "YouCan Pay (Gateways)"
+msgstr "YouCan Pay"
 
 msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
 msgstr "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">دليل طريقة الدفع</a>"

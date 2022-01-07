@@ -21,7 +21,7 @@ $youcanpay_settings = apply_filters(
                 'This controls the title which the user sees during checkout.',
                 'youcan-pay'
             ),
-            'default'     => __('Credit Card (YouCan Pay)', 'youcan-pay'),
+            'default'     => __('YouCan Pay (Gateways)', 'youcan-pay'),
             'desc_tip'    => true,
         ],
         'description'                  => [
@@ -31,7 +31,7 @@ $youcanpay_settings = apply_filters(
                 'This controls the description which the user sees during checkout.',
                 'youcan-pay'
             ),
-            'default'     => __('Pay with your credit card via YouCan Pay.', 'youcan-pay'),
+            'default'     => __('Pay with your credit card or Cash Plus via YouCan Pay.', 'youcan-pay'),
             'desc_tip'    => true,
         ],
         'sandbox_mode'                 => [
@@ -75,11 +75,6 @@ $youcanpay_settings = apply_filters(
             'default'     => '',
             'desc_tip'    => true,
         ],
-        'webhook'                      => [
-            'title'       => __('Webhook Endpoints', 'youcan-pay'),
-            'type'        => 'title',
-            'description' => $this->display_admin_settings_webhook_description(),
-        ],
         'private_key'                  => [
             'title'       => __('Production Private key', 'youcan-pay'),
             'type'        => 'password',
@@ -89,6 +84,11 @@ $youcanpay_settings = apply_filters(
             ),
             'default'     => '',
             'desc_tip'    => true,
+        ],
+        'webhook'                      => [
+            'title'       => __('Webhook Endpoints', 'youcan-pay'),
+            'type'        => 'title',
+            'description' => $this->display_admin_settings_webhook_description(),
         ],
         'payment_request_button_type'  => [
             'title'       => __('Payment Request Button Type', 'youcan-pay'),

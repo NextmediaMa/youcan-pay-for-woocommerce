@@ -46,8 +46,8 @@ msgstr "Description"
 msgid "This controls the description which the user sees during checkout."
 msgstr "Ceci détermine la description que les utilisateurs verront durant le réglement."
 
-msgid "Pay with your credit card via YouCan Pay."
-msgstr "Payez avec votre carte de crédit via YouCan Pay."
+msgid "Pay with your credit card or Cash Plus via YouCan Pay."
+msgstr "Payez avec votre carte de crédit ou Cash Plus via YouCan Pay."
 
 msgid "Sandbox mode"
 msgstr "Sandbox mode"
@@ -196,8 +196,8 @@ msgstr "En utilisant cette extension, vous pouvez stocker des données personnel
 msgid "Order ID %d is less than set retention days. Personal data retained. (YouCan Pay)"
 msgstr "L’ID de commande %d est inférieur aux jours de rétention définis. Données personnelles conservées. (Vous pouvez payer)"
 
-msgid "Credit Card (YouCan Pay)"
-msgstr "Carte de crédit (YouCan Pay)"
+msgid "YouCan Pay (Gateways)"
+msgstr "YouCan Pay (Passerelles)"
 
 msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
 msgstr "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Guide de méthode de paiement </a>"
