@@ -173,8 +173,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                     'order_id'       => $order->get_id(),
                     'order_total'    => $order->get_total(),
                 ]);
-
-                $order->set_payment_method($payment_method_name);
+                
                 $order->payment_complete($transaction->get_id());
 
                 $order->update_meta_data('_youcanpay_source_id', $transaction->get_id());
