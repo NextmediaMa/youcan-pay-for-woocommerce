@@ -43,25 +43,16 @@ jQuery(function ($) {
                     }
                 }, 500);
 
-                //TODO: need to manage this step by selected gateway
-                console.log('window.ycPay.selectedGateway: ' + window.ycPay.selectedGateway);
-
                 window.ycPay.pay(data.token_transaction)
                     .then(function (transactionId) {
                         detach_loader($form, loader);
 
-                        console.log("i'm here 1!");
-
                         if (typeof (data.redirect) !== 'undefined') {
-                            console.log('i\'m here 2!');
-                            console.log('transaction_id', transactionId);
-
                             let url = new URL(data.redirect);
                             url.searchParams.set('transaction_id', transactionId);
                             if (gateways.cash_plus === parseInt(window.ycPay.selectedGateway)) {
                                 url.searchParams.set('gateway', 'cash_plus');
                             }
-                            console.log('url', url.href);
                             window.location.href = url.href;
                         }
                     })
