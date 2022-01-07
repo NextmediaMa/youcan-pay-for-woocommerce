@@ -64,29 +64,6 @@ jQuery(function ($) {
                             console.log('url', url.href);
                             window.location.href = url.href;
                         }
-
-                        /*switch (parseInt(window.ycPay.selectedGateway)) {
-                            case gateways.credit_card:
-                                if (typeof (data.redirect_url) !== 'undefined') {
-                                    window.location.href = data.redirect_url;
-                                    return;
-                                }
-                                if (typeof (data.redirect) !== 'undefined') {
-                                    let url = new URL(data.redirect);
-                                    url.searchParams.set('transaction_id', transactionId);
-                                    window.location.href = url.href;
-                                }
-                                break;
-                            case gateways.cash_plus:
-                                console.log(transactionId);
-                                if (typeof (data.redirect) !== 'undefined') {
-                                    let url = new URL(data.redirect);
-                                    url.searchParams.set('transaction_id', transactionId);
-                                    url.searchParams.set('is_cash_plus', '1');
-                                    window.location.href = url.href;
-                                }
-                                break;
-                        }*/
                     })
                     .catch(function (errorMessage) {
                         detach_loader($form, loader);
