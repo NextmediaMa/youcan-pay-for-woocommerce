@@ -122,10 +122,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
             $payment_method = new WC_YouCanPay_Payment_Method_Model($data['payload']['payment_method']);
             $payment_method_name = sprintf(__('YouCan Pay (%s)', 'youcan-pay'), $payment_method->get_name());
 
-            if (WC_YouCanPay_Payment_Method_Model::PAYMENT_METHOD_CASH_PLUS != $payment_method->get_name()) {
-                return false;
-            }
-
             if (!isset($token)) {
                 WC_YouCanPay_Logger::info('arrived on process payment: token not exists', [
                     'payment_method' => $payment_method_name,
@@ -177,9 +173,6 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                     'order_id'       => $order->get_id(),
                     'order_total'    => $order->get_total(),
                 ]);
-
-                //TODO: Need to using WC_YouCanPay_Helper::set_payment_method_to_order() instead of $order->set_payment_method()
-                //WC_YouCanPay_Helper::set_payment_method_to_order( $order, WC_Gateway_YouCanPay::ID );
 
                 $order->set_payment_method($payment_method_name);
                 $order->payment_complete($transaction->get_id());
