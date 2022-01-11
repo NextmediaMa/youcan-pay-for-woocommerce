@@ -18,6 +18,7 @@ jQuery(function ($) {
         'credit_card': 1,
         'cash_plus': 2,
     };
+    var $notice_group = $('<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"></div>');
 
     function detach_loader($form, loader) {
         $('html, body').animate({
@@ -63,7 +64,7 @@ jQuery(function ($) {
                             errorMessage = youcan_pay_script_vars.errors.connexion_api;
                         }
 
-                        let notice = $noticeGroup.clone();
+                        let notice = $notice_group.clone();
                         notice.append('<ul class="woocommerce-error" role="alert"></ul>');
                         notice.find('ul').append('<li>' + errorMessage + '</li>');
                         $form.prepend(notice);
@@ -79,7 +80,7 @@ jQuery(function ($) {
 
     function display_notices($form, data) {
         if (typeof (data.messages) !== 'undefined') {
-            let notice = $noticeGroup.clone();
+            let notice = $notice_group.clone();
 
             notice.append(data.messages);
             $form.prepend(notice);
@@ -88,6 +89,47 @@ jQuery(function ($) {
         }
 
         return false;
+    }
+
+    function capitalize_words(str) {
+        let i, frags = str.split('_');
+        for (i=0; i<frags.length; i++) {
+            frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+        }
+
+        return frags.join(' ');
+    }
+
+    function validate_form($form, callback) {
+        let has_error = false;
+        $('.woocommerce-NoticeGroup').remove();
+
+        $form.find('.validate-required').each(function (index, row) {
+            let $row = $(row);
+            let $input = $row.find('input');
+            let type = $input.attr('type');
+            let value = $input.val();
+
+            switch (type) {
+                case 'checkbox':
+                    has_error = !$input.is(':checked');
+                    break;
+                case 'text':
+                    has_error = (value.length < 1);
+                    break;
+            }
+
+            if (has_error === true) {
+                detach_loader($form);
+                callback(has_error, $input);
+
+                return false;
+            }
+        });
+
+        if (has_error === false) {
+            callback(false, null);
+        }
     }
 
     function create_order_and_process_payment($form) {
@@ -129,8 +171,6 @@ jQuery(function ($) {
         return parseInt(youcan_pay_script_vars.is_pre_order) === parseInt(youcan_pay_script_vars.order_actions.pre_order);
     }
 
-    var $noticeGroup = $('<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"></div>');
-
     $(document).on('click', '#place_order', function (e) {
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -144,22 +184,34 @@ jQuery(function ($) {
             return false;
         }
 
-        let selected_gateway = $('input[name=payment_method]:checked').val();
+        validate_form($form, function (has_error, $input) {
+            if (has_error === true) {
+                let name = $input.attr('name');
+                let error_message = capitalize_words(name) + ' is a required field.';
 
-        if (selected_gateway === youcan_pay_script_vars.gateway) {
-            if (true === is_pre_order()) {
-                process_payment($form, {
-                    token_transaction: youcan_pay_script_vars.token_transaction,
-                    redirect: youcan_pay_script_vars.redirect,
-                });
-            } else {
-                create_order_and_process_payment();
+                let notice = $notice_group.clone();
+                notice.append('<ul class="woocommerce-error" role="alert"></ul>');
+                notice.find('ul').append('<li>' + error_message + '</li>');
+                $form.prepend(notice);
+
+                return false;
             }
 
-            return true;
-        }
+            let selected_gateway = $('input[name=payment_method]:checked').val();
+            if (selected_gateway === youcan_pay_script_vars.gateway) {
+                if (true === is_pre_order()) {
+                    process_payment($form, {
+                        token_transaction: youcan_pay_script_vars.token_transaction,
+                        redirect: youcan_pay_script_vars.redirect,
+                    });
+                } else {
+                    create_order_and_process_payment($form);
+                }
 
-        $form.submit();
+                return true;
+            }
+
+            $form.submit();
+        });
     });
-
 });
