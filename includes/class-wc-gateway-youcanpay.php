@@ -205,6 +205,9 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
                 'is_test_mode'  => $this->is_in_test_mode(),
                 'is_pre_order'  => 0,
                 'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
+                'errors'        => [
+                        'connexion_api' => __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
+                ],
             ];
 
             global $wp;
