@@ -21,9 +21,15 @@ jQuery(function ($) {
     var $notice_group = $('<div class="woocommerce-NoticeGroup woocommerce-NoticeGroup-checkout"></div>');
 
     function detach_loader($form, loader) {
+        let target = '.woocommerce';
+        if (gateways.cash_plus === parseInt(window.ycPay.selectedGateway)) {
+            target = '.wc_payment_methods';
+        }
+
         $('html, body').animate({
-            scrollTop: $('.woocommerce').offset().top
+            scrollTop: $(target).offset().top
         }, 400);
+
         $('.blockOverlay').remove();
         $('.woocommerce-notices-wrapper').remove();
         $form.removeClass('processing');
@@ -45,29 +51,21 @@ jQuery(function ($) {
                 }, 500);
 
                 window.ycPay.pay(data.token_transaction)
-                    .then(function (transactionId) {
+                    .then(function (transaction_id) {
                         detach_loader($form, loader);
 
                         if (typeof (data.redirect) !== 'undefined') {
                             let url = new URL(data.redirect);
-                            url.searchParams.set('transaction_id', transactionId);
+                            url.searchParams.set('transaction_id', transaction_id);
                             if (gateways.cash_plus === parseInt(window.ycPay.selectedGateway)) {
                                 url.searchParams.set('gateway', 'cash_plus');
                             }
                             window.location.href = url.href;
                         }
                     })
-                    .catch(function (errorMessage) {
+                    .catch(function (error_message) {
                         detach_loader($form, loader);
-
-                        if ((errorMessage === null) || (errorMessage.length < 1)) {
-                            errorMessage = youcan_pay_script_vars.errors.connexion_api;
-                        }
-
-                        let notice = $notice_group.clone();
-                        notice.append('<ul class="woocommerce-error" role="alert"></ul>');
-                        notice.find('ul').append('<li>' + errorMessage + '</li>');
-                        $form.prepend(notice);
+                        display_notice($form, error_message);
                     });
             } catch (error) {
                 detach_loader($form, loader);
@@ -76,6 +74,17 @@ jQuery(function ($) {
         }
 
         detach_loader($form);
+    }
+
+    function display_notice($form, message) {
+        if ((message === null) || (message.length < 1)) {
+            message = youcan_pay_script_vars.errors.connexion_api;
+        }
+
+        let notice = $notice_group.clone();
+        notice.append('<ul class="woocommerce-error" role="alert"></ul>');
+        notice.find('ul').append('<li>' + message + '</li>');
+        $form.prepend(notice);
     }
 
     function display_notices($form, data) {
@@ -189,10 +198,7 @@ jQuery(function ($) {
                 let name = $input.attr('name');
                 let error_message = capitalize_words(name) + ' is a required field.';
 
-                let notice = $notice_group.clone();
-                notice.append('<ul class="woocommerce-error" role="alert"></ul>');
-                notice.find('ul').append('<li>' + error_message + '</li>');
-                $form.prepend(notice);
+                display_notice($form, error_message);
 
                 return false;
             }
