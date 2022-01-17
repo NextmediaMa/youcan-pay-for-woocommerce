@@ -119,20 +119,22 @@ jQuery(function ($) {
             let type = $input.attr('type');
             let value = $input.val();
 
-            switch (type) {
-                case 'checkbox':
-                    has_error = !$input.is(':checked');
-                    break;
-                case 'text':
-                    has_error = (value.length < 1);
-                    break;
-            }
+            if ($input.is(':visible')) {
+                switch (type) {
+                    case 'checkbox':
+                        has_error = !$input.is(':checked');
+                        break;
+                    case 'text':
+                        has_error = (value.length < 1);
+                        break;
+                }
 
-            if (has_error === true) {
-                detach_loader($form);
-                callback(has_error, $input);
+                if (has_error === true) {
+                    detach_loader($form);
+                    callback(has_error, $input);
 
-                return false;
+                    return false;
+                }
             }
         });
 
