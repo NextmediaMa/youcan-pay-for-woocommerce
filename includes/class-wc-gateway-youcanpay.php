@@ -196,19 +196,25 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     public function javascript_params()
     {
         try {
-            $youcanpay_params = [
-                'title'         => $this->title,
-                'key'           => $this->public_key,
-                'gateway'       => self::ID,
-                'locale'        => WC_YouCanPay_Helper::get_supported_local(get_locale()),
-                'checkout_url'  => WC_YouCanPay_Helper::get_ajax_checkout_url(),
-                'is_test_mode'  => $this->is_in_test_mode(),
-                'is_pre_order'  => 0,
-                'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
-                'errors'        => [
-                        'connexion_api' => __('There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay')
-                ],
-            ];
+	        $youcanpay_params = [
+		        'title' => $this->title,
+		        'key' => $this->public_key,
+		        'default_gateway' => self::ID,
+		        'gateways' => [
+			        WC_YouCanPay_Gateways_Enum::get_youcan_pay(),
+			        WC_YouCanPay_Gateways_Enum::get_cash_plus(),
+			        WC_YouCanPay_Gateways_Enum::get_standalone(),
+		        ],
+		        'locale' => WC_YouCanPay_Helper::get_supported_local( get_locale() ),
+		        'checkout_url' => WC_YouCanPay_Helper::get_ajax_checkout_url(),
+		        'is_test_mode' => $this->is_in_test_mode(),
+		        'is_pre_order' => 0,
+		        'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
+		        'errors' => [
+			        'connexion_api' => __( 'There was a problem connecting to the YouCan Pay API endpoint.',
+			                               'youcan-pay' ),
+		        ],
+	        ];
 
             global $wp;
 

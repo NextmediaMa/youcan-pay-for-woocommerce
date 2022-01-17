@@ -113,6 +113,14 @@ jQuery(function ($) {
         let has_error = false;
         $('.woocommerce-NoticeGroup').remove();
 
+        let selected_gateway = $('input[name=payment_method]:checked').val();
+
+        if (!youcan_pay_script_vars.gateways.includes(selected_gateway)) {
+            callback(false, null);
+
+            return false;
+        }
+
         $form.find('.validate-required').each(function (index, row) {
             let $row = $(row);
             let $input = $row.find('input');
@@ -206,7 +214,7 @@ jQuery(function ($) {
             }
 
             let selected_gateway = $('input[name=payment_method]:checked').val();
-            if (selected_gateway === youcan_pay_script_vars.gateway) {
+            if (selected_gateway === youcan_pay_script_vars.default_gateway) {
                 if (true === is_pre_order()) {
                     process_payment($form, {
                         token_transaction: youcan_pay_script_vars.token_transaction,
