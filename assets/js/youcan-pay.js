@@ -22,7 +22,7 @@ jQuery(function ($) {
 
     function detach_loader($form, loader) {
         let target = '.woocommerce';
-        if (gateways.cash_plus === parseInt(window.ycPay.selectedGateway)) {
+        if ((window.ycPay !== null) && (gateways.cash_plus === parseInt(window.ycPay.selectedGateway))) {
             target = '.wc_payment_methods';
         }
 
@@ -113,26 +113,36 @@ jQuery(function ($) {
         let has_error = false;
         $('.woocommerce-NoticeGroup').remove();
 
+        let selected_gateway = $('input[name=payment_method]:checked').val();
+
+        if (!youcan_pay_script_vars.gateways.includes(selected_gateway)) {
+            callback(false, null);
+
+            return false;
+        }
+
         $form.find('.validate-required').each(function (index, row) {
             let $row = $(row);
             let $input = $row.find('input');
             let type = $input.attr('type');
             let value = $input.val();
 
-            switch (type) {
-                case 'checkbox':
-                    has_error = !$input.is(':checked');
-                    break;
-                case 'text':
-                    has_error = (value.length < 1);
-                    break;
-            }
+            if ($input.is(':visible')) {
+                switch (type) {
+                    case 'checkbox':
+                        has_error = !$input.is(':checked');
+                        break;
+                    case 'text':
+                        has_error = (value.length < 1);
+                        break;
+                }
 
-            if (has_error === true) {
-                detach_loader($form);
-                callback(has_error, $input);
+                if (has_error === true) {
+                    detach_loader($form);
+                    callback(has_error, $input);
 
-                return false;
+                    return false;
+                }
             }
         });
 
@@ -204,7 +214,7 @@ jQuery(function ($) {
             }
 
             let selected_gateway = $('input[name=payment_method]:checked').val();
-            if (selected_gateway === youcan_pay_script_vars.gateway) {
+            if (selected_gateway === youcan_pay_script_vars.default_gateway) {
                 if (true === is_pre_order()) {
                     process_payment($form, {
                         token_transaction: youcan_pay_script_vars.token_transaction,
