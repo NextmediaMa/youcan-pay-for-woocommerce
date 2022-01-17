@@ -8,7 +8,7 @@ class WC_YouCanPay_Gateways_Enum
 {
 
     /** @var string */
-    private static $credit_cart = 'credit_cart';
+    private static $youcan_pay = 'youcanpay';
 
     /** @var string */
     private static $cash_plus = 'cash_plus';
@@ -22,16 +22,16 @@ class WC_YouCanPay_Gateways_Enum
     public static function get_all(): array
     {
         return [
-            self::$credit_cart,
+            self::$youcan_pay,
             self::$cash_plus,
         ];
     }
     /**
      * @return string
      */
-    public static function get_credit_cart(): string
+    public static function get_youcan_pay(): string
     {
-        return self::$credit_cart;
+        return self::$youcan_pay;
     }
 
     /**

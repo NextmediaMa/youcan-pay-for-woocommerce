@@ -71,7 +71,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
         }
 
         switch (wc_clean(wp_unslash($data['gateway']))) {
-            case WC_YouCanPay_Gateways_Enum::get_credit_cart():
+            case WC_YouCanPay_Gateways_Enum::get_youcan_pay():
                 return $this->youcanpay_credit_card();
             case WC_YouCanPay_Gateways_Enum::get_cash_plus():
                 return $this->youcanpay_cash_plus();
