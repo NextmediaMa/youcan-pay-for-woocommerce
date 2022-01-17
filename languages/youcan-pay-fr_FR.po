@@ -309,3 +309,69 @@ msgstr "Avertissement : Le webhook en production le plus récent, reçu à %1$s,
 
 msgid "The received webhook token is not equal to the order token"
 msgstr "Le jeton webhook reçu n'est pas égal au jeton de commande"
+
+msgid "%s is a required field."
+msgstr "%s est un champ obligatoire."
+
+msgid "Billing First Name"
+msgstr "Prénom"
+
+msgid "Billing Last Name"
+msgstr "Nom"
+
+msgid "Billing Company"
+msgstr "Société"
+
+msgid "Billing Country"
+msgstr "Pays"
+
+msgid "Billing Address"
+msgstr "Numéro et nom de rue"
+
+msgid "Billing City"
+msgstr "Ville"
+
+msgid "Billing State"
+msgstr "Région / Département"
+
+msgid "Billing Postcode"
+msgstr "Code postal"
+
+msgid "Billing Phone"
+msgstr "Téléphone"
+
+msgid "Billing Email"
+msgstr "E-mail"
+
+msgid "Ship To Different Address"
+msgstr "Expédier à une adresse différente"
+
+msgid "Order Comments"
+msgstr "Notes de commande"
+
+msgid "Shipping First Name"
+msgstr "Prénom d'expédition"
+
+msgid "Shipping Last Name"
+msgstr "Nom de famille d'expédition"
+
+msgid "Shipping Company"
+msgstr "Société d'expédition"
+
+msgid "Shipping Country"
+msgstr "Pays d'expédition"
+
+msgid "Shipping Address"
+msgstr "Numéro et nom de rue d'expédition"
+
+msgid "Shipping City"
+msgstr "Ville d'expédition"
+
+msgid "Shipping State"
+msgstr "Région / Département d'expédition"
+
+msgid "Shipping Postcode"
+msgstr "Code postal d'expédition"
+
+msgid "Terms"
+msgstr "Conditions générales"

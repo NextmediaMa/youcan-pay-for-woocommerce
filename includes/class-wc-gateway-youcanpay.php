@@ -197,22 +197,45 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
     {
         try {
 	        $youcanpay_params = [
-		        'title' => $this->title,
-		        'key' => $this->public_key,
+		        'title'           => $this->title,
+		        'key'             => $this->public_key,
 		        'default_gateway' => self::ID,
-		        'gateways' => [
+		        'gateways'        => [
 			        WC_YouCanPay_Gateways_Enum::get_youcan_pay(),
 			        WC_YouCanPay_Gateways_Enum::get_cash_plus(),
 			        WC_YouCanPay_Gateways_Enum::get_standalone(),
 		        ],
-		        'locale' => WC_YouCanPay_Helper::get_supported_local( get_locale() ),
-		        'checkout_url' => WC_YouCanPay_Helper::get_ajax_checkout_url(),
-		        'is_test_mode' => $this->is_in_test_mode(),
-		        'is_pre_order' => 0,
-		        'order_actions' => WC_YouCanPay_Order_Action_Enum::get_all(),
-		        'errors' => [
-			        'connexion_api' => __( 'There was a problem connecting to the YouCan Pay API endpoint.',
-			                               'youcan-pay' ),
+		        'locale'          => WC_YouCanPay_Helper::get_supported_local( get_locale() ),
+		        'checkout_url'    => WC_YouCanPay_Helper::get_ajax_checkout_url(),
+		        'is_test_mode'    => $this->is_in_test_mode(),
+		        'is_pre_order'    => 0,
+		        'order_actions'   => WC_YouCanPay_Order_Action_Enum::get_all(),
+		        'inputs'          => [
+			        'billing_first_name'        => __( 'Billing First Name', 'youcan-pay' ),
+			        'billing_last_name'         => __( 'Billing Last Name', 'youcan-pay' ),
+			        'billing_company'           => __( 'Billing Company', 'youcan-pay' ),
+			        'billing_country'           => __( 'Billing Country', 'youcan-pay' ),
+			        'billing_address_1'         => __( 'Billing Address', 'youcan-pay' ),
+			        'billing_city'              => __( 'Billing City', 'youcan-pay' ),
+			        'billing_state'             => __( 'Billing State', 'youcan-pay' ),
+			        'billing_postcode'          => __( 'Billing Postcode', 'youcan-pay' ),
+			        'billing_phone'             => __( 'Billing Phone', 'youcan-pay' ),
+			        'billing_email'             => __( 'Billing Email', 'youcan-pay' ),
+			        'ship_to_different_address' => __( 'Ship To Different Address', 'youcan-pay' ),
+			        'order_comments'            => __( 'Order Comments', 'youcan-pay' ),
+			        'terms'                     => __( 'Terms', 'youcan-pay' ),
+			        'shipping_first_name'       => __( 'Shipping First Name', 'youcan-pay' ),
+			        'shipping_last_name'        => __( 'Shipping Last Name', 'youcan-pay' ),
+			        'shipping_company'          => __( 'Shipping Company', 'youcan-pay' ),
+			        'shipping_country'          => __( 'Shipping Country', 'youcan-pay' ),
+			        'shipping_address_1'        => __( 'Shipping Address', 'youcan-pay' ),
+			        'shipping_city'             => __( 'Shipping City', 'youcan-pay' ),
+			        'shipping_state'            => __( 'Shipping State', 'youcan-pay' ),
+			        'shipping_postcode'         => __( 'Shipping Postcode', 'youcan-pay' ),
+		        ],
+		        'errors'          => [
+			        'connexion_api'  => __( 'There was a problem connecting to the YouCan Pay API endpoint.', 'youcan-pay' ),
+			        'input_required' => __( '%s is a required field.', 'youcan-pay' ),
 		        ],
 	        ];
 

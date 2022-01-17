@@ -206,7 +206,8 @@ jQuery(function ($) {
         validate_form($form, function (has_error, $input) {
             if (has_error === true) {
                 let name = $input.attr('name');
-                let error_message = capitalize_words(name) + ' is a required field.';
+                const translated_name = youcan_pay_script_vars.inputs[name];
+                let error_message = youcan_pay_script_vars.errors.input_required.replace('%s', translated_name);
 
                 display_notice($form, error_message);
 

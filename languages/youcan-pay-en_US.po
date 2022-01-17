@@ -309,3 +309,69 @@ msgstr ""
 
 msgid "The received webhook token is not equal to the order token"
 msgstr ""
+
+msgid "%s is a required field."
+msgstr ""
+
+msgid "Billing First Name"
+msgstr ""
+
+msgid "Billing Last Name"
+msgstr ""
+
+msgid "Billing Company"
+msgstr ""
+
+msgid "Billing Country"
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+msgid "Billing City"
+msgstr ""
+
+msgid "Billing State"
+msgstr ""
+
+msgid "Billing Postcode"
+msgstr ""
+
+msgid "Billing Phone"
+msgstr ""
+
+msgid "Billing Email"
+msgstr ""
+
+msgid "Ship To Different Address"
+msgstr ""
+
+msgid "Order Comments"
+msgstr ""
+
+msgid "Shipping First Name"
+msgstr ""
+
+msgid "Shipping Last Name"
+msgstr ""
+
+msgid "Shipping Company"
+msgstr ""
+
+msgid "Shipping Country"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
+msgid "Shipping City"
+msgstr ""
+
+msgid "Shipping State"
+msgstr ""
+
+msgid "Shipping Postcode"
+msgstr ""
+
+msgid "Terms"
+msgstr ""
