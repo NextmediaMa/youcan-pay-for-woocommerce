@@ -22,7 +22,7 @@ jQuery(function ($) {
 
     function detach_loader($form, loader) {
         let target = '.woocommerce';
-        if ((window.ycPay != null) && (gateways.cash_plus === parseInt(window.ycPay.selectedGateway))) {
+        if ((window.ycPay !== null) && (gateways.cash_plus === parseInt(window.ycPay.selectedGateway))) {
             target = '.wc_payment_methods';
         }
 
