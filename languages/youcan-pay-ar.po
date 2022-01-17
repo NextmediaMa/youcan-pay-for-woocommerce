@@ -309,3 +309,69 @@ msgstr "تحذير: تعذرت معالجة أحدث webhooks للإنتاج ، 
 
 msgid "The received webhook token is not equal to the order token"
 msgstr "الرمز الذي تم استلامه من webhook لا يساوي رمز الطلبية"
+
+msgid "%s is a required field."
+msgstr "%s حقل مطلوب."
+
+msgid "Billing First Name"
+msgstr "الاسم الأول"
+
+msgid "Billing Last Name"
+msgstr "الاسم الأخير"
+
+msgid "Billing Company"
+msgstr "الشركة"
+
+msgid "Billing Country"
+msgstr "الدولة"
+
+msgid "Billing Address"
+msgstr "عنوان الشارع / الحي"
+
+msgid "Billing City"
+msgstr "المدينة"
+
+msgid "Billing State"
+msgstr "المنطقة"
+
+msgid "Billing Postcode"
+msgstr "الرمز البريدي / ZIP"
+
+msgid "Billing Phone"
+msgstr "الهاتف"
+
+msgid "Billing Email"
+msgstr "البريد الإلكتروني"
+
+msgid "Ship To Different Address"
+msgstr "الشحن لعنوان مختلف"
+
+msgid "Order Comments"
+msgstr "ملاحظات الطلب"
+
+msgid "Shipping First Name"
+msgstr "الشحن الاسم الأول"
+
+msgid "Shipping Last Name"
+msgstr "الشحن الاسم الأخير"
+
+msgid "Shipping Company"
+msgstr "شركة الشحن"
+
+msgid "Shipping Country"
+msgstr "بلد الشحن"
+
+msgid "Shipping Address"
+msgstr "عنوان الشارع / الحي الشحن"
+
+msgid "Shipping City"
+msgstr "مدينة الشحن"
+
+msgid "Shipping State"
+msgstr "منطقة الشحن"
+
+msgid "Shipping Postcode"
+msgstr "الرمز البريدي للشحن"
+
+msgid "Terms"
+msgstr "الشروط والأحكام"
