@@ -8,7 +8,7 @@ class WC_YouCanPay_Api_Enum
 {
 
     /** @var string */
-    private static $base_url = 'https://pay.youcan.shop';
+    private static $base_url = 'https://youcanpay.com';
 
     /** @var string */
     private static $javascript_path = '/js/ycpay.js';

@@ -2,12 +2,15 @@ window.ycPay = null;
 window.setupYouCanPayForm = () => {
     try {
         if (window.ycPay == null) {
-            window.ycPay = new YCPay(youcan_pay_script_vars.key, {locale: youcan_pay_script_vars.locale});
-            if (parseInt(youcan_pay_script_vars.is_test_mode) === 1) {
-                window.ycPay.setSandboxMode(true);
-            }
+            window.ycPay = new YCPay(
+                youcan_pay_script_vars.key, {
+                    locale: youcan_pay_script_vars.locale,
+                    isSandbox: parseInt(youcan_pay_script_vars.is_test_mode) === 1,
+                    formContainer: '#payment-card'
+                }
+            );
         }
-        window.ycPay.renderAvailableGateways('#payment-card', 'default');
+        window.ycPay.renderAvailableGateways();
     } catch (error) {
         console.error(error);
     }

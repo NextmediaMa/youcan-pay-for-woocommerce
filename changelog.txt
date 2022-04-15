@@ -1,4 +1,7 @@
 *** Changelog ***
+= 2.0.4 - 2022-04-15 =
+* Change main domain for YouCan Pay
+* Fix render available gateways breaking change
 
 = 2.0.3 - 2022-01-03 =
 * Code improvements
