@@ -78,6 +78,13 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The YouCan Pay settings screen used to configure the main YouCan Pay.
 
 == Changelog ==
+= 2.0.5 - 2022-04-19 =
+* Change main domain for YouCan Pay
+* Fix render available gateways breaking change
+
+= 2.0.4 - 2022-04-15 =
+* Change main domain for YouCan Pay
+* Fix render available gateways breaking change
 
 = 2.0.3 - 2022-01-04 =
 * Code improvements
