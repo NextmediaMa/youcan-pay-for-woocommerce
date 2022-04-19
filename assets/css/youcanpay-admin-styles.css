@@ -1,3 +1,6 @@
-body {
+.wc-youcanpay-upe-method-selection .wc-youcanpay-upe-method-selection__name,
+.wc-youcanpay-upe-method-selection .wc-youcanpay-upe-method-selection__description,
+.wc-youcanpay-upe-method-selection .wc-youcanpay-upe-method-selection__status {
+  vertical-align: middle;
   color: red;
 }
