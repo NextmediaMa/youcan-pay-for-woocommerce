@@ -7,11 +7,11 @@ return apply_filters(
 	'wc_youcanpay_standalone_settings',
 	[
 		'guide'       => [
-			'description' => __( '<a href="https://pay.youcan.shop/docs" target="_blank">Payment Method Guide</a>', 'youcan-pay' ),
+			'description' => __( sprintf('<a href="%s/docs" target="_blank">Payment Method Guide</a>', WC_YouCanPay_Api_Enum::get_base_url()), 'youcan-pay' ),
 			'type'        => 'title',
 		],
 		'activation'  => [
-			'description' => __( 'Must be activated from your YouCan Pay Settings <a href="https://pay.youcan.shop/settings" target="_blank">here</a>', 'youcan-pay' ),
+			'description' => __( sprintf('Must be activated from your YouCan Pay Settings <a href="%s/settings" target="_blank">here</a>', WC_YouCanPay_Api_Enum::get_base_url()), 'youcan-pay' ),
 			'type'        => 'title',
 		],
 		'enabled'     => [

@@ -199,11 +199,11 @@ msgstr "معرف الطلب %d أقل من أيام الاحتفاظ المحد�
 msgid "YouCan Pay (Gateways)"
 msgstr "YouCan Pay"
 
-msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
-msgstr "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">دليل طريقة الدفع</a>"
+msgid "<a href=\"https://youcanpay.com/docs\" target=\"_blank\">Payment Method Guide</a>"
+msgstr "<a href=\"https://youcanpay.com/docs\" target=\"_blank\">دليل طريقة الدفع</a>"
 
-msgid "Must be activated from your YouCan Pay Settings <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">here</a>"
-msgstr "يجب تشغيله من إعدادات YouCan Pay الخاصة بك <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">هنا</a>"
+msgid "Must be activated from your YouCan Pay Settings <a href=\"https://youcanpay.com/settings\" target=\"_blank\">here</a>"
+msgstr "يجب تشغيله من إعدادات YouCan Pay الخاصة بك <a href=\"https://youcanpay.com/settings\" target=\"_blank\">هنا</a>"
 
 msgid "Enable YouCan Pay Standalone"
 msgstr "تشغيل YouCan Pay المستقلة"
@@ -277,8 +277,8 @@ msgstr "الطلبية التي تم استلامها من الرد التلقا
 msgid "Payment not made"
 msgstr "لم يتم الدفع"
 
-msgid "You must add the following webhook endpoint <strong style=\"background-color:#ddd;\">%s</strong> to your <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
-msgstr "يجب عليك إضافة webhook التالي <strong style=\"background-color:#ddd;\">%s</strong> في اعدادات <a href=\"https://pay.youcan.shop/settings/webhooks\" target=\"_blank\">YouCan Pay</a> (إذا لم يكن بالفعل من قبل). سيسمح لك ذلك بتلقي إشعارات بشأن حالة المعاملات."
+msgid "You must add the following webhook endpoint <strong style=\"background-color:#ddd;\">%s</strong> to your <a href=\"https://youcanpay.com/settings/webhooks\" target=\"_blank\">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions."
+msgstr "يجب عليك إضافة webhook التالي <strong style=\"background-color:#ddd;\">%s</strong> في اعدادات <a href=\"https://youcanpay.com/settings/webhooks\" target=\"_blank\">YouCan Pay</a> (إذا لم يكن بالفعل من قبل). سيسمح لك ذلك بتلقي إشعارات بشأن حالة المعاملات."
 
 msgid "Webhook Endpoints"
 msgstr "نقاط نهاية Webhook"

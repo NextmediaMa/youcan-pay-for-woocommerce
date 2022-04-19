@@ -312,13 +312,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      */
     public function pw_load_scripts()
     {
-        $extension = '.js';
-        if (!$this->sandbox_mode) {
-            $extension = '.min.js';
-        }
+        $jsSuffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'js' : 'min.js';
 
         wp_enqueue_script('py-script', WC_YouCanPay_Api_Enum::get_javascript_url(), [], WC_YOUCAN_PAY_VERSION);
-        wp_enqueue_script('youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . '/assets/js/youcan-pay' . $extension, [], WC_YOUCAN_PAY_VERSION);
+        wp_enqueue_script('youcan-pay-script', WC_YOUCAN_PAY_PLUGIN_URL . sprintf('/assets/js/youcan-pay.%s', $jsSuffix), [], WC_YOUCAN_PAY_VERSION);
         wp_localize_script('py-script', 'youcan_pay_script_vars', $this->javascript_params());
     }
 
