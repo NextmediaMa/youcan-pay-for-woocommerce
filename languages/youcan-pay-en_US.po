@@ -199,10 +199,10 @@ msgstr ""
 msgid "YouCan Pay (Gateways)"
 msgstr ""
 
-msgid "<a href=\"https://pay.youcan.shop/docs\" target=\"_blank\">Payment Method Guide</a>"
+msgid "<a href=\"https://youcanpay.com/docs\" target=\"_blank\">Payment Method Guide</a>"
 msgstr ""
 
-msgid "Must be activated from your YouCan Pay Settings <a href=\"https://pay.youcan.shop/settings\" target=\"_blank\">here</a>"
+msgid "Must be activated from your YouCan Pay Settings <a href=\"https://youcanpay.com/settings\" target=\"_blank\">here</a>"
 msgstr ""
 
 msgid "Enable YouCan Pay Standalone"
@@ -277,7 +277,7 @@ msgstr ""
 msgid "Payment not made"
 msgstr ""
 
-msgid "You must add the following webhook endpoint <strong style='background-color:#ddd;'>%s</strong> to your <a href='https://pay.youcan.shop/settings/webhooks' target='_blank'>YouCan Pay Settings</a> (if there isn't one already enabled). This will allow you to receive notifications on the status of transactions."
+msgid "You must add the following webhook endpoint <strong style='background-color:#ddd;'>%s</strong> to your <a href='https://youcanpay.com/settings/webhooks' target='_blank'>YouCan Pay Settings</a> (if there isn't one already enabled). This will allow you to receive notifications on the status of transactions."
 msgstr ""
 
 msgid "Webhook Endpoints"

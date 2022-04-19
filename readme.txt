@@ -1,6 +1,6 @@
 === YouCan Pay ===
 Plugin Name:       YouCan Pay
-Plugin URI:        https://pay.youcan.shop
+Plugin URI:        https://youcanpay.com
 Contributors:      medoussama
 Tags:              credit card, youcanpay, payment request, standalone, woocommerce
 Author:            YouCan Pay
@@ -59,7 +59,7 @@ Yes!
 
 = Does this require an SSL certificate? =
 
-Yes! In Production Mode, an SSL certificate must be installed on your site to use YouCan Pay. In addition to SSL encryption, YouCan Pay provides an extra JavaScript method to secure card data using [YouCan Pay Elements](https://pay.youcan.shop/docs).
+Yes! In Production Mode, an SSL certificate must be installed on your site to use YouCan Pay. In addition to SSL encryption, YouCan Pay provides an extra JavaScript method to secure card data using [YouCan Pay Elements](https://youcanpay.com/docs).
 
 = Does this support both production mode and sandbox mode for testing? =
 
@@ -67,7 +67,7 @@ Yes, it does - production and Test (sandbox) mode is driven by the API keys you 
 
 = Where can I find documentation? =
 
-For help with installation and configuration, please refer to our [documentation](https://pay.youcan.shop/docs).
+For help with installation and configuration, please refer to our [documentation](https://youcanpay.com/docs).
 
 = Where can I get support or talk to other users? =
 
@@ -78,6 +78,13 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The YouCan Pay settings screen used to configure the main YouCan Pay.
 
 == Changelog ==
+= 2.0.5 - 2022-04-19 =
+* Change main domain for YouCan Pay
+* Fix render available gateways breaking change
+
+= 2.0.4 - 2022-04-15 =
+* Change main domain for YouCan Pay
+* Fix render available gateways breaking change
 
 = 2.0.3 - 2022-01-04 =
 * Code improvements

@@ -62,10 +62,10 @@ class WC_YouCanPay_Privacy extends WC_Abstract_Privacy
         return wpautop(
             sprintf(
                 __(
-                    'By using this extension, you may be storing personal data or sharing data with an external service. <a href="%s" target="_blank">Learn more about how this works, including what you may want to include in your privacy policy.</a>',
+                    'By using this extension, you may be storing personal data or sharing data with an external service. <a href="%s/about-us" target="_blank">Learn more about how this works, including what you may want to include in your privacy policy.</a>',
                     'youcan-pay'
                 ),
-                'https://pay.youcan.shop/about-us'
+                WC_YouCanPay_Api_Enum::get_base_url()
             )
         );
     }

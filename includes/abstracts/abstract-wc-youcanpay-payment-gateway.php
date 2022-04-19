@@ -90,7 +90,7 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC
      */
     public function get_transaction_url($order)
     {
-        $this->view_transaction_url = 'https://pay.youcan.shop/transactions/%s';
+        $this->view_transaction_url = WC_YouCanPay_Api_Enum::get_base_url() . '/transactions/%s';
 
         return parent::get_transaction_url($order);
     }
@@ -104,10 +104,11 @@ abstract class WC_YouCanPay_Payment_Gateway extends WC_Payment_Gateway_CC
     {
         $description = sprintf(
             __(
-                'You must add the following webhook endpoint <strong style="background-color:#ddd;">%s</strong> to your <a href="https://pay.youcan.shop/settings/webhooks" target="_blank">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions.',
+                'You must add the following webhook endpoint <strong style="background-color:#ddd;">%s</strong> to your <a href="%s/settings/webhooks" target="_blank">YouCan Pay Settings</a> (if there isn\'t one already enabled). This will allow you to receive notifications on the status of transactions.',
                 'youcan-pay'
             ),
-            WC_YouCanPay_Helper::get_webhook_url()
+            WC_YouCanPay_Helper::get_webhook_url(),
+            WC_YouCanPay_Api_Enum::get_base_url()
         );
         $webhook_status = WC_YouCanPay_Webhook_State::get_webhook_status_message();
 

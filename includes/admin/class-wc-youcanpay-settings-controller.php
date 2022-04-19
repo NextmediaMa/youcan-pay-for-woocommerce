@@ -25,12 +25,12 @@ class WC_YouCanPay_Settings_Controller {
 			return;
 		}
 
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+		$jsSuffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? 'js' : 'min.js';
 
-		wp_register_script( 'woocommerce_youcanpay_admin', plugins_url( 'assets/js/youcanpay-admin' . $suffix . '.js', WC_YOUCAN_PAY_MAIN_FILE ), [], WC_YOUCAN_PAY_VERSION, true );
+		wp_register_script( 'woocommerce_youcanpay_admin', plugins_url( sprintf('/assets/js/youcanpay-admin.%s', $jsSuffix), WC_YOUCAN_PAY_MAIN_FILE ), [], WC_YOUCAN_PAY_VERSION, true );
 		wp_register_style(
 			'woocommerce_youcanpay_admin',
-			plugins_url( 'assets/css/youcanpay-admin-styles' . $suffix . '.css', WC_YOUCAN_PAY_MAIN_FILE ),
+			plugins_url( 'assets/css/youcanpay-admin-styles.css', WC_YOUCAN_PAY_MAIN_FILE ),
 			[],
 			WC_YOUCAN_PAY_VERSION
 		);
