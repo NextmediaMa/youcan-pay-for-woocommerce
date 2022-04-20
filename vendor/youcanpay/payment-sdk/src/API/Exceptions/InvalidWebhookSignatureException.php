@@ -30,4 +30,3 @@ class InvalidWebhookSignatureException extends Exception
         return $this->payload;
     }
 }
-
