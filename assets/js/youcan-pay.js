@@ -10,8 +10,9 @@ window.setupYouCanPayForm = () => {
                     customCSS: '.gateway-selector{max-width:unset;}'
                 }
             );
+
+            window.ycPay.renderAvailableGateways();
         }
-        window.ycPay.renderAvailableGateways();
     } catch (error) {
         console.error(error);
     }
