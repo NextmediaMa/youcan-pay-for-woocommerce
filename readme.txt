@@ -7,8 +7,8 @@ Author:            YouCan Pay
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
-Stable tag:        2.0.3
-Version:           2.0.3
+Stable tag:        2.0.5
+Version:           2.0.5
 License:           GPLv3
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,29 +82,4 @@ If you get stuck, you can ask for help in the Plugin Forum.
 * Change main domain for YouCan Pay
 * Fix render available gateways breaking change
 
-= 2.0.4 - 2022-04-15 =
-* Change main domain for YouCan Pay
-* Fix render available gateways breaking change
-
-= 2.0.3 - 2022-01-04 =
-* Code improvements
-* Webhook to check the status of orders processed by Cash Plus
-* Verification of data received from the webhook by signature before processing this data
-
-= 2.0.2 - 2021-12-16 =
-* Code improvements
-* Fixed a bug on the subunit on some currencies
-* Display a message when the store uses an unsupported currency
-
-= 2.0.1 - 2021-12-14 =
-* Now the plugin supports almost all currencies exists in woocommerce
-
-= 2.0.0 - 2021-12-07 =
-* Security improvements
-* Manage multiple languages
-
-= 1.1.1 - 2021-12-02 =
-* Second Release
-
-= 1.0.0 - 2021-11-25 =
-* First Release
+For a complete list of changelog, please refer to the "Changelog" section of https://wordpress.org/plugins/youcan-pay-for-woocommerce/#developers
