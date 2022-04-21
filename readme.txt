@@ -7,8 +7,8 @@ Author:            YouCan Pay
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
-Stable tag:        2.0.5
-Version:           2.0.5
+Stable tag:        2.0.6
+Version:           2.0.6
 License:           GPLv3
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -78,8 +78,8 @@ If you get stuck, you can ask for help in the Plugin Forum.
 1. The YouCan Pay settings screen used to configure the main YouCan Pay.
 
 == Changelog ==
-= 2.0.5 - 2022-04-19 =
-* Change main domain for YouCan Pay
-* Fix render available gateways breaking change
+*** Changelog ***
+= 2.0.6 - 2022-04-21 =
+* Fixed bug resulting in the gateways form appearing twice
 
 For a complete list of changelog, please refer to the "Changelog" section of https://wordpress.org/plugins/youcan-pay-for-woocommerce/#developers

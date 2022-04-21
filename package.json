@@ -1,6 +1,6 @@
 {
   "name": "youcan-pay-for-woocommerce",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Accept Visa, MasterCard, American Express, and more directly on your store with the YouCan Pay.",
   "scripts": {
     "build": "webpack"
