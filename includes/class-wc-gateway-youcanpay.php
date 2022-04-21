@@ -162,11 +162,11 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
 
             <div class="form-row form-row-wide" id="payment-card"></div>
             <script>
-              jQuery(function () {
+              (function () {
                 if (typeof (window.setupYouCanPayForm) !== "undefined") {
                   window.setupYouCanPayForm();
                 }
-              });
+              })();
             </script>
 
             <div class="clear"></div>
