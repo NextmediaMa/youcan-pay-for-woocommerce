@@ -56,12 +56,12 @@ jQuery(function ($) {
                 }, 500);
 
                 window.ycPay.pay(data.token_transaction)
-                    .then(function (transaction_id) {
+                    .then(function ({ response }) {
                         detach_loader($form, loader);
 
                         if (typeof (data.redirect) !== 'undefined') {
                             let url = new URL(data.redirect);
-                            url.searchParams.set('transaction_id', transaction_id);
+                            url.searchParams.set('transaction_id', response.transaction_id);
                             if (gateways.cash_plus === parseInt(window.ycPay.selectedGateway)) {
                                 url.searchParams.set('gateway', 'cash_plus');
                             }

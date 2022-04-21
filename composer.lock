@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5a36869c684a849e8bfb4a05d1183921",
+    "content-hash": "85f265d9489a32be895eaf31eba220e8",
     "packages": [
         {
             "name": "nesbot/carbon",
@@ -410,16 +410,16 @@
         },
         {
             "name": "youcanpay/payment-sdk",
-            "version": "v0.1.19",
+            "version": "v0.1.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/NextmediaMa/youcan-payment-php-sdk.git",
-                "reference": "7f2a1457b9b5396563d823afe54c2899e3b439f1"
+                "reference": "1468c78cb61fbdbe779c4e92873ff026d3614cef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NextmediaMa/youcan-payment-php-sdk/zipball/7f2a1457b9b5396563d823afe54c2899e3b439f1",
-                "reference": "7f2a1457b9b5396563d823afe54c2899e3b439f1",
+                "url": "https://api.github.com/repos/NextmediaMa/youcan-payment-php-sdk/zipball/1468c78cb61fbdbe779c4e92873ff026d3614cef",
+                "reference": "1468c78cb61fbdbe779c4e92873ff026d3614cef",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +449,11 @@
                 }
             ],
             "description": "YouCan Pay SDK",
-            "time": "2021-12-30T19:09:29+00:00"
+            "support": {
+                "issues": "https://github.com/NextmediaMa/youcan-payment-php-sdk/issues",
+                "source": "https://github.com/NextmediaMa/youcan-payment-php-sdk/tree/v0.1.22"
+            },
+            "time": "2022-03-30T11:02:31+00:00"
         }
     ],
     "packages-dev": [],
@@ -460,5 +464,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.2.0"
 }

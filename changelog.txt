@@ -1,4 +1,7 @@
 *** Changelog ***
+= 2.0.7 - 2022-04-21 =
+* Fixed bug causing payments to not go through for some users
+
 = 2.0.6 - 2022-04-21 =
 * Fixed bug resulting in the gateways form appearing twice
 
