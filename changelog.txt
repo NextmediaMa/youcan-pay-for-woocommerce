@@ -1,4 +1,7 @@
 *** Changelog ***
+= 2.0.8 - 2022-04-22 =
+* Error messages are displayed properly
+
 = 2.0.7 - 2022-04-21 =
 * Fixed bug causing payments to not go through for some users
 
