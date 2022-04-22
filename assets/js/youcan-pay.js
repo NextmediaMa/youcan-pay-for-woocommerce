@@ -68,9 +68,9 @@ jQuery(function ($) {
                             window.location.href = url.href;
                         }
                     })
-                    .catch(function (error_message) {
+                    .catch(function ({ errorMessage }) {
                         detach_loader($form, loader);
-                        display_notice($form, error_message);
+                        display_notice($form, errorMessage);
                     });
             } catch (error) {
                 detach_loader($form, loader);
