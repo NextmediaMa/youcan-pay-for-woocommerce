@@ -7,7 +7,8 @@ window.setupYouCanPayForm = () => {
                     locale: youcan_pay_script_vars.locale,
                     isSandbox: parseInt(youcan_pay_script_vars.is_test_mode) === 1,
                     formContainer: '#payment-card',
-                    customCSS: '.gateway-selector{max-width:unset;}'
+                    customCSS: '.gateway-selector{max-width:unset;}',
+                    integrator: 'youcanpay-woocommerce',
                 }
             );
 
