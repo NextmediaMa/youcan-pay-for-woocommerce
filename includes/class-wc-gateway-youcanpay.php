@@ -280,6 +280,10 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      */
     public function payment_scripts()
     {
+        if ( is_admin() ) {
+            return;
+        }
+
         // If YouCan Pay is not enabled bail.
         if ('no' === $this->enabled) {
             return;
