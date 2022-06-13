@@ -145,6 +145,9 @@ function woocommerce_gateway_youcanpay() {
 
 					new WC_YouCanPay_Settings_Controller();
 				}
+                else {
+                    $this->load_payment_scripts();
+                }
 
 				add_filter( 'woocommerce_payment_gateways', [ $this, 'add_gateways' ] );
 				add_filter( 'pre_update_option_woocommerce_youcanpay_settings',
@@ -297,6 +300,20 @@ function woocommerce_gateway_youcanpay() {
 
 				return $this->youcanpay_gateway;
 			}
+
+            /**
+             * Load payment scripts
+             *
+             * @return void
+             */
+            public function load_payment_scripts() {
+
+                if ( is_null( $this->youcanpay_gateway ) ) {
+                    $this->youcanpay_gateway = new WC_Gateway_YouCanPay();
+                }
+
+                $this->youcanpay_gateway->load_scripts();
+            }
 		}
 
 		$plugin = WC_YouCanPay::get_instance();

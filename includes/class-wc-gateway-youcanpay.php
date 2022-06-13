@@ -85,13 +85,19 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
         WC_YouCanPay_API::set_private_key($this->private_key);
 
         // Hooks.
-        add_action('wp_enqueue_scripts', [$this, 'payment_scripts']);
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, [$this, 'process_admin_options']);
         add_action('set_logged_in_cookie', [$this, 'set_cookie_on_current_request']);
         add_filter('woocommerce_get_checkout_payment_url', [$this, 'get_checkout_payment_url'], 10, 2);
 
         // Note: display error is in the parent class.
         add_action('admin_notices', [$this, 'display_errors'], 9999);
+    }
+
+    /**
+     * Load payment scripts
+     */
+    public function load_scripts() :void {
+        add_action('wp_enqueue_scripts', [$this, 'payment_scripts']);
     }
 
     /**
@@ -274,14 +280,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
      */
     public function payment_scripts()
     {
-        if (
-            !is_product()
-            && !WC_YouCanPay_Helper::has_cart_or_checkout_on_current_page()
-            && !array_key_exists('pay_for_order', $_GET)
-            && !is_add_payment_method_page()
-            && !array_key_exists('change_payment_method', $_GET) // wpcs: csrf ok.
-            || (is_order_received_page())
-        ) {
+        if ( is_admin() ) {
             return;
         }
 
