@@ -79,7 +79,9 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 *** Changelog ***
-= 2.0.9 - 2022-06-13 =
-* Load plugin scripts in all pages
+= 2.0.10 - 2022-07-13 =
+* Fixed payment response on same payment page
+* Fixed translations
+* Fixed payment form display
 
 For a complete list of changelog, please refer to the "Changelog" section of https://wordpress.org/plugins/youcan-pay-for-woocommerce/#developers
