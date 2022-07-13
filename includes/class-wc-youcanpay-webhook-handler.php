@@ -171,7 +171,7 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
                     'order_id'       => $order->get_id(),
                     'order_total'    => $order->get_total(),
                 ]);
-                
+
                 $order->payment_complete($transaction->get_id());
 
                 $order->update_meta_data('_youcanpay_source_id', $transaction->get_id());
@@ -248,24 +248,45 @@ class WC_YouCanPay_Webhook_Handler extends WC_YouCanPay_Payment_Gateway
             return wp_redirect(wp_sanitize_redirect(esc_url_raw(get_home_url())));
         }
 
-        WC_YouCanPay_Logger::info('payment successfully processed', [
-            'payment_method' => 'YouCan Pay (Credit Card)',
-            'transaction_id' => $transaction->getId(),
-            'order_id'       => $order->get_id(),
-            'order_total'    => $order->get_total(),
-        ]);
+        if ($transaction->getStatus() === WC_YouCanPay_Transaction_Model::PAID_STATUS) {
+            WC_YouCanPay_Logger::info('payment successfully processed', [
+                'payment_method' => 'YouCan Pay (Credit Card)',
+                'transaction_id' => $transaction->getId(),
+                'order_id'       => $order->get_id(),
+                'order_total'    => $order->get_total(),
+            ]);
 
-        WC_YouCanPay_Helper::set_payment_method_to_order($order, WC_Gateway_YouCanPay::ID);
-        $order->payment_complete($transaction->getId());
+            WC_YouCanPay_Helper::set_payment_method_to_order($order, WC_Gateway_YouCanPay::ID);
+            $order->payment_complete($transaction->getId());
 
-        $order->update_meta_data('_youcanpay_source_id', $transaction->getId());
-        $order->save();
+            $order->update_meta_data('_youcanpay_source_id', $transaction->getId());
+            $order->save();
 
-        if (isset(WC()->cart)) {
-            WC()->cart->empty_cart();
+            if (isset(WC()->cart)) {
+                WC()->cart->empty_cart();
+            }
+
+            return wp_redirect(wp_sanitize_redirect(esc_url_raw($this->get_return_url($order))));
+        } else {
+            WC_YouCanPay_Logger::info('payment not processed', [
+                'payment_method'     => 'YouCan Pay (Credit Card)',
+                'transaction_status' => $transaction->getStatus(),
+                'transaction_id'     => $transaction->getId(),
+                'order_id'           => $order->get_id(),
+                'order_total'        => $order->get_total(),
+            ]);
+
+            $order->set_status('failed');
+            $order->save();
+
+            $error = 'Fatal error, please try again.';
+            if (array_key_exists('message', $_GET)) {
+                $error = wc_clean(wp_unslash($_GET['message']));
+            }
+            wc_add_notice(__($error, 'youcan-pay'), 'error');
+
+            return wp_redirect(wp_sanitize_redirect(esc_url_raw($checkout_url)));
         }
-
-        return wp_redirect(wp_sanitize_redirect(esc_url_raw($this->get_return_url($order))));
     }
 
     /**
