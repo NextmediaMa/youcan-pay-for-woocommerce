@@ -162,7 +162,7 @@ class WC_Gateway_YouCanPay extends WC_YouCanPay_Payment_Gateway
         ?>
         <fieldset id="wc-<?php
         echo esc_attr($this->id); ?>-cc-form" class="wc-credit-card-form wc-payment-form"
-                  style="background:transparent;">
+                  style="background:transparent;display:contents;">
             <?php
             do_action('woocommerce_credit_card_form_start', $this->id); ?>
 

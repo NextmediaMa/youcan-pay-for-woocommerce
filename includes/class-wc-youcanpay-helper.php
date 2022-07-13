@@ -161,6 +161,9 @@ class WC_YouCanPay_Helper
             'fr',     // French (France).
         ];
 
+        // Get only language without region: en_US > en
+        $wc_locale = substr($wc_locale, 0, 2);
+
         if (in_array($wc_locale, $supported, true)) {
             return $wc_locale;
         }
