@@ -7,8 +7,8 @@ Author:            YouCan Pay
 Requires at least: 4.6
 Tested up to:      5.8
 Requires PHP:      7.1
-Stable tag:        2.0.11
-Version:           2.0.11
+Stable tag:        2.0.12
+Version:           2.0.12
 License:           GPLv3
 License URI:       https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,7 +79,7 @@ If you get stuck, you can ask for help in the Plugin Forum.
 
 == Changelog ==
 *** Changelog ***
-= 2.0.11 - 2022-08-04 =
-* Dynamic YCPay.js versioning
+= 2.0.12 - 2022-09-09 =
+* Timestamp YCPay.js versioning
 
 For a complete list of changelog, please refer to the "Changelog" section of https://wordpress.org/plugins/youcan-pay-for-woocommerce/#developers
